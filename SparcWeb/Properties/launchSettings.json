@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Sparc v2": {
+    "Sparc.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
@@ -22,7 +22,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      } 
     }
   }
 }
