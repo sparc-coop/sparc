@@ -1,0 +1,70 @@
+﻿@import "../Global/_variables.scss";
+
+.project-list-page {
+    .hero-header {
+        text-align: center;
+        
+
+        .header {
+            max-width: 50%;
+            margin: auto;
+
+            .image-wrapper {
+                margin-bottom: 8px;
+            }
+
+            .title-1 {
+                margin-bottom: 26px;
+            }
+
+            .project-tags {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                max-width: 76%;
+                margin: auto;
+
+                .tag {
+                    border: 1px solid $peach-500;
+                    background: inherit;
+                    color: $peach-500;
+                    border-radius: 100px;
+                }
+            }
+        }
+    }
+
+    .project-list-wrapper {
+        .list-wrapper {
+            .filters {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 36px;
+
+                input {
+                }
+
+                select {
+                    max-width: 124px;
+                }
+            }
+
+            .project-list {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 38px;
+                flex-wrap: wrap;
+
+                .project-card {
+                    margin-bottom: 0px;
+                    padding: 0px;
+                    max-width: calc(53% - 64px);
+                }
+            }
+        }
+    }
+}

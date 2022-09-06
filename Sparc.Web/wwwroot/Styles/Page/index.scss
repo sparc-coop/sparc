@@ -1,0 +1,272 @@
+﻿@import "../Global/_variables.scss";
+
+
+.home-hero {
+    height: 100vh;
+    background: $yellow-100;
+    position: relative;
+
+    .header {
+        width: 64%;
+        margin: 0 auto;
+        margin-bottom: 72px;
+
+        h1 {
+            margin-bottom: 16px;
+        }
+
+        p {
+            width: 64%;
+            margin: 0 auto;
+        }
+    }
+}
+
+.center{
+    text-align: center;
+}
+
+.learn-more {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    flex-direction: column;
+
+    p{
+        margin-bottom: 24px;
+    }
+
+    img{
+        max-height: 24px;
+    }
+}
+
+.mission{
+    margin-top: 160px;
+    margin-bottom: 200px;
+    .mission-wrapper{
+        max-width:40%;
+        margin: 0 auto;
+
+        .mission-icon{
+            margin-bottom: 38px;
+        }
+
+        .mission-content{
+            h5{
+                margin-bottom: 48px;
+            }
+        }
+    }
+
+    .mission-wrapper:first-child{
+        margin-bottom: 160px;
+    }
+}
+
+.values {
+    background: $yellow-100;
+
+    .container {
+        position: relative;
+    }
+
+    .value-tag {
+        margin: 0 auto;
+        margin-bottom: 24px;
+    }
+
+    .header {
+        margin: 0 auto;
+        margin-bottom: 80px;
+        text-align: center;
+        max-width: 60%;
+    }
+
+    .card-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 32px;
+        margin-bottom: 200px;
+        text-align: center;
+
+        .card-value {
+            background: white;
+            padding: 56px 40px 40px;
+            border-radius: 24px;
+
+            .icon {
+                margin-bottom: 32px;
+            }
+
+            .subtitle-large {
+                margin-bottom: 12px;
+            }
+        }
+    }
+
+    .project-wrapper {
+        display: flex;
+        justify-content: space-between;
+        gap: 100px;
+
+        .left {
+            position: relative;
+
+            h5 {
+                margin-bottom: 54px;
+            }
+
+            button {
+                background: var(--grey-900);
+                border-radius: 100px;
+                font-size: 16px;
+                font-style: italic;
+
+                img {
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .right {
+            .card-wrapper {
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /*.project-card {
+                background: white;
+                padding: 32px;
+                border-radius: 24px;
+                margin-bottom: 32px;
+
+                .image-wrapper {
+                    margin-bottom: 24px;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                .card-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 8px;
+
+                    .image-wrapper {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .card-tags-wrapper {
+                    margin-top: 20px;
+
+                    button {
+                        border: none;
+                        color: $purple-500;
+                        background: var(--secondary-500);
+                    }
+
+                    button:hover {
+                        background: var(--secondary-300);
+                    }
+                }
+            }*/
+
+            .card:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.community {
+    .header {
+        margin-bottom: 56px;
+        max-width: 50%;
+    }
+
+    .card-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 32px;
+
+        .community-card {
+            background: $yellow-100;
+            border-radius: 24px;
+            padding: 48px 40px 40px;
+            position: relative;
+
+            .sparc-badge {
+                position: absolute;
+                left: 40px;
+                top: -18px;
+            }
+
+            .cta-flex {
+                margin-bottom: 36px;
+            }
+
+            .card-header {
+                margin-bottom: 48px;
+
+                h6 {
+                    margin-bottom: 12px;
+                }
+            }
+
+            .community-signup {
+                p {
+                    margin-bottom: 8px;
+                }
+
+                .community-join {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 12px;
+
+                    input {
+                        padding: 16px 24px;
+                        background: white;
+                        border: 1px solid var(--primary-300);
+                        border-radius: 100px;
+                        width: 100%;
+                    }
+
+                    button {
+                        background: $peach-500;
+                        color: white;
+                        border: none;
+                        border-radius: 100px;
+                    }
+                }
+            }
+        }
+
+        .badge {
+            .card-header {
+                margin-top: 72px;
+            }
+        }
+    }
+}
+
+.resources {
+    .header{
+        margin-bottom: 54px;
+        max-width: 50%;
+
+        .resources-tag{
+            background: $peach-100;
+            color: $peach-500;
+        }
+    }
+}
