@@ -1,0 +1,39 @@
+﻿.blog-page {
+    .container {
+        max-width: 1024px;
+    }
+
+    .blog {
+        .title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .posted {
+            margin-bottom: 40px;
+        }
+
+        .blog-image {
+            border-radius: 6px;
+            margin-bottom: 80px;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .blog-content {
+
+            div {
+                text-align: center;
+                margin-top: 80px;
+
+                button {
+                    background: var(--grey-900);
+                    color: white;
+                    border-radius: 100px;
+                }
+            }
+        }
+    }
+}

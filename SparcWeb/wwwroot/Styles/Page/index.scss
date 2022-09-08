@@ -2,7 +2,6 @@
 
 
 .home-hero {
-    height: 100vh;
     background: $yellow-100;
     position: relative;
 
@@ -181,79 +180,6 @@
 
             .card:last-child {
                 margin-bottom: 0;
-            }
-        }
-    }
-}
-
-.community {
-    .header {
-        margin-bottom: 56px;
-        max-width: 50%;
-    }
-
-    .card-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 32px;
-
-        .community-card {
-            background: $yellow-100;
-            border-radius: 24px;
-            padding: 48px 40px 40px;
-            position: relative;
-
-            .sparc-badge {
-                position: absolute;
-                left: 40px;
-                top: -18px;
-            }
-
-            .cta-flex {
-                margin-bottom: 36px;
-            }
-
-            .card-header {
-                margin-bottom: 48px;
-
-                h6 {
-                    margin-bottom: 12px;
-                }
-            }
-
-            .community-signup {
-                p {
-                    margin-bottom: 8px;
-                }
-
-                .community-join {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 12px;
-
-                    input {
-                        padding: 16px 24px;
-                        background: white;
-                        border: 1px solid var(--primary-300);
-                        border-radius: 100px;
-                        width: 100%;
-                    }
-
-                    button {
-                        background: $peach-500;
-                        color: white;
-                        border: none;
-                        border-radius: 100px;
-                    }
-                }
-            }
-        }
-
-        .badge {
-            .card-header {
-                margin-top: 72px;
             }
         }
     }
