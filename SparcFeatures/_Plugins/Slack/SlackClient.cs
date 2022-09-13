@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace SparcFeatures._Plugins.Slack
 {
-    public class SlackEngine
+    public class SlackService
     {
         private readonly IConfiguration _config;
-        public SlackEngine(IConfiguration config)
+        public SlackService(IConfiguration config)
         {
             _config = config;
         }
