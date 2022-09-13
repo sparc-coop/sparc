@@ -69,7 +69,7 @@ button {
 .cta-flex {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 
     .profile-pics-wrapper {
         display: flex;
@@ -87,6 +87,50 @@ button {
         border-radius: 100px;
         font-size: 16px;
         font-style: italic;
+    }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 48px;
+    background: $yellow-100;
+
+    .logo {
+        flex: 1;
+        img {
+            max-width: 114px;
+        }
+    }
+
+    .nav-links-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        background: white;
+        border-radius: 100px;
+        padding: 10px 24px;
+    }
+
+    .community-join {
+        flex: 1;
+
+        .profile-pic {
+            margin-right: 12px;
+            max-width: 14px;
+            max-height: 20px;
+
+            img {
+                max-width: 24px;
+                max-height: 24px;
+            }
+        }
+
+        button {
+            background: $peach-500;
+            border: none;
+        }
     }
 }
 
@@ -163,6 +207,92 @@ button {
 
         button:hover {
             background: var(--secondary-300);
+        }
+    }
+}
+
+//Community Component
+.community {
+    .header {
+        margin-bottom: 56px;
+        max-width: 50%;
+    }
+
+    .card-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 32px;
+
+        .community-card {
+            background: $yellow-100;
+            border-radius: 24px;
+            padding: 48px 40px 40px;
+            position: relative;
+
+            .sparc-badge {
+                position: absolute;
+                left: 40px;
+                top: -18px;
+            }
+
+            .cta-flex {
+                margin-bottom: 36px;
+            }
+
+            .card-header {
+                margin-bottom: 48px;
+
+                h6 {
+                    margin-bottom: 12px;
+                }
+            }
+
+            .community-signup {
+                p {
+                    margin-bottom: 8px;
+                }
+
+                .community-join {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 12px;
+
+                    input {
+                        padding: 16px 24px;
+                        background: white;
+                        border: 1px solid var(--primary-300);
+                        border-radius: 100px;
+                        width: 100%;
+                    }
+
+                    button {
+                        background: $peach-500;
+                        color: white;
+                        border: none;
+                        border-radius: 100px;
+                    }
+                }
+            }
+        }
+
+        .badge {
+            .card-header {
+                margin-top: 72px;
+            }
+        }
+    }
+}
+
+.resources {
+    .header {
+        margin-bottom: 54px;
+        max-width: 50%;
+
+        .resources-tag {
+            background: $peach-100;
+            color: $peach-500;
         }
     }
 }
