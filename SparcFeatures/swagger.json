@@ -5,10 +5,10 @@
     "version": "v1"
   },
   "paths": {
-    "/api/GetAllPosts": {
+    "/publicapi/GetSlackPosts": {
       "post": {
         "tags": [
-          "GetAllPosts"
+          "GetSlackPosts"
         ],
         "responses": {
           "200": {
@@ -16,26 +16,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Post"
-                  }
+                  "type": "string"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Post"
-                  }
+                  "type": "string"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Post"
-                  }
+                  "type": "string"
                 }
               }
             }
@@ -43,84 +34,26 @@
         }
       }
     },
-    "/api/GetMembers": {
+    "/api/CreatePost": {
       "post": {
         "tags": [
-          "GetMembers"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobject"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobject"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobject"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GetMessage": {
-      "post": {
-        "tags": [
-          "GetMessage"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobj"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobj"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Rootobj"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/GetSlackPost": {
-      "post": {
-        "tags": [
-          "GetSlackPost"
+          "SlackCommands"
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "text": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -131,137 +64,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/Postobject"
+                  "type": "string"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Postobject"
+                  "type": "string"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Postobject"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SendMessage": {
-      "post": {
-        "tags": [
-          "SendMessage"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/SendMessageRequest"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/SendMessageRequest"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/SendMessageRequest"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/UserSignUp": {
-      "post": {
-        "tags": [
-          "UserSignUp"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UserSignUpRequest"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UserSignUpRequest"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/UserSignUpRequest"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "boolean"
+                  "type": "string"
                 }
               }
             }
@@ -271,472 +84,12 @@
     }
   },
   "components": {
-    "schemas": {
-      "Authorization": {
-        "type": "object",
-        "properties": {
-          "enterprise_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "team_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "user_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "is_bot": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Event": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "type": "string",
-            "nullable": true
-          },
-          "item": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Item"
-              }
-            ],
-            "nullable": true
-          },
-          "reaction": {
-            "type": "string",
-            "nullable": true
-          },
-          "item_user": {
-            "type": "string",
-            "nullable": true
-          },
-          "event_ts": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Item": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "channel": {
-            "type": "string",
-            "nullable": true
-          },
-          "ts": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Member": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "team_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "deleted": {
-            "type": "boolean"
-          },
-          "color": {
-            "type": "string",
-            "nullable": true
-          },
-          "real_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "tz": {
-            "type": "string",
-            "nullable": true
-          },
-          "tz_label": {
-            "type": "string",
-            "nullable": true
-          },
-          "tz_offset": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "profile": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Profile"
-              }
-            ],
-            "nullable": true
-          },
-          "is_admin": {
-            "type": "boolean"
-          },
-          "is_owner": {
-            "type": "boolean"
-          },
-          "is_primary_owner": {
-            "type": "boolean"
-          },
-          "is_restricted": {
-            "type": "boolean"
-          },
-          "is_ultra_restricted": {
-            "type": "boolean"
-          },
-          "is_bot": {
-            "type": "boolean"
-          },
-          "is_app_user": {
-            "type": "boolean"
-          },
-          "updated": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "is_email_confirmed": {
-            "type": "boolean"
-          },
-          "who_can_share_contact_card": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Post": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Postobject": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "team_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "api_app_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "_event": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Event"
-              }
-            ],
-            "nullable": true
-          },
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "authed_users": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          },
-          "authorizations": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Authorization"
-            },
-            "nullable": true
-          },
-          "event_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "event_context": {
-            "type": "string",
-            "nullable": true
-          },
-          "event_time": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Profile": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "phone": {
-            "type": "string",
-            "nullable": true
-          },
-          "skype": {
-            "type": "string",
-            "nullable": true
-          },
-          "real_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "real_name_normalized": {
-            "type": "string",
-            "nullable": true
-          },
-          "display_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "display_name_normalized": {
-            "type": "string",
-            "nullable": true
-          },
-          "status_text": {
-            "type": "string",
-            "nullable": true
-          },
-          "status_emoji": {
-            "type": "string",
-            "nullable": true
-          },
-          "status_emoji_display_info": {
-            "type": "array",
-            "items": { },
-            "nullable": true
-          },
-          "status_expiration": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "avatar_hash": {
-            "type": "string",
-            "nullable": true
-          },
-          "always_active": {
-            "type": "boolean"
-          },
-          "first_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "last_name": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_24": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_32": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_48": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_72": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_192": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_512": {
-            "type": "string",
-            "nullable": true
-          },
-          "status_text_canonical": {
-            "type": "string",
-            "nullable": true
-          },
-          "team": {
-            "type": "string",
-            "nullable": true
-          },
-          "image_original": {
-            "type": "string",
-            "nullable": true
-          },
-          "is_custom_image": {
-            "type": "boolean"
-          },
-          "image_1024": {
-            "type": "string",
-            "nullable": true
-          },
-          "api_app_id": {
-            "type": "string",
-            "nullable": true
-          },
-          "bot_id": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Response_Metadata": {
-        "type": "object",
-        "properties": {
-          "next_cursor": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Rootobj": {
-        "type": "object",
-        "properties": {
-          "messages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SlackMessage"
-            },
-            "nullable": true
-          },
-          "has_more": {
-            "type": "boolean"
-          },
-          "ok": {
-            "type": "boolean"
-          },
-          "response_metadata": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Response_Metadata"
-              }
-            ],
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Rootobject": {
-        "type": "object",
-        "properties": {
-          "members": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Member"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "SendMessageRequest": {
-        "type": "object",
-        "properties": {
-          "userAt100": {
-            "type": "string",
-            "nullable": true
-          },
-          "days": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "SlackMessage": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "user": {
-            "type": "string",
-            "nullable": true
-          },
-          "text": {
-            "type": "string",
-            "nullable": true
-          },
-          "thread_ts": {
-            "type": "string",
-            "nullable": true
-          },
-          "reply_count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "subscribed": {
-            "type": "boolean"
-          },
-          "last_read": {
-            "type": "string",
-            "nullable": true
-          },
-          "unread_count": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ts": {
-            "type": "string",
-            "nullable": true
-          },
-          "parent_user_id": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UserSignUpRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "description": "Enter JWT Bearer token **_only_**",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

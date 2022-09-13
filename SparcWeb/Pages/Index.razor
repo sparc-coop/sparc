@@ -1,7 +1,43 @@
 ﻿@page "/"
-
 <PageTitle>Index</PageTitle>
 
+<nav>
+    <div class="logo">
+        <img src="./images/icons/Logo.png" />
+    </div>
+    <div class="nav-links-wrapper">
+        <div class="nav-link">
+            <a href="#">Home</a>
+        </div>
+        <div class="nav-link">
+            <a href="/bloglist">Resources</a>
+        </div>
+        <div class="nav-link">
+            <a href="/projectlist">Projects</a>
+        </div>
+        <div class="nav-link">
+            <a href="/contact">Contact</a>
+        </div>
+    </div>
+    <div class="community-join">
+        <div class="cta-flex">
+            <div class="profile-pics-wrapper">
+                <div class="profile-pic">
+                    <img src="images/Picture.png" />
+                </div>
+                <div class="profile-pic">
+                    <img src="images/Picture.png" />
+                </div>
+                <div class="profile-pic">
+                    <img src="images/Picture.png" />
+                </div>
+            </div>
+            <div>
+                <button>Join community</button>
+            </div>
+        </div>
+    </div>
+</nav>
 
 <div class="homepage">
     <section class="home-hero">
@@ -314,3 +350,12 @@
         </div>
     </section>
 </div>
+
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        //await Api.GetSlackPostsAsync(); 
+    }
+}
