@@ -1,4 +1,7 @@
-﻿using Sparc.Features;
+﻿using Sparc.Plugins.Database.Cosmos;
+using SparcFeatures._Plugins;
+using Sparc.Database.Cosmos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace SparcFeatures
 {
@@ -11,21 +14,18 @@ namespace SparcFeatures
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Sparcify<Startup>(Configuration["WebClientUrl"]);
-                //.AddCosmos<SparcContext>(Configuration.GetConnectionString("Database"), "sparc")
+            //services.AddRazorPages();
+            services.Sparcify<Startup>("https://localhost:7138")
+                .AddCosmos<SparcContext>(Configuration["ConnectionStrings:CosmosDb"], "sparc");
             //services.AddScoped(typeof(IRepository<>), typeof(CosmosDbRepository<>));
-            services.AddSignalR();
-            services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAuthentication();
             app.Sparcify<Startup>(env);
-            app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
-            });
-            app.UseDeveloperExceptionPage();
         }
     }
 }

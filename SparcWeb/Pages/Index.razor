@@ -1,7 +1,5 @@
 ﻿@page "/"
-
 <PageTitle>Index</PageTitle>
-
 
 <div class="homepage">
     <section class="home-hero">
@@ -314,3 +312,12 @@
         </div>
     </section>
 </div>
+
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        //await Api.GetSlackPostsAsync(); 
+    }
+}
