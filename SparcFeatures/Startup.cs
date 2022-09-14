@@ -19,6 +19,14 @@ namespace SparcFeatures
                 .AddCosmos<SparcContext>(Configuration["ConnectionStrings:CosmosDb"], "sparc");
             //services.AddScoped(typeof(IRepository<>), typeof(CosmosDbRepository<>));
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Audience = "http://localhost:7044/";
+                    options.Authority = "http://localhost:7044/identity/";
+                    options.RequireHttpsMetadata = false;
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

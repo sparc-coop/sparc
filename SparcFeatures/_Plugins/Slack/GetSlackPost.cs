@@ -12,7 +12,7 @@ using Sparc.SparcFeatures.Slack.Entities;
 
 namespace SparcFeatures._Plugins.Slack
 {
-    public class GetSlackPost : PublicFeature<string, Postobject>
+    public class GetSlackPost : PublicFeature<Postobject, string>
     {
 
         private readonly IConfiguration _config;
@@ -21,13 +21,29 @@ namespace SparcFeatures._Plugins.Slack
             _config = config;
         }
 
-        public override async Task<Postobject> ExecuteAsync(string JsonString)
+        public override async Task<string> ExecuteAsync(Postobject Json)
         {
             Postobject data = new Postobject();
+            var returnStr = "";
 
-            data = JsonConvert.DeserializeObject<Postobject>(JsonString);
+            data = Json;
 
-            return data;
+            if (data.token == _config["Slack:Secret"])
+            {
+                returnStr = data.challenge != null ? data.challenge : data.event_id;
+            } else
+            {
+                returnStr = "Not verified!";
+            }
+
+            if (data._event != null)
+            {
+
+            }
+            //data = JsonConvert.DeserializeObject<Postobject>(JsonString);
+            
+
+            return returnStr;
         }
     }
 }
@@ -35,16 +51,17 @@ namespace SparcFeatures._Plugins.Slack
 
 public class Postobject
 {
-    public string token { get; set; }
-    public string team_id { get; set; }
-    public string api_app_id { get; set; }
-    public Event _event { get; set; }
-    public string type { get; set; }
-    public string[] authed_users { get; set; }
-    public Authorization[] authorizations { get; set; }
-    public string event_id { get; set; }
-    public string event_context { get; set; }
-    public int event_time { get; set; }
+    public string? token { get; set; }
+    public string? challenge { get; set; }
+    public string? team_id { get; set; }
+    public string? api_app_id { get; set; }
+    public Event? _event { get; set; }
+    public string? type { get; set; }
+    public string[]? authed_users { get; set; }
+    public Authorization[]? authorizations { get; set; }
+    public string? event_id { get; set; }
+    public string? event_context { get; set; }
+    public int? event_time { get; set; }
 }
 
 public class Event
