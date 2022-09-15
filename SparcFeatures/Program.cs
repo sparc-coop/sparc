@@ -1,5 +1,6 @@
 using SparcFeatures;
 using SparcFeatures._Plugins.Slack;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 var startup = new Startup(builder.Configuration);

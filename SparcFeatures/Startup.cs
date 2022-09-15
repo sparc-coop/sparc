@@ -22,8 +22,8 @@ namespace SparcFeatures
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Audience = "http://localhost:7044/";
-                    options.Authority = "http://localhost:7044/identity/";
+                    options.Audience = "https://sparc-app.azurewebsites.net/";
+                    options.Authority = "https://sparc-app.azurewebsites.net/identity/";
                     options.RequireHttpsMetadata = false;
                 });
 

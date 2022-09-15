@@ -31,7 +31,7 @@ namespace SparcFeatures._Plugins.Slack
                 client.BaseAddress = new Uri("https://slack.com/api/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["SlackToken"]);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config["Slack:Token"]);
 
                 //send channel message api.slack.com/methods/chat.postMessage
                 HttpResponseMessage response = await client.PostAsync("chat.postMessage", httpContent);

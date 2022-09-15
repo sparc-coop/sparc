@@ -332,6 +332,76 @@
   },
   "components": {
     "schemas": {
+      "Attachment": {
+        "type": "object",
+        "properties": {
+          "fallback": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
+          },
+          "pretext": {
+            "type": "string",
+            "nullable": true
+          },
+          "author_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "author_link": {
+            "type": "string",
+            "nullable": true
+          },
+          "author_icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "title_link": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Field"
+            },
+            "nullable": true
+          },
+          "image_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumb_url": {
+            "type": "string",
+            "nullable": true
+          },
+          "footer": {
+            "type": "string",
+            "nullable": true
+          },
+          "footer_icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "ts": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Authorization": {
         "type": "object",
         "properties": {
@@ -348,7 +418,22 @@
             "nullable": true
           },
           "is_bot": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Edited": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "nullable": true
+          },
+          "ts": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -360,46 +445,53 @@
             "type": "string",
             "nullable": true
           },
+          "channel": {
+            "type": "string",
+            "nullable": true
+          },
           "user": {
             "type": "string",
             "nullable": true
           },
-          "item": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Item"
-              }
-            ],
-            "nullable": true
-          },
-          "reaction": {
-            "type": "string",
-            "nullable": true
-          },
-          "item_user": {
-            "type": "string",
-            "nullable": true
-          },
-          "event_ts": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Item": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "channel": {
+          "text": {
             "type": "string",
             "nullable": true
           },
           "ts": {
             "type": "string",
+            "nullable": true
+          },
+          "edited": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Edited"
+              }
+            ],
+            "nullable": true
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attachment"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Field": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          },
+          "_short": {
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -489,11 +581,15 @@
       "Postobject": {
         "type": "object",
         "properties": {
-          "token": {
-            "type": "string",
+          "event": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Event"
+              }
+            ],
             "nullable": true
           },
-          "challenge": {
+          "token": {
             "type": "string",
             "nullable": true
           },
@@ -503,14 +599,6 @@
           },
           "api_app_id": {
             "type": "string",
-            "nullable": true
-          },
-          "_event": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Event"
-              }
-            ],
             "nullable": true
           },
           "type": {
