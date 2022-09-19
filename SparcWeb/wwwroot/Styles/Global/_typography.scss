@@ -27,3 +27,76 @@
 .semi-bold{
     font-weight: 500;
 }
+
+//fonts
+@font-face {
+    font-family: 'NeueHaasDisplayThin';
+    font-weight: 100;
+    src: url(wwwroot/fonts/NeueHaasDisplayThin.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayThinItalic';
+    font-weight: 100;
+    src: url(wwwroot/fonts/NeueHaasDisplayThinItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayLight';
+    font-weight: 300;
+    src: url(wwwroot/fonts/NeueHaasDisplayLight.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayLightItalic';
+    font-weight: 300;
+    src: url(wwwroot/fonts/NeueHaasDisplayLightItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayRoman';
+    font-weight: 400;
+    src: url(wwwroot/fonts/NeueHaasDisplayRoman.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayRomanItalic';
+    font-weight: 400;
+    src: url(wwwroot/fonts/NeueHaasDisplayRomanItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayMedium';
+    font-weight: 500;
+    src: url(wwwroot/fonts/NeueHaasDisplayMedium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayMediumItalic';
+    font-weight: 500;
+    src: url(wwwroot/fonts/NeueHaasDisplayMediumItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayBold';
+    font-weight: 700;
+    src: url(wwwroot/fonts/NeueHaasDisplayBold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayBoldItalic';
+    font-weight: 700;
+    src: url(wwwroot/fonts/NeueHaasDisplayBoldItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayBlack';
+    font-weight: 900;
+    src: url(wwwroot/fonts/NeueHaasDisplayBlack.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'NeueHaasDisplayBlackItalic';
+    font-weight: 900;
+    src: url(wwwroot/fonts/NeueHaasDisplayBlackItalic.ttf) format('truetype');
+}

@@ -406,6 +406,66 @@ nav .community-join button {
   font-weight: 500;
 }
 
+@font-face {
+  font-family: "NeueHaasDisplayThin";
+  font-weight: 100;
+  src: url(../fonts/NeueHaasDisplayThin.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayThinItalic";
+  font-weight: 100;
+  src: url(../fonts/NeueHaasDisplayThinItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayLight";
+  font-weight: 300;
+  src: url(../fonts/NeueHaasDisplayLight.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayLightItalic";
+  font-weight: 300;
+  src: url(../fonts/NeueHaasDisplayLightItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayRoman";
+  font-weight: 400;
+  src: url(../fonts/NeueHaasDisplayRoman.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayRomanItalic";
+  font-weight: 400;
+  src: url(../fonts/NeueHaasDisplayRomanItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayMedium";
+  font-weight: 500;
+  src: url(../fonts/NeueHaasDisplayMedium.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayMediumItalic";
+  font-weight: 500;
+  src: url(../fonts/NeueHaasDisplayMediumItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayBold";
+  font-weight: 700;
+  src: url(../fonts/NeueHaasDisplayBold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayBoldItalic";
+  font-weight: 700;
+  src: url(../fonts/NeueHaasDisplayBoldItalic.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayBlack";
+  font-weight: 900;
+  src: url(../fonts/NeueHaasDisplayBlack.ttf) format("truetype");
+}
+@font-face {
+  font-family: "NeueHaasDisplayBlackItalic";
+  font-weight: 900;
+  src: url(../fonts/NeueHaasDisplayBlackItalic.ttf) format("truetype");
+}
 .container {
   max-width: 1480px;
   margin: 0 auto;
@@ -472,34 +532,40 @@ h1 {
   color: var(--error-500);
 }
 
-.home-hero {
+.homepage h1, .homepage h2, .homepage h3, .homepage h4, .homepage h5, .homepage .invert {
+  font-family: "NeueHaasDisplayMedium";
+}
+.homepage p, .homepage p.subtitle-medium, .homepage a {
+  font-family: "NeueHaasDisplayRoman";
+}
+.homepage .home-hero {
   background: #F2EDDF;
   position: relative;
 }
-.home-hero .header {
+.homepage .home-hero .micro-post {
+  padding: 20px;
+}
+.homepage .home-hero .micro-post p {
+  padding: 10px;
+}
+.homepage .home-hero .header {
   width: 64%;
   margin: 0 auto;
   margin-bottom: 72px;
 }
-.home-hero .header h1 {
+.homepage .home-hero .header h1 {
   margin-bottom: 16px;
 }
-.home-hero .header p {
+.homepage .home-hero .header p {
   width: 64%;
   margin: 0 auto;
 }
-.home-hero .micro-post {
-  padding: 20px;
-}
-.home-hero .micro-post p {
-  padding: 10px;
-}
-
-.center {
+.homepage .home-hero .hero-graphic {
+  display: block;
   text-align: center;
+  margin-bottom: 72px;
 }
-
-.learn-more {
+.homepage .home-hero .learn-more {
   position: absolute;
   bottom: 24px;
   left: 50%;
@@ -507,48 +573,53 @@ h1 {
   display: flex;
   flex-direction: column;
 }
-.learn-more p {
+.homepage .home-hero .learn-more p {
   margin-bottom: 24px;
 }
-.learn-more img {
+.homepage .home-hero .learn-more img {
   max-height: 24px;
 }
-
-.mission-wrapper {
+.homepage .center {
+  text-align: center;
+}
+.homepage .mission-wrapper {
   max-width: 40%;
   margin: 0 auto;
 }
-.mission-wrapper:first-child {
+.homepage .mission-wrapper:first-child {
   margin-bottom: 160px;
 }
-.mission-icon {
+.homepage .mission-icon {
   margin-bottom: 38px;
 }
-.mission-content h5 {
+.homepage .mission-content h5 {
   margin-bottom: 48px;
+  font-family: "NeueHaasDisplayMedium";
 }
-
-.values {
+.homepage .values {
   background: #F2EDDF;
 }
-.values .container {
+.homepage .values .container {
   position: relative;
 }
-.values-tag {
+.homepage .values-tag {
   margin: 0 auto;
   margin-bottom: 24px;
   background: #FFFFFF;
 }
-.values-tag p {
+.homepage .values-tag p {
   color: var(--error-500);
 }
-.values .header {
+.homepage .values .header {
   margin: 0 auto;
   margin-bottom: 80px;
   text-align: center;
   max-width: 60%;
 }
-.values .card-wrapper {
+.homepage .values .header h2 {
+  font-family: "NeueHaasDisplayMedium";
+}
+.homepage .values .card-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -556,38 +627,38 @@ h1 {
   margin-bottom: 200px;
   text-align: center;
 }
-.values .card-wrapper .card-value {
+.homepage .values .card-wrapper .card-value {
   background: white;
   padding: 56px 40px 40px;
   border-radius: 24px;
 }
-.values .card-wrapper .card-value .icon {
+.homepage .values .card-wrapper .card-value .icon {
   margin-bottom: 32px;
 }
-.values .card-wrapper .card-value .subtitle-large {
+.homepage .values .card-wrapper .card-value .subtitle-large {
   margin-bottom: 12px;
 }
-.values .project-wrapper {
+.homepage .values .project-wrapper {
   display: flex;
   justify-content: space-between;
   gap: 100px;
 }
-.values .project-wrapper .left {
+.homepage .values .project-wrapper .left {
   position: relative;
 }
-.values .project-wrapper .left h5 {
+.homepage .values .project-wrapper .left h5 {
   margin-bottom: 54px;
 }
-.values .project-wrapper .left button {
+.homepage .values .project-wrapper .left button {
   background: var(--grey-900);
   border-radius: 100px;
   font-size: 16px;
   font-style: italic;
 }
-.values .project-wrapper .left button img {
+.homepage .values .project-wrapper .left button img {
   margin-left: 10px;
 }
-.values .project-wrapper .right {
+.homepage .values .project-wrapper .right {
   /*.project-card {
       background: white;
       padding: 32px;
@@ -628,20 +699,19 @@ h1 {
       }
   }*/
 }
-.values .project-wrapper .right .card-wrapper {
+.homepage .values .project-wrapper .right .card-wrapper {
   text-align: left;
   display: flex;
   flex-direction: column;
 }
-.values .project-wrapper .right .card:last-child {
+.homepage .values .project-wrapper .right .card:last-child {
   margin-bottom: 0;
 }
-
-.resources .header {
+.homepage .resources .header {
   margin-bottom: 54px;
   max-width: 50%;
 }
-.resources-tag {
+.homepage .resources-tag {
   background: #FFECEB;
   color: #FF756A;
 }
