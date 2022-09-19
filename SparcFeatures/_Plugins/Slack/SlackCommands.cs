@@ -1,39 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SparcFeatures._Plugins.Slack;
+using System.Linq;
 
-namespace SparcFeatures._Plugins.Slack
+namespace SparcFeatures._Plugins.Slack;
+
+[ApiController]
+[Route("api")]
+public class SlackCommands : ControllerBase
 {
-    [ApiController]
-    [Route("api")]
-    public class SlackCommands : ControllerBase
+    public IRepository<SlackPost> Posts { get; }
+    public SlackCommands(IRepository<SlackPost> posts)
     {
-        public IRepository<SlackPost> Posts { get; }
-        public SlackCommands(IRepository<SlackPost> posts)
-        {
-            Posts = posts;  
-        }
-
-        [HttpPost("CreatePost")]
-        public async Task<string> Post([FromForm]PostRequest request)
-        {
-            //var newPost = new SlackPost();
-            //newPost.text = request.text;
-
-            //await Posts.UpdateAsync(newPost);
-
-            return $"'{request.text}' - Thank you, your post has been received!";
-        }
+        Posts = posts;  
     }
 
-    public class EventsRequest
+    [HttpPost("CreatePost")]
+    public async Task<string> Post([FromForm]SlackPost request)
     {
-        public string? token { get; set; }
-        public string? challenge { get; set; }
-        public string? type { get; set; }
+        SaveNewPost(request);
+
+        return $"'{request.text}' - Thank you, your post has been received!";
     }
 
-    public class PostRequest
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public async Task SaveNewPost(SlackPost request)
     {
-        public string? text { get; set; }
-    }
+        SlackPost newPost = request;
+        string[] parseRequest = request.text.Split(' ', 2);
+        newPost.SiteName = parseRequest[0];
+        newPost.PostType = parseRequest[1].Split(' ', 2)[0];
+        newPost.text = parseRequest[1].Split(' ', 2)[1];
 
+        Posts.UpdateAsync(newPost);
+    }
 }

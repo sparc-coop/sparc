@@ -1,46 +1,19 @@
 ﻿@page "/"
-<PageTitle>Index</PageTitle>
-
-<nav>
-    <div class="logo">
-        <img src="./images/icons/Logo.png" />
-    </div>
-    <div class="nav-links-wrapper">
-        <div class="nav-link">
-            <a href="#">Home</a>
-        </div>
-        <div class="nav-link">
-            <a href="/bloglist">Resources</a>
-        </div>
-        <div class="nav-link">
-            <a href="/projectlist">Projects</a>
-        </div>
-        <div class="nav-link">
-            <a href="/contact">Contact</a>
-        </div>
-    </div>
-    <div class="community-join">
-        <div class="cta-flex">
-            <div class="profile-pics-wrapper">
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
-                </div>
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
-                </div>
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
-                </div>
-            </div>
-            <div>
-                <button>Join community</button>
-            </div>
-        </div>
-    </div>
-</nav>
+<PageTitle>Sparc</PageTitle>
 
 <div class="homepage">
     <section class="home-hero">
+        <div class="micro-post">
+            @if(PostList != null)
+            {
+                 @foreach(var item in PostList)
+                {
+                    <p>
+                        @item.Text
+                    </p>
+                }
+            }
+        </div>
         <div class="container">
             <div class="header center">
                 <h1>Striving for a world where <span class="invert">startups</span> are owned by those who <span class="invert">built it</span></h1>
@@ -105,7 +78,7 @@
 
     <section class="values">
         <div class="container">
-            <div class="section-tag value-tag">
+            <div class="section-tag values-tag">
                 <p class="subtitle-medium">Our Core Values</p>
             </div>
             <div class="header">
@@ -139,7 +112,7 @@
                 <div class="left">
                     <div class="section-tag project-tag"><p class="subtitle-medium">Sparc Projects</p></div>
                     <h5>To put this belief into practice, we have self funded a few initial startups, which, once profitable will be able to continue to fund following startups through to their own profitability.</h5>
-                    <button>View All Projects <img src="images/icons/Icon Right.svg" /></button>
+                    <a href="/projectlist">View All Projects <img src="images/icons/Icon Right.svg" /></a>
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
@@ -237,7 +210,11 @@
         <div class="container">
             <div class="header">
                 <div class="section-tag community-tag"><p class="subtitle-medium">Sparc Community</p></div>
-                <h5 class="subtitle-large">Our projects are just one way we plan to combat this issue within the startup world, but another way is to share information, process, resources and more with individuals and companies who align with our values and our goals.</h5>
+                <h5 class="subtitle-large">
+                    Our projects are just one way we plan to combat this issue within the startup world, 
+                    but another way is to share information, process, resources and more with individuals and 
+                    companies who align with our values and our goals.
+                </h5>
             </div>
 
             <div class="card-wrapper">
@@ -297,65 +274,25 @@
     <section class="resources">
         <div class="container">
             <div class="header">
-                <div class="section-tag recourses-tag"><p class="subtitle-medium">Sparc Resources</p></div>
-                <h5 class="subtitle-large semi-bold">Our projects are just one way we plan to combat this issue within the startup world, but another way is to share information, process, resources and more with individuals and companies who align with our values and our goals.</h5>
+                <div class="section-tag resources-tag"><p class="subtitle-medium">Sparc Resources</p></div>
+                <h5 class="subtitle-large semi-bold">
+                    Our projects are just one way we plan to combat this issue within the startup world, 
+                    but another way is to share information, process, resources and more with individuals 
+                    and companies who align with our values and our goals.
+                </h5>
             </div>
-
-            <div class="blog-wrapper">
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <BlogPartial />
         </div>
     </section>
 </div>
 
 
 @code {
-    
+    public List<SlackPost> PostList = new List<SlackPost>();
+
     protected override async Task OnInitializedAsync()
     {
-        //await Api.GetSlackPostsAsync(); 
+        var list = await Api.GetSlackPostsAsync("/post");
+        PostList = list.ToList();
     }
 }

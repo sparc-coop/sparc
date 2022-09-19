@@ -37,6 +37,10 @@
     }
 
     .project-list-wrapper {
+        .container {
+            padding: 0 30px;
+        }
+
         .list-wrapper {
             .filters {
                 display: flex;

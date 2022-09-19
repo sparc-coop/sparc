@@ -10,23 +10,51 @@
         "tags": [
           "GetSlackPosts"
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlackPost"
+                  }
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlackPost"
+                  }
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "string"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SlackPost"
+                  }
                 }
               }
             }
@@ -45,13 +73,50 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "PostId": {
+                    "type": "string"
+                  },
+                  "user_name": {
+                    "type": "string"
+                  },
                   "text": {
+                    "type": "string"
+                  },
+                  "command": {
+                    "type": "string"
+                  },
+                  "project_tag": {
+                    "type": "string"
+                  },
+                  "Timestamp": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "Id": {
                     "type": "string"
                   }
                 }
               },
               "encoding": {
+                "PostId": {
+                  "style": "form"
+                },
+                "user_name": {
+                  "style": "form"
+                },
                 "text": {
+                  "style": "form"
+                },
+                "command": {
+                  "style": "form"
+                },
+                "project_tag": {
+                  "style": "form"
+                },
+                "Timestamp": {
+                  "style": "form"
+                },
+                "Id": {
                   "style": "form"
                 }
               }
@@ -84,6 +149,44 @@
     }
   },
   "components": {
+    "schemas": {
+      "SlackPost": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "postId": {
+            "type": "string",
+            "nullable": true
+          },
+          "user_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "text": {
+            "type": "string",
+            "nullable": true
+          },
+          "command": {
+            "type": "string",
+            "nullable": true
+          },
+          "project_tag": {
+            "type": "string",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "securitySchemes": {
       "bearer": {
         "type": "http",

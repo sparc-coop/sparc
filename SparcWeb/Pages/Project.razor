@@ -1,4 +1,4 @@
-﻿@page "/Project"
+﻿@page "/Project/{Title}"
 
 <div class="project-page">
     <section class="hero-header">
@@ -24,7 +24,7 @@
                         </div>
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
-                        </div>\s
+                        </div>
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
@@ -162,53 +162,12 @@
                 <h3 class="subtitle-large semi-bold">Related Blogs</h3>
                 <p class="subtitle-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
             </div>
-
-            <div class="blog-wrapper">
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Laptop.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">#Design</button>
-                        <button class="tag btn-small">#Productivity</button>
-                    </div>
-                    <div>
-                        <p class="title-2">
-                            Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements.
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <BlogPartial />
         </div>
     </section>
 </div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+}
