@@ -29,6 +29,8 @@
 }
 
 //fonts
+
+//Neue Haas Grotesk Display Pro
 @font-face {
     font-family: 'NeueHaasDisplayThin';
     font-weight: 100;
@@ -99,4 +101,17 @@
     font-family: 'NeueHaasDisplayBlackItalic';
     font-weight: 900;
     src: url(wwwroot/fonts/NeueHaasDisplayBlackItalic.ttf) format('truetype');
+}
+
+//IBM Plex Sans
+@font-face {
+    font-family: 'IBMPlexSans-Medium';
+    font-weight: 500;
+    src: url(wwwroot/fonts/IBMPlexSans-Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-MediumItalic';
+    font-weight: 500;
+    src: url(wwwroot/fonts/IBMPlexSans-MediumItalic.ttf) format('truetype');
 }

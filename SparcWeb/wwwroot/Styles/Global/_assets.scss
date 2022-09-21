@@ -99,6 +99,8 @@ nav {
 
     .logo {
         flex: 1;
+        margin-right: 10px;
+
         img {
             max-width: 114px;
         }
@@ -111,25 +113,40 @@ nav {
         background: white;
         border-radius: 100px;
         padding: 10px 24px;
+
+        a {
+            font-family: 'NeueHaasDisplayRoman';
+        }
     }
 
     .community-join {
         flex: 1;
 
-        .profile-pic {
-            margin-right: 12px;
-            max-width: 14px;
-            max-height: 20px;
+        .profile-pics-wrapper {
+            margin-right: 10px;
+            margin-left: 20px;
 
-            img {
-                max-width: 24px;
-                max-height: 24px;
+            .profile-pic {
+                margin-right: 12px;
+                max-width: 14px;
+                max-height: 20px;
+
+                img {
+                    max-width: 24px;
+                    max-height: 24px;
+                }
             }
         }
 
+
         button {
+            padding: 10px 24px;
             background: $peach-500;
             border: none;
+            font-family: 'NeueHaasDisplayMedium';
+            font-size: 14px;
+            font-style: normal;
+            text-align: center;
         }
     }
 }
@@ -154,12 +171,12 @@ nav {
             margin-bottom: 12px;
 
             .tag {
-                border: 1px solid var(--primary-300);
+                border: 1px solid rgba(104,105,110, 0.5); //$grey-500 50% opacity
                 border-radius: 100px;
                 box-shadow: $box-shadow-md;
                 color: var(--primary-900);
                 background: white;
-                font-weight: 450;
+                font-weight: 400;
             }
         }
     }
@@ -287,7 +304,7 @@ nav {
 
 .resources {
     .header {
-        margin-bottom: 54px;
+        margin-bottom: 190px;
         max-width: 50%;
 
         .resources-tag {
