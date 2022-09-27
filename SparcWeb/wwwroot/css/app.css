@@ -1,7 +1,7 @@
 ﻿.container {
   max-width: 1480px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
 }
 
 section {
@@ -231,9 +231,11 @@ nav .community-join button {
   background: #F2EDDF;
   border-radius: 24px;
   padding: 48px 40px 40px;
+}
+.community .card-wrapper .community-card.badge {
   position: relative;
 }
-.community .card-wrapper .community-card .sparc-badge {
+.community .card-wrapper .community-card.badge .sparc-badge {
   position: absolute;
   left: 40px;
   top: -18px;
@@ -257,7 +259,8 @@ nav .community-join button {
   gap: 12px;
 }
 .community .card-wrapper .community-card .community-signup .community-join input {
-  padding: 16px 24px;
+  height: 48px;
+  padding: 12px 24px;
   background: white;
   border: 1px solid var(--primary-300);
   border-radius: 100px;
@@ -496,14 +499,11 @@ body .bold {
   color: var(--error-500);
 }
 .homepage .values .header {
+  width: 70%;
+  max-width: 592px;
   margin: 0 auto;
   margin-bottom: 80px;
   text-align: center;
-  max-width: 60%;
-  /*            h2 {
-                  font-family: 'NeueHaasDisplayMedium';
-              }
-  */
 }
 .homepage .values .card-wrapper {
   width: 100%;
@@ -512,11 +512,11 @@ body .bold {
   display: flex;
   justify-content: center;
   gap: 32px;
-  margin-bottom: 200px;
+  flex-wrap: wrap;
   text-align: center;
 }
 .homepage .values .card-wrapper .card-value {
-  max-width: 384px;
+  width: 384px;
   background: white;
   padding: 56px 40px 40px;
   border-radius: 24px;
@@ -529,13 +529,15 @@ body .bold {
 }
 .homepage .values .project-wrapper {
   max-width: 1216px;
+  padding-top: 100px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   gap: 100px;
+  flex-wrap: wrap;
 }
 .homepage .values .project-wrapper .left {
-  width: 1000px;
+  width: 592px;
   position: relative;
 }
 .homepage .values .project-wrapper .left h5.subtitle-large {
@@ -554,14 +556,20 @@ body .bold {
 .homepage .values .project-wrapper .left a img {
   margin-left: 10px;
 }
+.homepage .values .project-wrapper .right {
+  width: 520px;
+  margin: 0 auto;
+}
 .homepage .values .project-wrapper .right .card-wrapper {
   margin-bottom: 0px;
   text-align: left;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 32px;
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card {
+  width: 520px;
   margin-bottom: 0px;
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content .image-wrapper {
@@ -604,6 +612,7 @@ body .bold {
   max-width: 1216px;
   margin: 0 auto;
   justify-content: center;
+  flex-wrap: wrap;
 }
 .homepage .community .card-wrapper .cta-flex {
   display: block;
@@ -611,6 +620,10 @@ body .bold {
 }
 .homepage .community .card-wrapper p.subtitle-medium {
   line-height: 28px;
+}
+.homepage .community .card-wrapper .community-card {
+  min-height: 418px;
+  width: 592px;
 }
 .homepage .community .card-wrapper .community-signup p {
   line-height: 21px;

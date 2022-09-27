@@ -4,7 +4,7 @@
 .container {
     max-width: 1480px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
 }
 
 section {
@@ -276,12 +276,15 @@ nav {
             background: $yellow-100;
             border-radius: 24px;
             padding: 48px 40px 40px;
-            position: relative;
 
-            .sparc-badge {
-                position: absolute;
-                left: 40px;
-                top: -18px;
+            &.badge {
+                position: relative;
+
+                .sparc-badge {
+                    position: absolute;
+                    left: 40px;
+                    top: -18px;
+                }
             }
 
             .cta-flex {
@@ -308,7 +311,8 @@ nav {
                     gap: 12px;
 
                     input {
-                        padding: 16px 24px;
+                        height: 48px;
+                        padding: 12px 24px;
                         background: white;
                         border: 1px solid var(--primary-300);
                         border-radius: 100px;

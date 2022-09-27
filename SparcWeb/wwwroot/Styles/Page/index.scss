@@ -137,14 +137,11 @@
         }
 
         .header {
+            width: 70%;
+            max-width: 592px;
             margin: 0 auto;
             margin-bottom: 80px;
             text-align: center;
-            max-width: 60%;
-            /*            h2 {
-                font-family: 'NeueHaasDisplayMedium';
-            }
-*/
         }
 
         .card-wrapper {
@@ -154,11 +151,11 @@
             display: flex;
             justify-content: center;
             gap: 32px;
-            margin-bottom: 200px;
+            flex-wrap: wrap;
             text-align: center;
 
             .card-value {
-                max-width: 384px;
+                width: 384px;
                 background: white;
                 padding: 56px 40px 40px;
                 border-radius: 24px;
@@ -175,13 +172,15 @@
 
         .project-wrapper {
             max-width: 1216px;
+            padding-top: 100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             gap: 100px;
+            flex-wrap: wrap;
 
             .left {
-                width: 1000px;
+                width: 592px;
                 position: relative;
 
                 h5.subtitle-large {
@@ -205,14 +204,19 @@
             }
 
             .right {
+                width: 520px;
+                margin: 0 auto;
+
                 .card-wrapper {
                     margin-bottom: 0px;
                     text-align: left;
                     display: flex;
                     flex-direction: column;
+                    justify-content: center;
                     gap: 32px;
 
                     .project-card {
+                        width: 520px;
                         margin-bottom: 0px;
 
                         .card-content {
@@ -271,6 +275,7 @@
             max-width: 1216px;
             margin: 0 auto;
             justify-content: center;
+            flex-wrap: wrap;
 
             .cta-flex {
                 display: block;
@@ -279,6 +284,11 @@
 
             p.subtitle-medium {
                 line-height: 28px;
+            }
+
+            .community-card {
+                min-height: 418px;
+                width: 592px;
             }
 
             .community-signup {
