@@ -1,31 +1,59 @@
-﻿
-.title-2 {
-    font-size: 24px;
-}
+﻿body {
+    font-family: 'NeueHaasDisplayRoman';
+    font-weight: 400;
 
-.subtitle-small {
-    font-size: 14px;
-}
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'NeueHaasDisplayMedium';
+    }
 
-.subtitle-medium {
-    font-size: 20px;
-}
+    .title-1 {
+        font-size: 68px;
+        line-height: 120%;
+    }
 
-.subtitle-large {
-    font-size: 32px;
-}
+    .title-2 {
+        font-size: 24px;
+    }
 
-.title-1{
-    font-size: 68px;
-    line-height: 120%;
-}
+    .subtitle-small {
+        font-size: 14px;
+    }
 
-.bold{
-    font-weight: 600;
-}
+    .subtitle-medium {
+        font-size: 20px;
+    }
 
-.semi-bold{
-    font-weight: 500;
+    .subtitle-large {
+        font-size: 32px;
+    }
+
+    p, a, button {
+        font-family: 'NeueHaasDisplayRoman';
+    }
+
+    .label, input, button {
+        font-size: 16px;
+    }
+
+    .link-small {
+        font-size: 14px;
+    }
+
+    .link-medium {
+        font-size: 20px;
+    }
+
+    .link-large {
+        font-size: 32px;
+    }
+
+    .semi-bold {
+        font-weight: 500;
+    }
+
+    .bold {
+        font-weight: 600;
+    }
 }
 
 //fonts

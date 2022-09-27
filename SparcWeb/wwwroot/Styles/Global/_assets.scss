@@ -1,5 +1,22 @@
 ﻿@import "_variables.scss";
 
+//containers & sections
+.container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding-top: 160px;
+    padding-bottom: 200px;
+}
+
+section:last-of-type {
+    padding-bottom: 100px;
+}
+
+//tags
 .section-tag {
     padding: 10px 16px;
     box-shadow: -10px 2px 4px rgba(16, 45, 71, 0.02);
@@ -8,7 +25,7 @@
     margin-bottom: 32px;
 }
 
-.value-tag {
+.values-tag {
     background: white;
 
 
@@ -34,6 +51,57 @@
     }
 }
 
+.blog-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    .tag {
+        border: 1px solid rgba(104,105,110, 0.5); //$grey-500 50% opacity
+        border-radius: 100px;
+        box-shadow: $box-shadow-md;
+        color: var(--primary-900);
+        background: white;
+        font-weight: 400;
+    }
+}
+.project-card {
+    .card-tags-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .card-tags {
+            button {
+                border: none;
+                color: $purple-500;
+                background: var(--secondary-500);
+                border-radius: 100px;
+            }
+
+            button:hover {
+                background: var(--secondary-300);
+            }
+        }
+
+        .card-github {
+            button {
+                padding: 4px 14px 3px 14px;
+                background: $white;
+                border: 1px solid $grey-100;
+                border-radius: 100px;
+                opacity: 0.75;
+
+                img {
+                    width: 15px;
+                    opacity: 0.75;
+                }
+            }
+        }
+    }
+}
+
+//buttons
 button {
     background: var(--grey-900);
     border-radius: 100px;
@@ -52,6 +120,7 @@ button {
     line-height: 16px;
 }
 
+//cta
 .cta-box {
     padding: 24px 32px;
     background: $yellow-500;
@@ -63,9 +132,8 @@ button {
     .box-header {
         margin-bottom: 16px;
     }
-
-    
 }
+
 .cta-flex {
     display: flex;
     align-items: center;
@@ -90,6 +158,7 @@ button {
     }
 }
 
+//nav
 nav {
     display: flex;
     justify-content: space-between;
@@ -151,42 +220,13 @@ nav {
     }
 }
 
-//Blog card x3
-.blog-wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 32px;
-
-    .blog-card {
-        .blog-image {
-            border-radius: 12px;
-            margin-bottom: 28px;
-        }
-
-        .blog-tags {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 12px;
-
-            .tag {
-                border: 1px solid rgba(104,105,110, 0.5); //$grey-500 50% opacity
-                border-radius: 100px;
-                box-shadow: $box-shadow-md;
-                color: var(--primary-900);
-                background: white;
-                font-weight: 400;
-            }
-        }
-    }
-}
-
+//hero
 .hero-header {
     padding: 138px 0;
     background: $yellow-100;
 }
 
+//Projects
 .project-card {
     background: white;
     padding: 32px;
@@ -214,22 +254,13 @@ nav {
 
     .card-tags-wrapper {
         margin-top: 20px;
-
-        button {
-            border: none;
-            color: $purple-500;
-            background: var(--secondary-500);
-            border-radius: 100px;
-        }
-
-        button:hover {
-            background: var(--secondary-300);
-        }
     }
 }
 
 //Community Component
 .community {
+    padding-bottom: 100px;
+
     .header {
         margin-bottom: 56px;
         max-width: 50%;
@@ -298,18 +329,6 @@ nav {
             .card-header {
                 margin-top: 72px;
             }
-        }
-    }
-}
-
-.resources {
-    .header {
-        margin-bottom: 190px;
-        max-width: 50%;
-
-        .resources-tag {
-            background: $peach-100;
-            color: $peach-500;
         }
     }
 }

@@ -1,15 +1,6 @@
 ﻿@import "../Global/_variables.scss";
 
 .homepage {
-    //fonts
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'NeueHaasDisplayMedium';
-    }
-
-    p, p.subtitle-medium, a, button {
-        font-family: 'NeueHaasDisplayRoman';
-    }
-
     .center {
         text-align: center;
     }
@@ -28,21 +19,24 @@
         }
 
         .header {
-            width: 64%;
+            width: 100%;
             margin: 0 auto;
             margin-bottom: 72px;
 
             h1 {
+                width: 75%;
+                max-width: 1100px;
+                margin: 0 auto;
                 margin-bottom: 16px;
                 font-size: 96px;
                 line-height: 115px;
             }
 
             p.title-2 {
-                width: 64%;
+                width: 70%;
+                max-width: 592px;
                 margin: 0 auto;
                 font-family: 'IBMPlexSans-Medium';
-                font-size: 24px;
                 line-height: 38px;
             }
 
@@ -66,9 +60,12 @@
                 line-height: 17px;
             }
 
-            button {
-                font-size: 16px;
-                line-height: 100%;
+            .cta-flex {
+                justify-content: space-between;
+
+                button {
+                    line-height: 100%;
+                }
             }
         }
 
@@ -99,7 +96,8 @@
         padding-bottom: 112px;
 
         &-wrapper {
-            max-width: 40%;
+            width: 70%;
+            max-width: 592px;
             margin: 0 auto;
 
             &:first-child {
@@ -112,10 +110,8 @@
         }
 
         &-content {
-            h5 {
+            h5.subtitle-large {
                 margin-bottom: 48px;
-                font-family: 'NeueHaasDisplayMedium';
-                font-size: 32px;
                 line-height: 100%;
             }
         }
@@ -145,10 +141,10 @@
             margin-bottom: 80px;
             text-align: center;
             max-width: 60%;
-
-            h2 {
+            /*            h2 {
                 font-family: 'NeueHaasDisplayMedium';
             }
+*/
         }
 
         .card-wrapper {
@@ -178,7 +174,6 @@
         }
 
         .project-wrapper {
-            width: 100%;
             max-width: 1216px;
             margin: 0 auto;
             display: flex;
@@ -189,9 +184,8 @@
                 width: 1000px;
                 position: relative;
 
-                h5 {
-                    margin-bottom: 54px;
-                    font-size: 32px;
+                h5.subtitle-large {
+                    margin-bottom: 55px;
                     line-height: 42px;
                 }
 
@@ -249,72 +243,9 @@
                                 font-size: 14px;
                                 line-height: 18px;
                             }
-
-                            .btn-small {
-                                font-family: 'NeueHaasDisplayRomanItalic';
-                            }
-
-                            .card-tags-wrapper {
-                                display: flex;
-                                justify-content: space-between;
-
-                                .card-github {
-                                    button {
-                                        padding: 2px 14px 0px 14px;
-                                        background: transparent;
-                                        border: 1px solid $grey-100;
-                                        border-radius: 100px;
-                                        opacity: 0.75;
-
-                                        img {
-                                            width: 15px;
-                                            opacity: 0.75;
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
-                /*.project-card {
-                background: white;
-                padding: 32px;
-                border-radius: 24px;
-                margin-bottom: 32px;
-
-                .image-wrapper {
-                    margin-bottom: 24px;
-
-                    img {
-                        width: 100%;
-                    }
-                }
-
-                .card-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 8px;
-
-                    .image-wrapper {
-                        margin-bottom: 0;
-                    }
-                }
-
-                .card-tags-wrapper {
-                    margin-top: 20px;
-
-                    button {
-                        border: none;
-                        color: $purple-500;
-                        background: var(--secondary-500);
-                    }
-
-                    button:hover {
-                        background: var(--secondary-300);
-                    }
-                }
-            }*/
 
                 .card:last-child {
                     margin-bottom: 0;
@@ -324,33 +255,45 @@
     }
 
     .community {
+        padding-bottom: 100px;
+
+        .header {
+            max-width: 1216px;
+            margin: 0 auto;
+            margin-bottom: 55px;
+
+            h5.subtitle-large {
+                max-width: 592px;
+            }
+        }
+
         .card-wrapper {
+            max-width: 1216px;
+            margin: 0 auto;
+            justify-content: center;
+
             .cta-flex {
                 display: block;
                 padding-left: 10px;
             }
 
             p.subtitle-medium {
-                font-size: 20px;
                 line-height: 28px;
             }
 
             .community-signup {
                 p {
-                    font-size: 16px;
                     line-height: 21px;
                 }
 
                 input {
                     border: $grey-300;
-                    font-size: 16px;
                     line-height: 16px;
                     color: $grey-500;
                     opacity: 0.5;
                 }
 
                 button {
-                    font-size: 16px;
                     line-height: 16px;
                 }
             }
@@ -358,17 +301,49 @@
     }
 
     .resources {
+        max-width: 100%;
+        padding-top: 100px;
         padding-bottom: 290px;
 
         .header {
-            max-width: 592px;
-            margin-bottom: 54px;
-            max-width: 50%;
+            max-width: 1216px;
+            margin: 0 auto;
+            margin-bottom: 55px;
+
+            h5.subtitle-large {
+                max-width: 592px;
+            }
         }
 
         &-tag {
             background: $peach-100;
             color: $peach-500;
+        }
+
+        .blog-wrapper {
+            width: 100%;
+            max-width: 1216px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 32px;
+
+            .blog-card {
+                width: 100%;
+                max-width: 384px;
+
+                .blog-image {
+                    width: 100%;
+                    border-radius: 12px;
+                    margin-bottom: 28px;
+
+                    img {
+                        max-width: 384px;
+                    }
+                }
+            }
         }
     }
 }
