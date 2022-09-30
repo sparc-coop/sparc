@@ -143,16 +143,17 @@ nav {
                     position: fixed;
                     overflow: hidden;
                     width: 100vw;
-                    height: 100vh;
+                    height: calc(100vh - 96px);
 
                     .menu {
                         display: block;
-                        position: fixed;
+                        overflow: scroll;
+                        height: 100%;
                     }
 
                     .community-join {
-                        display: block;
-                        background: $yellow-100;
+                       background: $yellow-100;
+                       overflow: hidden;
                     }
                 }
             }
@@ -171,6 +172,7 @@ nav {
             align-items: center;
             background: $white;
             z-index: 50;
+            overflow: hidden;
 
             .logo {
                 padding: 18px 25px;
@@ -183,8 +185,7 @@ nav {
 
             .menu {
                 width: 100vw;
-                overflow: hidden;
-                padding-top: 90px;
+                padding: 96px 0;
                 background: $white;
                 text-align: center;
 

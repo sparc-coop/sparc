@@ -460,15 +460,16 @@ nav .nav-mobile {
     position: fixed;
     overflow: hidden;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 96px);
   }
   nav input.menu-toggle:checked ~ .nav-mobile .menu {
     display: block;
-    position: fixed;
+    overflow: scroll;
+    height: 100%;
   }
   nav input.menu-toggle:checked ~ .nav-mobile .community-join {
-    display: block;
     background: #F2EDDF;
+    overflow: hidden;
   }
   nav label.menu-toggle {
     background: transparent;
@@ -481,6 +482,7 @@ nav .nav-mobile {
     align-items: center;
     background: #FFFFFF;
     z-index: 50;
+    overflow: hidden;
   }
   nav .nav-mobile .logo {
     padding: 18px 25px;
@@ -491,8 +493,7 @@ nav .nav-mobile {
   }
   nav .nav-mobile .menu {
     width: 100vw;
-    overflow: hidden;
-    padding-top: 90px;
+    padding: 96px 0;
     background: #FFFFFF;
     text-align: center;
   }
