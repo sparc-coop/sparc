@@ -133,57 +133,6 @@ button {
   font-style: italic;
 }
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 32px 48px;
-  background: #F2EDDF;
-}
-nav .logo {
-  flex: 1;
-  margin-right: 10px;
-}
-nav .logo img {
-  max-width: 114px;
-}
-nav .nav-links-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  background: white;
-  border-radius: 100px;
-  padding: 10px 24px;
-}
-nav .nav-links-wrapper a {
-  font-family: "NeueHaasDisplayRoman";
-}
-nav .community-join {
-  flex: 1;
-}
-nav .community-join .profile-pics-wrapper {
-  margin-right: 10px;
-  margin-left: 20px;
-}
-nav .community-join .profile-pics-wrapper .profile-pic {
-  margin-right: 12px;
-  max-width: 14px;
-  max-height: 20px;
-}
-nav .community-join .profile-pics-wrapper .profile-pic img {
-  max-width: 24px;
-  max-height: 24px;
-}
-nav .community-join button {
-  padding: 10px 24px;
-  background: #FF756A;
-  border: none;
-  font-family: "NeueHaasDisplayMedium";
-  font-size: 14px;
-  font-style: normal;
-  text-align: center;
-}
-
 .hero-header {
   padding: 138px 0;
   background: #F2EDDF;
@@ -391,6 +340,329 @@ body .bold {
   font-weight: 500;
   src: url(../fonts/IBMPlexSans-MediumItalic.ttf) format("truetype");
 }
+nav .nav-desktop {
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #F2EDDF;
+}
+nav .nav-desktop .logo {
+  flex: 1;
+  margin-right: 10px;
+}
+nav .nav-desktop .logo img {
+  max-width: 114px;
+}
+nav .nav-desktop .nav-links-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background: white;
+  border-radius: 100px;
+  padding: 10px 24px;
+}
+nav .nav-desktop .nav-links-wrapper a {
+  font-family: "NeueHaasDisplayRoman";
+}
+nav .nav-desktop .community-join {
+  flex: 1;
+}
+nav .nav-desktop .community-join .profile-pics-wrapper {
+  margin-right: 10px;
+  margin-left: 20px;
+}
+nav .nav-desktop .community-join .profile-pics-wrapper .profile-pic {
+  margin-right: 12px;
+  max-width: 14px;
+  max-height: 20px;
+}
+nav .nav-desktop .community-join .profile-pics-wrapper .profile-pic img {
+  max-width: 24px;
+  max-height: 24px;
+}
+nav .nav-desktop .community-join button {
+  padding: 10px 24px;
+  background: #FF756A;
+  border: none;
+  font-family: "NeueHaasDisplayMedium";
+  font-size: 14px;
+  font-style: normal;
+  text-align: center;
+}
+nav .menu-toggle {
+  display: none;
+}
+nav input.menu-toggle {
+  display: none;
+}
+nav .nav-mobile {
+  display: none;
+}
+@media only screen and (max-width: 760px) {
+  nav {
+    position: relative;
+    overflow: hidden;
+  }
+  nav .nav-desktop {
+    display: none;
+  }
+  nav .menu-toggle {
+    display: inline-block;
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    z-index: 60;
+  }
+  nav input.menu-toggle {
+    display: none;
+  }
+  nav input.menu-toggle:not(:checked) {
+    background: #F2EDDF;
+  }
+  nav input.menu-toggle:not(:checked) ~ label {
+    position: fixed;
+  }
+  nav input.menu-toggle:not(:checked) ~ label span:last-child {
+    display: none;
+  }
+  nav input.menu-toggle:not(:checked) ~ .nav-mobile {
+    width: 100vw;
+    background: #F2EDDF;
+    position: fixed;
+    z-index: 20;
+  }
+  nav input.menu-toggle:not(:checked) ~ .nav-mobile .menu {
+    display: none;
+  }
+  nav input.menu-toggle:not(:checked) ~ .nav-mobile .community-join {
+    display: none;
+  }
+  nav input.menu-toggle:not(:checked) ~ .nav-mobile .community-join button {
+    display: none;
+  }
+  nav input.menu-toggle:checked {
+    background: #FFFFFF;
+  }
+  nav input.menu-toggle:checked ~ label {
+    position: fixed;
+    z-index: 60;
+  }
+  nav input.menu-toggle:checked ~ label span:first-child {
+    display: none;
+  }
+  nav input.menu-toggle:checked ~ .nav-mobile {
+    background: #FFFFFF;
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
+  nav input.menu-toggle:checked ~ .nav-mobile .menu {
+    display: block;
+    position: fixed;
+  }
+  nav input.menu-toggle:checked ~ .nav-mobile .community-join {
+    display: block;
+    background: #F2EDDF;
+  }
+  nav label.menu-toggle {
+    background: transparent;
+  }
+  nav label.menu-toggle i {
+    font-size: 20px;
+  }
+  nav .nav-mobile {
+    display: block;
+    align-items: center;
+    background: #FFFFFF;
+    z-index: 50;
+  }
+  nav .nav-mobile .logo {
+    padding: 18px 25px;
+    flex: 1;
+  }
+  nav .nav-mobile .logo img {
+    max-width: 93px;
+  }
+  nav .nav-mobile .menu {
+    width: 100vw;
+    overflow: hidden;
+    padding-top: 90px;
+    background: #FFFFFF;
+    text-align: center;
+  }
+  nav .nav-mobile .menu li {
+    margin-bottom: 100px;
+  }
+  nav .nav-mobile .menu li a {
+    font-family: "NeueHaasDisplayRoman";
+    font-size: 24px;
+  }
+  nav .nav-mobile .community-join {
+    overflow: hidden;
+    width: 100vw;
+    padding: 25px 18px;
+    background: #F2EDDF;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+  }
+  nav .nav-mobile .community-join button {
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: "NeueHaasDisplayThin";
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+  nav .nav-mobile .community-join button.log-in {
+    background: transparent;
+    border: 1px solid #FF756A;
+    color: #FF756A;
+  }
+  nav .nav-mobile .community-join button.join-community {
+    background: #FF756A;
+    border: none;
+  }
+}
+
+/*       &.mobile {
+            width: 100%;
+            height: 50px;
+            display: block;
+            padding: 15px 25px 15px 20px;
+            background: $yellow-100;
+            position: fixed;
+            top: 0;
+            z-index: 50;
+
+            .logo {
+                position: relative;
+                width: 50px;
+                z-index: 50;
+            }
+
+            label.menu-toggle {
+                background: $yellow-100;
+                position: absolute;
+                top: 15px;
+                right: 25px;
+                z-index: 50;
+
+                i {
+                    font-size: 20px;
+                }
+            }
+
+            input.menu-toggle {
+                display: none;
+
+                &:not(:checked) {
+                    & ~ label span:last-child {
+                        display: none;
+                    }
+
+                    & ~ .nav-menu {
+                        background: $yellow-100;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        width: 0;
+                        height: 0;
+                        z-index: 20;
+                    }
+
+                    & ~ .nav-menu ul {
+                        margin-top: 40px;
+                    }
+                }
+
+                &:checked {
+                    & ~ label span:first-child {
+                        display: none;
+                    }
+
+                    & ~ .menu {
+                        background: $yellow-100;
+                        float: right;
+                        width: 100vw;
+                        height: 100vh;
+                    }
+
+                    & ~ label {
+                        position: fixed;
+                    }
+                }
+            }
+               .menu {
+                overflow: hidden;
+                margin: 0px -25px 0 -20px;
+                padding-top: 25px;
+                display: block;
+                background: $background;
+                position: fixed;
+                top: 40px;
+                right: 25px;
+                z-index: 20;
+                transition: width 600ms, height 600ms;
+
+                ul {
+                    background: $background;
+                    overflow: hidden;
+
+                    li {
+                        width: 100%;
+                        margin-bottom: 8px;
+
+                        &:active {
+                            background: $secondary-300;
+                        }
+
+                        a.log-in {
+                            width: 80%;
+                            min-width: 200px;
+                            margin: 0px 0px 6px 45px;
+                            padding: 5px 20px;
+                            border: 1px solid $gray;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            line-height: 24px;
+                            text-decoration: none;
+                            text-align: center;
+                            transition: color 0ms, background 300ms ease-in-out;
+
+                            &:hover {
+                                color: $gray;
+                                cursor: pointer;
+                                transform: scale(103%);
+                            }
+                        }
+
+                        a.get-started {
+                            width: 80%;
+                            min-width: 200px;
+                            margin: 6px 0px 0px 45px;
+                            padding: 5px 20px;
+                            border: 1px solid $primary-500;
+                            font-size: 16px;
+                            line-height: 20px;
+                            text-align: center;
+                            transition: 200ms ease-in-out;
+
+                            &:hover {
+                                cursor: pointer;
+                                transform: scale(103%);
+                            }
+                        }
+                    }
+                }
+            }
+*/
 .homepage .center {
   text-align: center;
 }
@@ -561,6 +833,7 @@ body .bold {
   margin: 0 auto;
 }
 .homepage .values .project-wrapper .right .card-wrapper {
+  max-width: 1216px;
   margin-bottom: 0px;
   text-align: left;
   display: flex;
@@ -569,7 +842,7 @@ body .bold {
   gap: 32px;
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card {
-  width: 520px;
+  width: 100%;
   margin-bottom: 0px;
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content .image-wrapper {
@@ -675,6 +948,11 @@ body .bold {
 }
 .homepage .resources .blog-wrapper .blog-card .blog-image img {
   max-width: 384px;
+}
+@media only screen and (max-width: 760px) {
+  .homepage {
+    margin-top: 63px;
+  }
 }
 
 .project-list-page .hero-header {

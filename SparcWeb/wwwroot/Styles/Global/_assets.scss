@@ -158,68 +158,6 @@ button {
     }
 }
 
-//nav
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 32px 48px;
-    background: $yellow-100;
-
-    .logo {
-        flex: 1;
-        margin-right: 10px;
-
-        img {
-            max-width: 114px;
-        }
-    }
-
-    .nav-links-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-        background: white;
-        border-radius: 100px;
-        padding: 10px 24px;
-
-        a {
-            font-family: 'NeueHaasDisplayRoman';
-        }
-    }
-
-    .community-join {
-        flex: 1;
-
-        .profile-pics-wrapper {
-            margin-right: 10px;
-            margin-left: 20px;
-
-            .profile-pic {
-                margin-right: 12px;
-                max-width: 14px;
-                max-height: 20px;
-
-                img {
-                    max-width: 24px;
-                    max-height: 24px;
-                }
-            }
-        }
-
-
-        button {
-            padding: 10px 24px;
-            background: $peach-500;
-            border: none;
-            font-family: 'NeueHaasDisplayMedium';
-            font-size: 14px;
-            font-style: normal;
-            text-align: center;
-        }
-    }
-}
-
 //hero
 .hero-header {
     padding: 138px 0;
