@@ -251,6 +251,10 @@ body .subtitle-large {
 body p, body a, body button {
   font-family: "NeueHaasDisplayRoman";
 }
+body button {
+  text-align: center;
+  line-height: 100%;
+}
 body .label, body input, body button {
   font-size: 16px;
 }
@@ -901,14 +905,21 @@ nav .nav-mobile {
 .homepage .community .card-wrapper .community-signup p {
   line-height: 21px;
 }
-.homepage .community .card-wrapper .community-signup input {
+.homepage .community .card-wrapper .community-signup .community-join {
+  flex-wrap: wrap;
+}
+.homepage .community .card-wrapper .community-signup .community-join input {
+  width: 75%;
+  min-width: 200px;
   border: #7A7B7F;
   line-height: 16px;
   color: #68696E;
   opacity: 0.5;
 }
-.homepage .community .card-wrapper .community-signup button {
-  line-height: 16px;
+@media only screen and (max-width: 578px) {
+  .homepage .community .card-wrapper .community-signup .community-join input {
+    width: 100%;
+  }
 }
 .homepage .resources {
   max-width: 100%;

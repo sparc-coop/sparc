@@ -297,15 +297,23 @@
                     line-height: 21px;
                 }
 
-                input {
-                    border: $grey-300;
-                    line-height: 16px;
-                    color: $grey-500;
-                    opacity: 0.5;
-                }
+                .community-join {
+                    flex-wrap: wrap;
 
-                button {
-                    line-height: 16px;
+                    input {
+                        width: 75%;
+                        min-width: 200px;
+                        border: $grey-300;
+                        line-height: 16px;
+                        color: $grey-500;
+                        opacity: 0.5;
+                    }
+
+                    @media only screen and (max-width: 578px){
+                        input {
+                            width: 100%;
+                        }
+                    }
                 }
             }
         }
