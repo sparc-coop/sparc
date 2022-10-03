@@ -1187,6 +1187,9 @@ nav .nav-mobile {
   .homepage .mission {
     padding-bottom: 17px;
   }
+  .homepage .mission-wrapper {
+    width: 100%;
+  }
   .homepage .mission-icon {
     margin-bottom: 38px;
   }
