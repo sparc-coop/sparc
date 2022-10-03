@@ -47,6 +47,7 @@ section:last-of-type {
 }
 .resources-tag p {
   color: var(--primary-500);
+  color: #FF756A;
 }
 
 .blog-tags {
@@ -240,8 +241,8 @@ body h1, body h2, body h3, body h4, body h5, body h6, body .subtitle-large {
   font-family: "NeueHaasDisplayMedium";
 }
 body .title-1 {
-  font-size: 68px;
-  line-height: 120%;
+  font-size: 24px;
+  line-height: 140%;
 }
 body .title-2 {
   font-size: 24px;
@@ -282,9 +283,6 @@ body .bold {
 }
 @media only screen and (max-width: 760px) {
   body .title-1 {
-    font-size: 55px;
-  }
-  body .title-2 {
     font-size: 20px;
   }
   body .subtitle-small {
@@ -311,10 +309,7 @@ body .bold {
 }
 @media only screen and (max-width: 480px) {
   body .title-1 {
-    font-size: 48px;
-  }
-  body .title-2 {
-    font-size: 20px;
+    font-size: 16px;
   }
   body .subtitle-medium {
     font-size: 16px;
@@ -779,7 +774,7 @@ nav .nav-mobile {
   font-size: 96px;
   line-height: 115px;
 }
-.homepage .home-hero .header p.title-2 {
+.homepage .home-hero .header p.title-1 {
   width: 70%;
   max-width: 592px;
   margin: 0 auto;
@@ -937,12 +932,6 @@ nav .nav-mobile {
 .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content .image-wrapper img.live {
   width: 67px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .card-content h5 {
-  font-size: 24px;
-}
-.homepage .values .project-wrapper .right .card-wrapper .project-card .card-content p {
-  font-size: 14px;
-}
 .homepage .values .project-wrapper .right .card:last-child {
   margin-bottom: 0;
 }
@@ -1048,7 +1037,7 @@ nav .nav-mobile {
   .homepage .home-hero .header .invert {
     font-family: "NeueHaasDisplayBold";
   }
-  .homepage .home-hero .header p.title-2 {
+  .homepage .home-hero .header p.title-1 {
     font-family: "IBMPlexSans-SemiBold";
     line-height: 150%;
   }
@@ -1097,6 +1086,29 @@ nav .nav-mobile {
     margin: 0 auto;
     justify-content: center;
   }
+  .homepage .values .project-wrapper .right {
+    height: 426px;
+    width: 100%;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-bottom: 15px;
+    overflow: scroll;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: normal;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper:last-child {
+    padding-right: 40px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper .project-card:first-child {
+    margin-left: 40px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content {
+    width: 264px;
+  }
   .homepage .community {
     padding-top: 64px;
     padding-bottom: 64px;
@@ -1114,10 +1126,6 @@ nav .nav-mobile {
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
-  .homepage .community .card-wrapper .community-card.badge .card-header {
-    /*                            margin-top: 32px;
-    */
   }
   .homepage .community .card-wrapper .community-card .community-signup .community-join {
     justify-content: center;
@@ -1137,19 +1145,41 @@ nav .nav-mobile {
   }
   .homepage .resources {
     padding-top: 64px;
-    padding-bottom: 64px;
+    padding-bottom: 438px;
   }
   .homepage .resources p.title-2 {
     text-align: left;
   }
-  .homepage .resources .blog-card .blog-tags {
+  .homepage .resources .blog-wrapper {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding-bottom: 15px;
+    overflow: scroll;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: normal;
+  }
+  .homepage .resources .blog-wrapper:last-child {
+    padding-right: 40px;
+  }
+  .homepage .resources .blog-wrapper .blog-card {
+    width: 264px;
+  }
+  .homepage .resources .blog-wrapper .blog-card:first-child {
+    margin-left: 40px;
+  }
+  .homepage .resources .blog-wrapper .blog-card .blog-image {
+    width: 264px;
+  }
+  .homepage .resources .blog-wrapper .blog-card .blog-tags {
     justify-content: center;
   }
-  .homepage .resources .blog-card p.title-2 {
+  .homepage .resources .blog-wrapper .blog-card p.title-2 {
     text-align: center;
   }
 }
-@media only screen and (max-width: 760px) and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
   .homepage {
     margin-top: 63px;
   }
@@ -1165,9 +1195,8 @@ nav .nav-mobile {
     font-size: 48px;
     line-height: 120%;
   }
-  .homepage .home-hero .header p.title-2 {
+  .homepage .home-hero .header p.title-1 {
     width: 100%;
-    font-size: 16px;
   }
   .homepage .home-hero .cta-box {
     text-align: center;

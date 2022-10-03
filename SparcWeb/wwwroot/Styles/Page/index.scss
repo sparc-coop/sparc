@@ -25,7 +25,7 @@
                 line-height: 115px;
             }
 
-            p.title-2 {
+            p.title-1 {
                 width: 70%;
                 max-width: 592px;
                 margin: 0 auto;
@@ -219,14 +219,6 @@
                                     width: 67px;
                                 }
                             }
-
-                            h5 {
-                                font-size: 24px;
-                            }
-
-                            p {
-                                font-size: 14px;
-                            }
                         }
                     }
                 }
@@ -365,7 +357,7 @@
                     font-family: 'NeueHaasDisplayBold';
                 }
 
-                p.title-2 {
+                p.title-1 {
                     font-family: 'IBMPlexSans-SemiBold';
                     line-height: 150%;
                 }
@@ -429,6 +421,36 @@
                     margin: 0 auto;
                     justify-content: center;
                 }
+
+                .right {
+                    height: 426px;
+                    width: 100%;
+
+                    .card-wrapper {
+                        position: absolute;
+                        left: 0;
+                        width: 100%;
+                        padding-bottom: 15px;
+                        overflow: scroll;
+                        flex-wrap: nowrap;
+                        flex-direction: row;
+                        justify-content: normal;
+
+                        &:last-child {
+                            padding-right: 40px;
+                        }
+
+                        .project-card {
+                            &:first-child {
+                                margin-left: 40px;
+                            }
+
+                            .card-content {
+                                width: 264px;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -450,11 +472,6 @@
                             top: 0;
                             left: 50%;
                             transform: translate(-50%,-50%);
-                        }
-
-                        .card-header {
-                            /*                            margin-top: 32px;
-*/
                         }
                     }
 
@@ -484,91 +501,115 @@
 
         .resources {
             padding-top: 64px;
-            padding-bottom: 64px;
+            padding-bottom: 438px;
 
             p.title-2 {
                 text-align: left;
             }
 
-            .blog-card {
-                .blog-tags {
-                    justify-content: center;
+            .blog-wrapper {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                padding-bottom: 15px;
+                overflow: scroll;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                justify-content: normal;
+
+                &:last-child {
+                    padding-right: 40px;
                 }
 
-                p.title-2 {
+                .blog-card {
+                    width: 264px;
+
+                    &:first-child {
+                        margin-left: 40px;
+                    }
+
+                    .blog-image {
+                        width: 264px;
+                    }
+
+                    .blog-tags {
+                        justify-content: center;
+                    }
+
+                    p.title-2 {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        margin-top: 63px;
+
+        .home-hero {
+            padding-top: 32px;
+            padding-bottom: 60px;
+
+            .header {
+                margin-bottom: 32px;
+
+                h1 {
+                    width: 100%;
+                    font-size: 48px;
+                    line-height: 120%;
+                }
+
+                p.title-1 {
+                    width: 100%;
+                }
+            }
+
+            .cta-box {
+                text-align: center;
+                min-width: 200px;
+
+                .cta-flex {
+                    display: block;
                     text-align: center;
+
+                    .profile-pics-wrapper {
+                        justify-content: center;
+                        margin-bottom: 18px;
+                    }
+                }
+            }
+
+            .learn-more {
+                margin-top: 64px;
+            }
+        }
+
+        .mission {
+            padding-bottom: 17px;
+
+            &-wrapper {
+                width: 100%;
+            }
+
+            &-icon {
+                margin-bottom: 38px;
+            }
+
+            &-content {
+                h5.subtitle-large {
+                    margin-bottom: 48px;
                 }
             }
         }
 
-        @media only screen and (max-width: 480px) {
-            margin-top: 63px;
+        .values {
+            padding-bottom: 64px;
+        }
 
-            .home-hero {
-                padding-top: 32px;
-                padding-bottom: 60px;
-
-                .header {
-                    margin-bottom: 32px;
-
-                    h1 {
-                        width: 100%;
-                        font-size: 48px;
-                        line-height: 120%;
-                    }
-
-                    p.title-2 {
-                        width: 100%;
-                        font-size: 16px;
-                    }
-                }
-
-                .cta-box {
-                    text-align: center;
-                    min-width: 200px;
-
-                    .cta-flex {
-                        display: block;
-                        text-align: center;
-
-                        .profile-pics-wrapper {
-                            justify-content: center;
-                            margin-bottom: 18px;
-                        }
-                    }
-                }
-
-                .learn-more {
-                    margin-top: 64px;
-                }
-            }
-
-            .mission {
-                padding-bottom: 17px;
-
-                &-wrapper {
-                    width: 100%;
-                }
-
-                &-icon {
-                    margin-bottom: 38px;
-                }
-
-                &-content {
-                    h5.subtitle-large {
-                        margin-bottom: 48px;
-                    }
-                }
-            }
-
-            .values {
-                padding-bottom: 64px;
-            }
-
-            .community {
-                .profile-pics-wrapper {
-                    justify-content: center;
-                }
+        .community {
+            .profile-pics-wrapper {
+                justify-content: center;
             }
         }
     }
