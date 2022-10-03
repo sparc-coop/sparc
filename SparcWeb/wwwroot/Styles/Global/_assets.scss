@@ -51,6 +51,16 @@ section:last-of-type {
     }
 }
 
+.resources-tag {
+    background: $peach-100;
+
+    p {
+        color: var(--primary-500);
+        color: $peach-500;
+    }
+}
+
+
 .blog-tags {
     display: flex;
     align-items: center;

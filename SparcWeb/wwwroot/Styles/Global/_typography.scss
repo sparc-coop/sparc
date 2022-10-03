@@ -2,13 +2,13 @@
     font-family: 'NeueHaasDisplayRoman';
     font-weight: 400;
 
-    h1, h2, h3, h4, h5, h6 {
+    h1, h2, h3, h4, h5, h6, .subtitle-large {
         font-family: 'NeueHaasDisplayMedium';
     }
 
     .title-1 {
-        font-size: 68px;
-        line-height: 120%;
+        font-size: 24px;
+        line-height: 140%;
     }
 
     .title-2 {
@@ -58,6 +58,66 @@
 
     .bold {
         font-weight: 600;
+    }
+
+    @media only screen and (max-width: 760px) {
+        .title-1 {
+            font-size: 20px;
+        }
+
+        .subtitle-small {
+            font-size: 14px;
+        }
+
+        .subtitle-medium {
+            font-size: 20px;
+        }
+
+        .subtitle-large {
+            font-size: 28px;
+        }
+
+        .label, input, button {
+            font-size: 16px;
+        }
+
+        .link-small {
+            font-size: 14px;
+        }
+
+        .link-medium {
+            font-size: 18px;
+        }
+
+        .link-large {
+            font-size: 26px;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .title-1 {
+            font-size: 16px;
+        }
+
+        .subtitle-medium {
+            font-size: 16px;
+        }
+
+        .subtitle-large {
+            font-size: 20px;
+        }
+
+        .label, input, button {
+            font-size: 14px;
+        }
+
+        .link-medium {
+            font-size: 16px;
+        }
+
+        .link-large {
+            font-size: 20px;
+        }
     }
 }
 
@@ -144,7 +204,43 @@
 }
 
 @font-face {
+    font-family: 'IBMPlexSans-Medium';
+    font-weight: 500;
+    src: url(wwwroot/fonts/IBMPlexSans-Medium.ttf) format('truetype');
+}
+
+@font-face {
     font-family: 'IBMPlexSans-MediumItalic';
     font-weight: 500;
     src: url(wwwroot/fonts/IBMPlexSans-MediumItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-Regular';
+    font-weight: 500;
+    src: url(wwwroot/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-SemiBold';
+    font-weight: 600;
+    src: url(wwwroot/fonts/IBMPlexSans-SemiBold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-SemiBoldItalic';
+    font-weight: 600;
+    src: url(wwwroot/fonts/IBMPlexSans-SemiBoldItalic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-Bold';
+    font-weight: 700;
+    src: url(wwwroot/fonts/IBMPlexSans-Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'IBMPlexSans-BoldItalic';
+    font-weight: 700;
+    src: url(wwwroot/fonts/IBMPlexSans-BoldItalic.ttf) format('truetype');
 }
