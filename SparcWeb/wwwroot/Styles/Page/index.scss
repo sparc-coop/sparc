@@ -7,16 +7,9 @@
 
     .home-hero {
         padding-top: 122px;
+        padding-bottom: 24px;
         background: $yellow-100;
         position: relative;
-
-        .micro-post {
-            padding: 20px;
-
-            p {
-                padding: 10px;
-            }
-        }
 
         .header {
             width: 100%;
@@ -57,25 +50,16 @@
             p.subtitle-small {
                 font-family: 'NeueHaasDisplayMedium';
                 font-size: 14px;
-                line-height: 17px;
             }
 
             .cta-flex {
                 justify-content: space-between;
-
-                button {
-                    line-height: 100%;
-                }
             }
         }
 
         .learn-more {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translate(-50%, 0);
-            display: flex;
-            flex-direction: column;
+            margin: 0 auto;
+            margin-top: 122px;
             text-align: center;
 
             a:hover {
@@ -112,7 +96,6 @@
         &-content {
             h5.subtitle-large {
                 margin-bottom: 48px;
-                line-height: 100%;
             }
         }
     }
@@ -185,7 +168,6 @@
 
                 h5.subtitle-large {
                     margin-bottom: 55px;
-                    line-height: 42px;
                 }
 
                 a {
@@ -195,7 +177,6 @@
                     color: $white;
                     font-family: 'NeueHaasDisplayRomanItalic';
                     font-size: 20px;
-                    line-height: 20px;
 
                     img {
                         margin-left: 10px;
@@ -241,12 +222,10 @@
 
                             h5 {
                                 font-size: 24px;
-                                line-height: 31px;
                             }
 
                             p {
                                 font-size: 14px;
-                                line-height: 18px;
                             }
                         }
                     }
@@ -283,10 +262,6 @@
                 padding-left: 10px;
             }
 
-            p.subtitle-medium {
-                line-height: 28px;
-            }
-
             .community-card {
                 min-height: 418px;
                 width: 592px;
@@ -309,7 +284,7 @@
                         opacity: 0.5;
                     }
 
-                    @media only screen and (max-width: 578px){
+                    @media only screen and (max-width: 578px) {
                         input {
                             width: 100%;
                         }
@@ -334,11 +309,6 @@
             }
         }
 
-        &-tag {
-            background: $peach-100;
-            color: $peach-500;
-        }
-
         .blog-wrapper {
             width: 100%;
             max-width: 1216px;
@@ -354,12 +324,12 @@
                 max-width: 384px;
 
                 .blog-image {
-                    width: 100%;
+                    max-width: 384px;
                     border-radius: 12px;
                     margin-bottom: 28px;
 
                     img {
-                        max-width: 384px;
+                        width: 100%;
                     }
                 }
             }
@@ -368,5 +338,239 @@
 
     @media only screen and (max-width: 760px) {
         margin-top: 63px;
+
+        section {
+            padding-top: 64px;
+        }
+
+        .values, .community, .resources {
+            text-align: center;
+        }
+
+        .section-tag {
+            margin: 0 auto;
+            margin-bottom: 16px;
+        }
+
+        .home-hero {
+            .header {
+                h1 {
+                    font-family: 'NeueHaasDisplayBold';
+                    font-size: 70px;
+                    line-height: 120%;
+                    margin-bottom: 16px;
+                }
+
+                .invert {
+                    font-family: 'NeueHaasDisplayBold';
+                }
+
+                p.title-2 {
+                    font-family: 'IBMPlexSans-SemiBold';
+                    line-height: 150%;
+                }
+            }
+        }
+
+        .mission {
+            padding-top: 64px;
+            padding-bottom: 16px;
+
+            &-wrapper {
+                width: 100%;
+            }
+
+            img {
+                width: 46px;
+            }
+
+            &-wrapper {
+                width: 80%;
+                padding: 0 7px;
+
+                &:first-child {
+                    margin-bottom: 64px;
+                }
+            }
+
+            &-icon {
+                margin-bottom: 38px;
+            }
+
+            &-content {
+                h5.subtitle-large {
+                    margin-bottom: 48px;
+                }
+
+                &:last-child {
+                    margin-bottom: 0px;
+                }
+            }
+
+            &-content:last-child {
+                margin-bottom: 0px;
+            }
+        }
+
+        .values {
+            padding-top: 64px;
+            padding-bottom: 64px;
+
+            .header {
+                width: 100%;
+                margin-bottom: 48px;
+            }
+
+            .project-wrapper {
+                gap: 84px;
+
+                .left {
+                    width: 100%;
+                    margin: 0 auto;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .community {
+            padding-top: 64px;
+            padding-bottom: 64px;
+
+            .card-wrapper {
+                margin-top: 124px;
+                flex-direction: column-reverse;
+
+                .community-card {
+                    width: 100%;
+
+                    &.badge {
+                        .sparc-badge {
+                            position: absolute;
+                            text-align: center;
+                            top: 0;
+                            left: 50%;
+                            transform: translate(-50%,-50%);
+                        }
+
+                        .card-header {
+                            /*                            margin-top: 32px;
+*/
+                        }
+                    }
+
+                    .community-signup {
+                        .community-join {
+                            justify-content: center;
+                            display: block;
+                            flex-wrap: nowrap;
+
+                            input {
+                                display: block;
+                                width: 100%;
+                                margin-bottom: 12px;
+                                text-align: left;
+                            }
+                        }
+                    }
+                }
+
+                button {
+                    display: block;
+                    width: 100%;
+                    font-family: 'NeueHaasDisplayMedium';
+                }
+            }
+        }
+
+        .resources {
+            padding-top: 64px;
+            padding-bottom: 64px;
+
+            p.title-2 {
+                text-align: left;
+            }
+
+            .blog-card {
+                .blog-tags {
+                    justify-content: center;
+                }
+
+                p.title-2 {
+                    text-align: center;
+                }
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            margin-top: 63px;
+
+            .home-hero {
+                padding-top: 32px;
+                padding-bottom: 60px;
+
+                .header {
+                    margin-bottom: 32px;
+
+                    h1 {
+                        width: 100%;
+                        font-size: 48px;
+                        line-height: 120%;
+                    }
+
+                    p.title-2 {
+                        width: 100%;
+                        font-size: 16px;
+                    }
+                }
+
+                .cta-box {
+                    text-align: center;
+                    min-width: 200px;
+
+                    .cta-flex {
+                        display: block;
+                        text-align: center;
+
+                        .profile-pics-wrapper {
+                            justify-content: center;
+                            margin-bottom: 18px;
+                        }
+                    }
+                }
+
+                .learn-more {
+                    margin-top: 64px;
+                }
+            }
+
+            .mission {
+                padding-bottom: 17px;
+
+
+                &-icon {
+                    margin-bottom: 38px;
+                }
+
+                &-content {
+                    h5.subtitle-large {
+                        margin-bottom: 48px;
+                    }
+                }
+            }
+
+            .values {
+                padding-bottom: 64px;
+            }
+
+            .community {
+                .profile-pics-wrapper {
+                    justify-content: center;
+                }
+
+                p.subtitle-medium {
+                    font-size: 20px;
+                }
+            }
+        }
     }
 }
