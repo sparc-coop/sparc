@@ -270,7 +270,7 @@
                     input {
                         width: 75%;
                         min-width: 200px;
-                        border: $grey-300;
+                        border: 1px solid rgba(104, 105, 110, 0.5);
                         line-height: 16px;
                         color: $grey-500;
                         opacity: 0.5;
@@ -475,6 +475,10 @@
                         }
                     }
 
+                    .profile-pics-wrapper {
+                        justify-content: center;
+                    }
+
                     .community-signup {
                         .community-join {
                             justify-content: center;
@@ -605,12 +609,6 @@
 
         .values {
             padding-bottom: 64px;
-        }
-
-        .community {
-            .profile-pics-wrapper {
-                justify-content: center;
-            }
         }
     }
 }

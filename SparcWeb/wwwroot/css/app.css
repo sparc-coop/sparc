@@ -969,7 +969,7 @@ nav .nav-mobile {
 .homepage .community .card-wrapper .community-signup .community-join input {
   width: 75%;
   min-width: 200px;
-  border: #7A7B7F;
+  border: 1px solid rgba(104, 105, 110, 0.5);
   line-height: 16px;
   color: #68696E;
   opacity: 0.5;
@@ -1127,6 +1127,9 @@ nav .nav-mobile {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .homepage .community .card-wrapper .community-card .profile-pics-wrapper {
+    justify-content: center;
+  }
   .homepage .community .card-wrapper .community-card .community-signup .community-join {
     justify-content: center;
     display: block;
@@ -1227,9 +1230,6 @@ nav .nav-mobile {
   }
   .homepage .values {
     padding-bottom: 64px;
-  }
-  .homepage .community .profile-pics-wrapper {
-    justify-content: center;
   }
 }
 
