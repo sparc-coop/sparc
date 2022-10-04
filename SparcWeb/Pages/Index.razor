@@ -3,17 +3,6 @@
 
 <div class="homepage">
     <section class="home-hero">
-        <div class="micro-post">
-            @if(PostList != null)
-            {
-                 @foreach(var item in PostList)
-                {
-                    <p>
-                        @item.Text
-                    </p>
-                }
-            }
-        </div>
         <div class="container">
             <div class="header center">
                 <h1>Striving for a world where <span class="invert">startups</span> are owned by those who <span class="invert">built it</span></h1>
@@ -288,11 +277,13 @@
 
 
 @code {
-    public List<SlackPost> PostList = new List<SlackPost>();
+    public List<string> PostList = new List<string>();
+    public string Headertest = "";
 
     protected override async Task OnInitializedAsync()
     {
-        var list = await Api.GetSlackPostsAsync("/post");
-        PostList = list.ToList();
+        Ibis.Init("sparc");
+        PostList = await Ibis.GetAll();
+        Headertest = await Ibis.Get("paragraph-title");
     }
 }
