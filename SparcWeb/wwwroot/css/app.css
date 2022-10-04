@@ -236,16 +236,21 @@ button {
 body {
   font-family: "NeueHaasDisplayRoman";
   font-weight: 400;
+  line-height: 120%;
 }
 body h1, body h2, body h3, body h4, body h5, body h6, body .subtitle-large {
   font-family: "NeueHaasDisplayMedium";
 }
 body .title-1 {
-  font-size: 24px;
-  line-height: 140%;
+  font-size: 68px;
 }
 body .title-2 {
+  font-family: IBMPlexSans-Regular;
   font-size: 24px;
+}
+body .subtitle-landing {
+  font-size: 24px;
+  line-height: 140%;
 }
 body .subtitle-small {
   font-size: 14px;
@@ -258,6 +263,9 @@ body .subtitle-large {
 }
 body p, body a, body button {
   font-family: "NeueHaasDisplayRoman";
+}
+body a {
+  line-height: 100%;
 }
 body button {
   text-align: center;
@@ -282,9 +290,6 @@ body .bold {
   font-weight: 600;
 }
 @media only screen and (max-width: 760px) {
-  body .title-1 {
-    font-size: 20px;
-  }
   body .subtitle-small {
     font-size: 14px;
   }
@@ -308,9 +313,6 @@ body .bold {
   }
 }
 @media only screen and (max-width: 480px) {
-  body .title-1 {
-    font-size: 16px;
-  }
   body .subtitle-medium {
     font-size: 16px;
   }
@@ -774,42 +776,43 @@ nav .nav-mobile {
   font-size: 96px;
   line-height: 115px;
 }
-.homepage .home-hero .header p.title-1 {
+.homepage .home-hero .header p.title-2 {
   width: 70%;
   max-width: 592px;
   margin: 0 auto;
   font-family: "IBMPlexSans-Medium";
-  line-height: 38px;
+  font-size: 24px;
+  line-height: 140%;
 }
-.homepage .home-hero .header span.invert {
+.homepage .home-hero span.invert {
   font-family: "NeueHaasDisplayMedium";
   color: #F2EDDF;
   -webkit-text-stroke: 2px #111321;
 }
-.homepage .home-hero .hero-graphic {
+.homepage .hero-graphic {
   display: block;
   text-align: center;
   margin-bottom: 72px;
 }
-.homepage .home-hero .cta-box p.subtitle-small {
+.homepage .cta-box p.subtitle-small {
   font-family: "NeueHaasDisplayMedium";
   font-size: 14px;
 }
-.homepage .home-hero .cta-box .cta-flex {
+.homepage .cta-box .cta-flex {
   justify-content: space-between;
 }
-.homepage .home-hero .learn-more {
+.homepage .learn-more {
   margin: 0 auto;
   margin-top: 122px;
   text-align: center;
 }
-.homepage .home-hero .learn-more a:hover {
+.homepage .learn-more a:hover {
   cursor: pointer;
 }
-.homepage .home-hero .learn-more p {
+.homepage .learn-more p {
   margin-bottom: 24px;
 }
-.homepage .home-hero .learn-more img {
+.homepage .learn-more img {
   max-height: 24px;
 }
 .homepage .mission {
@@ -1037,9 +1040,9 @@ nav .nav-mobile {
   .homepage .home-hero .header .invert {
     font-family: "NeueHaasDisplayBold";
   }
-  .homepage .home-hero .header p.title-1 {
+  .homepage .home-hero .header p.title-2 {
     font-family: "IBMPlexSans-SemiBold";
-    line-height: 150%;
+    font-size: 20px;
   }
   .homepage .mission {
     padding-top: 64px;
@@ -1198,8 +1201,9 @@ nav .nav-mobile {
     font-size: 48px;
     line-height: 120%;
   }
-  .homepage .home-hero .header p.title-1 {
+  .homepage .home-hero .header p.title-2 {
     width: 100%;
+    font-size: 16px;
   }
   .homepage .home-hero .cta-box {
     text-align: center;
