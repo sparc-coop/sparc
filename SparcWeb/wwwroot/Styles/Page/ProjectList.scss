@@ -3,10 +3,10 @@
 .project-list-page {
     .hero-header {
         text-align: center;
-        
+        padding-bottom: 55px;
 
         .header {
-            max-width: 50%;
+            max-width: 1007px;
             margin: auto;
 
             .image-wrapper {
@@ -37,6 +37,8 @@
     }
 
     .project-list-wrapper {
+        padding-top: 220px;
+
         .container {
             padding: 0 30px;
         }
@@ -67,6 +69,31 @@
                     margin-bottom: 0px;
                     padding: 0px;
                     max-width: calc(53% - 64px);
+                    /*max-width: 589px;*/
+
+                    .btn-small {
+                        font-style: italic;
+                    }
+
+                    .card-content {
+                        .image-wrapper {
+                            position: relative;
+
+                            img.project-status {
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                            }
+
+                            img.in-progress {
+                                width: 109px;
+                            }
+
+                            img.live {
+                                width: 67px;
+                            }
+                        }
+                    }
                 }
             }
         }
