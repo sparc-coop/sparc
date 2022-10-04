@@ -199,6 +199,12 @@
 
 //IBM Plex Sans
 @font-face {
+    font-family: 'IBMPlexSans-Regular';
+    font-weight: 400;
+    src: url(wwwroot/fonts/IBMPlexSans-Regular.ttf) format('truetype');
+}
+
+@font-face {
     font-family: 'IBMPlexSans-Medium';
     font-weight: 500;
     src: url(wwwroot/fonts/IBMPlexSans-Medium.ttf) format('truetype');
@@ -214,12 +220,6 @@
     font-family: 'IBMPlexSans-MediumItalic';
     font-weight: 500;
     src: url(wwwroot/fonts/IBMPlexSans-MediumItalic.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'IBMPlexSans-Regular';
-    font-weight: 500;
-    src: url(wwwroot/fonts/IBMPlexSans-Regular.ttf) format('truetype');
 }
 
 @font-face {

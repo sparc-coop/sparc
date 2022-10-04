@@ -390,6 +390,11 @@ body .bold {
   src: url(../fonts/NeueHaasDisplayBlackItalic.ttf) format("truetype");
 }
 @font-face {
+  font-family: "IBMPlexSans-Regular";
+  font-weight: 400;
+  src: url(../fonts/IBMPlexSans-Regular.ttf) format("truetype");
+}
+@font-face {
   font-family: "IBMPlexSans-Medium";
   font-weight: 500;
   src: url(../fonts/IBMPlexSans-Medium.ttf) format("truetype");
@@ -403,11 +408,6 @@ body .bold {
   font-family: "IBMPlexSans-MediumItalic";
   font-weight: 500;
   src: url(../fonts/IBMPlexSans-MediumItalic.ttf) format("truetype");
-}
-@font-face {
-  font-family: "IBMPlexSans-Regular";
-  font-weight: 500;
-  src: url(../fonts/IBMPlexSans-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: "IBMPlexSans-SemiBold";
@@ -1327,8 +1327,12 @@ nav .nav-mobile {
   border-radius: 100px;
 }
 
+.project-page .hero-header {
+  padding-top: 170px;
+  padding-bottom: 140px;
+}
 .project-page .hero-header .header {
-  max-width: 32%;
+  max-width: 725px;
   margin: 0 auto;
 }
 .project-page .hero-header .header .title {
@@ -1336,6 +1340,12 @@ nav .nav-mobile {
   align-items: center;
   justify-content: center;
   margin-bottom: 6px;
+}
+.project-page .hero-header .header .title img {
+  margin-left: 32px;
+}
+.project-page .hero-header .header .title img:hover {
+  cursor: pointer;
 }
 .project-page .hero-header .header .cta-flex {
   justify-content: center;
@@ -1349,48 +1359,91 @@ nav .nav-mobile {
   max-width: 24px;
   max-height: 24px;
 }
-.project-page .timeline .wrapper {
+.project-page .timeline {
+  padding-top: 77px;
+  padding-bottom: 100px;
+}
+.project-page .timeline .container {
+  width: 446px;
+  min-width: 200px;
+}
+.project-page .timeline .container .header {
+  margin-bottom: 30px;
+}
+.project-page .timeline .container .header p {
+  color: var(--primary-500);
+}
+.project-page .timeline .container .wrapper {
   position: relative;
-  max-width: 26%;
   margin: 0 auto;
 }
-.project-page .timeline .wrapper .timeline-sidebar {
+.project-page .timeline .container .wrapper .timeline-sidebar {
   position: absolute;
   left: -64px;
   top: 0;
 }
-.project-page .timeline .wrapper .header {
-  margin-bottom: 30px;
+.project-page .timeline .container .wrapper .timeline-sidebar img {
+  width: 40px;
 }
-.project-page .timeline .wrapper .header p {
-  color: var(--primary-500);
+.project-page .timeline .container .wrapper .timeline-item {
+  margin-bottom: 38px;
 }
-.project-page .timeline .wrapper .timeline-item {
-  margin-bottom: 34px;
-}
-.project-page .timeline .wrapper .timeline-item .item-header {
+.project-page .timeline .container .wrapper .timeline-item .item-header {
   margin-bottom: 10px;
 }
-.project-page .timeline .wrapper .timeline-item .item-header .title-2 {
-  line-height: 32px;
+.project-page .timeline .container .wrapper .timeline-item .item-header .title-2 {
+  line-height: 36px;
 }
-.project-page .timeline .wrapper .timeline-item .item-header .timeline-date {
+.project-page .timeline .container .wrapper .timeline-item .item-header .title-2.semi-bold {
+  font-family: "NeueHaasDisplayMedium";
+}
+.project-page .timeline .container .wrapper .timeline-item .item-header .timeline-date {
   color: var(--primary-500);
+  font-family: "IBMPlexSans-Regular";
   line-height: 21px;
 }
-.project-page .timeline .wrapper .timeline-item:nth-last-child(-n+2) {
-  margin-bottom: 94px;
+.project-page .timeline .container .wrapper .timeline-item .timeline-content p.subtitle-small {
+  font-family: "IBMPlexSans-Regular";
 }
-.project-page .timeline .wrapper .read-more {
+.project-page .timeline .container .wrapper .timeline-item:nth-last-child(-n+2) {
+  margin-bottom: 100px;
+}
+.project-page .timeline .container .wrapper .read-more {
   text-align: center;
   max-width: 220px;
   margin: auto;
 }
-.project-page .timeline .wrapper .read-more button {
+.project-page .timeline .container .wrapper .read-more button {
   width: 100%;
   background: white;
   border: 1px solid var(--primary-900);
   color: var(--primary-900);
+}
+.project-page .community {
+  padding-top: 100px;
+}
+.project-page .community .card-wrapper {
+  width: 1268px;
+  height: 419px;
+  gap: 0px;
+  background: #F2EDDF;
+  border-radius: 24px;
+}
+.project-page .community .card-wrapper .community-card {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.project-page .community .card-wrapper .community-card.badge {
+  border-radius: 24px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.project-page .community .card-wrapper .divider {
+  height: 75%;
+  border: 0.5px solid #68696E;
 }
 .project-page .resources .header {
   text-align: center;
