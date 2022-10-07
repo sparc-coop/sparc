@@ -80,6 +80,7 @@
 
                 select {
                     max-width: 124px;
+                    font-size: 20px;
                 }
             }
 
@@ -126,42 +127,35 @@
 
     @media only screen and (max-width: 760px) {
         .hero-header {
-            text-align: center;
-            padding-bottom: 55px;
+            padding-top: 76px;
+            padding-bottom: 30px;
+
+            .container {
+                padding: 0 42px;
+            }
 
             .header {
-                max-width: 1007px;
-                margin: auto;
+                max-width: 760px;
 
-                .image-wrapper {
-                    margin-bottom: 8px;
-                }
-
-                .title-1 {
-                    margin-bottom: 26px;
+                .icon-wrapper {
+                    margin-bottom: 16px;
                 }
 
                 .project-tags {
-                    display: flex;
-                    flex-wrap: wrap;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 8px;
-                    max-width: 76%;
+                    width: 95%;
+                    max-width: 390px;
                     margin: auto;
 
                     .tag {
-                        border: 1px solid $peach-500;
-                        background: inherit;
-                        color: $peach-500;
-                        border-radius: 100px;
+                        padding: 3px 12px;
+                        font-size: 14px;
                     }
                 }
             }
         }
 
         .project-list-wrapper {
-            padding-top: 220px;
+            padding-top: 70px;
 
             .container {
                 padding: 0 30px;
@@ -173,28 +167,39 @@
                     justify-content: space-between;
                     align-items: center;
                     margin-bottom: 36px;
+                    gap: 20px;
+
+                    .search {
+                        width: 100%;
+                        position: relative;
+
+                        input {
+                            width: 100%;
+                        }
+
+                        i {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            font-size: 16px;
+                        }
+                    }
 
                     select {
                         max-width: 124px;
+                        font-size: 16px;
                     }
                 }
 
                 .project-list {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 38px;
-                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 30px;
 
                     .project-card {
-                        margin-bottom: 0px;
+                        margin-bottom: 16px;
                         padding: 0px;
-                        max-width: calc(53% - 64px);
-                        /*max-width: 589px;*/
-
-                        .btn-small {
-                            font-style: italic;
-                        }
+                        width: calc(50% - 15px);
+                        max-width: none;
 
                         .card-content {
                             .image-wrapper {
@@ -214,6 +219,35 @@
                                     width: 67px;
                                 }
                             }
+
+                            .card-header {
+                                margin-bottom: 12px;
+                            }
+
+                            .card-tags-wrapper {
+                                display: block;
+                                margin-top: 16px;
+
+                                .card-tags {
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: flex-start;
+                                    gap: 5px;
+                                    margin-bottom: 16px;
+
+                                    button {
+                                        font-size: 14px;
+                                    }
+                                }
+
+                                .card-github {
+                                    width: 100%;
+
+                                    button {
+                                        width: 100%;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -222,38 +256,20 @@
     }
 
     @media only screen and (max-width: 480px) {
+        padding-bottom: 60px;
+
         .hero-header {
             text-align: center;
             padding-top: 76px;
             padding-bottom: 30px;
 
-            .container {
-                padding: 0 42px;
-            }
-
             .header {
                 max-width: 390px;
-                margin: auto;
-
-                .icon-wrapper {
-                    margin-bottom: 16px;
-                }
-
-                .project-tags {
-                    width: 95%;
-                    max-width: 390px;
-                    margin: auto;
-
-                    .tag {
-                        padding: 3px 12px;
-                        font-size: 12px;
-                    }
-                }
             }
         }
 
         .project-list-wrapper {
-            padding-top: 70px;
+            padding-bottom: 0px;
 
             .container {
                 padding: 0 16px;
@@ -261,16 +277,8 @@
 
             .list-wrapper {
                 .filters {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 36px;
-
                     .search {
-                        position: relative;
-
                         i {
-                            position: absolute;
                             top: 10px;
                             right: 10px;
                             font-size: 16px;
@@ -278,22 +286,19 @@
                     }
 
                     select {
-                        max-width: 124px;
+                        font-size: 14px;
                     }
                 }
 
                 .project-list {
-                    justify-content: space-between;
+                    justify-content: center;
                     gap: 16px;
                     flex-wrap: wrap;
 
                     .project-card {
-                        margin-bottom: 0px;
+                        margin-bottom: 16px;
                         padding: 0px;
-                        /*                        max-width: calc(53% - 64px);
-*/
-                        width: 179px;
-                        max-width: 179px;
+                        width: calc(50% - 8px);
 
                         .card-content {
                             width: 100%;
@@ -317,6 +322,47 @@
 
                                 img.live {
                                     width: 67px;
+                                }
+                            }
+
+                            .card-header {
+                                .title-2 {
+                                    font-size: 20px;
+                                }
+
+                                img {
+                                    width: 20px;
+                                }
+                            }
+
+                            p.subtitle-small {
+                                font-size: 12px;
+                            }
+
+                            .card-tags-wrapper {
+                                display: block;
+                                margin-top: 8px;
+
+                                .card-tags {
+                                    width: 100%;
+                                    display: flex;
+                                    justify-content: flex-start;
+                                    gap: 5px;
+                                    margin-bottom: 16px;
+
+                                    button {
+                                        padding: 3px 12px 3px 10px;
+                                        font-size: 10px;
+                                    }
+                                }
+
+                                .card-github {
+                                    width: 100%;
+
+                                    button {
+                                        width: 100%;
+                                        padding-bottom: 0px;
+                                    }
                                 }
                             }
                         }
