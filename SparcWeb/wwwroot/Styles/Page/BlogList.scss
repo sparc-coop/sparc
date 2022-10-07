@@ -15,11 +15,18 @@
                 text-align: center;
             }
         }
+
+        @media (max-width: 838px) {
+            max-width: 100%;
+
+            .title{
+                max-width: 90%;
+            }
+        }
     }
 
     .blog-featured {
         display: flex;
-        justify-content: space-between;
         align-items: center;
         gap: 42px;
         padding-top: 0;
@@ -36,7 +43,6 @@
             max-width: 49%;
 
             .wrapper {
-                max-width: 58%;
 
                 .title {
                     margin-bottom: 40px;
@@ -47,9 +53,17 @@
                 }
             }
         }
+
+        @media (max-width: 838px) {
+            flex-direction: column;
+
+            .right {
+                max-width: 100%;
+            }
+        }
     }
 
-    .blog-grid{
+    .blog-grid {
         padding-top: 0;
     }
 
@@ -63,7 +77,7 @@
             .card-image {
                 margin-bottom: 12px;
 
-                img{
+                img {
                     width: 100%;
                 }
             }
