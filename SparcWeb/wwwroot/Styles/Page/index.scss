@@ -432,7 +432,7 @@
                         left: 0;
                         width: 100%;
                         padding-bottom: 15px;
-                        overflow: scroll;
+                        overflow-x: scroll;
                         flex-wrap: nowrap;
                         flex-direction: row;
                         justify-content: normal;
@@ -458,6 +458,12 @@
         .community {
             padding-top: 64px;
             padding-bottom: 64px;
+
+            .header {
+                h5 {
+                    margin: 0 auto;
+                }
+            }
 
             .card-wrapper {
                 margin-top: 124px;
@@ -508,8 +514,10 @@
             padding-top: 64px;
             padding-bottom: 438px;
 
-            p.title-2 {
-                text-align: left;
+            .header {
+                h5 {
+                    margin: 0 auto;
+                }
             }
 
             .blog-wrapper {
@@ -517,7 +525,7 @@
                 left: 0;
                 width: 100%;
                 padding-bottom: 15px;
-                overflow: scroll;
+                overflow-x: scroll;
                 flex-wrap: nowrap;
                 flex-direction: row;
                 justify-content: normal;
@@ -542,7 +550,7 @@
                     }
 
                     p.title-2 {
-                        text-align: center;
+                        text-align: left;
                     }
                 }
             }
