@@ -85,12 +85,18 @@
                   "command": {
                     "type": "string"
                   },
-                  "project_tag": {
-                    "type": "string"
-                  },
                   "Timestamp": {
                     "type": "string",
                     "format": "date-time"
+                  },
+                  "SiteName": {
+                    "type": "string"
+                  },
+                  "PostType": {
+                    "type": "string"
+                  },
+                  "Title": {
+                    "type": "string"
                   },
                   "Id": {
                     "type": "string"
@@ -110,10 +116,16 @@
                 "command": {
                   "style": "form"
                 },
-                "project_tag": {
+                "Timestamp": {
                   "style": "form"
                 },
-                "Timestamp": {
+                "SiteName": {
+                  "style": "form"
+                },
+                "PostType": {
+                  "style": "form"
+                },
+                "Title": {
                   "style": "form"
                 },
                 "Id": {
@@ -173,15 +185,23 @@
             "type": "string",
             "nullable": true
           },
-          "project_tag": {
-            "type": "string",
-            "nullable": true
-          },
           "timestamp": {
             "type": "string",
             "format": "date-time",
             "nullable": true,
             "readOnly": true
+          },
+          "siteName": {
+            "type": "string",
+            "nullable": true
+          },
+          "postType": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

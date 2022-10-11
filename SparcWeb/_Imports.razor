@@ -17,11 +17,9 @@
 @using SparcWeb
 @using SparcWeb.Pages
 @using SparcWeb.Shared
-@using SparcFeatures
 
-@inject SparcApi Api
-@inject Public<SparcApi> PublicApi
-@attribute [AllowAnonymous]
-
-    @inject IJSRuntime JSRuntime
+@inject IJSRuntime JSRuntime
 @inject NavigationManager Nav
+@inject IbisContentProvider Ibis
+
+@attribute [AllowAnonymous]
