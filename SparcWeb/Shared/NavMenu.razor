@@ -1,37 +1,67 @@
 ﻿<nav>
-    <div class="logo">
-        <img src="./images/icons/Logo.png" />
-    </div>
-    <div class="nav-links-wrapper">
-        <div class="nav-link">
-            <a href="#">Home</a>
+    <div class="nav-desktop">
+        <div class="logo">
+            <img src="./images/icons/Logo.png" />
         </div>
-        <div class="nav-link">
-            <a href="/bloglist">Resources</a>
+        <div class="nav-links-wrapper">
+            <div class="nav-link">
+                <a href="#">Home</a>
+            </div>
+            <div class="nav-link">
+                <a href="/Blogs">Resources</a>
+            </div>
+            <div class="nav-link">
+                <a href="/Projects">Projects</a>
+            </div>
+            <div class="nav-link">
+                <a href="/Contact">Contact</a>
+            </div>
         </div>
-        <div class="nav-link">
-            <a href="/projectlist">Projects</a>
-        </div>
-        <div class="nav-link">
-            <a href="/contact">Contact</a>
-        </div>
-    </div>
-    <div class="community-join">
-        <div class="cta-flex">
-            <div class="profile-pics-wrapper">
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
+        <div class="community-join">
+            <div class="cta-flex">
+                <div class="profile-pics-wrapper">
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
                 </div>
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
-                </div>
-                <div class="profile-pic">
-                    <img src="images/Picture.png" />
+                <div>
+                    <button>Join community</button>
                 </div>
             </div>
-            <div>
-                <button>Join community</button>
-            </div>
+        </div>
+    </div>
+    <input id="menuToggle" type="checkbox" class="menu-toggle">
+    <label for="menuToggle" class="menu-toggle">
+        <span><i class="material-icons">menu</i></span>
+        <span><i class="material-icons">close</i></span>
+    </label>
+    <div class="nav-mobile">
+        <div class="logo">
+            <img src="./images/icons/Logo.png" />
+        </div>
+        <ul class="menu">
+            <li class="nav-link">
+                <a href="#">Home</a>
+            </li>
+            <li class="nav-link">
+                <a href="/Blogs">Resources</a>
+            </li>
+            <li class="nav-link">
+                <a href="/Projects">Projects</a>
+            </li>
+            <li class="nav-link">
+                <a href="/Contact">Contact</a>
+            </li>
+        </ul>
+        <div class="community-join">
+            <button class="log-in">Log In</button>
+            <button class="join-community">Join community</button>
         </div>
     </div>
 </nav>
