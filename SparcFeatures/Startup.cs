@@ -14,8 +14,7 @@ namespace SparcFeatures
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Sparcify<Startup>("https://localhost:7138")
-                .AddCosmos<SparcContext>(Configuration["ConnectionStrings:CosmosDb"], "sparc");
+            services.Sparcify<Startup>("https://localhost:7138");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

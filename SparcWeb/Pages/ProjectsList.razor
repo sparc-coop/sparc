@@ -51,11 +51,11 @@
 </div>
 
 @code {
-    public List<SlackPost> PostList = new List<SlackPost>();
+    //public List<SlackPost> PostList = new List<SlackPost>();
 
-    protected override async Task OnInitializedAsync()
-    {
-        var list = await Api.GetSlackPostsAsync("/blog-post");
-        PostList = list.ToList();
-    }
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var list = await Api.GetSlackPostsAsync("/blog-post");
+    //    PostList = list.ToList();
+    //}
 }

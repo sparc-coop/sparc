@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 <PageTitle>Sparc</PageTitle>
 
 <div class="homepage" id="homepage">
@@ -212,11 +212,8 @@
 
 
 @code {
-    public List<SlackPost> PostList = new List<SlackPost>();
-
     protected override async Task OnInitializedAsync()
     {
-        var list = await Api.GetSlackPostsAsync("/post");
-        PostList = list.ToList();
+        await Ibis.InitAsync("sparc");
     }
 }
