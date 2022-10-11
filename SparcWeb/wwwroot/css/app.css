@@ -1963,6 +1963,7 @@ nav .nav-mobile {
   }
   .project-page .community .container .card-wrapper .community-card.badge {
     padding: 48px 17px;
+    padding-top: 8px;
   }
   .project-page .community .container .card-wrapper .community-card .community-signup {
     font-size: 16px;
