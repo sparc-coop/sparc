@@ -6,10 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-	<ItemGroup>
-		<OpenApiReference Include="..\SparcFeatures\swagger.json" CodeGenerator="NSwagCSharp" Namespace="SparcFeatures" ClassName="SparcApi" Link="OpenAPIs\swagger.json" />
-	</ItemGroup>
-
   <ItemGroup>
 	  <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
 	  <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />

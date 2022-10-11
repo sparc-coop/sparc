@@ -277,13 +277,8 @@
 
 
 @code {
-    public List<string> PostList = new List<string>();
-    public string Headertest = "";
-
     protected override async Task OnInitializedAsync()
     {
-        Ibis.Init("sparc");
-        PostList = await Ibis.GetAll();
-        Headertest = await Ibis.Get("paragraph-title");
+        await Ibis.InitAsync("sparc");
     }
 }

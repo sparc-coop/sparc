@@ -1,96 +1,69 @@
 ﻿using System.Globalization;
-using System.Text;
 using System.Text.Json;
-using Microsoft.Extensions.Configuration;
 
 namespace SparcWeb;
 
-public record GetAllSlackMessagesRequest(string RoomId, string? Language, string? ContentType = "Text");
-public record GetSlackMessageRequest(string RoomId, string Tag, string? Language, string? ContentType = "Text");
+public record GetAllContentRequest(string RoomSlug, string Language);
+public record GetContentRequest(string RoomSlug, string Tag, string Language);
+public record IbisContent(string Tag, string Text, string? Audio)
+{
+    public override string ToString() => Text;
+}
+
 public class IbisContentProvider
 {
-    internal string? RoomID { get; set; }
-    internal string? Language { get; set; }
+    internal static string Language => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+    internal List<IbisContent> Content { get; set; }
+    internal Dictionary<string, IbisContent> CachedContent { get; private set; }
+    
     internal HttpClient _httpClient;
     internal string? ApiString { get; set; }
 
     public IbisContentProvider(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        ApiString = "https://localhost:7117";//configuration["IbisApi"];
+        ApiString = configuration["IbisApi"];
+        CachedContent = new();
     }
 
-    public void Init(string roomId)
+    public async Task<IbisContent?> GetAsync(string channelId, string tag)
     {
-        Language = (CultureInfo.CurrentCulture.TwoLetterISOLanguageName ?? "en");
-        RoomID = roomId;
+        // some small caching
+        if (CachedContent.ContainsKey(tag))
+            return CachedContent[tag];
+        
+        var request = new GetContentRequest(channelId, tag, Language);
+        return await _httpClient.PostAsJsonAsync<GetContentRequest, IbisContent>(ApiString + "/api/GetContent", request);
     }
 
-    public async Task<string> Get(string Tag)
+    public async Task InitAsync(string channelId)
     {
-        var request = new GetSlackMessageRequest(RoomID, Tag, Language, "Text");
-        var content = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-        var stringContent = new StringContent(content, UnicodeEncoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync(ApiString + "/api/GetSlackMessage", stringContent);
-        return await response.Content.ReadAsStringAsync();
+        var request = new GetAllContentRequest(channelId, Language);
+        var response = await _httpClient.PostAsJsonAsync<GetAllContentRequest, List<IbisContent>>(ApiString + "/api/GetAllContent", request);
+
+        if (response != null)
+        {
+            Content = response;
+            CachedContent = response.ToDictionary(x => x.Tag, x => x);
+        }
     }
 
-
-    public async Task<string> GetAudio(string Tag)
-    {
-        var request = new GetSlackMessageRequest(RoomID, Tag, Language, "Audio");
-        var content = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-        var stringContent = new StringContent(content, UnicodeEncoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync(ApiString + "/api/GetSlackMessage", stringContent);
-        return await response.Content.ReadAsStringAsync();
-    }
-
-    public Task<List<string>> GetAll()
-    {
-        var request = new GetAllSlackMessagesRequest(RoomID, Language, "Text");
-        var content = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-        var stringContent = new StringContent(content, UnicodeEncoding.UTF8, "application/json");
-        var result = _httpClient.PostAsync(ApiString + "/api/GetAllSlackMessages", stringContent);
-
-        return result.ContinueWith(
-            (response) => JsonSerializer.Deserialize<List<string>>(response.Result.Content.ReadAsStream())
-        );
-    }
+    // This + IbisContent.ToString() enables use of @Ibis[tag] in Razor templates
+    public IbisContent? this[string tag] => CachedContent.ContainsKey(tag) ? CachedContent[tag] : null;
 }
 
-public class Message
+public static class HttpClientExtensions
 {
-    public string RoomId { get; private set; }
-    public string? SourceMessageId { get; private set; }
-    public string Language { get; private set; }
-    public DateTime Timestamp { get; private set; }
-    //public UserSummary User { get; private set; }
-    public AudioMessage? Audio { get; private set; }
-    public string? Text { get; private set; }
-    public List<MessageTranslation>? Translations { get; private set; }
-    public decimal Charge { get; private set; }
-    public string? SiteName { get; set; }
-    public string? Tag { get; set; }
+    public static async Task<TResponse?> PostAsJsonAsync<TRequest, TResponse>(this HttpClient client, string url, TRequest request)
+    {
+        try
+        {
+            var response = await client.PostAsJsonAsync(url, request);
+            return JsonSerializer.Deserialize<TResponse>(response.Content.ReadAsStream());
+        }
+        catch
+        {
+            return default;
+        }
+    }
 }
-
-public class AudioMessage
-{
-    public string? Url { get; private set; }
-    public long Duration { get; private set; }
-    public Voice? Voice { get; private set; }
-    public List<Word>? Subtitles { get; private set; }
-}
-
-public class Voice
-{
-    public string Locale { get; private set; }
-    public string Name { get; private set; }
-    public string DisplayName { get; private set; }
-    public string LocaleName { get; private set; }
-    public string ShortName { get; private set; }
-    public string Gender { get; private set; }
-    public string VoiceType { get; private set; }
-}
-
-public record MessageTranslation(string LanguageId, string MessageId);
-public record Word(long Offset, long Duration, string Text);
