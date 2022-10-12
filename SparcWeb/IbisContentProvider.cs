@@ -1,11 +1,14 @@
-﻿using System.Globalization;
+﻿using Microsoft.JSInterop;
+using System.Globalization;
 using System.Text.Json;
 
 namespace SparcWeb;
 
-public record GetAllContentRequest(string RoomSlug, string Language);
+public record GetAllContentRequest(string RoomSlug, string Language, List<string>? AdditionalMessages = null);
 public record GetContentRequest(string RoomSlug, string Tag, string Language);
-public record IbisContent(string Tag, string Text, string? Audio)
+
+public record IbisChannel(string Name, string Slug, string Language, List<IbisContent> Content);
+public record IbisContent(string Tag, string Text, string? Audio, DateTime Timestamp)
 {
     public override string ToString() => Text;
 }
@@ -15,15 +18,18 @@ public class IbisContentProvider
     internal static string Language => CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
     internal List<IbisContent> Content { get; set; }
     internal Dictionary<string, IbisContent> CachedContent { get; private set; }
-    
-    internal HttpClient _httpClient;
-    internal string? ApiString { get; set; }
+    public IJSRuntime Js { get; }
 
-    public IbisContentProvider(HttpClient httpClient, IConfiguration configuration)
+    internal HttpClient _httpClient;
+
+    public IbisContentProvider(IConfiguration configuration, IJSRuntime js)
     {
-        _httpClient = httpClient;
-        ApiString = configuration["IbisApi"];
+        _httpClient = new HttpClient
+        {
+            BaseAddress = new Uri(configuration["IbisApi"])
+        };
         CachedContent = new();
+        Js = js;
     }
 
     public async Task<IbisContent?> GetAsync(string channelId, string tag)
@@ -33,19 +39,26 @@ public class IbisContentProvider
             return CachedContent[tag];
         
         var request = new GetContentRequest(channelId, tag, Language);
-        return await _httpClient.PostAsJsonAsync<GetContentRequest, IbisContent>(ApiString + "/api/GetContent", request);
+        return await _httpClient.PostAsJsonAsync<GetContentRequest, IbisContent>("/api/GetContent", request);
     }
 
-    public async Task InitAsync(string channelId)
+    public async Task<IbisChannel?> GetAllAsync(string channelId)
     {
         var request = new GetAllContentRequest(channelId, Language);
-        var response = await _httpClient.PostAsJsonAsync<GetAllContentRequest, List<IbisContent>>(ApiString + "/api/GetAllContent", request);
+        var response = await _httpClient.PostAsJsonAsync<GetAllContentRequest, IbisChannel>("/api/GetAllContent", request);
 
         if (response != null)
         {
-            Content = response;
-            CachedContent = response.ToDictionary(x => x.Tag, x => x);
+            Content = response.Content;
+            CachedContent = response.Content.ToDictionary(x => x.Tag, x => x);
         }
+
+        return response;
+    }
+
+    public async Task TranslatePageAsync()
+    {
+        var nodes = await Js.InvokeAsync<List<string>>("ibis.getTextNodes");
     }
 
     // This + IbisContent.ToString() enables use of @Ibis[tag] in Razor templates
@@ -59,9 +72,10 @@ public static class HttpClientExtensions
         try
         {
             var response = await client.PostAsJsonAsync(url, request);
-            return JsonSerializer.Deserialize<TResponse>(response.Content.ReadAsStream());
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(result, new JsonSerializerOptions {  PropertyNameCaseInsensitive = true });
         }
-        catch
+        catch (Exception e)
         {
             return default;
         }

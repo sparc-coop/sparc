@@ -15,6 +15,21 @@
 
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
+    <script>
+        function textNodesUnder(el) {
+            var n, a = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+            while (n = walk.nextNode()) a.push(n);
+            return a;
+        }
+
+        window.ibis = {
+            getTextNodes: function () {
+                const textNodes = textNodesUnder(document.body).filter(x => x.parentNode.nodeName != 'SCRIPT' && x.textContent.trim());
+                console.log(textNodes);
+                return textNodes.map(n => n.textContent.trim());
+            }
+        }
+    </script>
 </body>
 
 </html>

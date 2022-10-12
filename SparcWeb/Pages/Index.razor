@@ -212,8 +212,16 @@
 
 
 @code {
+    IbisChannel? Channel;
+    
     protected override async Task OnInitializedAsync()
     {
-        await Ibis.InitAsync("sparc");
+        Channel = await Ibis.GetAllAsync("sparc");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //if (System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName != "en")
+        var result = await JSRuntime.InvokeAsync<List<string>>("ibis.getTextNodes");
     }
 }
