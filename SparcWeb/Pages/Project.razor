@@ -51,51 +51,21 @@
                     <img src="./images/Sidebar mobile.png" class="mobile" />
                 </div>
                 <div class="timeline-list">
-                    <div class="timeline-item">
-                        <div class="item-header">
-                            <p class="title-2 semi-bold">Kode Kit is ready to go!</p>
-                            <p class="timeline-date subtitle-small">AUG 22, 2022</p>
-                        </div>
-                        <div class="timeline-content">
-                            <p class="subtitle-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="item-header">
-                            <p class="title-2 semi-bold">It's on the way.</p>
-                            <p class="timeline-date subtitle-small">AUG 22, 2022</p>
-                        </div>
-                        <div class="timeline-content">
-                            <p class="subtitle-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="item-header">
-                            <p class="title-2 semi-bold">One step closer.</p>
-                            <p class="timeline-date subtitle-small">AUG 22, 2022</p>
-                        </div>
-                        <div class="timeline-content">
-                            <p class="subtitle-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="item-header">
-                            <p class="title-2 semi-bold">How we are planning.</p>
-                            <p class="timeline-date subtitle-small">AUG 22, 2022</p>
-                        </div>
-                        <div class="timeline-content">
-                            <p class="subtitle-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="item-header">
-                            <p class="title-2 semi-bold">What do you think?</p>
-                            <p class="timeline-date subtitle-small">AUG 22, 2022</p>
-                        </div>
-                        <div class="timeline-content">
-                            <p class="subtitle-small">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
-                        </div>
-                    </div>
+                    @if (Channel != null)
+                    {
+                        @foreach (var post in Channel.Content)
+                        {
+                            <div class="timeline-item">
+                                <div class="item-header">
+                                    <p class="title-2 semi-bold">[Title]</p>
+                                    <p class="timeline-date subtitle-small">@post.Timestamp.ToString("M")</p>
+                                </div>
+                                <div class="timeline-content">
+                                    <p class="subtitle-small">@post</p>
+                                </div>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
             <div class="read-more">
@@ -216,6 +186,11 @@
 </div>
 
 @code {
-    [Parameter]
-    public string Title { get; set; }
+    [Parameter] public string Title { get; set; } = null!;
+    IbisChannel? Channel; 
+
+    protected override async Task OnInitializedAsync()
+    {
+        Channel = await Ibis.GetAllAsync(Title);
+    }
 }
