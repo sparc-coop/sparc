@@ -23,10 +23,21 @@
         }
 
         window.ibis = {
+            textNodes: [],
+
             getTextNodes: function () {
-                const textNodes = textNodesUnder(document.body).filter(x => x.parentNode.nodeName != 'SCRIPT' && x.textContent.trim());
-                console.log(textNodes);
+                document.body.classList.add('ibis-translating');
+                textNodes = textNodesUnder(document.body).filter(x => x.parentNode.nodeName != 'SCRIPT' && x.textContent.trim());
                 return textNodes.map(n => n.textContent.trim());
+            },
+
+            translateTextNodes: function (translatedNodes) {
+                for (var i = 0; i < textNodes.length; i++) {
+                    if (textNodes[i].textContent != translatedNodes[i])
+                        textNodes[i].textContent = translatedNodes[i];
+                }
+                document.body.classList.remove('ibis-translating');
+                document.body.classList.add('ibis-translated');
             }
         }
     </script>
