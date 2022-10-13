@@ -1,6 +1,6 @@
 ﻿@import "_variables.scss";
 
-//nav
+
 nav {
     .nav-desktop {
         padding: 32px 48px;
@@ -21,14 +21,19 @@ nav {
         .nav-links-wrapper {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 20px;
             background: white;
             border-radius: 100px;
-            padding: 10px 24px;
+            padding: 0 14px;
 
             a {
                 font-family: 'NeueHaasDisplayRoman';
             }
+        }
+
+        .nav-link {
+            padding: 10px;
+            cursor: pointer;
         }
 
         .community-join {
@@ -235,135 +240,3 @@ nav {
         }
     }
 }
-/*       &.mobile {
-            width: 100%;
-            height: 50px;
-            display: block;
-            padding: 15px 25px 15px 20px;
-            background: $yellow-100;
-            position: fixed;
-            top: 0;
-            z-index: 50;
-
-            .logo {
-                position: relative;
-                width: 50px;
-                z-index: 50;
-            }
-
-            label.menu-toggle {
-                background: $yellow-100;
-                position: absolute;
-                top: 15px;
-                right: 25px;
-                z-index: 50;
-
-                i {
-                    font-size: 20px;
-                }
-            }
-
-            input.menu-toggle {
-                display: none;
-
-                &:not(:checked) {
-                    & ~ label span:last-child {
-                        display: none;
-                    }
-
-                    & ~ .nav-menu {
-                        background: $yellow-100;
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        width: 0;
-                        height: 0;
-                        z-index: 20;
-                    }
-
-                    & ~ .nav-menu ul {
-                        margin-top: 40px;
-                    }
-                }
-
-                &:checked {
-                    & ~ label span:first-child {
-                        display: none;
-                    }
-
-                    & ~ .menu {
-                        background: $yellow-100;
-                        float: right;
-                        width: 100vw;
-                        height: 100vh;
-                    }
-
-                    & ~ label {
-                        position: fixed;
-                    }
-                }
-            }
-               .menu {
-                overflow: hidden;
-                margin: 0px -25px 0 -20px;
-                padding-top: 25px;
-                display: block;
-                background: $background;
-                position: fixed;
-                top: 40px;
-                right: 25px;
-                z-index: 20;
-                transition: width 600ms, height 600ms;
-
-                ul {
-                    background: $background;
-                    overflow: hidden;
-
-                    li {
-                        width: 100%;
-                        margin-bottom: 8px;
-
-                        &:active {
-                            background: $secondary-300;
-                        }
-
-                        a.log-in {
-                            width: 80%;
-                            min-width: 200px;
-                            margin: 0px 0px 6px 45px;
-                            padding: 5px 20px;
-                            border: 1px solid $gray;
-                            border-radius: 5px;
-                            font-size: 16px;
-                            line-height: 24px;
-                            text-decoration: none;
-                            text-align: center;
-                            transition: color 0ms, background 300ms ease-in-out;
-
-                            &:hover {
-                                color: $gray;
-                                cursor: pointer;
-                                transform: scale(103%);
-                            }
-                        }
-
-                        a.get-started {
-                            width: 80%;
-                            min-width: 200px;
-                            margin: 6px 0px 0px 45px;
-                            padding: 5px 20px;
-                            border: 1px solid $primary-500;
-                            font-size: 16px;
-                            line-height: 20px;
-                            text-align: center;
-                            transition: 200ms ease-in-out;
-
-                            &:hover {
-                                cursor: pointer;
-                                transform: scale(103%);
-                            }
-                        }
-                    }
-                }
-            }
-*/

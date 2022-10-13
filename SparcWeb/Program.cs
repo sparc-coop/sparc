@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-builder.Services.AddScoped<IbisContentProvider>();
+builder.Services.AddSingleton<IbisContentProvider>();
+builder.Services.AddHttpClient<IbisContentProvider>();
 builder.Services.AddApiAuthorization();
 builder.Sparcify();
 
