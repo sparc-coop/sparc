@@ -1,5 +1,10 @@
 ﻿@import "../Global/_variables.scss";
 
+body.ibis-translating {
+    visibility: hidden;
+    opacity: 0;
+}
+
 .homepage {
     .center {
         text-align: center;
@@ -45,6 +50,7 @@
             font-family: 'NeueHaasDisplayMedium';
             color: $yellow-100;
             -webkit-text-stroke: 2px $grey-900;
+            margin: 0 12px;
         }
     }
 

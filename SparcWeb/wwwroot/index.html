@@ -16,6 +16,32 @@
      
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
+    <script>
+        function textNodesUnder(el) {
+            var n, a = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+            while (n = walk.nextNode()) a.push(n);
+            return a;
+        }
+
+        window.ibis = {
+            textNodes: [],
+
+            getTextNodes: function () {
+                document.body.classList.add('ibis-translating');
+                textNodes = textNodesUnder(document.body).filter(x => x.parentNode.nodeName != 'SCRIPT' && x.textContent.trim());
+                return textNodes.map(n => n.textContent.trim());
+            },
+
+            translateTextNodes: function (translatedNodes) {
+                for (var i = 0; i < textNodes.length; i++) {
+                    if (textNodes[i].textContent != translatedNodes[i])
+                        textNodes[i].textContent = translatedNodes[i];
+                }
+                document.body.classList.remove('ibis-translating');
+                document.body.classList.add('ibis-translated');
+            }
+        }
+    </script>
 </body>
 
 </html>
