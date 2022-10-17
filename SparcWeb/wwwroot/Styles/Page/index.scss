@@ -11,15 +11,17 @@ body.ibis-translating {
     }
 
     .home-hero {
-        padding-top: 122px;
+        padding-top: 100px;
         padding-bottom: 24px;
         background: $yellow-100;
         position: relative;
+        box-sizing: border-box;
+        height: calc(100vh - 103px);
 
         .header {
             width: 100%;
             margin: 0 auto;
-            margin-bottom: 72px;
+            margin-bottom: 52px;
 
             h1 {
                 width: 80%;
@@ -28,6 +30,10 @@ body.ibis-translating {
                 margin-bottom: 16px;
                 font-size: 96px;
                 line-height: 115px;
+
+                @media only screen and (max-width: 1420px) {
+                    width: 90%;
+                }
             }
 
             p.subtitle-1 {
@@ -67,7 +73,7 @@ body.ibis-translating {
 
     .learn-more {
         margin: 0 auto;
-        margin-top: 122px;
+        margin-top: 50px;
         text-align: center;
 
         a:hover {
@@ -206,27 +212,16 @@ body.ibis-translating {
 
                     .project-card {
                         width: 100%;
+                        max-width: 520px;
+                        height: 531px;
+                        padding: 32px;
                         margin-bottom: 0px;
+                        background: $white;
+                        border-radius: 24px;
 
-                        .card-content {
-                            .image-wrapper {
-                                position: relative;
-
-                                img.project-status {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 8px;
-                                }
-
-                                img.in-progress {
-                                    width: 109px;
-                                }
-
-                                img.live {
-                                    width: 67px;
-                                }
-                            }
-                        }
+                        .card-header img {
+                            cursor: pointer;
+                        }                                                              
                     }
                 }
 

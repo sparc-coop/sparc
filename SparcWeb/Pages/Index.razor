@@ -3,31 +3,17 @@
 
 <div class="homepage" id="homepage">
     <section class="home-hero">
-@*        <div class="micro-post">
-            @if(PostList != null)
-            {
-                 @foreach(var item in PostList)
-                {
-                    <p>
-                        @item.Text
-                    </p>
-                }
-            }
-        </div>
-*@        <div class="container">
+        <div class="container">
             <div class="header center">
                 <h1>Striving for a world where <span class="invert">startups</span> are owned by those who <span class="invert">built it</span></h1>
                 <p class="subtitle-1">We are building a community of individuals & organisations who believe there is a better way to fund, build and reward startups.</p>
             </div>
-@*            <div class="hero-graphic">
-                <img src="/images/Frame 338.svg" />
-            </div>
-*@            <div class="cta-box">
+            <div class="cta-box">
                 <div class="box-header">
                     <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
                 </div>
                 <div class="cta-flex">
-                    <div class="profile-pics-wrapper">
+@*                    <div class="profile-pics-wrapper">
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
@@ -37,7 +23,7 @@
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
-                    </div>
+                    </div>*@
                     <div>
                         <button>Join the community</button>
                     </div>
@@ -110,7 +96,6 @@
                     <p class="subtitle-medium">Each member of Sparc defines their own role, as they know their skills best. And they own that role completely, including every decision it requires. They are the trusted expert by default.</p>
                 </div>
             </div>
-
             <div class="project-wrapper">
                 <div class="left">
                     <div class="section-tag project-tag">
@@ -121,9 +106,25 @@
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
-                        <ProjectCard Title="Kode Kit" Status="Live"/>
-                        <ProjectCard Title="Kode Kit" Status="In Progress"/>
-                        <ProjectCard Title="Kode Kit" Status="In Progress"/>
+                        <ProjectCard 
+                            Title="KodeKit" 
+                            Status="Live"
+                            ImgUrl="/images/Frame 359 Group 48.png"
+                            Link="https://www.kodekit.io/"
+                            Github="https://github.com/sparc-coop/kodekit"
+                            Content="@KodekitText"/>
+                        <ProjectCard Title="Ibis" 
+                            Status="Live"
+                            ImgUrl=""
+                            Link="https://ibis.chat"
+                            Github="https://github.com/sparc-coop/ibis"
+                            Content="@IbisText"/>
+                        <ProjectCard Title="Law of 100" 
+                            Status="Live"
+                            ImgUrl=""
+                            Link="https://lawof100.co/"
+                            Github="https://github.com/sparc-coop/law-of-100"
+                            Content="@LawofText"/>
                     </div>
                 </div>
             </div>
@@ -140,7 +141,6 @@
                     companies who align with our values and our goals.
                 </h5>
             </div>
-
             <div class="card-wrapper">
                 <div class="community-card">
                     <div class="cta-flex">
@@ -156,14 +156,12 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="card-header">
                         <h6 class="title-2 semi-bold">Individuals</h6>
                         <p class="subtitle-medium">At an individual level, we want to provide guidance, resources and anything else we can to help you find similar companies, fit into our projects or build your own.
 
                         </p>
                     </div>
-
                     <div class="community-signup">
                         <p class="label">Join our community</p>
                         <div class="community-join">
@@ -172,7 +170,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="community-card badge">
                     <div class="sparc-badge">
                         <img src="./images/sparc-approved-badge-2x 1.png" />
@@ -183,7 +180,6 @@
 
                         </p>
                     </div>
-
                     <div class="community-signup">
                         <p class="label">Join our movement</p>
                         <div class="community-join">
@@ -212,7 +208,11 @@
 
 
 @code {
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
+    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
+    public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
+    
+    pprotected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
             await Ibis.TranslatePageAsync("sparc-landing-page");

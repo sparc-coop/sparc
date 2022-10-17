@@ -11,51 +11,69 @@
                 <div>
                     <h2 class="title-1">Every great idea starts with a spark. Explore our journey to bring ideas to reality. </h2>
                 </div>
-                <div class="project-tags">
+@*                <div class="project-tags">
                     <button class="btn-small tag">Productivity</button>
                     <button class="btn-small tag">Ideas</button>
                     <button class="btn-small tag">Creativity</button>
                     <button class="btn-small tag">Inpirational</button>
                     <button class="btn-small tag">Motivative</button>
-                </div>
+                </div>*@
              </div>
         </div>
     </section>
 
     <section class="project-list-wrapper">
-        <div class="container">
-            <div class="list-wrapper">
-                <div class="filters">
-                    <div class="search">
-                        <input placeholder="Search">
-                        <i class="material-icons">search</i>
-                    </div>
-                    <select>
-                        <option>Sort By</option>
-                        <option>Productivity</option>
-                        <option>Ideas</option>
-                        <option>Design</option>
-                    </select>
-                </div>
-
-                <div class="project-list">
-                    <ProjectCard Title="KodeKit" Status="Live" />
-                    <ProjectCard Title="Kode Kit" Status="In Progress"/>
-                    <ProjectCard Title="Kode Kit" Status="In Progress"/>
-                    <ProjectCard Title="Kode Kit" Status="In Progress"/>
-                </div>
+        <div class="filters">
+            <div class="search">
+                <input placeholder="Search">
+                <i class="material-icons">search</i>
             </div>
+            <select>
+                <option>Sort By</option>
+                <option>Productivity</option>
+                <option>Ideas</option>
+                <option>Design</option>
+            </select>
+        </div>
+        <div class="project-list">
+            <ProjectCard 
+                Title="KodeKit" 
+                Status="Live"
+                ImgUrl="/images/Frame 359 Group 48.png"
+                Link="https://www.kodekit.io/"
+                Github="https://github.com/sparc-coop/kodekit"
+                Content="@KodekitText"/>
+            <ProjectCard Title="Ibis" 
+                Status="Live"
+                ImgUrl=""
+                Link="https://ibis.chat"
+                Github="https://github.com/sparc-coop/ibis"
+                Content="@IbisText"/>
+            <ProjectCard Title="Law of 100" 
+                Status="Live"
+                ImgUrl=""
+                Link="https://lawof100.co/"
+                Github="https://github.com/sparc-coop/law-of-100"
+                Content="@LawofText"/>
+            <ProjectCard Title="Conseris" 
+                Status="In Progress"
+                ImgUrl=""
+                Link="https://conseris.io/"
+                Github="https://github.com/sparc-coop"
+                Content="@ConserisText"/>
         </div>
     </section>
     
 </div>
 
 @code {
-    //public List<SlackPost> PostList = new List<SlackPost>();
+    public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
+    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
+    public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals. With Law of 100, you can rate your experience each day along your process and share your progression with others.";
+    public string ConserisText = $"Conseris is a data collection app that provides researchers with the ability to gather data and collaborate without any internet connection. With Conseris, everyone on your team can go into the field, collect data, and see each other’s responses stream into the app. These responses can be reviewed and edited in real time, and are centralized into one location for later review and processing.";
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    var list = await Api.GetSlackPostsAsync("/blog-post");
-    //    PostList = list.ToList();
-    //}
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
 }

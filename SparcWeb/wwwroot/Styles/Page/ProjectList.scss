@@ -3,7 +3,7 @@
 .project-list-page {
     .hero-header {
         text-align: center;
-        padding-bottom: 55px;
+        padding: 120px 0 140px 0;
 
         .header {
             max-width: 1007px;
@@ -54,72 +54,58 @@
     }
 
     .project-list-wrapper {
-        padding-top: 220px;
+        padding: 140px 30px 100px 30px;
+        width: 100%;
+        max-width: 1276px;
+        margin: 0 auto;
 
-        .container {
-            padding: 0 30px;
-        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 36px;
 
-        .list-wrapper {
-            .filters {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 36px;
+            .search {
+                position: relative;
+                width: 300px;
 
-                .search {
-                    position: relative;
-
-                    i {
-                        position: absolute;
-                        top: 9px;
-                        right: 12px;
-                        font-size: 20px;
-                    }
+                input {
+                    width: 300px;
                 }
 
-                select {
-                    max-width: 124px;
+                i {
+                    position: absolute;
+                    top: 9px;
+                    right: 12px;
                     font-size: 20px;
                 }
             }
 
-            .project-list {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 38px;
-                flex-wrap: wrap;
+            select {
+                max-width: 124px;
+                font-size: 20px;
+                cursor: pointer;
+            }
+        }
 
-                .project-card {
-                    margin-bottom: 0px;
-                    padding: 0px;
-                    max-width: calc(53% - 64px);
-                    /*max-width: 589px;*/
+        .project-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 38px;
+            flex-wrap: wrap;
 
-                    .btn-small {
-                        font-style: italic;
-                    }
+            .project-card {
+                margin-bottom: 0px;
+                padding: 0px;
+                max-width: 100%;
+                width: 589px;
+                height: 516px;
 
-                    .card-content {
-                        .image-wrapper {
-                            position: relative;
-
-                            img.project-status {
-                                position: absolute;
-                                top: 8px;
-                                right: 8px;
-                            }
-
-                            img.in-progress {
-                                width: 109px;
-                            }
-
-                            img.live {
-                                width: 67px;
-                            }
-                        }
-                    }
+                .photo {
+                    max-height: 367px;
+                    height: 100%;
+                    width: 100%;
                 }
             }
         }
@@ -155,97 +141,94 @@
         }
 
         .project-list-wrapper {
-            padding-top: 70px;
+            padding: 70px 30px;
 
-            .container {
-                padding: 0 30px;
-            }
+            .filters {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 36px;
+                gap: 20px;
 
-            .list-wrapper {
-                .filters {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 36px;
-                    gap: 20px;
+                .search {
+                    width: 100%;
+                    position: relative;
 
-                    .search {
+                    input {
                         width: 100%;
-                        position: relative;
-
-                        input {
-                            width: 100%;
-                        }
-
-                        i {
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            font-size: 16px;
-                        }
                     }
 
-                    select {
-                        max-width: 124px;
+                    i {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
                         font-size: 16px;
                     }
                 }
 
-                .project-list {
-                    justify-content: center;
-                    gap: 30px;
+                select {
+                    max-width: 124px;
+                    font-size: 16px;
+                }
+            }
 
-                    .project-card {
-                        margin-bottom: 16px;
-                        padding: 0px;
-                        width: calc(50% - 15px);
-                        max-width: none;
+            .project-list {
+                justify-content: center;
+                gap: 30px;
 
-                        .card-content {
+                .project-card {
+                    margin-bottom: 16px;
+                    padding: 0px;
+                    width: calc(50% - 15px);
+                    max-width: none;
+
+                    .card-content {
+                        .image-wrapper {
+                            position: relative;
+
+                            img {
+                                width: 100%;
+                            }
+
+                            .project-status {
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                            }
+
+                            .in-progress {
+                                width: 109px;
+                            }
+
+                            .live {
+                                width: 67px;
+                            }
+                        }
+
+                        .card-header {
+                            margin-bottom: 12px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+
                             .image-wrapper {
-                                position: relative;
-
-                                img.project-status {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 8px;
-                                }
-
-                                img.in-progress {
-                                    width: 109px;
-                                }
-
-                                img.live {
-                                    width: 67px;
-                                }
+                                margin-bottom: 0;
                             }
+                        }
 
-                            .card-header {
-                                margin-bottom: 12px;
-                            }
+                        .card-tags-wrapper {
+                            display: block;
+                            margin-top: 16px;
 
-                            .card-tags-wrapper {
-                                display: block;
-                                margin-top: 16px;
+                            .card-tags {
+                                width: 100%;
+                                display: flex;
+                                justify-content: flex-start;
+                                gap: 5px;
+                                margin-bottom: 16px;
 
-                                .card-tags {
-                                    width: 100%;
-                                    display: flex;
-                                    justify-content: flex-start;
-                                    gap: 5px;
-                                    margin-bottom: 16px;
-
-                                    button {
-                                        font-size: 14px;
-                                    }
-                                }
-
-                                .card-github {
-                                    width: 100%;
-
-                                    button {
-                                        width: 100%;
-                                    }
+                                button {
+                                    font-size: 14px;
                                 }
                             }
                         }
@@ -269,100 +252,90 @@
         }
 
         .project-list-wrapper {
-            padding-bottom: 0px;
+            padding: 0 16px;
 
-            .container {
-                padding: 0 16px;
-            }
-
-            .list-wrapper {
-                .filters {
-                    .search {
-                        i {
-                            top: 10px;
-                            right: 10px;
-                            font-size: 16px;
-                        }
-                    }
-
-                    select {
-                        font-size: 14px;
+            .filters {
+                .search {
+                    i {
+                        top: 10px;
+                        right: 10px;
+                        font-size: 16px;
                     }
                 }
 
-                .project-list {
-                    justify-content: center;
-                    gap: 16px;
-                    flex-wrap: wrap;
+                select {
+                    font-size: 14px;
+                }
+            }
 
-                    .project-card {
-                        margin-bottom: 16px;
-                        padding: 0px;
-                        width: calc(50% - 8px);
+            .project-list {
+                justify-content: center;
+                gap: 16px;
+                flex-wrap: wrap;
 
-                        .card-content {
-                            width: 100%;
+                .project-card {
+                    margin-bottom: 16px;
+                    padding: 0px;
+                    width: calc(50% - 8px);
 
-                            .image-wrapper {
-                                position: relative;
+                    .card-content {
+                        width: 100%;
 
-                                img {
-                                    width: 100%;
-                                }
+                        .image-wrapper {
+                            position: relative;
 
-                                img.project-status {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 8px;
-                                }
+                            .project-status {
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                            }
 
-                                img.in-progress {
-                                    width: 109px;
-                                }
+                            .in-progress {
+                                width: 109px;
+                            }
 
-                                img.live {
-                                    width: 67px;
+                            .live {
+                                width: 67px;
+                            }
+                        }
+
+                        .card-header {
+                            .title-2 {
+                                font-size: 20px;
+                            }
+
+                            img {
+                                width: 20px;
+                            }
+                        }
+
+                        p.subtitle-small {
+                            font-size: 12px;
+                        }
+
+                        .card-tags-wrapper {
+                            display: block;
+                            margin-top: 8px;
+
+                            .card-tags {
+                                width: 100%;
+                                display: flex;
+                                justify-content: flex-start;
+                                gap: 5px;
+                                margin-bottom: 16px;
+
+                                button {
+                                    padding: 3px 12px 3px 10px;
+                                    font-size: 10px;
                                 }
                             }
 
-                            .card-header {
-                                .title-2 {
-                                    font-size: 20px;
-                                }
+                            .card-github {
+                                width: 100%;
 
-                                img {
-                                    width: 20px;
-                                }
-                            }
-
-                            p.subtitle-small {
-                                font-size: 12px;
-                            }
-
-                            .card-tags-wrapper {
-                                display: block;
-                                margin-top: 8px;
-
-                                .card-tags {
+                                button {
                                     width: 100%;
-                                    display: flex;
-                                    justify-content: flex-start;
-                                    gap: 5px;
-                                    margin-bottom: 16px;
-
-                                    button {
-                                        padding: 3px 12px 3px 10px;
-                                        font-size: 10px;
-                                    }
-                                }
-
-                                .card-github {
-                                    width: 100%;
-
-                                    button {
-                                        width: 100%;
-                                        padding-bottom: 0px;
-                                    }
+                                    padding-bottom: 0px;
                                 }
                             }
                         }
