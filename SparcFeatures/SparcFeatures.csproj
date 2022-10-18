@@ -8,14 +8,21 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Content Include=".config\dotnet-tools.json"/>
+		<Content Include=".config\dotnet-tools.json" />
 	</ItemGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.10" />
 	  <PackageReference Include="Sparc.Database.Cosmos" Version="6.0.8" />
 	  <PackageReference Include="Sparc.Features" Version="6.2.1" />
 	  <PackageReference Include="Sparc.Authentication.AzureADB2C" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\SparcWeb\SparcWeb.csproj">
+		<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+	</ProjectReference>
   </ItemGroup>
 
 </Project>

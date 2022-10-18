@@ -2,6 +2,8 @@
 using SparcFeatures._Plugins;
 using Sparc.Database.Cosmos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 
 namespace SparcFeatures
 {
@@ -25,6 +27,16 @@ namespace SparcFeatures
                     options.RequireHttpsMetadata = false;
                 });
 
+            services.AddRazorPages();
+
+            services.AddSingleton<HttpClient>(sp =>
+            {
+                // Get the address that the app is currently running at
+                var server = sp.GetRequiredService<IServer>();
+                var addressFeature = server.Features.Get<IServerAddressesFeature>();
+                string baseAddress = addressFeature.Addresses.First();
+                return new HttpClient { BaseAddress = new Uri(baseAddress) };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +44,10 @@ namespace SparcFeatures
         {
             app.UseAuthentication();
             app.Sparcify<Startup>(env);
+
+            app.UseEndpoints(endpoints => {
+                endpoints.MapFallbackToPage("/_Host");
+            });
         }
     }
 }

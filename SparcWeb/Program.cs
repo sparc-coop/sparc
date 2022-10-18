@@ -6,8 +6,8 @@ using SparcWeb;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+//builder.RootComponents.Add<App>("#app");
+//builder.RootComponents.Add<HeadOutlet>("head::after");
 //builder.Services.AddScoped<IConfiguration>(_ => builder.Configuration);
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7044") });//builder.HostEnvironment.BaseAddress) });
 //builder.AddB2CApi<SparcApi>("https://sparcapp.onmicrosoft.com/10a2c1ad-f17d-4cb3-ae01-61ef3188caa5/SparcFeatures",
