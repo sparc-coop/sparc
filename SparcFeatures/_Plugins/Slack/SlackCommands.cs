@@ -17,7 +17,7 @@ public class SlackCommands : ControllerBase
     [HttpPost("CreatePost")]
     public async Task<string> Post([FromForm]SlackPost request)
     {
-        SaveNewPost(request);
+        await SaveNewPost(request);
 
         return $"'{request.Text}' - Thank you, your post has been received!";
     }
@@ -31,6 +31,6 @@ public class SlackCommands : ControllerBase
         newPost.PostType = parseRequest[1].Split(' ', 2)[0];
         newPost.Text = parseRequest[1].Split(' ', 2)[1];
 
-        Posts.UpdateAsync(newPost);
+        await Posts.UpdateAsync(newPost);
     }
 }

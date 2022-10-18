@@ -44,10 +44,6 @@ namespace SparcFeatures
         {
             app.UseAuthentication();
             app.Sparcify<Startup>(env);
-
-            app.UseEndpoints(endpoints => {
-                endpoints.MapFallbackToPage("/_Host");
-            });
         }
     }
 }
