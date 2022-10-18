@@ -1,9 +1,11 @@
 ﻿using Sparc.Plugins.Database.Cosmos;
 using SparcFeatures._Plugins;
 using Sparc.Database.Cosmos;
+using SparcWeb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Components;
 
 namespace SparcFeatures
 {
@@ -36,6 +38,18 @@ namespace SparcFeatures
                 string baseAddress = addressFeature.Addresses.First();
                 return new HttpClient { BaseAddress = new Uri(baseAddress) };
             });
+
+            services.AddScoped<HttpClient>(s =>
+            {
+                var navigationManager = s.GetRequiredService<NavigationManager>();
+                return new HttpClient
+                {
+                    BaseAddress = new Uri(navigationManager.BaseUri)
+                };
+            });
+
+            services.AddScoped<IbisContentProvider>()
+               .AddScoped<RootScope>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
