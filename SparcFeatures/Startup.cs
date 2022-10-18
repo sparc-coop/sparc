@@ -5,7 +5,6 @@ using SparcWeb;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Components;
 
 namespace SparcFeatures
 {
@@ -37,15 +36,6 @@ namespace SparcFeatures
                 var addressFeature = server.Features.Get<IServerAddressesFeature>();
                 string baseAddress = addressFeature.Addresses.First();
                 return new HttpClient { BaseAddress = new Uri(baseAddress) };
-            });
-
-            services.AddScoped<HttpClient>(s =>
-            {
-                var navigationManager = s.GetRequiredService<NavigationManager>();
-                return new HttpClient
-                {
-                    BaseAddress = new Uri(navigationManager.BaseUri)
-                };
             });
 
             services.AddScoped<IbisContentProvider>()
