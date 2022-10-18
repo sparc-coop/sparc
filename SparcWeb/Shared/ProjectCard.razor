@@ -2,7 +2,7 @@
     <div class="card-content">
         <div class="image-wrapper">
             <a href="/Projects/@titleURL">
-                <img src="images/Laptop.png" />
+                <img class="photo" src="images/Laptop.png" />
                 @if(Status.ToLower() == "live")
                 {
                     <img class="project-status live" src="images/icons/Status Pin Live.svg" />
@@ -13,22 +13,20 @@
             </a>
         </div>
         <div class="card-header">
-            <h5 class="title-2 semi-bold">KodeKit</h5>
-            <div class="image-wrapper">
+            <h5 class="title-2 semi-bold">@Title</h5>
+            <a href="@Link" class="image-wrapper">
                 <img src="images/icons/Up-Right.svg" />
-            </div>
+            </a>
         </div>
-        <div>
-            <p class="subtitle-small">Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements. No classes, no confusion.</p>
-        </div>
+        <p class="subtitle-small">
+            @Content
+        </p>
         <div class="card-tags-wrapper">
             <div class="card-tags">
                 <button class="btn-small">Design</button>
                 <button class="btn-small">Productivity</button>
             </div>
-            <div class="card-github">
-                <button><img src="images/icons/Github.svg" /></button>
-            </div>
+            <a href="@Github" class="card-github"><img src="images/icons/Github.svg"/></a>
         </div>
     </div>
 </div>
@@ -36,6 +34,10 @@
 @code{
     [Parameter] public string Title { get; set; }
     [Parameter] public string Status { get; set;  }
+    [Parameter] public string ImgUrl { get; set; }
+    [Parameter] public string Github { get; set;  }
+    [Parameter] public string Link { get; set; }
+    [Parameter] public string Content { get; set;  }
 
     string titleURL;
 

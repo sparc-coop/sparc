@@ -11,9 +11,16 @@
 
         .posted {
             margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+                color: var(--primary-500);
+            }
         }
 
-        .blog-image {
+        &-image {
             border-radius: 6px;
             margin-bottom: 80px;
 
@@ -22,7 +29,12 @@
             }
         }
 
-        .blog-content {
+        &-content {
+
+            p {
+                font-size: 24px;
+                line-height: 130%;
+            }
 
             div {
                 text-align: center;
@@ -36,9 +48,80 @@
             }
         }
     }
+}
+
+.blog-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
 
     .blog-card {
+        width: 384px;
+        cursor: pointer;
+
+        img {
+            width: 100%;
+        }
+
+        .blog-tags {
+            margin-top: 42px;
+
+            .tag {
+                margin: 0;
+                padding: 0;
+                border: none;
+                font-family: 'IBMPlexSans-Regular';
+            }
+
+            .tag-divider {
+                font-size: 14px;
+                color: $peach-500;
+            }
+        }
+
+        .subtitle-large {
+            font-size: 24px;
+        }
+    }
+}
+
+@media only screen and (max-width: 760px) {
+    .blog-wrapper {
         width: 100%;
-        max-width: 456px;
+        padding-bottom: 15px;
+        max-width: none;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: normal;
+        gap: 32px;
+        overflow-x: scroll;
+        position: absolute;
+        left: 0;
+
+        .blog-card {
+            width: 100%;
+
+            img {
+                width: 264px;
+            }
+
+            &:first-child {
+                margin-left: 40px;
+            }
+
+            &:last-child {
+                padding-right: 40px;
+            }
+
+            .blog-tags {
+                margin-top: 16px;
+            }
+
+            .subtitle-large {
+                font-size: 24px;
+            }
+        }
     }
 }

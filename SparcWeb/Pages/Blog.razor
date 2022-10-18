@@ -1,1 +1,45 @@
-﻿@page "/Blogs/{Title}"
+@page "/blogs/{title}"
+
+<section class="blog-page">
+    <div class="container">
+        <div class="blog">
+            <div class="title">
+                <h5 class="semi-bold title-1">How to tackle HTML/CSS as a beginner (All you need to know is in here!)</h5>
+            </div>
+            <div class="posted">
+                <p>Mary Jane</p>
+                <p>1/1/2022</p>
+            </div>
+            <div class="blog-image">
+                <img src="./images/Laptop.png" />
+            </div>
+            <div class="blog-content semi-bold">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Feugiat pretium nibh ipsum consequat nisl vel pretium. Lectus magna fringilla urna porttitor rhoncus dolor purus. Vel pretium lectus quam id leo in vitae turpis massa.
+                    <br /><br />
+                    Ultrices in iaculis nunc sed augue lacus viverra vitae. Arcu dictum varius duis at consectetur lorem donec massa sapien. Accumsan in nisl nisi scelerisque eu ultrices vitae. Augue neque gravida in fermentum et sollicitudin.
+                    <br /><br />
+                    Augue mauris augue neque gravida in. Suspendisse sed nisi lacus sed. Aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis. Varius quam quisque id diam vel quam elementum pulvinar etiam.
+                    <br /><br />
+                    Nunc pulvinar sapien et ligula. Hac habitasse platea dictumst quisque. Venenatis cras sed felis eget velit aliquet sagittis id. Iaculis eu non diam phasellus vestibulum. Adipiscing elit pellentesque habitant morbi. Pellentesque habitant morbi tristique senectus et netus. Convallis aenean et tortor at risus.
+                    <br /><br />
+                    Facilisi cras fermentum odio eu feugiat pretium nibh ipsum. Tristique magna sit amet purus gravida quis. Bibendum neque egestas congue quisque egestas diam in. Eget arcu dictum varius duis. A diam maecenas sed enim ut. In ante metus dictum at. Augue neque gravida in fermentum et sollicitudin. Turpis egestas pretium aenean pharetra magna. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices gravida. Rhoncus aenean vel elit scelerisque mauris pellentesque. Enim nec dui nunc mattis enim.
+                    <br /><br />
+                    Rhoncus aenean vel elit scelerisque mauris pellentesque. Nullam non nisi est sit amet facilisis magna. Nisi porta lorem mollis aliquam ut porttitor leo a. Facilisis mauris sit amet massa. Eu scelerisque felis imperdiet proin. Enim blandit volutpat maecenas volutpat blandit aliquam etiam erat. Pellentesque sit amet porttitor eget dolor morbi non arcu. Duis ut diam quam nulla porttitor massa id.
+                </p>
+                <div>
+                    <button class="btn-large">Share this blog</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public string title { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //await Ibis.InitAsync("sparc");
+    }
+}
