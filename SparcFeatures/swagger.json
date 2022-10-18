@@ -73,16 +73,19 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "Id": {
+                    "type": "string"
+                  },
                   "PostId": {
                     "type": "string"
                   },
-                  "user_name": {
+                  "User_name": {
                     "type": "string"
                   },
-                  "text": {
+                  "Text": {
                     "type": "string"
                   },
-                  "command": {
+                  "Command": {
                     "type": "string"
                   },
                   "Timestamp": {
@@ -97,23 +100,23 @@
                   },
                   "Title": {
                     "type": "string"
-                  },
-                  "Id": {
-                    "type": "string"
                   }
                 }
               },
               "encoding": {
+                "Id": {
+                  "style": "form"
+                },
                 "PostId": {
                   "style": "form"
                 },
-                "user_name": {
+                "User_name": {
                   "style": "form"
                 },
-                "text": {
+                "Text": {
                   "style": "form"
                 },
-                "command": {
+                "Command": {
                   "style": "form"
                 },
                 "Timestamp": {
@@ -126,9 +129,6 @@
                   "style": "form"
                 },
                 "Title": {
-                  "style": "form"
-                },
-                "Id": {
                   "style": "form"
                 }
               }

@@ -19,17 +19,17 @@ public class SlackCommands : ControllerBase
     {
         SaveNewPost(request);
 
-        return $"'{request.text}' - Thank you, your post has been received!";
+        return $"'{request.Text}' - Thank you, your post has been received!";
     }
 
     [ApiExplorerSettings(IgnoreApi = true)]
     public async Task SaveNewPost(SlackPost request)
     {
         SlackPost newPost = request;
-        string[] parseRequest = request.text.Split(' ', 2);
+        string[] parseRequest = request.Text.Split(' ', 2);
         newPost.SiteName = parseRequest[0];
         newPost.PostType = parseRequest[1].Split(' ', 2)[0];
-        newPost.text = parseRequest[1].Split(' ', 2)[1];
+        newPost.Text = parseRequest[1].Split(' ', 2)[1];
 
         Posts.UpdateAsync(newPost);
     }
