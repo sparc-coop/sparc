@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="_Plugins\" />
+	<Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

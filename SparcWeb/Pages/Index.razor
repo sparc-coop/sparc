@@ -212,7 +212,7 @@
     public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
     
-    pprotected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
             await Ibis.TranslatePageAsync("sparc-landing-page");
