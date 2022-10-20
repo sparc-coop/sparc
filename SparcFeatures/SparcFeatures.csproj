@@ -7,6 +7,11 @@
     <UserSecretsId>30e88c96-c3e4-44e9-b6d8-af2d44f2d461</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Pages\app.css" />
+    <None Remove="Pages\app.min.css" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<Content Include=".config\dotnet-tools.json" />
 	</ItemGroup>
@@ -27,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="_Plugins\" />
-	<Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>
