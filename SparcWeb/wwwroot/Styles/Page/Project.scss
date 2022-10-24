@@ -135,8 +135,9 @@
         padding-top: 100px;
 
         .card-wrapper {
-            width: 1268px;
-            height: 419px;
+            width: 100%;
+            max-width: 1268px;
+            height: 100%;
             margin: 0 auto;
             gap: 0px;
             background: $yellow-100;
@@ -169,7 +170,7 @@
             }
 
             .divider {
-                height: 75%;
+                height: 325px;
                 border: 0.5px solid $grey-500;
             }
         }
@@ -190,6 +191,41 @@
 
             p {
                 font-family: 'IBMPlexSans-Regular';
+            }
+        }
+
+        .blog-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+
+            .blog-card {
+                width: 384px;
+
+                img {
+                    width: 100%;
+                }
+
+                .blog-tags {
+                    margin-top: 42px;
+
+                    .tag {
+                        margin: 0;
+                        padding: 0;
+                        border: none;
+                        font-family: 'IBMPlexSans-Regular';
+                    }
+
+                    .tag-divider {
+                        font-size: 14px;
+                        color: $peach-500;
+                    }
+                }
+
+                .subtitle-large {
+                    font-size: 24px;
+                }
             }
         }
     }
@@ -360,6 +396,44 @@
                     margin: 0 auto;
                 }
             }
+
+            .blog-wrapper {
+                width: 100%;
+                padding-bottom: 15px;
+                max-width: none;
+                display: flex;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                justify-content: normal;
+                gap: 32px;
+                overflow-x: scroll;
+                position: absolute;
+                left: 0;
+
+                .blog-card {
+                    width: 100%;
+
+                    img {
+                        width: 264px;
+                    }
+
+                    &:first-child {
+                        margin-left: 40px;
+                    }
+
+                    &:last-child {
+                        padding-right: 40px;
+                    }
+
+                    .blog-tags {
+                        margin-top: 16px;
+                    }
+
+                    .subtitle-large {
+                        font-size: 24px;
+                    }
+                }
+            }
         }
     }
 
@@ -470,7 +544,6 @@
 
                         &.badge {
                             padding: 48px 17px;
-                            padding-top: 8px;
                         }
 
                         .community-signup {

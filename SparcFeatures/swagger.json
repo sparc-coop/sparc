@@ -76,10 +76,10 @@
                   "PostId": {
                     "type": "string"
                   },
-                  "user_name": {
+                  "User_name": {
                     "type": "string"
                   },
-                  "text": {
+                  "Text": {
                     "type": "string"
                   },
                   "command": {
@@ -107,10 +107,10 @@
                 "PostId": {
                   "style": "form"
                 },
-                "user_name": {
+                "User_name": {
                   "style": "form"
                 },
-                "text": {
+                "Text": {
                   "style": "form"
                 },
                 "command": {

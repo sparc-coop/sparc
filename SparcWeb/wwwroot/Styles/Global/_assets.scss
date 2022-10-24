@@ -59,7 +59,6 @@ section:last-of-type {
     }
 }
 
-
 .blog-tags {
     display: flex;
     align-items: center;
@@ -73,6 +72,41 @@ section:last-of-type {
         color: var(--primary-900);
         background: white;
         font-weight: 400;
+    }
+}
+
+.project-card {
+    .card-tags-wrapper {
+        display: flex;
+        justify-content: space-between;
+
+        .card-tags {
+            button {
+                border: none;
+                color: $purple-500;
+                background: var(--secondary-500);
+                border-radius: 100px;
+            }
+
+            button:hover {
+                background: var(--secondary-300);
+            }
+        }
+
+        .card-github {
+            button {
+                padding: 4px 14px 3px 14px;
+                background: $white;
+                border: 1px solid $grey-100;
+                border-radius: 100px;
+                opacity: 0.75;
+
+                img {
+                    width: 15px;
+                    opacity: 0.75;
+                }
+            }
+        }
     }
 }
 
@@ -213,7 +247,7 @@ button {
 
         .badge {
             .card-header {
-                margin-top: 72px;
+                margin-top: 76px;
             }
         }
     }

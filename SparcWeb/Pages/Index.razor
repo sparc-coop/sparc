@@ -9,11 +9,22 @@
                 <p class="subtitle-1">We are building a community of individuals & organisations who believe there is a better way to fund, build and reward startups.</p>
             </div>
             <div class="cta-box">
+                <div class="profile-pics-wrapper mobile">
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                </div>
                 <div class="box-header">
                     <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
                 </div>
                 <div class="cta-flex">
-@*                    <div class="profile-pics-wrapper">
+                    <div class="profile-pics-wrapper desktop">
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
@@ -23,8 +34,9 @@
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
-                    </div>*@
+                    </div>
                     <div>
+                        <input class="cta-email" placeholder="Your Email"/>
                         <button>Join the community</button>
                     </div>
                 </div>
@@ -102,7 +114,7 @@
                         <p class="subtitle-medium">Sparc Projects</p>
                     </div>
                     <h5 class="subtitle-large">To put this belief into practice, we have self funded a few initial startups, which, once profitable will be able to continue to fund following startups through to their own profitability.</h5>
-                    <a class="link-large" href="/projectlist">View All Projects <img src="images/icons/Icon Right.svg" /></a>
+                    <a class="link-large" href="/Projects">View All Projects <img src="images/icons/Icon Right.svg" /></a>
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
@@ -212,7 +224,9 @@
     public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
     
-    pprotected override async Task OnAfterRenderAsync(bool firstRender)
+    @inject SparcWeb.IbisContentProvider Ibis
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
             await Ibis.TranslatePageAsync("sparc-landing-page");
