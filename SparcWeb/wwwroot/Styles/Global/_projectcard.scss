@@ -1,10 +1,16 @@
 ﻿@import "_variables.scss";
 
 .project-card {
+    margin-bottom: 30px;
+    padding: 0px;
+    max-width: 100%;
+    width: 589px;
+    height: 516px;
+
     .card-header {
+        height: 30px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
         margin-bottom: 8px;
         margin-top: 20px;
     }
@@ -13,24 +19,30 @@
         font-family: 'NeueHaasDisplayRomanItalic';
     }
 
-    .card-content {
-        .image-wrapper {
-            position: relative;
+    .image-wrapper {
+        position: relative;
+        height: 367px;
 
-            .project-status {
-                position: absolute;
-                top: 8px;
-                right: 8px;
-            }
-
-            .in-progress {
-                width: 109px;
-            }
-
-            .live {
-                width: 67px;
-            }
+        .project-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
         }
+
+        .in-progress {
+            width: 109px;
+        }
+
+        .live {
+            width: 67px;
+        }
+    }
+
+    .photo {
+        border-radius: 6px;
+        max-height: 367px;
+        height: 100%;
+        width: 100%;
     }
 
     .card-tags-wrapper {
@@ -65,5 +77,8 @@
                 width: 15px;
             }
         }
+    }
+
+    @media only screen and (max-width: 760px) {
     }
 }

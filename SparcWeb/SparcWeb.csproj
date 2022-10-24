@@ -24,6 +24,7 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	  <PackageReference Include="Sparc.Core" Version="6.3.0" />
+	  <PackageReference Include="Sparc.Notifications.Twilio" Version="6.1.0" />
 	  <PackageReference Include="Sparc.Platforms.Web" Version="6.3.6" />
   </ItemGroup>
 

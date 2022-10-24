@@ -1,0 +1,50 @@
+﻿
+<div class="community-cta">
+    <div class="community-card">
+        <div class="card-header">
+            <h6 class="semi-bold">Individuals</h6>
+            <p>
+                At an individual level, we want to provide guidance, resources and anything else we 
+                can to help you find similar companies, fit into our projects or build your own.
+            </p>
+        </div>
+        <div class="community-signup">
+            <p>Join our community</p>
+            <div class="community-join">
+                <input value="@EmailAddress" placeholder="Your Email"/>
+                <button @onclick="SendEmail" class="btn-large">Join</button>
+            </div>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="community-card">
+        <div class="sparc-badge">
+            <img src="/images/sparc-approved-badge-2x 1.png" />
+        </div>
+        <div class="card-header">
+            <h6 class="semi-bold">Companies</h6>
+            <p>
+                As a company, you have the ability to lead by example, and so we want to partner 
+                with companies to expand our “sparc coop” and proudly show our values are aligned.
+            </p>
+        </div>
+        <div class="community-signup">
+            <p>Join our movement</p>
+            <div class="community-join">
+                <a href="mailto:hello@sparc.coop?subject=Sparc Align Partner Application">Apply to become Sparc Align</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public string EmailAddress;
+    
+    public void SendEmail()
+    {
+        if (EmailAddress != null)
+        {
+            //bool result = Email.SendEmail(EmailAddress, "Join Sparc Community", "Thank you for joining the Sparc Community!");
+        }
+    }
+}

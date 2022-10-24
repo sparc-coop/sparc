@@ -13,20 +13,8 @@
                     <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
                 </div>
                 <div class="cta-flex">
-@*                    <div class="profile-pics-wrapper">
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                    </div>*@
-                    <div>
-                        <button>Join the community</button>
-                    </div>
+                    <input placeholder="Your Email"/>
+                    <button @onclick="SendEmail">Join the community</button>
                 </div>
             </div>
             <div class="learn-more">
@@ -102,26 +90,26 @@
                         <p class="subtitle-medium">Sparc Projects</p>
                     </div>
                     <h5 class="subtitle-large">To put this belief into practice, we have self funded a few initial startups, which, once profitable will be able to continue to fund following startups through to their own profitability.</h5>
-                    <a class="link-large" href="/projectlist">View All Projects <img src="images/icons/Icon Right.svg" /></a>
+                    <a class="link-large" href="/projects">View All Projects <img src="images/icons/Icon Right.svg" /></a>
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
                         <ProjectCard 
                             Title="KodeKit" 
                             Status="Live"
-                            ImgUrl="/images/Frame 359 Group 48.png"
+                            ImgUrl="/images/Laptop.png"
                             Link="https://www.kodekit.io/"
                             Github="https://github.com/sparc-coop/kodekit"
                             Content="@KodekitText"/>
                         <ProjectCard Title="Ibis" 
                             Status="Live"
-                            ImgUrl=""
+                            ImgUrl="/images/ibis.png"
                             Link="https://ibis.chat"
                             Github="https://github.com/sparc-coop/ibis"
                             Content="@IbisText"/>
                         <ProjectCard Title="Law of 100" 
                             Status="Live"
-                            ImgUrl=""
+                            ImgUrl="/images/lawof100.png"
                             Link="https://lawof100.co/"
                             Github="https://github.com/sparc-coop/law-of-100"
                             Content="@LawofText"/>
@@ -130,67 +118,19 @@
             </div>
         </div>
     </section>
-
-    <section class="community">
+        <section class="resources">
         <div class="container">
             <div class="header">
                 <div class="section-tag community-tag"><p class="subtitle-medium">Sparc Community</p></div>
-                <h5 class="subtitle-large">
+                <h5 class="subtitle-large semi-bold">
                     Our projects are just one way we plan to combat this issue within the startup world, 
-                    but another way is to share information, process, resources and more with individuals and 
-                    companies who align with our values and our goals.
+                    but another way is to share information, process, resources and more with individuals 
+                    and companies who align with our values and our goals.
                 </h5>
             </div>
-            <div class="card-wrapper">
-                <div class="community-card">
-                    <div class="cta-flex">
-                        <div class="profile-pics-wrapper">
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-header">
-                        <h6 class="title-2 semi-bold">Individuals</h6>
-                        <p class="subtitle-medium">At an individual level, we want to provide guidance, resources and anything else we can to help you find similar companies, fit into our projects or build your own.
-
-                        </p>
-                    </div>
-                    <div class="community-signup">
-                        <p class="label">Join our community</p>
-                        <div class="community-join">
-                            <input placeholder="Your Email"/>
-                            <button class="btn-large">Join</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="community-card badge">
-                    <div class="sparc-badge">
-                        <img src="./images/sparc-approved-badge-2x 1.png" />
-                    </div>
-                    <div class="card-header">
-                        <h6 class="title-2 semi-bold">Companies</h6>
-                        <p class="subtitle-medium">As a company, you have the ability to lead by example, and so we want to partner with companies to expand our “sparc coop” and proudly show our values are aligned.
-
-                        </p>
-                    </div>
-                    <div class="community-signup">
-                        <p class="label">Join our movement</p>
-                        <div class="community-join">
-                            <button class="btn-large">Apply to become Sparc Align</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <CommunityCta />
         </div>
     </section>
-
     <section class="resources">
         <div class="container">
             <div class="header">
@@ -209,12 +149,19 @@
 
 @code {
     public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
-    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
+    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
     
-    pprotected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
             await Ibis.TranslatePageAsync("sparc-landing-page");
+    }
+    
+    public async Task SendEmail()
+    {
+        EmailService emailService = new EmailService();
+        await emailService.SendContactEmail();
+               
     }
 }

@@ -5,17 +5,8 @@
         &-hero {
             max-width: 72%;
             margin: auto;
-
-            .title {
-                max-width: 48%;
-                margin: 0 auto;
-                margin-bottom: 40px;
-
-
-                .title-1 {
-                    text-align: center;
-                }
-            }
+            text-align: center;
+            padding: 100px 20px;
 
             @media (max-width: 838px) {
                 max-width: 100%;
@@ -30,7 +21,8 @@
             display: flex;
             align-items: center;
             gap: 42px;
-            padding-top: 0;
+            padding: 0;
+            cursor: pointer;
 
             .left {
                 width: 100%;
@@ -68,6 +60,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(384px, 1fr) );
             grid-gap: 32px;
+            padding-top: 160px;
         }
 
         &-card {

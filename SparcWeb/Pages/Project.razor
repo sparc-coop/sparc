@@ -1,41 +1,26 @@
-﻿@page "/Projects/{Title}"
+﻿@page "/Projects/{Title}/{ChannelId}"
 
 <div class="project-page">
     <section class="hero-header">
         <div class="container">
             <div class="header">
                 <div class="title">
-                    <h2 class="title-1 semi-bold">Kode Kit</h2>
-                    <a href="http://kodekit.io">
+                    <h2 class="title-1 semi-bold">@Ibis["title"]</h2>
+                    <a href="@Ibis["url"]" target="_blank" title="Visit Website">
                         <p class="title-2 mobile">Visit Website</p>
                         <i class="material-icons">launch</i>
                     </a>
                 </div>
                 <div>
-                    <p class="subtitle-1">Remove the complexity of HTML & CSS, create a styleguide, and apply your styles directly to the HTML elements. No classes, no confusion.</p>
+                    <p class="subtitle-1">@Ibis["sub-header"]</p>
                 </div>
-                <div class="cta-flex">
+@*                <div class="cta-flex">
                     <div class="profile-pics-wrapper">
                         <div class="profile-pic">
                             <img src="images/Picture.png" />
                         </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </section>
@@ -57,7 +42,7 @@
                         {
                             <div class="timeline-item">
                                 <div class="item-header">
-                                    <p class="title-2 semi-bold">[Title]</p>
+@*                                    <p class="title-2 semi-bold">[Title]</p>*@
                                     <p class="timeline-date subtitle-small">@post.Timestamp.ToString("M")</p>
                                 </div>
                                 <div class="timeline-content">
@@ -68,75 +53,17 @@
                     }
                 </div>
             </div>
-            <div class="read-more">
+@*            <div class="read-more">
                 <button class="btn-small">Read More</button>
-            </div>
+            </div>*@
         </div>
     </section>
-
-    <section class="community">
-        <div class="container">
-            <div class="card-wrapper">
-                <div class="community-card">
-                    <div class="cta-flex">
-                        <div class="profile-pics-wrapper">
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                            <div class="profile-pic">
-                                <img src="images/Picture.png" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-header">
-                        <h6 class="title-2 semi-bold">Individuals</h6>
-                        <p class="subtitle-medium">At an individual level, we want to provide guidance, resources and anything else we can to help you find similar companies, fit into our projects or build your own.
-
-                        </p>
-                    </div>
-
-                    <div class="community-signup">
-                        <p>Join our community</p>
-                        <div class="community-join">
-                            <input placeholder="Your Email"/>
-                            <button class="btn-large">Join</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="community-card badge">
-                    <div class="sparc-badge">
-                        <img src="./images/sparc-approved-badge-2x 1.png" />
-                    </div>
-                    <div class="card-header">
-                        <h6 class="title-2 semi-bold">Companies</h6>
-                        <p class="subtitle-medium">
-                            As a company, you have the ability to lead by example, and so we want to partner with companies to expand our “sparc coop” and proudly show our values are aligned.
-                        </p>
-                    </div>
-
-                    <div class="community-signup">
-                        <p>Join our movement</p>
-                        <div class="community-join">
-                            <button class="btn-large">Apply to become Sparc Align</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="resources">
+    <CommunityCta/>
+@*    <section class="resources">
         <div class="container">
             <div class="header">
                 <h3 class="subtitle-large semi-bold">Related Blogs</h3>
-                <p class="subtitle-small">Quis nostrud exercitation ullamco laboris nisi ut aliquip</p>
+                <p class="subtitle-small"></p>
             </div>
             <div class="blog-wrapper">
                 <div class="blog-card">
@@ -182,15 +109,24 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>*@
 </div>
 
 @code {
     [Parameter] public string Title { get; set; } = null!;
+    [Parameter] public string Link { get; set; } = null!;
+    [Parameter] public string ChannelId { get; set; } = null!;
     IbisChannel? Channel; 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        //if (firstRender)
+            //await Ibis.TranslatePageAsync(ChannelId);
+    }
 
     protected override async Task OnInitializedAsync()
     {
+        await Ibis.TranslatePageAsync(ChannelId);
         Channel = await Ibis.GetAllAsync(Title);
     }
 }

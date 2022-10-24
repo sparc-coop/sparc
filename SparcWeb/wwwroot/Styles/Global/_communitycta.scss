@@ -1,0 +1,207 @@
+﻿@import "_variables.scss";
+
+.community-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin: 0 auto;
+    background: $yellow-100;
+    border-radius: 24px;
+    padding: 48px 40px 40px;
+    max-width: 1268px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 80px;
+
+    h6 {
+        font-size: 28px;
+        margin-top: 65px;
+    }
+
+    .divider {
+        border: 1px solid $grey-500;
+        height: 330px;
+    }
+
+    .community-card {
+        width: 100%;
+        position: relative;
+
+        .card-header {
+            p {
+                font-size: 20px;
+                padding: 12px 0 48px 0;
+            }
+        }
+
+        .sparc-badge {
+            position: absolute;
+            text-align: center;
+            top: -70px;
+        }
+
+        .profile-pics-wrapper {
+            justify-content: center;
+        }
+
+        .community-signup {
+
+            p {
+                padding-bottom: 8px;
+            }
+
+            .community-join {
+                display: flex;
+
+                input {
+                    display: block;
+                    width: 80%;
+                    margin-right: 12px;
+                    border: 1px solid rgba(104, 105, 110, 0.5);
+                    background: $white;
+                    color: $grey-500;
+                    font-family: 'NeueHaasDisplayRoman';
+                    font-size: 16px;
+                    border-radius: 60px;
+                    padding: 13.5px 24px;
+                }
+
+                a, .btn-large {
+                    background: $peach-500;
+                    color: white;
+                    border: none;
+                    border-radius: 100px;
+                    padding: 16px 32px;
+                }
+
+                .btn-large {
+                    height: 48px;
+                    width: 94px;
+                }
+            }
+        }
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        font-family: 'NeueHaasDisplayMedium';
+    }
+
+
+    @media only screen and (max-width: 760px) {
+        width: 100%;
+        padding-top: 70px;
+        padding-bottom: 40px;
+        text-align: center;
+
+        .container {
+            .card-wrapper {
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+                flex-direction: column-reverse;
+                justify-content: space-between;
+                gap: 32px;
+                background: $white;
+                border-radius: 24px;
+
+                .community-card {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0 auto;
+                    padding: 48px 40px;
+                    border-radius: 24px;
+                    background: $yellow-100;
+
+                    .card-header {
+                        padding-top: 0;
+                    }
+
+                    p {
+                        font-size: 20px;
+                        line-height: 22px;
+                    }
+
+                    button {
+                        width: 100%;
+                        padding: 16px 17px;
+                        font-family: 'NeueHaasDisplayMedium';
+                        font-size: 16px;
+                    }
+
+                    .cta-flex {
+                        margin-left: 8px;
+                        justify-content: flex-start;
+
+                        .profile-pics-wrapper {
+                            width: 100%;
+                            justify-content: center;
+                        }
+                    }
+
+                    &.badge {
+                        padding: 0 40px;
+                        padding-bottom: 48px;
+                        border-radius: 24px;
+
+                        .sparc-badge {
+                            position: absolute;
+                            text-align: center;
+                            top: 0;
+                            left: 50%;
+                            transform: translate(-50%,-50%);
+                        }
+                    }
+
+                    .community-signup {
+                        font-size: 16px;
+
+                        .community-join {
+                            flex-direction: column;
+
+                            input {
+                                width: 100%;
+                            }
+                        }
+
+                        p {
+                            font-size: 16px;
+                        }
+                    }
+                }
+
+                .divider {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        width: 100%;
+
+        .community-card {
+            padding: 48px 17px;
+
+            p {
+                font-size: 16px;
+                line-height: 22px;
+            }
+
+            button {
+                padding: 16px 14px;
+            }
+
+            &.badge {
+                padding: 48px 17px;
+                padding-top: 8px;
+            }
+
+            .community-signup {
+                font-size: 16px;
+            }
+        }
+    }
+}

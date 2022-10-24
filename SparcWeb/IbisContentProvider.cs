@@ -43,7 +43,7 @@ public class IbisContentProvider
 
     public async Task<IbisChannel?> GetAllAsync(string channelId, List<string>? additionalMessages = null)
     {
-        var request = new GetAllContentRequest(channelId, Language, additionalMessages);
+        var request = new GetAllContentRequest(channelId.ToLower(), Language, additionalMessages);
         var response = await _httpClient.PostAsJsonAsync<GetAllContentRequest, IbisChannel>("/api/GetAllContent", request);
 
         if (response != null)

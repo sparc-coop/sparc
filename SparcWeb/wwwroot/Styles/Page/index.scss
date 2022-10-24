@@ -52,6 +52,23 @@ body.ibis-translating {
             -webkit-text-stroke: 2px $grey-900;
             margin: 0 12px;
         }
+
+        .cta-box {
+            width: 656px;
+
+            input {
+                width: 420px;
+                height: 40px;
+                border-radius: 40px;
+                background: $white;
+                padding: 12px 24px;
+                margin-right: 6px;
+            }
+
+            button {
+                padding: 12px 15px;
+            }
+        }
     }
 
     .hero-graphic {
@@ -219,70 +236,19 @@ body.ibis-translating {
                         background: $white;
                         border-radius: 24px;
 
-                        .card-header img {
+                        .photo {
                             cursor: pointer;
-                        }                                                              
+                            height: 320px;
+                        }   
+                        
+                        .image-wrapper {
+                            height: 320px;
+                        }
                     }
                 }
 
                 .card:last-child {
                     margin-bottom: 0;
-                }
-            }
-        }
-    }
-
-    .community {
-        padding-bottom: 100px;
-
-        .header {
-            max-width: 1216px;
-            margin: 0 auto;
-            margin-bottom: 55px;
-
-            h5.subtitle-large {
-                max-width: 592px;
-            }
-        }
-
-        .card-wrapper {
-            max-width: 1216px;
-            margin: 0 auto;
-            justify-content: center;
-            flex-wrap: wrap;
-
-            .cta-flex {
-                display: block;
-                padding-left: 10px;
-            }
-
-            .community-card {
-                min-height: 418px;
-                width: 592px;
-            }
-
-            .community-signup {
-                p {
-                    line-height: 21px;
-                }
-
-                .community-join {
-                    flex-wrap: wrap;
-
-                    input {
-                        width: 75%;
-                        min-width: 200px;
-                        border: 1px solid rgba(104, 105, 110, 0.5);
-                        line-height: 16px;
-                        color: $grey-500;
-                        opacity: 0.5;
-                    }
-
-                    @media only screen and (max-width: 578px) {
-                        input {
-                            width: 100%;
-                        }
-                    }
                 }
             }
         }
@@ -452,61 +418,6 @@ body.ibis-translating {
                             }
                         }
                     }
-                }
-            }
-        }
-
-        .community {
-            padding-top: 64px;
-            padding-bottom: 64px;
-
-            .header {
-                h5 {
-                    margin: 0 auto;
-                }
-            }
-
-            .card-wrapper {
-                margin-top: 124px;
-                flex-direction: column-reverse;
-
-                .community-card {
-                    width: 100%;
-
-                    &.badge {
-                        .sparc-badge {
-                            position: absolute;
-                            text-align: center;
-                            top: 0;
-                            left: 50%;
-                            transform: translate(-50%,-50%);
-                        }
-                    }
-
-                    .profile-pics-wrapper {
-                        justify-content: center;
-                    }
-
-                    .community-signup {
-                        .community-join {
-                            justify-content: center;
-                            display: block;
-                            flex-wrap: nowrap;
-
-                            input {
-                                display: block;
-                                width: 100%;
-                                margin-bottom: 12px;
-                                text-align: left;
-                            }
-                        }
-                    }
-                }
-
-                button {
-                    display: block;
-                    width: 100%;
-                    font-family: 'NeueHaasDisplayMedium';
                 }
             }
         }
