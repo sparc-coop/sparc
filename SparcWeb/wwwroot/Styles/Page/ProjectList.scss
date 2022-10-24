@@ -1,9 +1,11 @@
 ﻿@import "../Global/_variables.scss";
 
 .project-list-page {
+    padding-bottom: 130px;
+
     .hero-header {
         text-align: center;
-        padding: 120px 0 140px 0;
+        padding-bottom: 55px;
 
         .header {
             max-width: 1007px;
@@ -54,24 +56,23 @@
     }
 
     .project-list-wrapper {
-        padding: 140px 30px 100px 30px;
-        width: 100%;
-        max-width: 1276px;
-        margin: 0 auto;
+        padding: 0 60px;
+        padding-top: 200px;
 
         .filters {
             display: flex;
             justify-content: space-between;
+            gap: 20px;
             align-items: center;
             margin-bottom: 36px;
 
-            .search {
-                position: relative;
-                width: 300px;
+            input {
+                width: 100%;
+            }
 
-                input {
-                    width: 300px;
-                }
+            .search {
+                width: 100%;
+                position: relative;
 
                 i {
                     position: absolute;
@@ -83,29 +84,49 @@
 
             select {
                 max-width: 124px;
-                font-size: 20px;
-                cursor: pointer;
+                font-size: 16px;
             }
         }
 
         .project-list {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             gap: 38px;
             flex-wrap: wrap;
 
             .project-card {
+                width: 47%;
+                max-width: 589px;
                 margin-bottom: 0px;
                 padding: 0px;
-                max-width: 100%;
-                width: 589px;
-                height: 516px;
 
-                .photo {
-                    max-height: 367px;
-                    height: 100%;
-                    width: 100%;
+                .btn-small {
+                    font-style: italic;
+                }
+
+                .card-content {
+                    .image-wrapper {
+                        position: relative;
+
+                        img.photo {
+                            width: 100%;
+                            max-width: 589px;
+                        }
+
+                        img.project-status {
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                        }
+
+                        img.in-progress {
+                            width: 109px;
+                        }
+
+                        img.live {
+                            width: 67px;
+                        }
+                    }
                 }
             }
         }
@@ -141,7 +162,8 @@
         }
 
         .project-list-wrapper {
-            padding: 70px 30px;
+            padding: 0 30px;
+            padding-top: 70px;
 
             .filters {
                 display: flex;
@@ -173,7 +195,6 @@
             }
 
             .project-list {
-                justify-content: center;
                 gap: 30px;
 
                 .project-card {
@@ -186,34 +207,27 @@
                         .image-wrapper {
                             position: relative;
 
-                            img {
+                            img.photo {
                                 width: 100%;
                             }
 
-                            .project-status {
+                            img.project-status {
                                 position: absolute;
                                 top: 8px;
                                 right: 8px;
                             }
 
-                            .in-progress {
+                            img.in-progress {
                                 width: 109px;
                             }
 
-                            .live {
+                            img.live {
                                 width: 67px;
                             }
                         }
 
                         .card-header {
                             margin-bottom: 12px;
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-
-                            .image-wrapper {
-                                margin-bottom: 0;
-                            }
                         }
 
                         .card-tags-wrapper {
@@ -230,6 +244,10 @@
                                 button {
                                     font-size: 14px;
                                 }
+                            }
+
+                            .card-github {
+                                width: 100%;
                             }
                         }
                     }
@@ -252,7 +270,7 @@
         }
 
         .project-list-wrapper {
-            padding: 0 16px;
+            padding-bottom: 0px;
 
             .filters {
                 .search {
@@ -284,17 +302,21 @@
                         .image-wrapper {
                             position: relative;
 
-                            .project-status {
+                            img {
+                                width: 100%;
+                            }
+
+                            img.project-status {
                                 position: absolute;
                                 top: 8px;
                                 right: 8px;
                             }
 
-                            .in-progress {
+                            img.in-progress {
                                 width: 109px;
                             }
 
-                            .live {
+                            img.live {
                                 width: 67px;
                             }
                         }
