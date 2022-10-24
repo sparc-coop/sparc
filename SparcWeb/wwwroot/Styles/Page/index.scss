@@ -1,5 +1,4 @@
 ﻿@import "../Global/_variables.scss";
-
 body.ibis-translating {
     visibility: hidden;
     opacity: 0;
@@ -11,17 +10,15 @@ body.ibis-translating {
     }
 
     .home-hero {
-        padding-top: 100px;
+        padding-top: 122px;
         padding-bottom: 24px;
         background: $yellow-100;
         position: relative;
-        box-sizing: border-box;
-        height: calc(100vh - 103px);
 
         .header {
             width: 100%;
             margin: 0 auto;
-            margin-bottom: 52px;
+            margin-bottom: 72px;
 
             h1 {
                 width: 80%;
@@ -78,6 +75,10 @@ body.ibis-translating {
     }
 
     .cta-box {
+        .profile-pics-wrapper.mobile {
+            display: none;
+        }
+
         p.subtitle-small {
             font-family: 'NeueHaasDisplayMedium';
             font-size: 14px;
@@ -86,11 +87,15 @@ body.ibis-translating {
         .cta-flex {
             justify-content: space-between;
         }
+
+        .cta-email {
+            display: none;
+        }
     }
 
     .learn-more {
         margin: 0 auto;
-        margin-top: 50px;
+        margin-top: 122px;
         text-align: center;
 
         a:hover {
@@ -221,6 +226,7 @@ body.ibis-translating {
                 .card-wrapper {
                     max-width: 1216px;
                     margin-bottom: 0px;
+                    padding-bottom: 15px;
                     text-align: left;
                     display: flex;
                     flex-direction: column;
@@ -229,12 +235,24 @@ body.ibis-translating {
 
                     .project-card {
                         width: 100%;
-                        max-width: 520px;
-                        height: 531px;
-                        padding: 32px;
                         margin-bottom: 0px;
-                        background: $white;
+                        padding: 32px;
                         border-radius: 24px;
+                        background: $white;
+
+                        .card-content {
+                            .image-wrapper {
+                                position: relative;
+
+                                img.project-status {
+                                    position: absolute;
+                                    top: 8px;
+                                    right: 8px;
+                                }
+
+                                img.in-progress {
+                                    width: 109px;
+                                }
 
                         .photo {
                             cursor: pointer;
@@ -328,6 +346,56 @@ body.ibis-translating {
                 p.subtitle-1 {
                     font-family: 'IBMPlexSans-SemiBold';
                     font-size: 20px;
+                }
+            }
+
+            .cta-box {
+                text-align: center;
+                min-width: 200px;
+                max-height: none;
+
+                .profile-pics-wrapper.mobile {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 8px;
+
+                    .profile-pic {
+                        max-width: 40px;
+                        max-height: 40px;
+                        border-radius: 1000px;
+                        margin-left: -10px
+                    }
+                }
+
+                .box-header {
+                    margin-bottom: 18px;
+                }
+
+                .cta-flex {
+                    display: block;
+                    text-align: center;
+
+                    .profile-pics-wrapper.desktop {
+                        display: none;
+                    }
+
+                    input, button {
+                        width: 100%;
+                        font-family: 'NeueHaasDisplayRoman';
+                    }
+
+                    .cta-email {
+                        display: block;
+                        margin: 0 auto;
+                        margin-bottom: 8px;
+                        padding: 10px 24px;
+                        background: white;
+                        border: 1px solid rgba(104, 105, 110, 0.5);
+                        border-radius: 100px;
+                        color: rgba(104, 105, 110, 0.5);
+                        font-size: 16px;
+                        line-height: 100%;
+                    }
                 }
             }
         }
@@ -491,21 +559,6 @@ body.ibis-translating {
                 }
             }
 
-            .cta-box {
-                text-align: center;
-                min-width: 200px;
-
-                .cta-flex {
-                    display: block;
-                    text-align: center;
-
-                    .profile-pics-wrapper {
-                        justify-content: center;
-                        margin-bottom: 18px;
-                    }
-                }
-            }
-
             .learn-more {
                 margin-top: 64px;
             }
@@ -531,6 +584,52 @@ body.ibis-translating {
 
         .values {
             padding-bottom: 64px;
+
+            .project-wrapper {
+                .left {
+                    h5.subtitle-large {
+                        margin-bottom: 44px;
+                    }
+
+                    a {
+                        font-size: 16px;
+                    }
+                }
+
+                .right {
+                    .card-wrapper {
+                        gap: 16px;
+
+                        .project-card {
+                            padding: 16px;
+
+                            .card-content {
+                                width: 236px;
+
+                                img.photo {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .resources {
+            .blog-wrapper {
+                gap: 20px;
+
+                .blog-card {
+                    width: 240px;
+
+                    .blog-image {
+                        img {
+                            width: 240px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

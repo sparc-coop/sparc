@@ -9,6 +9,17 @@
                 <p class="subtitle-1">We are building a community of individuals & organisations who believe there is a better way to fund, build and reward startups.</p>
             </div>
             <div class="cta-box">
+                <div class="profile-pics-wrapper mobile">
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                    <div class="profile-pic">
+                        <img src="images/Picture.png" />
+                    </div>
+                </div>
                 <div class="box-header">
                     <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
                 </div>
@@ -152,6 +163,8 @@
     public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
     
+    @inject SparcWeb.IbisContentProvider Ibis
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Sparc.Core;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<App>("#app");
-builder.RootComponents.Add<HeadOutlet>("head::after");
+//builder.RootComponents.Add<App>("#app");
+//builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped<IbisContentProvider>()
     .AddScoped<EmailService>()
     .AddScoped<RootScope>();
