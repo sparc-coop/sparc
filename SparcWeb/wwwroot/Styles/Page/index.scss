@@ -116,7 +116,6 @@ body.ibis-translating {
 
         &-wrapper {
             width: 70%;
-            max-width: 592px;
             margin: 0 auto;
 
             &:first-child {
@@ -240,33 +239,33 @@ body.ibis-translating {
                         border-radius: 24px;
                         background: $white;
 
-                        .card-content {
-                            .image-wrapper {
-                                position: relative;
-
-                                img.project-status {
-                                    position: absolute;
-                                    top: 8px;
-                                    right: 8px;
-                                }
-
-                                img.in-progress {
-                                    width: 109px;
-                                }
-
-                        .photo {
-                            cursor: pointer;
-                            height: 320px;
-                        }   
-                        
                         .image-wrapper {
                             height: 320px;
+
+                            .project-status {
+                                position: absolute;
+                                top: 8px;
+                                right: 8px;
+                            }
+
+                            .in-progress {
+                                width: 109px;
+                            }
+
+                            .photo {
+                                cursor: pointer;
+                                height: 320px;
+                            }
+
+                            .image-wrapper {
+                                height: 320px;
+                            }
+                        }
+
+                        .card:last-child {
+                            margin-bottom: 0;
                         }
                     }
-                }
-
-                .card:last-child {
-                    margin-bottom: 0;
                 }
             }
         }
@@ -610,22 +609,6 @@ body.ibis-translating {
                                     width: 100%;
                                 }
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        .resources {
-            .blog-wrapper {
-                gap: 20px;
-
-                .blog-card {
-                    width: 240px;
-
-                    .blog-image {
-                        img {
-                            width: 240px;
                         }
                     }
                 }

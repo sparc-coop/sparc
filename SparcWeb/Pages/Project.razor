@@ -122,11 +122,12 @@
     {
         //if (firstRender)
             //await Ibis.TranslatePageAsync(ChannelId);
+            Channel = await Ibis.GetAllAsync(Title);
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await Ibis.TranslatePageAsync(ChannelId);
-        Channel = await Ibis.GetAllAsync(Title);
+        //await Ibis.TranslatePageAsync(ChannelId);
+        //Channel = await Ibis.GetAllAsync(Title);
     }
 }
