@@ -12,7 +12,7 @@
     "Sparc.Features": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:7044",
+      "applicationUrl": "https://localhost:7044",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
