@@ -11,7 +11,7 @@
         <div class="community-signup">
             <p>Join our community</p>
             <div class="community-join">
-                <input value="@EmailAddress" placeholder="Your Email"/>
+                <input @bind="@EmailAddress" placeholder="Your Email"/>
                 <button @onclick="SendEmail" class="btn-large">Join</button>
             </div>
         </div>
