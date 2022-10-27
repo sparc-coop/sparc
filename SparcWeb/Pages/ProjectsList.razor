@@ -23,7 +23,7 @@
     </section>
 
     <section class="project-list-wrapper">
-        <div class="filters">
+@*        <div class="filters">
             <div class="search">
                 <input placeholder="Search">
                 <i class="material-icons">search</i>
@@ -34,40 +34,38 @@
                 <option>Ideas</option>
                 <option>Design</option>
             </select>
-        </div>
+        </div>*@
         <div class="project-list">
-            @if(string.IsNullOrWhiteSpace(SearchText))
-            {
-                <ProjectCard 
-                    Title="KodeKit" 
-                    Status="Live"
-                    ImgUrl="/images/Laptop.png"
-                    Link="https://www.kodekit.io/"
-                    Github="https://github.com/sparc-coop/kodekit"
-                    Content="@KodekitText"
-                    ChannelId="kodekit-content"/>
-                <ProjectCard Title="Ibis" 
-                    Status="Live"
-                    ImgUrl="/images/ibis.png"
-                    Link="https://ibis.chat"
-                    Github="https://github.com/sparc-coop/ibis"
-                    Content="@IbisText"
-                    ChannelId="ibis-content"/>
-                <ProjectCard Title="Law of 100" 
-                    Status="Live"
-                    ImgUrl="/images/lawof100.png"
-                    Link="https://lawof100.co/"
-                    Github="https://github.com/sparc-coop/law-of-100"
-                    Content="@LawofText"
-                    ChannelId="lawof100-content"/>
-                <ProjectCard Title="Conseris" 
-                    Status="In Progress"
-                    ImgUrl="/images/conseris.png"
-                    Link="https://conseris.io/"
-                    Github="https://github.com/sparc-coop"
-                    Content="@ConserisText"
-                    ChannelId="conseris-content"/>
-            }
+@*            @if(string.IsNullOrWhiteSpace(SearchText))*@           
+            <ProjectCard 
+                Title="KodeKit" 
+                Status="Live"
+                ImgUrl="/images/Laptop.png"
+                Link="https://www.kodekit.io/"
+                Github="https://github.com/sparc-coop/kodekit"
+                Content="@KodekitText"
+                ChannelId="kodekit-content"/>
+            <ProjectCard Title="Ibis" 
+                Status="Live"
+                ImgUrl="/images/ibis.png"
+                Link="https://ibis.chat"
+                Github="https://github.com/sparc-coop/ibis"
+                Content="@IbisText"
+                ChannelId="ibis-content"/>
+            <ProjectCard Title="Law of 100" 
+                Status="Live"
+                ImgUrl="/images/lawof100.png"
+                Link="https://lawof100.co/"
+                Github="https://github.com/sparc-coop/law-of-100"
+                Content="@LawofText"
+                ChannelId="lawof100-content"/>
+            <ProjectCard Title="Conseris" 
+                Status="In Progress"
+                ImgUrl="/images/conseris.png"
+                Link="https://conseris.io/"
+                Github="https://github.com/sparc-coop"
+                Content="@ConserisText"
+                ChannelId="conseris-content"/>        
         </div>
     </section>
     

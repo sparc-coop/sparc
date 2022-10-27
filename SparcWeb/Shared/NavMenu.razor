@@ -19,7 +19,7 @@
         </div>
         <div class="community-join">
             <div class="@ToggleContact">
-                <input value="@EmailAddress" placeholder="Your Email"/>
+                <input @bind="@EmailAddress" placeholder="Your Email"/>
                 <button @onclick="SendEmail">Join Now</button>
             </div>
             @if(ToggleContact != "toggle-show")
@@ -42,10 +42,10 @@
                 <a href="/">Home</a>
             </li>
             <li class="nav-link">
-                <a href="/Blogs">Resources</a>
+                <a href="/blogs">Blogs</a>
             </li>
             <li class="nav-link">
-                <a href="/Projects">Projects</a>
+                <a href="/projects">Projects</a>
             </li>
             <li class="nav-link">
                 <a href="mailto:hello@sparc.coop?subject=Contact Inquiry">Contact</a>
@@ -64,10 +64,10 @@
 
     async Task SendEmail()
     {
-        //if (EmailAddress != null)
-        //{
-        //    //bool result = Email.SendEmail(EmailAddress, "Join Sparc Community", "Thank you for joining the Sparc Community!");
-        //}
+        if (EmailAddress != null)
+        {
+            //bool result = Email.SendEmail(EmailAddress, "Join Sparc Community", "Thank you for joining the Sparc Community!");
+        }
         
         ToggleContact = "toggle";
     }

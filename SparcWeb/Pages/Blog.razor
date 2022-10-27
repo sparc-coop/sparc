@@ -6,17 +6,14 @@
             <h5 class="semi-bold title-1">@Ibis["title"]</h5>
                 @if (Channel != null)
                 {
-                    @foreach (var post in Channel.Content.Where(x => x.Tag == null))
+                    @foreach (var post in Channel.Content.OrderBy(x => x.Timestamp).Take(1))
                     {
                         <div class="posted">
-                            @*<p>Name</p>*@
+                            @*<p>Name</p>*@ 
                             <p>@post.Timestamp.ToString("M")</p>
                         </div>
-                        <div class="blog-image">
-                            <img src="/images/Laptop.png" />
-                        </div>
                         <p>
-                            @post
+                            @((MarkupString)post.Text)
                         </p>
                     }
                 }
@@ -31,6 +28,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Channel = await Ibis.GetAllAsync(title);
+        Channel = await Ibis.GetAllAsync(title, null, true);
     }
 }

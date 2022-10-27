@@ -11,7 +11,6 @@ nav {
         position: relative;
 
         .logo {
-            //flex: 1;
             margin-right: 10px;
 
             img {
@@ -39,23 +38,6 @@ nav {
 
         .community-join {
             width: 148px;
-            
-            /*
-            .profile-pics-wrapper {
-                margin-right: 10px;
-                margin-left: 20px;
-
-                .profile-pic {
-                    margin-right: 12px;
-                    max-width: 14px;
-                    max-height: 20px;
-
-                    img {
-                        max-width: 24px;
-                        max-height: 24px;
-                    }
-                }
-            }*/
 
             > div {
                 position: absolute;
@@ -73,7 +55,7 @@ nav {
             }
 
             input {
-                width: 320px;
+                width: 280px;
                 height: 34px;
                 border-radius: 40px;
                 background: $white;
