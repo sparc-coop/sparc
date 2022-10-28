@@ -23,7 +23,7 @@
     </section>
 
     <section class="project-list-wrapper">
-        <div class="filters">
+@*        <div class="filters">
             <div class="search">
                 <input placeholder="Search">
                 <i class="material-icons">search</i>
@@ -34,33 +34,38 @@
                 <option>Ideas</option>
                 <option>Design</option>
             </select>
-        </div>
+        </div>*@
         <div class="project-list">
+@*            @if(string.IsNullOrWhiteSpace(SearchText))*@           
             <ProjectCard 
                 Title="KodeKit" 
                 Status="Live"
-                ImgUrl="/images/Frame 359 Group 48.png"
+                ImgUrl="/images/Laptop.png"
                 Link="https://www.kodekit.io/"
                 Github="https://github.com/sparc-coop/kodekit"
-                Content="@KodekitText"/>
+                Content="@KodekitText"
+                ChannelId="kodekit-content"/>
             <ProjectCard Title="Ibis" 
                 Status="Live"
-                ImgUrl=""
+                ImgUrl="/images/ibis.png"
                 Link="https://ibis.chat"
                 Github="https://github.com/sparc-coop/ibis"
-                Content="@IbisText"/>
+                Content="@IbisText"
+                ChannelId="ibis-content"/>
             <ProjectCard Title="Law of 100" 
                 Status="Live"
-                ImgUrl=""
+                ImgUrl="/images/lawof100.png"
                 Link="https://lawof100.co/"
                 Github="https://github.com/sparc-coop/law-of-100"
-                Content="@LawofText"/>
+                Content="@LawofText"
+                ChannelId="lawof100-content"/>
             <ProjectCard Title="Conseris" 
                 Status="In Progress"
-                ImgUrl=""
+                ImgUrl="/images/conseris.png"
                 Link="https://conseris.io/"
                 Github="https://github.com/sparc-coop"
-                Content="@ConserisText"/>
+                Content="@ConserisText"
+                ChannelId="conseris-content"/>        
         </div>
     </section>
     
@@ -68,12 +73,15 @@
 
 @code {
     public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
-    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files";
+    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals. With Law of 100, you can rate your experience each day along your process and share your progression with others.";
     public string ConserisText = $"Conseris is a data collection app that provides researchers with the ability to gather data and collaborate without any internet connection. With Conseris, everyone on your team can go into the field, collect data, and see each other’s responses stream into the app. These responses can be reviewed and edited in real time, and are centralized into one location for later review and processing.";
 
-    protected override async Task OnInitializedAsync()
-    {
+    public string SearchText;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await Ibis.TranslatePageAsync("sparc-projects-list");
     }
 }

@@ -1,35 +1,31 @@
 ﻿<div class="project-card">
-    <div class="card-content">
-        <div class="image-wrapper">
-            <a href="/Projects/@titleURL">
-                <img class="photo" src="images/Laptop.png" />
-                @if(Status.ToLower() == "live")
-                {
-                    <img class="project-status live" src="images/icons/Status Pin Live.svg" />
-                } else
-                {
-                    <img class="project-status in-progress" src="images/icons/Status Pin In Progress.svg" />
-                }
-            </a>
+    <div class="image-wrapper">
+        <a href="/Projects/@titleURL/@ChannelId" title="Project Information">
+            <img class="photo" src="@ImgUrl" />
+            @if(Status.ToLower() == "live")
+            {
+                <img class="project-status live" src="images/icons/Status Pin Live.svg" />
+            } else
+            {
+                <img class="project-status in-progress" src="images/icons/Status Pin In Progress.svg" />
+            }
+        </a>
+    </div>
+    <div class="card-header">
+        <h5 class="title-2 semi-bold">@Title</h5>
+        <a href="@Link" target="_blank" title="Site Link">
+            <img src="images/icons/Up-Right.svg" />
+        </a>
+    </div>
+    <p class="subtitle-small">
+        @Content
+    </p>
+    <div class="card-tags-wrapper">
+        <div class="card-tags">
+            <button class="btn-small">Design</button>
+            <button class="btn-small">Productivity</button>
         </div>
-        <div class="card-header">
-            <h5 class="title-2 semi-bold">@Title</h5>
-            <a href="@Link" class="image-wrapper">
-                <img src="images/icons/Up-Right.svg" />
-            </a>
-        </div>
-        <p class="subtitle-small">
-            @Content
-        </p>
-        <div class="card-tags-wrapper">
-            <div class="card-tags">
-                <button class="btn-small">Design</button>
-                <button class="btn-small">Productivity</button>
-            </div>
-            <div class="card-github">
-                <a href="@Github"><img src="images/icons/Github.svg"/></a>
-            </div>
-        </div>
+        <a href="@Github" class="card-github" title="Github Link"><img src="images/icons/Github.svg"/></a>
     </div>
 </div>
 
@@ -40,6 +36,7 @@
     [Parameter] public string Github { get; set;  }
     [Parameter] public string Link { get; set; }
     [Parameter] public string Content { get; set;  }
+    [Parameter] public string ChannelId { get; set;  }
 
     string titleURL;
 

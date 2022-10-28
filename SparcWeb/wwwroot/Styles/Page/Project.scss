@@ -2,7 +2,7 @@
 
 .project-page {
     .hero-header {
-        padding-top: 170px;
+        padding-top: 70px;
         padding-bottom: 140px;
 
         .header {
@@ -17,13 +17,9 @@
 
                 i {
                     margin-left: 20px;
-                    font-style: normal;
-                    font-size: 32px;
+                    font-size: 22px;
                     color: $blue-500;
-
-                    &:hover {
-                        cursor: pointer;
-                    }
+                    cursor: pointer;
                 }
 
                 .mobile {
@@ -85,6 +81,7 @@
 
                     .timeline-item {
                         margin-bottom: 34px;
+                        height: 130px;
 
                         .item-header {
                             margin-bottom: 10px;
@@ -98,8 +95,8 @@
                             }
 
                             .timeline-date {
-                                color: var(--primary-500);
-                                font-family: 'IBMPlexSans-Regular';
+                                color: var(--primary-700);
+                                font-family: 'IBMPlexSans-SemiBold';
                                 line-height: 21px;
                             }
                         }
@@ -129,53 +126,7 @@
             }
         }
     }
-
-    .community {
-        width: 100%;
-        padding-top: 100px;
-
-        .card-wrapper {
-            width: 100%;
-            max-width: 1268px;
-            height: 100%;
-            margin: 0 auto;
-            gap: 0px;
-            background: $yellow-100;
-            border-radius: 24px;
-
-            .community-card {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                border-top-right-radius: 0px;
-                border-bottom-right-radius: 0px;
-
-                .cta-flex {
-                    margin-left: 8px;
-                    justify-content: flex-start;
-                }
-
-                &.badge {
-                    border-radius: 24px;
-                    border-top-left-radius: 0px;
-                    border-bottom-left-radius: 0px;
-                }
-
-                input {
-                    border: 1px solid rgba(104, 105, 110, 0.5);
-                    background: $white;
-                    color: $grey-500;
-                    opacity: 0.5;
-                }
-            }
-
-            .divider {
-                height: 325px;
-                border: 0.5px solid $grey-500;
-            }
-        }
-    }
-
+    
     .resources {
         padding-top: 100px;
         padding-bottom: 150px;
@@ -274,103 +225,6 @@
 
                 .cta-flex {
                     margin-top: 32px;
-                }
-            }
-        }
-
-        .community {
-            width: 100%;
-            padding-top: 70px;
-            padding-bottom: 40px;
-            text-align: center;
-
-            .container {
-                .card-wrapper {
-                    width: 100%;
-                    height: 100%;
-                    margin: 0 auto;
-                    flex-direction: column-reverse;
-                    justify-content: space-between;
-                    gap: 32px;
-                    background: $white;
-                    border-radius: 24px;
-
-                    .community-card {
-                        width: 100%;
-                        height: 100%;
-                        margin: 0 auto;
-                        padding: 48px 40px;
-                        border-radius: 24px;
-                        background: $yellow-100;
-
-                        .card-header {
-                            padding-top: 0;
-                        }
-
-                        p {
-                            font-size: 20px;
-                            line-height: 22px;
-                        }
-
-                        button {
-                            width: 100%;
-                            padding: 16px 17px;
-                            font-family: 'NeueHaasDisplayMedium';
-                            font-size: 16px;
-                        }
-
-                        .cta-flex {
-                            margin-left: 8px;
-                            justify-content: flex-start;
-
-                            .profile-pics-wrapper {
-                                width: 100%;
-                                justify-content: center;
-                            }
-                        }
-
-                        &.badge {
-                            padding: 0 40px;
-                            padding-bottom: 48px;
-                            border-radius: 24px;
-
-                            .sparc-badge {
-                                position: absolute;
-                                text-align: center;
-                                top: 0;
-                                left: 50%;
-                                transform: translate(-50%,-50%);
-                            }
-                        }
-
-                        .community-signup {
-                            font-size: 16px;
-
-                            .community-join {
-                                display: flex;
-                                flex-direction: column;
-
-                                input {
-                                    width: 100%;
-                                    border: 1px solid rgba(104, 105, 110, 0.5);
-                                    background: $white;
-                                    color: $grey-500;
-                                    opacity: 0.5;
-                                    font-family: 'NeueHaasDisplayRoman';
-                                    font-size: 16px;
-                                    text-align: left;
-                                }
-                            }
-
-                            p {
-                                font-size: 16px;
-                            }
-                        }
-                    }
-
-                    .divider {
-                        display: none;
-                    }
                 }
             }
         }
@@ -520,51 +374,6 @@
                         border: 1px solid var(--primary-900);
                         border-radius: 5px;
                         color: var(--primary-900);
-                    }
-                }
-            }
-        }
-
-        .community {
-            .container {
-                .card-wrapper {
-                    width: 100%;
-
-                    .community-card {
-                        padding: 48px 17px;
-
-                        p {
-                            font-size: 16px;
-                            line-height: 22px;
-                        }
-
-                        button {
-                            padding: 16px 14px;
-                        }
-
-                        &.badge {
-                            padding: 48px 17px;
-                        }
-
-                        .community-signup {
-                            font-size: 16px;
-
-                            .community-join {
-                                display: flex;
-                                flex-direction: column;
-
-                                input {
-                                    width: 100%;
-                                    border: 1px solid rgba(104, 105, 110, 0.5);
-                                    background: $white;
-                                    color: $grey-500;
-                                    opacity: 0.5;
-                                    font-family: 'NeueHaasDisplayRoman';
-                                    font-size: 16px;
-                                    text-align: left;
-                                }
-                            }
-                        }
                     }
                 }
             }

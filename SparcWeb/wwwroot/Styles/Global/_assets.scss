@@ -8,12 +8,7 @@
 }
 
 section {
-    padding-top: 160px;
-    padding-bottom: 200px;
-}
-
-section:last-of-type {
-    padding-bottom: 100px;
+    padding: 100px 0;
 }
 
 //tags
@@ -59,6 +54,7 @@ section:last-of-type {
     }
 }
 
+
 .blog-tags {
     display: flex;
     align-items: center;
@@ -72,41 +68,6 @@ section:last-of-type {
         color: var(--primary-900);
         background: white;
         font-weight: 400;
-    }
-}
-
-.project-card {
-    .card-tags-wrapper {
-        display: flex;
-        justify-content: space-between;
-
-        .card-tags {
-            button {
-                border: none;
-                color: $purple-500;
-                background: var(--secondary-500);
-                border-radius: 100px;
-            }
-
-            button:hover {
-                background: var(--secondary-300);
-            }
-        }
-
-        .card-github {
-            button {
-                padding: 4px 14px 3px 14px;
-                background: $white;
-                border: 1px solid $grey-100;
-                border-radius: 100px;
-                opacity: 0.75;
-
-                img {
-                    width: 15px;
-                    opacity: 0.75;
-                }
-            }
-        }
     }
 }
 
@@ -135,7 +96,6 @@ button {
     background: $yellow-500;
     border: 1px solid var(--grey-900);
     border-radius: 24px;
-    max-width: 562px;
     max-height: 117px;
     margin: 0 auto;
 
@@ -171,84 +131,4 @@ button {
 //hero
 .hero-header {
     background: $yellow-100;
-}
-
-//Community Component
-.community {
-    padding-bottom: 100px;
-
-    .header {
-        margin-bottom: 56px;
-        max-width: 50%;
-    }
-
-    .card-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 32px;
-
-        .community-card {
-            background: $yellow-100;
-            border-radius: 24px;
-            padding: 48px 40px 40px;
-
-            &.badge {
-                position: relative;
-
-                .sparc-badge {
-                    position: absolute;
-                    left: 40px;
-                    top: -18px;
-                }
-            }
-
-            .cta-flex {
-                margin-bottom: 36px;
-            }
-
-            .card-header {
-                margin-bottom: 48px;
-
-                h6 {
-                    margin-bottom: 12px;
-                }
-            }
-
-            .community-signup {
-                p {
-                    margin-bottom: 8px;
-                }
-
-                .community-join {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 12px;
-
-                    input {
-                        height: 48px;
-                        padding: 12px 24px;
-                        background: white;
-                        border: 1px solid var(--primary-300);
-                        border-radius: 100px;
-                        width: 100%;
-                    }
-
-                    button {
-                        background: $peach-500;
-                        color: white;
-                        border: none;
-                        border-radius: 100px;
-                    }
-                }
-            }
-        }
-
-        .badge {
-            .card-header {
-                margin-top: 76px;
-            }
-        }
-    }
 }

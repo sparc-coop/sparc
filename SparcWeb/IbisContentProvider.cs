@@ -4,8 +4,8 @@ using System.Text.Json;
 
 namespace SparcWeb;
 
-public record GetAllContentRequest(string RoomSlug, string Language, List<string>? AdditionalMessages = null);
-public record GetContentRequest(string RoomSlug, string Tag, string Language);
+public record GetAllContentRequest(string RoomSlug, string Language, List<string>? AdditionalMessages = null, bool AsHtml = false);
+public record GetContentRequest(string RoomSlug, string Tag, string Language, bool AsHtml = false);
 
 public record IbisChannel(string Name, string Slug, List<IbisContent> Content);
 public record IbisContent(string Tag, string Text, string Language, string? Audio, DateTime Timestamp)
@@ -41,9 +41,9 @@ public class IbisContentProvider
         return await _httpClient.PostAsJsonAsync<GetContentRequest, IbisContent>("/api/GetContent", request);
     }
 
-    public async Task<IbisChannel?> GetAllAsync(string channelId, List<string>? additionalMessages = null)
+    public async Task<IbisChannel?> GetAllAsync(string channelId, List<string>? additionalMessages = null, bool asHtml = false)
     {
-        var request = new GetAllContentRequest(channelId, Language, additionalMessages);
+        var request = new GetAllContentRequest(channelId.ToLower(), Language, additionalMessages, asHtml);
         var response = await _httpClient.PostAsJsonAsync<GetAllContentRequest, IbisChannel>("/api/GetAllContent", request);
 
         if (response != null)

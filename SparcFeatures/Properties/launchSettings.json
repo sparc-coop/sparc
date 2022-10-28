@@ -1,21 +1,21 @@
-﻿{
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:10603",
-      "sslPort": 44314
+      "applicationUrl": "http://localhost:53098/",
+      "sslPort": 44386
     }
   },
   "profiles": {
     "Sparc.Features": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:7044",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7044"
     },
     "IIS Express": {
       "commandName": "IISExpress",

@@ -1,30 +1,28 @@
-using SparcFeatures;
-using SparcFeatures._Plugins.Slack;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Hosting.Server;
+using SparcWeb;
 
 var builder = WebApplication.CreateBuilder(args);
-var startup = new Startup(builder.Configuration);
-startup.ConfigureServices(builder.Services);
 
 builder.Services.AddRazorPages();
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
 
-//builder.Services.AddHttpClient<GetSlack>(client =>
-//    client.BaseAddress = new Uri("http://localhost:7044"));
-//builder.Services.AddRazorPages();
+builder.Services.AddSingleton(sp =>
+{
+    // Get the address that the app is currently running at
+    var server = sp.GetRequiredService<IServer>();
+    var addressFeature = server.Features.Get<IServerAddressesFeature>();
+    var baseAddress = addressFeature!.Addresses.First();
+    return new HttpClient { BaseAddress = new Uri(baseAddress) };
+});
+
+builder.Services.AddScoped<IbisContentProvider>();
 
 var app = builder.Build();
 
-startup.Configure(app, app.Environment);
-
+app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
-
-
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToPage("/_Host");
-
-//app.UseHttpsRedirection();
 
 app.Run();
