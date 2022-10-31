@@ -10,3 +10,14 @@
 @import "wwwroot/Styles/Page/Project";
 @import "wwwroot/Styles/Page/BlogList";
 @import "wwwroot/Styles/Page/Blog";
+
+.ibis-translate {
+    padding: 0;
+    margin: 0;
+}
+
+.ibis-translating {
+    visibility: visible;
+    opacity: 0.3;
+}
+

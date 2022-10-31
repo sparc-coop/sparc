@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Hosting.Server;
-using SparcWeb;
+using Sparc.Ibis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,7 @@ builder.Services.AddSingleton(sp =>
     return new HttpClient { BaseAddress = new Uri(baseAddress) };
 });
 
-builder.Services.AddScoped<IbisContentProvider>();
+builder.Services.AddIbis();
 
 var app = builder.Build();
 

@@ -5,12 +5,7 @@
 }
 
 section {
-  padding-top: 160px;
-  padding-bottom: 200px;
-}
-
-section:last-of-type {
-  padding-bottom: 100px;
+  padding: 100px 0;
 }
 
 .section-tag {
@@ -146,6 +141,7 @@ body .subtitle-medium {
 }
 body .subtitle-large {
   font-size: 32px;
+  max-width: 592px;
 }
 body p, body a, body button {
   font-family: "NeueHaasDisplayRoman";
@@ -597,14 +593,13 @@ nav .nav-mobile {
   justify-content: space-between;
   align-items: center;
   gap: 32px;
-  margin: 0 auto;
+  margin: 80px auto;
   background: #F2EDDF;
   border-radius: 24px;
   padding: 48px 40px 40px;
   max-width: 1268px;
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 80px;
 }
 .community-cta h6 {
   font-size: 28px;
@@ -770,17 +765,15 @@ body.ibis-translating {
   text-align: center;
 }
 .homepage .home-hero {
-  padding-top: 100px;
+  padding-top: 122px;
   padding-bottom: 24px;
   background: #F2EDDF;
   position: relative;
-  box-sizing: border-box;
-  height: calc(100vh - 103px);
 }
 .homepage .home-hero .header {
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 52px;
+  margin-bottom: 72px;
 }
 .homepage .home-hero .header h1 {
   width: 80%;
@@ -828,6 +821,9 @@ body.ibis-translating {
   text-align: center;
   margin-bottom: 72px;
 }
+.homepage .cta-box .profile-pics-wrapper.mobile {
+  display: none;
+}
 .homepage .cta-box p.subtitle-small {
   font-family: "NeueHaasDisplayMedium";
   font-size: 14px;
@@ -835,9 +831,12 @@ body.ibis-translating {
 .homepage .cta-box .cta-flex {
   justify-content: space-between;
 }
+.homepage .cta-box .cta-email {
+  display: none;
+}
 .homepage .learn-more {
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 122px;
   text-align: center;
 }
 .homepage .learn-more a:hover {
@@ -854,7 +853,6 @@ body.ibis-translating {
 }
 .homepage .mission-wrapper {
   width: 70%;
-  max-width: 592px;
   margin: 0 auto;
 }
 .homepage .mission-wrapper:first-child {
@@ -945,6 +943,7 @@ body.ibis-translating {
 .homepage .values .project-wrapper .right .card-wrapper {
   max-width: 1216px;
   margin-bottom: 0px;
+  padding-bottom: 15px;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -953,21 +952,30 @@ body.ibis-translating {
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card {
   width: 100%;
-  max-width: 520px;
-  height: 531px;
-  padding: 32px;
   margin-bottom: 0px;
-  background: #FFFFFF;
+  padding: 32px;
   border-radius: 24px;
-}
-.homepage .values .project-wrapper .right .card-wrapper .project-card .photo {
-  cursor: pointer;
-  height: 320px;
+  background: #FFFFFF;
 }
 .homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper {
   height: 320px;
 }
-.homepage .values .project-wrapper .right .card:last-child {
+.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .project-status {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .in-progress {
+  width: 109px;
+}
+.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .photo {
+  cursor: pointer;
+  height: 320px;
+}
+.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .image-wrapper {
+  height: 320px;
+}
+.homepage .values .project-wrapper .right .card-wrapper .project-card .card:last-child {
   margin-bottom: 0;
 }
 .homepage .resources {
@@ -1031,6 +1039,48 @@ body.ibis-translating {
   .homepage .home-hero .header p.subtitle-1 {
     font-family: "IBMPlexSans-SemiBold";
     font-size: 20px;
+  }
+  .homepage .home-hero .cta-box {
+    text-align: center;
+    min-width: 200px;
+    max-height: none;
+  }
+  .homepage .home-hero .cta-box .profile-pics-wrapper.mobile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .homepage .home-hero .cta-box .profile-pics-wrapper.mobile .profile-pic {
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 1000px;
+    margin-left: -10px;
+  }
+  .homepage .home-hero .cta-box .box-header {
+    margin-bottom: 18px;
+  }
+  .homepage .home-hero .cta-box .cta-flex {
+    display: block;
+    text-align: center;
+  }
+  .homepage .home-hero .cta-box .cta-flex .profile-pics-wrapper.desktop {
+    display: none;
+  }
+  .homepage .home-hero .cta-box .cta-flex input, .homepage .home-hero .cta-box .cta-flex button {
+    width: 100%;
+    font-family: "NeueHaasDisplayRoman";
+  }
+  .homepage .home-hero .cta-box .cta-flex .cta-email {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    padding: 10px 24px;
+    background: white;
+    border: 1px solid rgba(104, 105, 110, 0.5);
+    border-radius: 100px;
+    color: rgba(104, 105, 110, 0.5);
+    font-size: 16px;
+    line-height: 100%;
   }
   .homepage .mission {
     padding-top: 64px;
@@ -1156,18 +1206,6 @@ body.ibis-translating {
     width: 100%;
     font-size: 16px;
   }
-  .homepage .home-hero .cta-box {
-    text-align: center;
-    min-width: 200px;
-  }
-  .homepage .home-hero .cta-box .cta-flex {
-    display: block;
-    text-align: center;
-  }
-  .homepage .home-hero .cta-box .cta-flex .profile-pics-wrapper {
-    justify-content: center;
-    margin-bottom: 18px;
-  }
   .homepage .home-hero .learn-more {
     margin-top: 64px;
   }
@@ -1186,8 +1224,29 @@ body.ibis-translating {
   .homepage .values {
     padding-bottom: 64px;
   }
+  .homepage .values .project-wrapper .left h5.subtitle-large {
+    margin-bottom: 44px;
+  }
+  .homepage .values .project-wrapper .left a {
+    font-size: 16px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper {
+    gap: 16px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper .project-card {
+    padding: 16px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content {
+    width: 236px;
+  }
+  .homepage .values .project-wrapper .right .card-wrapper .project-card .card-content img.photo {
+    width: 100%;
+  }
 }
 
+.project-list-page {
+  padding-bottom: 130px;
+}
 .project-list-page .hero-header {
   text-align: center;
   padding: 120px 0 140px 0;
@@ -1245,11 +1304,11 @@ body.ibis-translating {
   margin-bottom: 36px;
 }
 .project-list-page .project-list-wrapper .filters .search {
+  width: 30%;
   position: relative;
-  width: 300px;
 }
 .project-list-page .project-list-wrapper .filters .search input {
-  width: 300px;
+  width: 100%;
 }
 .project-list-page .project-list-wrapper .filters .search i {
   position: absolute;
@@ -1258,14 +1317,12 @@ body.ibis-translating {
   font-size: 20px;
 }
 .project-list-page .project-list-wrapper .filters select {
-  max-width: 124px;
-  font-size: 20px;
-  cursor: pointer;
+  max-width: 146px;
+  font-size: 16px;
 }
 .project-list-page .project-list-wrapper .project-list {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 38px;
   flex-wrap: wrap;
 }
@@ -1348,12 +1405,6 @@ body.ibis-translating {
   }
   .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-header {
     margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-header .image-wrapper {
-    margin-bottom: 0;
   }
   .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper {
     display: block;
@@ -1566,6 +1617,34 @@ body.ibis-translating {
 .project-page .resources .header p {
   font-family: "IBMPlexSans-Regular";
 }
+.project-page .resources .blog-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+}
+.project-page .resources .blog-wrapper .blog-card {
+  width: 384px;
+}
+.project-page .resources .blog-wrapper .blog-card img {
+  width: 100%;
+}
+.project-page .resources .blog-wrapper .blog-card .blog-tags {
+  margin-top: 42px;
+}
+.project-page .resources .blog-wrapper .blog-card .blog-tags .tag {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: "IBMPlexSans-Regular";
+}
+.project-page .resources .blog-wrapper .blog-card .blog-tags .tag-divider {
+  font-size: 14px;
+  color: #FF756A;
+}
+.project-page .resources .blog-wrapper .blog-card .subtitle-large {
+  font-size: 24px;
+}
 @media only screen and (max-width: 760px) {
   .project-page .hero-header {
     padding-top: 105px;
@@ -1621,6 +1700,37 @@ body.ibis-translating {
   .project-page .resources .header p {
     max-width: 60%;
     margin: 0 auto;
+  }
+  .project-page .resources .blog-wrapper {
+    width: 100%;
+    padding-bottom: 15px;
+    max-width: none;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: normal;
+    gap: 32px;
+    overflow-x: scroll;
+    position: absolute;
+    left: 0;
+  }
+  .project-page .resources .blog-wrapper .blog-card {
+    width: 100%;
+  }
+  .project-page .resources .blog-wrapper .blog-card img {
+    width: 264px;
+  }
+  .project-page .resources .blog-wrapper .blog-card:first-child {
+    margin-left: 40px;
+  }
+  .project-page .resources .blog-wrapper .blog-card:last-child {
+    padding-right: 40px;
+  }
+  .project-page .resources .blog-wrapper .blog-card .blog-tags {
+    margin-top: 16px;
+  }
+  .project-page .resources .blog-wrapper .blog-card .subtitle-large {
+    font-size: 24px;
   }
 }
 @media only screen and (max-width: 480px) {
@@ -1839,10 +1949,10 @@ body.ibis-translating {
 }
 
 .blog-wrapper {
-  width: 100%;
   display: flex;
   justify-content: center;
   gap: 32px;
+  margin-top: 56px;
 }
 .blog-wrapper .blog-card {
   width: 384px;
@@ -1900,4 +2010,13 @@ body.ibis-translating {
   .blog-wrapper .blog-card .subtitle-large {
     font-size: 24px;
   }
+}
+.ibis-translate {
+  padding: 0;
+  margin: 0;
+}
+
+.ibis-translating {
+  visibility: visible;
+  opacity: 0.3;
 }
