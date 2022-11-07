@@ -62,11 +62,13 @@
     public string ToggleContact = "toggle";
     public string EmailAddress;
 
+    TwilioService Twilio { get; set; }
+
     async Task SendEmail()
     {
         if (EmailAddress != null)
         {
-            //bool result = Email.SendEmail(EmailAddress, "Join Sparc Community", "Thank you for joining the Sparc Community!");
+            //await Api.SendEmailNotificationAsync(EmailAddress);
         }
         
         ToggleContact = "toggle";

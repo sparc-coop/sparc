@@ -3,18 +3,15 @@
 <section class="blog-page">
     <div class="container">
         <div class="blog">
-            <h5 class="semi-bold title-1">@Ibis["title"]</h5>
                 @if (Channel != null)
                 {
-                    @foreach (var post in Channel.Content.OrderBy(x => x.Timestamp).Take(1))
+                    <div class="blog--title">@((MarkupString)Ibis["title"].ToString())</div>
+                    @foreach (var post in Channel.Content.Where(x => x.Tag == "blog"))
                     {
                         <div class="posted">
-                            @*<p>Name</p>*@ 
                             <p>@post.Timestamp.ToString("M")</p>
                         </div>
-                        <p>
-                            @((MarkupString)post.Text)
-                        </p>
+                        @((MarkupString)post.Text.ToString())
                     }
                 }
         </div>

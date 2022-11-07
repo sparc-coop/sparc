@@ -1,6 +1,7 @@
 ﻿@page "/Projects/{Title}/{ChannelId}"
 
 <div class="project-page">
+<IbisTranslate ChannelId="@ChannelId">
     <section class="hero-header">
         <div class="container">
             <div class="header">
@@ -14,13 +15,6 @@
                 <div>
                     <p class="subtitle-1">@Ibis["sub-header"]</p>
                 </div>
-@*                <div class="cta-flex">
-                    <div class="profile-pics-wrapper">
-                        <div class="profile-pic">
-                            <img src="images/Picture.png" />
-                        </div>
-                    </div>
-                </div>*@
             </div>
         </div>
     </section>
@@ -35,7 +29,7 @@
                     <img src="./images/Sidebar.png" class="desktop"/>
                     <img src="./images/Sidebar mobile.png" class="mobile" />
                 </div>
-                <div class="timeline-list">
+                <div class="timeline-list ibis-ignore">
                     @if (Channel != null)
                     {
                         @foreach (var post in Channel.Content)
@@ -53,63 +47,10 @@
                     }
                 </div>
             </div>
-@*            <div class="read-more">
-                <button class="btn-small">Read More</button>
-            </div>*@
         </div>
     </section>
     <CommunityCta/>
-@*    <section class="resources">
-        <div class="container">
-            <div class="header">
-                <h3 class="subtitle-large semi-bold">Related Blogs</h3>
-                <p class="subtitle-small"></p>
-            </div>
-            <div class="blog-wrapper">
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Frame 359 Group 48.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">Design</button>
-                    </div>
-                    <div>
-                        <p class="subtitle-large">
-                            2022 Trending Web design
-                        </p>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Frame 360 Group 48.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">Coding</button>
-                        <span class="tag-divider"> | </span> 
-                        <button class="tag btn-small category">Tips & Tricks</button>
-                    </div>
-                    <div>
-                        <p class="subtitle-large">
-                            How to tackle HTML/CSS as a beginner (All you need to know is in here!)
-                        </p>
-                    </div>
-                </div>
-                <div class="blog-card">
-                    <div class="blog-image">
-                        <img src="./images/Frame 361 Group 48.png" />
-                    </div>
-                    <div class="blog-tags">
-                        <button class="tag btn-small">Design</button>
-                    </div>
-                    <div>
-                        <p class="subtitle-large">
-                            Design system 101: We will answer all your questions
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>*@
+</IbisTranslate>
 </div>
 
 @code {
@@ -117,16 +58,8 @@
     [Parameter] public string ChannelId { get; set; } = null!;
     IbisChannel? Channel; 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        //if (firstRender)
-            //await Ibis.TranslatePageAsync(ChannelId);
-            Channel = await Ibis.GetAllAsync(Title);
-    }
-
     protected override async Task OnInitializedAsync()
     {
-        //await Ibis.TranslatePageAsync(ChannelId);
-        //Channel = await Ibis.GetAllAsync(Title);
+        Channel = await Ibis.GetAllAsync(Title);
     }
 }
