@@ -152,7 +152,6 @@ nav {
                 }
 
                 & ~ .nav-mobile {
-                    background: $white;
                     position: fixed;
                     overflow: hidden;
                     width: 100vw;
@@ -167,6 +166,7 @@ nav {
                     .community-join {
                         background: $yellow-100;
                         overflow: hidden;
+                        padding: 70px 20px;
                     }
                 }
             }
@@ -183,13 +183,14 @@ nav {
         .nav-mobile {
             display: block;
             align-items: center;
-            background: $white;
+            background: $yellow-100;
             z-index: 50;
             overflow: hidden;
 
             .logo {
                 padding: 18px 25px;
                 flex: 1;
+                display: block;
 
                 img {
                     max-width: 93px;
@@ -199,8 +200,12 @@ nav {
             .menu {
                 width: 100vw;
                 padding: 96px 0;
-                background: $white;
+                background: $yellow-100;
                 text-align: center;
+
+                &.hide-menu {
+                    display: none;
+                }
 
                 li {
                     margin-bottom: 100px;
