@@ -1,21 +1,21 @@
-﻿
+﻿using Sparc.Kernel;
+using Sparc.Notifications.Twilio;
 
-namespace SparcFeatures
+namespace Sparc.App;
+
+public record RegisterForCommunityRequest(string Email);
+public class RegisterForCommunity : PublicFeature<RegisterForCommunityRequest, bool>
 {
-    public class SendEmailNotification : Feature<bool>
+    TwilioService Twilio { get; set; }
+
+    public RegisterForCommunity(TwilioService twilio)
     {
-        TwilioService Twilio { get; set; }
+        Twilio = twilio;
+    }
 
-        public SendRegistrationNotification(TwilioService twilio)
-        {
-            Twilio = twilio;
-        }
-
-        public override async Task<bool> ExecuteAsync(string emailAddress)
-        {
-            await Twilio.SendAsync(emailAddress, "Sparc email contact form");
-
-            return true;
-        }
+    public override async Task<bool> ExecuteAsync(RegisterForCommunityRequest request)
+    {
+        await Twilio.AddContactAsync(request.Email, "689a1a54-cef8-4327-a04d-abd6a8787dd9");
+        return true;
     }
 }

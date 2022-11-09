@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Hosting.Server;
 using Sparc.Ibis;
+using Sparc.Kernel;
+using Sparc.Notifications.Twilio;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,10 @@ builder.Services.AddSingleton(sp =>
     return new HttpClient { BaseAddress = new Uri(baseAddress) };
 });
 
-builder.Services.AddIbis();
+builder.AddSparcKernel();
+builder.Services
+    .AddIbis()
+    .AddTwilio(builder.Configuration);
 
 var app = builder.Build();
 
