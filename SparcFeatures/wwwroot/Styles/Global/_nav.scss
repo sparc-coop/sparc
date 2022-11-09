@@ -1,0 +1,250 @@
+﻿@import "_variables.scss";
+
+
+nav {
+    .nav-desktop {
+        padding: 32px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: $yellow-100;
+        position: relative;
+
+        .logo {
+            margin-right: 10px;
+
+            img {
+                max-width: 114px;
+            }
+        }
+
+        .nav-links-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            border-radius: 100px;
+            padding: 0 14px;
+
+            a {
+                font-family: 'NeueHaasDisplayRoman';
+            }
+        }
+
+        .nav-link {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .community-join {
+            width: 148px;
+
+            > div {
+                position: absolute;
+                width: 435px;
+                right: 48px;
+                top: 34px;
+            }
+
+            .toggle {
+                display: none;
+
+                &-show {
+                    display: block;
+                }
+            }
+
+            input {
+                width: 280px;
+                height: 34px;
+                border-radius: 40px;
+                background: $white;
+                padding: 9px 24px;
+                margin-right: 6px;
+                border: 1px solid $grey-100;
+            }
+
+            button {
+                border-radius: 50px;
+                padding: 10px 24px;
+                background: $peach-500;
+                border: none;
+                font-family: 'NeueHaasDisplayMedium';
+                font-size: 14px;
+                font-style: normal;
+                text-align: center;
+            }
+        }
+    }
+    //mobile menu
+    .menu-toggle {
+        display: none;
+    }
+
+    input.menu-toggle {
+        display: none;
+    }
+
+    .nav-mobile {
+        display: none;
+    }
+
+    @media only screen and (max-width: 760px) {
+        position: relative;
+        overflow: hidden;
+
+        .nav-desktop {
+            display: none;
+        }
+
+        .menu-toggle {
+            display: inline-block;
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            z-index: 60;
+        }
+
+        input.menu-toggle {
+            display: none;
+
+            &:not(:checked) {
+                background: $yellow-100;
+
+                & ~ label {
+                    position: fixed;
+                }
+
+                & ~ label span:last-child {
+                    display: none;
+                }
+
+                & ~ .nav-mobile {
+                    width: 100vw;
+                    background: $yellow-100;
+                    position: fixed;
+                    z-index: 20;
+
+                    .menu {
+                        display: none;
+                    }
+
+                    .community-join {
+                        display: none;
+
+                        button {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            &:checked {
+                background: $white;
+
+                & ~ label {
+                    position: fixed;
+                    z-index: 60;
+                }
+
+                & ~ label span:first-child {
+                    display: none;
+                }
+
+                & ~ .nav-mobile {
+                    background: $white;
+                    position: fixed;
+                    overflow: hidden;
+                    width: 100vw;
+                    height: calc(100vh - 96px);
+
+                    .menu {
+                        display: block;
+                        overflow: scroll;
+                        height: 100%;
+                    }
+
+                    .community-join {
+                        background: $yellow-100;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+
+        label.menu-toggle {
+            background: transparent;
+
+            i {
+                font-size: 20px;
+            }
+        }
+
+        .nav-mobile {
+            display: block;
+            align-items: center;
+            background: $white;
+            z-index: 50;
+            overflow: hidden;
+
+            .logo {
+                padding: 18px 25px;
+                flex: 1;
+
+                img {
+                    max-width: 93px;
+                }
+            }
+
+            .menu {
+                width: 100vw;
+                padding: 96px 0;
+                background: $white;
+                text-align: center;
+
+                li {
+                    margin-bottom: 100px;
+
+                    a {
+                        font-family: 'NeueHaasDisplayRoman';
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .community-join {
+                overflow: hidden;
+                width: 100vw;
+                padding: 25px 18px;
+                background: $yellow-100;
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+                position: fixed;
+                bottom: 0;
+                text-align: center;
+
+                button {
+                    padding: 10px 24px;
+                    border-radius: 50px;
+                    font-family: 'NeueHaasDisplayThin';
+                    font-size: 24px;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+
+                    &.log-in {
+                        background: transparent;
+                        border: 1px solid $peach-500;
+                        color: $peach-500;
+                    }
+
+                    &.join-community {
+                        background: $peach-500;
+                        border: none;
+                    }
+                }
+            }
+        }
+    }
+}

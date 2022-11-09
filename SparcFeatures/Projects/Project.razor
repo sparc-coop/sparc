@@ -1,0 +1,65 @@
+﻿@page "/Projects/{Title}/{ChannelId}"
+
+<div class="project-page">
+<IbisTranslate ChannelId="@ChannelId">
+    <section class="hero-header">
+        <div class="container">
+            <div class="header">
+                <div class="title">
+                    <h2 class="title-1 semi-bold">@Ibis["title"]</h2>
+                    <a href="@Ibis["url"]" target="_blank" title="Visit Website">
+                        <p class="title-2 mobile">Visit Website</p>
+                        <i class="material-icons">launch</i>
+                    </a>
+                </div>
+                <div>
+                    <p class="subtitle-1">@Ibis["sub-header"]</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container">
+            <div class="header">
+                <p class="subtitle-small">Recent Timeline</p>
+            </div>
+            <div class="wrapper">
+                <div class="timeline-sidebar">
+                    <img src="./images/Sidebar.png" class="desktop"/>
+                    <img src="./images/Sidebar mobile.png" class="mobile" />
+                </div>
+                <div class="timeline-list ibis-ignore">
+                    @if (Channel != null)
+                    {
+                        @foreach (var post in Channel.Content)
+                        {
+                            <div class="timeline-item">
+                                <div class="item-header">
+@*                                    <p class="title-2 semi-bold">[Title]</p>*@
+                                    <p class="timeline-date subtitle-small">@post.Timestamp.ToString("M")</p>
+                                </div>
+                                <div class="timeline-content">
+                                    <p class="subtitle-small">@post.Html</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <Sparc.Coop.Community.CommunityCta />
+</IbisTranslate>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = null!;
+    [Parameter] public string ChannelId { get; set; } = null!;
+    IbisChannel? Channel; 
+
+    protected override async Task OnInitializedAsync()
+    {
+        Channel = await Ibis.GetAllAsync(Title);
+    }
+}

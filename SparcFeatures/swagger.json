@@ -1,11 +1,11 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Sparc.App, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "title": "Sparc.Coop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "version": "v1"
   },
   "paths": {
-    "/publicapi/RegisterForCommunity": {
+    "/api/RegisterForCommunity": {
       "post": {
         "tags": [
           "RegisterForCommunity"
@@ -62,7 +62,16 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": [
+              "Policy:",
+              "Roles:",
+              "AuthenticationSchemes:"
+            ]
+          }
+        ]
       }
     }
   },

@@ -105,7 +105,7 @@
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
-                        <ProjectCard 
+                        <Sparc.Coop.Projects.ProjectCard 
                             Title="KodeKit" 
                             Status="Live"
                             ImgUrl="/images/Laptop.png"
@@ -113,14 +113,14 @@
                             Github="https://github.com/sparc-coop/kodekit"
                             Content="@KodekitText"
                             ChannelId="kodekit-content"/>
-                        <ProjectCard Title="Ibis" 
+                        <Sparc.Coop.Projects.ProjectCard Title="Ibis" 
                             Status="Live"
                             ImgUrl="/images/ibis.png"
                             Link="https://ibis.chat"
                             Github="https://github.com/sparc-coop/ibis"
                             Content="@IbisText"
                             ChannelId="ibis-content"/>
-                        <ProjectCard Title="Law of 100" 
+                        <Sparc.Coop.Projects.ProjectCard Title="Law of 100" 
                             Status="Live"
                             ImgUrl="/images/lawof100.png"
                             Link="https://lawof100.co/"
@@ -142,7 +142,7 @@
                     and companies who align with our values and our goals.
                 </h5>
             </div>
-            <CommunityCta />
+            <Sparc.Coop.Community.CommunityCta />
         </div>
     </section>
     <section class="resources">
@@ -155,7 +155,7 @@
                     and companies who align with our values and our goals.
                 </h5>
             </div>
-            <BlogPartial />
+            <Sparc.Coop.Blog.BlogPartial />
         </div>
     </section>
 </div>
@@ -171,7 +171,7 @@
     {
         if (EmailAddress != null)
         {
-            //await EmailService().SendContactEmail(EmailAddress);       
+            await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
         }       
     }
 }

@@ -1,0 +1,23 @@
+﻿@import "wwwroot/Styles/Global/_variables";
+@import "wwwroot/Styles/Global/_assets";
+@import "wwwroot/Styles/Global/_typography";
+@import "wwwroot/Styles/Global/_nav";
+@import "wwwroot/Styles/Global/_projectcard";
+@import "wwwroot/Styles/Global/_communitycta";
+
+@import "wwwroot/Styles/Page/Index";
+@import "wwwroot/Styles/Page/ProjectList";
+@import "wwwroot/Styles/Page/Project";
+@import "wwwroot/Styles/Page/BlogList";
+@import "wwwroot/Styles/Page/Blog";
+
+.ibis-translate {
+    padding: 0;
+    margin: 0;
+}
+
+.ibis-translating {
+    visibility: visible;
+    opacity: 0.3;
+}
+

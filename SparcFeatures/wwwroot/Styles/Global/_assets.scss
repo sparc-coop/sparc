@@ -1,0 +1,134 @@
+﻿@import "_variables.scss";
+
+//containers & sections
+.container {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+section {
+    padding: 100px 0;
+}
+
+//tags
+.section-tag {
+    padding: 10px 16px;
+    box-shadow: -10px 2px 4px rgba(16, 45, 71, 0.02);
+    font-style: italic;
+    max-width: fit-content;
+    margin-bottom: 32px;
+}
+
+.values-tag {
+    background: white;
+
+    p {
+        color: var(--error-500);
+    }
+}
+
+.project-tag {
+    background: white;
+
+
+    p {
+        color: var(--error-500);
+    }
+}
+
+.community-tag {
+    background: $blue-100;
+
+    p {
+        color: var(--tertiary-500);
+    }
+}
+
+.resources-tag {
+    background: $peach-100;
+
+    p {
+        color: var(--primary-500);
+        color: $peach-500;
+    }
+}
+
+
+.blog-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    .tag {
+        border: 1px solid rgba(104,105,110, 0.5); //$grey-500 50% opacity
+        border-radius: 100px;
+        box-shadow: $box-shadow-md;
+        color: var(--primary-900);
+        background: white;
+        font-weight: 400;
+    }
+}
+
+//buttons
+button {
+    background: var(--grey-900);
+    border-radius: 100px;
+    font-size: 16px;
+    font-style: italic;
+}
+
+.btn-large{
+    padding: 16px 32px;
+}
+
+.btn-small{
+    padding: 6px 14px;
+    box-shadow: $box-shadow-md;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+//cta
+.cta-box {
+    padding: 24px 32px;
+    background: $yellow-500;
+    border: 1px solid var(--grey-900);
+    border-radius: 24px;
+    max-height: 117px;
+    margin: 0 auto;
+
+    .box-header {
+        margin-bottom: 16px;
+    }
+}
+
+.cta-flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .profile-pics-wrapper {
+        display: flex;
+    }
+
+    .profile-pic {
+        max-width: 40px;
+        max-height: 40px;
+        border-radius: 1000px;
+        margin-left: -10px
+    }
+
+    button {
+        background: var(--grey-900);
+        border-radius: 100px;
+        font-size: 16px;
+        font-style: italic;
+    }
+}
+
+//hero
+.hero-header {
+    background: $yellow-100;
+}

@@ -8,8 +8,6 @@
 
   <ItemGroup>
 	  <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
 	  <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.0">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,8 +21,8 @@
 	  <PackageReference Include="Sparc.Ibis" Version="7.0.1" />
   </ItemGroup>
 
-	<ItemGroup>
-		<TrimmerRootAssembly Include="Microsoft.Authentication.WebAssembly.Msal" />
-	</ItemGroup>
-
+  <ItemGroup>
+    <Folder Include="Pages\" />
+    <Folder Include="Shared\" />
+  </ItemGroup>
 </Project>
