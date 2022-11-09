@@ -1,0 +1,171 @@
+@page "/"
+<PageTitle>Sparc</PageTitle>
+
+<div class="homepage" id="homepage">
+    <section class="home-hero">
+        <div class="container">
+            <div class="header center">
+                <h1>
+                    Striving for a world where 
+                    <span class="invert">startups</span>
+                    are owned by those who 
+                    <span class="invert">built it</span>
+                </h1>
+                <p class="subtitle-1">We are building a community of individuals & organisations who believe there is a better way to fund, build and reward startups.</p>
+            </div>
+            <div class="cta-box">
+                <div class="box-header">
+                    <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
+                </div>
+                <div class="cta-flex">
+                    <input placeholder="Your Email" @bind="@EmailAddress"/>
+                    <button @onclick="SendEmail">Join the community</button>
+                </div>
+            </div>
+            <div class="learn-more">
+                <p class="subtitle-small">learn more about our mission</p>
+                <img src="images/icons/Down.svg" />
+            </div>
+        </div>
+    </section>
+
+    <section class="mission">
+        <div class="container">
+            <div class="mission-wrapper">
+                <div class="mission-icon">
+                    <img src="images/icons/04.svg" />
+                </div>
+                <div class="mission-content">
+                    <h5 class="subtitle-large">Behind every venture, there are folks who are persistently dedicating their unique talents, energy and skills.</h5>
+                    <h5 class="subtitle-large">All in pursuit of a larger goal.</h5>
+                    <h5 class="subtitle-large">And yet, the value they are creating above and beyond their salaries is always locked away.</h5>
+                    <h5 class="subtitle-large">Owned by someone else...</h5>
+                    <h5 class="subtitle-large">It is as though their contributions are somehow lesser. Less deserving. Less crucial. The value of their own creations gets suctioned away, while they're asked to give just a little more.</h5>
+                </div>
+            </div>
+            <div class="mission-wrapper">
+                <div class="mission-icon">
+                    <img src="images/icons/09.svg" />
+                </div>
+                <div class="mission-content">
+                    <h5 class="subtitle-large">Sparc Cooperative is a verfied Worker Cooperative, all the way down to our bylaws.</h5>
+                    <h5 class="subtitle-large">This means that at Sparc, money does not buy power. Every person owns an equal share and has an equal vote, no matter their job.</h5>
+                    <h5 class="subtitle-large">No external investment can dictate the direction the Sparc team goes.</h5>
+                    <h5 class="subtitle-large">No single person walks away with the majority of the project.</h5>
+                    <h5 class="subtitle-large">And no person's skill or opinion is less important than another's.</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="values">
+        <div class="container">
+            <div class="section-tag values-tag">
+                <p class="subtitle-medium">Our Core Values</p>
+            </div>
+            <div class="header">
+                <h2 class="subtitle-large">Our three values, by which sparc and its community function.</h2>
+            </div>
+            <div class="card-wrapper">
+                <div class="card-value">
+                    <div class="icon">
+                        <img src="images/icons/02.svg" />
+                    </div>
+                    <p class="subtitle-large">Self-Governance</p>
+                    <p class="subtitle-medium">At each fork in the road, the members themselves vote for the direction that Sparc goes. There is no board, no executive team, no outside owners to override us. Where we want to go, we go together, and we learn together.</p>
+                </div>
+                <div class="card-value">
+                    <div class="icon">
+                        <img src="images/icons/07.svg" />
+                    </div>
+                    <p class="subtitle-large">Self-Sufficiency</p>
+                    <p class="subtitle-medium">Every profitable startup created at Sparc retains a certain percentage of its profit to give forward to the next projects. All the rest belongs to the people.</p>
+                </div>
+                <div class="card-value">
+                    <div class="icon">
+                        <img src="images/icons/08.svg" />
+                    </div>
+                    <p class="subtitle-large">Self-Determination</p>
+                    <p class="subtitle-medium">Each member of Sparc defines their own role, as they know their skills best. And they own that role completely, including every decision it requires. They are the trusted expert by default.</p>
+                </div>
+            </div>
+            <div class="project-wrapper">
+                <div class="left">
+                    <div class="section-tag project-tag">
+                        <p class="subtitle-medium">Sparc Projects</p>
+                    </div>
+                    <h5 class="subtitle-large">To put this belief into practice, we have self funded a few initial startups, which, once profitable will be able to continue to fund following startups through to their own profitability.</h5>
+                    <a class="link-large" href="/projects">View All Projects <img src="images/icons/Icon Right.svg" /></a>
+                </div>
+                <div class="right">
+                    <div class="card-wrapper">
+                        <Sparc.Coop.Projects.ProjectCard 
+                            Title="KodeKit" 
+                            Status="Live"
+                            ImgUrl="/images/Laptop.png"
+                            Link="https://www.kodekit.io/"
+                            Github="https://github.com/sparc-coop/kodekit"
+                            Content="@KodekitText"
+                            ChannelId="kodekit-content"/>
+                        <Sparc.Coop.Projects.ProjectCard Title="Ibis" 
+                            Status="Live"
+                            ImgUrl="/images/ibis.png"
+                            Link="https://ibis.chat"
+                            Github="https://github.com/sparc-coop/ibis"
+                            Content="@IbisText"
+                            ChannelId="ibis-content"/>
+                        <Sparc.Coop.Projects.ProjectCard Title="Law of 100" 
+                            Status="Live"
+                            ImgUrl="/images/lawof100.png"
+                            Link="https://lawof100.co/"
+                            Github="https://github.com/sparc-coop/law-of-100"
+                            Content="@LawofText"
+                            ChannelId="lawof100-content"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="resources">
+        <div class="container">
+            <div class="header">
+                <div class="section-tag community-tag"><p class="subtitle-medium">Sparc Community</p></div>
+                <h5 class="subtitle-large semi-bold">
+                    Our projects are just one way we plan to combat this issue within the startup world, 
+                    but another way is to share information, process, resources and more with individuals 
+                    and companies who align with our values and our goals.
+                </h5>
+            </div>
+            <Sparc.Coop.Community.CommunityCta />
+        </div>
+    </section>
+    <section class="resources">
+        <div class="container">
+            <div class="header">
+                <div class="section-tag resources-tag"><p class="subtitle-medium">Sparc Resources</p></div>
+                <h5 class="subtitle-large semi-bold">
+                    Our projects are just one way we plan to combat this issue within the startup world, 
+                    but another way is to share information, process, resources and more with individuals 
+                    and companies who align with our values and our goals.
+                </h5>
+            </div>
+            <Sparc.Coop.Blog.BlogPartial />
+        </div>
+    </section>
+</div>
+
+
+@code {
+    public string? EmailAddress;
+    public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
+    public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
+    public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
+
+    public async Task SendEmail()
+    {
+        if (EmailAddress != null)
+        {
+            await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
+        }       
+    }
+}

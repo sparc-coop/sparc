@@ -1,0 +1,117 @@
+﻿@import "../App.Variables.scss";
+
+.blog-list-page {
+    margin-bottom: 100px;
+    
+    .blog {
+        &-hero {
+            max-width: 72%;
+            margin: auto;
+            text-align: center;
+            padding: 100px 20px;
+
+            @media (max-width: 838px) {
+                max-width: 100%;
+
+                .title {
+                    max-width: 90%;
+                }
+            }
+        }
+
+        &-featured {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+            padding: 0;
+            cursor: pointer;
+            margin-bottom: 30px;
+
+            .left {
+                width: 100%;
+
+                img {
+                    width: 100%;
+                    border-radius: 6px;
+                }
+            }
+
+            .right {
+                max-width: 49%;
+
+                .wrapper {
+
+                    .title {
+                        margin-bottom: 40px;
+
+                        h5 {
+                            margin-bottom: 40px;
+                        }
+                    }
+                }
+            }
+
+            @media (max-width: 838px) {
+                flex-direction: column;
+
+                .right {
+                    max-width: 100%;
+                }
+            }
+        }
+
+        &-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(384px, 1fr) );
+            grid-gap: 32px;
+            padding-top: 160px;
+        }
+
+        &-card {
+            cursor: pointer;
+
+            .card-image {
+                margin-bottom: 12px;
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .title {
+                margin-bottom: 12px;
+            }
+        }
+
+        &-grid {
+            padding-top: 0;
+        }
+
+        &-tags {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+
+            p {
+                color: var(--primary-500);
+            }
+
+            .seperation-line {
+                border: 1px solid $peach-500;
+                width: 1px;
+                height: 14px;
+                margin: 0 8px;
+            }
+        }
+    }
+
+    .posted {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            color: var(--primary-500);
+        }
+    }
+}

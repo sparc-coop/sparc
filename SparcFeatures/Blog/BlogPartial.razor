@@ -1,0 +1,30 @@
+﻿<div class="blog-wrapper">
+    <div class="blog-card" @onclick="@(e => GoTo("law-of-100-behind-the-project"))">
+        <div class="blog-image">
+            <img src="/images/lawof100.png" />
+        </div>
+        <div class="blog-tags">
+            <button class="tag btn-small">#Design</button>
+            <button class="tag btn-small">#Productivity</button>
+        </div>
+        <p class="subtitle-medium">
+            Law of 100 - Behind The Project
+        </p>
+    </div>
+    <div class="blog-card" @onclick="@(e => GoTo("habit-building-tips"))">
+        <div class="blog-image">
+            <img src="/images/lawof-blog.jpg" />
+        </div>
+        <div class="blog-tags">
+            <button class="tag btn-small">#Design</button>
+            <button class="tag btn-small">#Productivity</button>
+        </div>
+        <p class="subtitle-medium">
+            Habit Building Tips from the Law of 100 Team
+        </p>
+    </div>
+</div>
+
+@code {
+    public void GoTo(string link) => Nav.NavigateTo("/blog/" + link);
+}

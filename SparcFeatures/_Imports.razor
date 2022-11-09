@@ -1,0 +1,24 @@
+﻿@using System.Net.Http
+@using System.Net.Http.Json
+@using System.ComponentModel.DataAnnotations
+
+@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+
+@using Sparc.Core
+@using Sparc.Coop
+@using Sparc.Coop.Pages
+@using Sparc.Coop.Shared
+@using Sparc.Ibis
+
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Nav
+@inject IbisTranslator Ibis
+@inject Sparc.Coop.Community.RegisterForCommunity RegisterForCommunity
+@attribute [AllowAnonymous]

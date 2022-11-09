@@ -1,47 +1,23 @@
 ﻿@page "/"
-@using SparcWeb
+@using Microsoft.AspNetCore.Components.Web
+@namespace Sparc.Coop.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"  />
-    <title>Sparc</title>
     <base href="~/" />
     <link rel="stylesheet" type="text/css" href="https://api.kodekit.io/greffe-winterweight.css">
     <link href="css/app.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
     <app>
-        <component type="typeof(SparcWeb.App)" render-mode="WebAssemblyPrerendered" />
+        <component type="typeof(Sparc.Coop.App)" render-mode="ServerPrerendered" />
     </app>
 
-    <script src="_framework/blazor.webassembly.js"></script>
-    <script>
-        function textNodesUnder(el) {
-            var n, a = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-            while (n = walk.nextNode()) a.push(n);
-            return a;
-        }
-
-        window.ibis = {
-            textNodes: [],
-
-            getTextNodes: function () {
-                document.body.classList.add('ibis-translating');
-                textNodes = textNodesUnder(document.body).filter(x => x.parentNode.nodeName != 'SCRIPT' && x.textContent.trim());
-                return textNodes.map(n => n.textContent.trim());
-            },
-
-            translateTextNodes: function (translatedNodes) {
-                for (var i = 0; i < textNodes.length; i++) {
-                    if (textNodes[i].textContent != translatedNodes[i])
-                        textNodes[i].textContent = translatedNodes[i];
-                }
-                document.body.classList.remove('ibis-translating');
-                document.body.classList.add('ibis-translated');
-            }
-        }
-    </script>
+    <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
