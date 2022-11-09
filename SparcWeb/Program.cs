@@ -6,7 +6,6 @@ using Sparc.Ibis;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services
-    .AddScoped<EmailService>()
     .AddScoped<RootScope>()
     .AddIbis();
 

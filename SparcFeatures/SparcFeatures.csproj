@@ -8,10 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Include=".config\dotnet-tools.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.0-rc.2.22476.2" />
     <PackageReference Include="Sparc.Ibis" Version="7.0.0-pre.19" />
     <PackageReference Include="Sparc.Notifications.Twilio" Version="6.1.0" />

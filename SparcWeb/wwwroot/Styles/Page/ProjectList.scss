@@ -61,6 +61,19 @@
         max-width: 1276px;
         margin: 0 auto;
 
+        @media only screen and (max-width: 1293px) {
+            width: 80%;
+
+            .project-card {
+                max-width: 47%;
+            }
+        }
+
+        @media only screen and (max-width: 885px) {
+            width: 95%;
+
+        }
+
         .filters {
             display: flex;
             justify-content: space-between;
@@ -163,9 +176,8 @@
                 gap: 30px;
 
                 .project-card {
-                    margin-bottom: 16px;
+                    margin: 16px 0;
                     padding: 0px;
-                    width: calc(50% - 15px);
                     max-width: none;
 
                     .card-content {

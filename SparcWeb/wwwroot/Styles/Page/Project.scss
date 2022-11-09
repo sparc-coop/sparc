@@ -102,10 +102,9 @@
                         }
 
                         .timeline-content {
-                            p.subtitle-small {
-                                font-family: 'IBMPlexSans-Regular';
-                                line-height: 18px;
-                            }
+                            font-family: 'IBMPlexSans-Regular';
+                            line-height: 18px;
+                            font-size: 16px;
                         }
                     }
                 }
@@ -348,16 +347,13 @@
                                 }
 
                                 .timeline-date {
-                                    font-size: 9px;
-                                    line-height: 13px;
+                                    font-size: 13px;
+                                    line-height: 16px;
                                 }
                             }
 
                             .timeline-content {
-                                p.subtitle-small {
-                                    font-size: 11px;
-                                    line-height: 14px;
-                                }
+                                line-height: 16px;
                             }
                         }
                     }

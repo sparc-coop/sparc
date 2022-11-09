@@ -34,11 +34,11 @@
         <span><i class="material-icons">close</i></span>
     </label>
     <div class="nav-mobile">
-        <div class="logo">
+        <a href="/" class="logo">
             <img src="/images/icons/Logo.png" />
-        </div>
-        <ul class="menu">
-            <li class="nav-link">
+        </a>
+        <ul class="menu @ToggleMenu">
+            <li class="nav-link" @onclick="@(e => ToggleMenu = "hide-menu")">
                 <a href="/">Home</a>
             </li>
             <li class="nav-link">
@@ -52,18 +52,16 @@
             </li>
         </ul>
         <div class="community-join">
-@*            <button class="log-in">Log In</button>
-            <button class="join-community">Join community</button>*@
+            <button class="join-community">Join community</button>
         </div>
     </div>
 </nav>
 
 @code {
     public string ToggleContact = "toggle";
+    public string ToggleMenu = "";
     public string EmailAddress;
-
-    TwilioService Twilio { get; set; }
-
+    
     async Task SendEmail()
     {
         if (EmailAddress != null)
