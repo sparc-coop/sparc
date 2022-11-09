@@ -344,22 +344,22 @@ nav .nav-desktop .nav-link {
   padding: 10px;
   cursor: pointer;
 }
-nav .nav-desktop .community-join {
+nav .community-join {
   width: 148px;
 }
-nav .nav-desktop .community-join > div {
+nav .community-join > div {
   position: absolute;
   width: 435px;
   right: 48px;
   top: 34px;
 }
-nav .nav-desktop .community-join .toggle {
+nav .community-join .toggle {
   display: none;
 }
-nav .nav-desktop .community-join .toggle-show {
+nav .community-join .toggle-show {
   display: block;
 }
-nav .nav-desktop .community-join input {
+nav .community-join input {
   width: 280px;
   height: 34px;
   border-radius: 40px;
@@ -368,7 +368,7 @@ nav .nav-desktop .community-join input {
   margin-right: 6px;
   border: 1px solid #9FA0A3;
 }
-nav .nav-desktop .community-join button {
+nav .community-join button {
   border-radius: 50px;
   padding: 10px 24px;
   background: #FF756A;
@@ -397,76 +397,20 @@ nav .nav-mobile {
   }
   nav .menu-toggle {
     display: inline-block;
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 25px;
     z-index: 60;
   }
-  nav input.menu-toggle {
-    display: none;
-  }
-  nav input.menu-toggle:not(:checked) {
-    background: #F2EDDF;
-  }
-  nav input.menu-toggle:not(:checked) ~ label {
-    position: fixed;
-  }
-  nav input.menu-toggle:not(:checked) ~ label span:last-child {
-    display: none;
-  }
-  nav input.menu-toggle:not(:checked) ~ .nav-mobile {
-    width: 100vw;
-    background: #F2EDDF;
-    position: fixed;
-    z-index: 20;
-  }
-  nav input.menu-toggle:not(:checked) ~ .nav-mobile .menu {
-    display: none;
-  }
-  nav input.menu-toggle:not(:checked) ~ .nav-mobile .community-join {
-    display: none;
-  }
-  nav input.menu-toggle:not(:checked) ~ .nav-mobile .community-join button {
-    display: none;
-  }
-  nav input.menu-toggle:checked {
-    background: #FFFFFF;
-  }
-  nav input.menu-toggle:checked ~ label {
-    position: fixed;
-    z-index: 60;
-  }
-  nav input.menu-toggle:checked ~ label span:first-child {
-    display: none;
-  }
-  nav input.menu-toggle:checked ~ .nav-mobile {
-    position: fixed;
-    overflow: hidden;
-    width: 100vw;
-    height: calc(100vh - 96px);
-  }
-  nav input.menu-toggle:checked ~ .nav-mobile .menu {
-    display: block;
-    overflow: scroll;
-    height: 100%;
-  }
-  nav input.menu-toggle:checked ~ .nav-mobile .community-join {
-    background: #F2EDDF;
-    overflow: hidden;
-    padding: 70px 20px;
-  }
-  nav label.menu-toggle {
-    background: transparent;
-  }
-  nav label.menu-toggle i {
-    font-size: 20px;
-  }
   nav .nav-mobile {
+    width: 100vw;
     display: block;
     align-items: center;
     background: #F2EDDF;
     z-index: 50;
     overflow: hidden;
+    position: fixed;
+    z-index: 1;
   }
   nav .nav-mobile .logo {
     padding: 18px 25px;
@@ -476,14 +420,14 @@ nav .nav-mobile {
   nav .nav-mobile .logo img {
     max-width: 93px;
   }
+  nav .nav-mobile .hide-menu {
+    display: none;
+  }
   nav .nav-mobile .menu {
     width: 100vw;
     padding: 96px 0;
     background: #F2EDDF;
     text-align: center;
-  }
-  nav .nav-mobile .menu.hide-menu {
-    display: none;
   }
   nav .nav-mobile .menu li {
     margin-bottom: 100px;
@@ -495,7 +439,7 @@ nav .nav-mobile {
   nav .nav-mobile .community-join {
     overflow: hidden;
     width: 100vw;
-    padding: 25px 18px;
+    padding: 90px 18px;
     background: #F2EDDF;
     display: flex;
     gap: 15px;
@@ -504,6 +448,19 @@ nav .nav-mobile {
     position: fixed;
     bottom: 0;
     text-align: center;
+  }
+  nav .nav-mobile .community-join > div {
+    position: relative;
+    width: 100%;
+    right: unset;
+    top: unset;
+  }
+  nav .nav-mobile .community-join input {
+    display: block;
+    width: 100%;
+    height: 44px;
+    margin-bottom: 20px;
+    text-align: left;
   }
   nav .nav-mobile .community-join button {
     padding: 10px 24px;
@@ -755,9 +712,6 @@ body.ibis-translating {
   max-width: 592px;
 }
 @media only screen and (max-width: 760px) {
-  .homepage {
-    margin-top: 63px;
-  }
   .homepage section {
     padding: 64px 0 0 0;
   }
@@ -881,10 +835,10 @@ body.ibis-translating {
   }
 }
 @media only screen and (max-width: 600px) {
-  .homepage .cta-box .cta-flex input {
+  .homepage .home-hero .cta-box .cta-flex input {
     width: 100%;
   }
-  .homepage .cta-box .cta-flex button {
+  .homepage .home-hero .cta-box .cta-flex button {
     margin-top: 16px;
   }
 }
@@ -1005,6 +959,19 @@ body.ibis-translating {
   max-width: 1276px;
   margin: 0 auto;
 }
+@media only screen and (max-width: 1293px) {
+  .project-list-page .project-list-wrapper {
+    width: 80%;
+  }
+  .project-list-page .project-list-wrapper .project-card {
+    max-width: 47%;
+  }
+}
+@media only screen and (max-width: 885px) {
+  .project-list-page .project-list-wrapper {
+    width: 95%;
+  }
+}
 .project-list-page .project-list-wrapper .filters {
   display: flex;
   justify-content: space-between;
@@ -1089,9 +1056,8 @@ body.ibis-translating {
     gap: 30px;
   }
   .project-list-page .project-list-wrapper .project-list .project-card {
-    margin-bottom: 16px;
+    margin: 16px 0;
     padding: 0px;
-    width: calc(50% - 15px);
     max-width: none;
   }
   .project-list-page .project-list-wrapper .project-list .project-card .card-content .image-wrapper {
@@ -1140,75 +1106,6 @@ body.ibis-translating {
   }
   .project-list-page .hero-header .header {
     max-width: 390px;
-  }
-  .project-list-page .project-list-wrapper {
-    padding: 0 16px;
-  }
-  .project-list-page .project-list-wrapper .filters .search i {
-    top: 10px;
-    right: 10px;
-    font-size: 16px;
-  }
-  .project-list-page .project-list-wrapper .filters select {
-    font-size: 14px;
-  }
-  .project-list-page .project-list-wrapper .project-list {
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card {
-    margin-bottom: 16px;
-    padding: 0px;
-    width: calc(50% - 8px);
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content {
-    width: 100%;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .image-wrapper {
-    position: relative;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .image-wrapper .project-status {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .image-wrapper .in-progress {
-    width: 109px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .image-wrapper .live {
-    width: 67px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-header .title-2 {
-    font-size: 20px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-header img {
-    width: 20px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content p.subtitle-small {
-    font-size: 12px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper {
-    display: block;
-    margin-top: 8px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper .card-tags {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    gap: 5px;
-    margin-bottom: 16px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper .card-tags button {
-    padding: 3px 12px 3px 10px;
-    font-size: 10px;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper .card-github {
-    width: 100%;
-  }
-  .project-list-page .project-list-wrapper .project-list .project-card .card-content .card-tags-wrapper .card-github button {
-    width: 100%;
-    padding-bottom: 0px;
   }
 }
 
@@ -1594,6 +1491,7 @@ body.ibis-translating {
 .project-card .card-tags-wrapper .card-github img {
   width: 15px;
 }
+
 .blog-list-page {
   margin-bottom: 100px;
 }

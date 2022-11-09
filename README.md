@@ -1,5 +1,5 @@
 <a href="https://www.sparc.coop/" target="_blank">
-    <img alt="Sparc" width="300" src="SparcWeb/wwwroot/images/icons/Logo.png"/>
+    <img alt="Sparc" width="300" src="/wwwroot/images/icons/Logo.png"/>
 </a>
 
 # Introduction 

@@ -61,6 +61,18 @@
         max-width: 1276px;
         margin: 0 auto;
 
+        @media only screen and (max-width: 1293px) {
+            width: 80%;
+
+            .project-card {
+                max-width: 47%;
+            }
+        }
+
+        @media only screen and (max-width: 885px) {
+            width: 95%;
+        }
+
         .filters {
             display: flex;
             justify-content: space-between;
@@ -163,9 +175,8 @@
                 gap: 30px;
 
                 .project-card {
-                    margin-bottom: 16px;
+                    margin: 16px 0;
                     padding: 0px;
-                    width: calc(50% - 15px);
                     max-width: none;
 
                     .card-content {
@@ -227,99 +238,6 @@
 
             .header {
                 max-width: 390px;
-            }
-        }
-
-        .project-list-wrapper {
-            padding: 0 16px;
-
-            .filters {
-                .search {
-                    i {
-                        top: 10px;
-                        right: 10px;
-                        font-size: 16px;
-                    }
-                }
-
-                select {
-                    font-size: 14px;
-                }
-            }
-
-            .project-list {
-                justify-content: center;
-                gap: 16px;
-                flex-wrap: wrap;
-
-                .project-card {
-                    margin-bottom: 16px;
-                    padding: 0px;
-                    width: calc(50% - 8px);
-
-                    .card-content {
-                        width: 100%;
-
-                        .image-wrapper {
-                            position: relative;
-
-                            .project-status {
-                                position: absolute;
-                                top: 8px;
-                                right: 8px;
-                            }
-
-                            .in-progress {
-                                width: 109px;
-                            }
-
-                            .live {
-                                width: 67px;
-                            }
-                        }
-
-                        .card-header {
-                            .title-2 {
-                                font-size: 20px;
-                            }
-
-                            img {
-                                width: 20px;
-                            }
-                        }
-
-                        p.subtitle-small {
-                            font-size: 12px;
-                        }
-
-                        .card-tags-wrapper {
-                            display: block;
-                            margin-top: 8px;
-
-                            .card-tags {
-                                width: 100%;
-                                display: flex;
-                                justify-content: flex-start;
-                                gap: 5px;
-                                margin-bottom: 16px;
-
-                                button {
-                                    padding: 3px 12px 3px 10px;
-                                    font-size: 10px;
-                                }
-                            }
-
-                            .card-github {
-                                width: 100%;
-
-                                button {
-                                    width: 100%;
-                                    padding-bottom: 0px;
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
     }
