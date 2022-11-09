@@ -28,38 +28,51 @@
             }
         </div>
     </div>
-    <input id="menuToggle" type="checkbox" class="menu-toggle">
     <label for="menuToggle" class="menu-toggle">
-        <span><i class="material-icons">menu</i></span>
-        <span><i class="material-icons">close</i></span>
+        @if(ToggleMenuClass == "hide-menu")
+        {
+            <i class="material-icons" @onclick="ToggleMenu">menu</i>
+        } else
+        {
+            <i class="material-icons" @onclick="ToggleMenu">close</i>
+        }
     </label>
     <div class="nav-mobile">
         <a href="/" class="logo">
             <img src="/images/icons/Logo.png" />
         </a>
-       <ul class="menu @ToggleMenu">
-            <li class="nav-link" @onclick="@(e => ToggleMenu = "hide-menu")">
-                <a href="/">Home</a>
-            </li>
-            <li class="nav-link">
-                <a href="/blogs">Blogs</a>
-            </li>
-            <li class="nav-link">
-                <a href="/projects">Projects</a>
-            </li>
-            <li class="nav-link">
-                <a href="mailto:info@sparc.coop?subject=Contact Inquiry">Contact</a>
-            </li>
-        </ul>
-        <div class="community-join">
-            <button class="join-community">Join community</button>
+        <div class="@ToggleMenuClass">
+            <ul class="menu">
+                <li class="nav-link" @onclick="ToggleMenu">
+                    <a href="/">Home</a>
+                </li>
+                <li class="nav-link" @onclick="ToggleMenu">
+                    <a href="/blogs">Blogs</a>
+                </li>
+                <li class="nav-link" @onclick="ToggleMenu">
+                    <a href="/projects">Projects</a>
+                </li>
+                <li class="nav-link">
+                    <a href="mailto:info@sparc.coop?subject=Contact Inquiry">Contact</a>
+                </li>
+            </ul>
+            <div class="community-join">
+                <div class="@ToggleContact">
+                    <input @bind="@EmailAddress" placeholder="Your Email" />
+                    <button @onclick="SendEmail">Join Now</button>
+                </div>
+                @if (ToggleContact != "toggle-show")
+                {
+                    <button @onclick="@Toggle" class="join">Join Community</button>
+                }
+            </div>
         </div>
     </div>
 </nav>
 
 @code {
     public string ToggleContact = "toggle";
-    public string ToggleMenu = "";
+    public string ToggleMenuClass = "";
     public string? EmailAddress;
 
     async Task SendEmail()
@@ -83,4 +96,17 @@
             ToggleContact = "toggle";
         }
     }
+
+    void ToggleMenu()
+    {
+        if (ToggleMenuClass == "")
+        {
+            ToggleMenuClass = "hide-menu";
+        }
+        else
+        {
+            ToggleMenuClass = "";
+        }
+    }
+
 }

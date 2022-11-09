@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Sparc.Features": {
+    "Sparc.Coop": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
