@@ -9,6 +9,16 @@
 
 	<ItemGroup>
 		<Content Include=".config\dotnet-tools.json" />
+		<Content Include="App.Assets.scss" />
+		<Content Include="Blog\Blog.scss" />
+		<Content Include="Blog\BlogList.scss" />
+		<Content Include="Community\CommunityCta.scss" />
+		<Content Include="Pages\Index.scss" />
+		<Content Include="Projects\Project.scss" />
+		<Content Include="Projects\ProjectCard.scss" />
+		<Content Include="Projects\ProjectsList.scss" />
+		<Content Include="Shared\NavMenu.scss" />
+		<Content Include="App.Variables.scss" />
 	</ItemGroup>
 
 	<ItemGroup>
