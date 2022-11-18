@@ -1,18 +1,20 @@
 ﻿@page "/blogs"
 @page "/blogs/{ChannelId}"
 
-<div class="blog-list-page">
+<div class="blog-list">
     <div class="container">
-        <div class="blog-hero">
-            <h2 class="title-1">Sparc Blogs</h2>
-        </div>
+        <header>
+            <h2>Sparc Blogs</h2>
+        </header>
 
-        @foreach (var post in Content)
-        {
-            <section class="blog-featured" @onclick="@(e => GoTo(post))">
-                <BlogPost Post="post" />
-            </section>
-        }
+        <div class="blog-wrapper">
+            @foreach (var post in Content)
+            {
+                <div @onclick="@(e => GoTo(post))">
+                    <BlogPost Post="post" />
+                </div>
+            }
+        </div>
     </div>
 </div>
 
@@ -32,12 +34,12 @@
         {
             foreach (var channel in DefaultChannels)
             {
-                var channelContent = await Ibis.GetAllAsync(channel, asHtml: true, take: 1);
+                var channelContent = await Ibis.GetAllAsync(channel, asHtml: true, take: 10);
                 Content.AddRange(channelContent!.Content);
             }
             Content = Content.OrderByDescending(x => x.Timestamp).ToList();
         }
     }
-    
-    public void GoTo(IbisContent content) => Nav.NavigateTo($"/blog/{ChannelId}/{content.Tag}");
+
+    public void GoTo(IbisContent content) => Nav.NavigateTo($"/blogs/{content.RoomSlug}/{content.Tag}");
 }
