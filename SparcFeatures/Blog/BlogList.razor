@@ -1,63 +1,43 @@
 ﻿@page "/blogs"
+@page "/blogs/{ChannelId}"
 
 <div class="blog-list-page">
     <div class="container">
         <div class="blog-hero">
-            <h2 class="title-1">Blog</h2>
+            <h2 class="title-1">Sparc Blogs</h2>
         </div>
-        
-        <section class="blog-featured" @onclick="@(e => GoTo("law-of-100-behind-the-project"))">
-            <div class="left">
-                <div class="blog-image-wrapper">
-                    <img src="/images/lawof100.png" />
-                </div>
-            </div>
-            <div class="right">
-                <div class="wrapper">
-                    <div class="title">
-                        <h5 class="subtitle-large semi-bold">Law of 100 - Behind The Project</h5>
-                        <p class="title-2">
-                            Law Of 100 is one of the Sparc team's latest projects this year. 
-                            It is a web app wherein a person can log in daily for one hundred 
-                            days to track whatever goal or habit they want to create or break. 
-                            This is the first habit tracker project the team has done so far. And like all other Sparc Projects, 
-                            Law Of 100 is open source, something that tech people could appreciate. 
-                            But its creation is what makes it really special.
-                        </p>
-                    </div>
-                    <div class="posted">
-                        <p></p>
-                        <p>10/20/2022</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="blog-featured" @onclick="@(e => GoTo("habit-building-tips"))">
-            <div class="left">
-                <div class="blog-image-wrapper">
-                    <img src="/images/lawof-blog.jpg" />
-                </div>
-            </div>
-            <div class="right">
-                <div class="wrapper">
-                    <div class="title">
-                        <h5 class="subtitle-large semi-bold">Habit Building Tips from the Law of 100 Team</h5>
-                        <p class="title-2">
-                            Habits are hard to make, and almost harder to break. Once people get into a certain routine, 
-                            it can be extremely difficult to step outside of their comfort zone, and try something new. 
-                            Our Law of 100 team has compiled a list of tips to help you achieve the change you desire.
-                        </p>
-                    </div>
-                    <div class="posted">
-                        <p></p>
-                        <p>10/20/2022</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+        @foreach (var post in Content)
+        {
+            <section class="blog-featured" @onclick="@(e => GoTo(post))">
+                <BlogPost Post="post" />
+            </section>
+        }
     </div>
 </div>
 
 @code {
-    public void GoTo(string link) => Nav.NavigateTo("/blog/" + link);
+    [Parameter] public string? ChannelId { get; set; } = null!;
+    List<string> DefaultChannels = new() { "law-of-100-blog" };
+    List<IbisContent> Content = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ChannelId != null)
+        {
+            var channel = await Ibis.GetAllAsync(ChannelId, asHtml: true, take: 10);
+            Content.AddRange(channel!.Content);
+        }
+        else
+        {
+            foreach (var channel in DefaultChannels)
+            {
+                var channelContent = await Ibis.GetAllAsync(channel, asHtml: true, take: 1);
+                Content.AddRange(channelContent!.Content);
+            }
+            Content = Content.OrderByDescending(x => x.Timestamp).ToList();
+        }
+    }
+    
+    public void GoTo(IbisContent content) => Nav.NavigateTo($"/blog/{ChannelId}/{content.Tag}");
 }

@@ -1,30 +1,20 @@
-@page "/blog/{title}"
+@page "/blogs/{ChannelId}/{Tag}"
 
 <section class="blog-page">
     <div class="container">
         <div class="blog">
-                @if (Channel != null)
-                {
-                    <div class="blog--title">@Ibis["title"]</div>
-                    @foreach (var post in Channel.Content.Where(x => x.Tag == "blog"))
-                    {
-                        <div class="posted">
-                            <p>@post.Timestamp.ToString("M")</p>
-                        </div>
-                        @post.Html
-                    }
-                }
+            <BlogPost Post="Content" />
         </div>
     </div>
 </section>
 
 @code {
-    [Parameter] public string title { get; set; } = null!;
-    public string Content = "";
-    IbisChannel? Channel;
+    [Parameter] public string ChannelId { get; set; } = null!;
+    [Parameter] public string Tag { get; set; } = null!;
+    IbisContent? Content;
 
     protected override async Task OnInitializedAsync()
     {
-        Channel = await Ibis.GetAllAsync(title, null, true);
+        Content = await Ibis.GetAsync(ChannelId, Tag);
     }
 }
