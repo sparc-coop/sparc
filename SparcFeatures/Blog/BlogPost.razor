@@ -1,0 +1,44 @@
+﻿@using Sparc.Ibis;
+
+<article class="blog-post ibis-ignore">
+    <header>
+        @if (Post["title"] != null)
+        {
+            <h3>
+                @Post["title"]
+            </h3>
+        }
+        else
+        {
+            <h3>
+                @Post.Text.Substring(0, 30)...
+            </h3>
+        }
+
+        @if (Post["author"] != null)
+        {
+            <aside>
+                by @Post["author"]
+            </aside>
+        }
+
+        <time datetime="@Post.Timestamp.ToString("O")">
+            @Post.Timestamp.ToString("M")
+        </time>
+    </header>
+
+    <figure>
+        @if (Post["image"] != null)
+        {
+            <img src="@Post["image"]" alt="@Post["title"]" />
+        }
+    </figure>
+    
+    <section class="content">
+        @Post.Html
+    </section>
+</article>
+
+@code {
+    [Parameter] public IbisContent Post { get; set; } = null!;
+}

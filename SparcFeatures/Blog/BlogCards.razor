@@ -1,0 +1,23 @@
+﻿@if (Channel != null)
+{
+    <section class="blog-wrapper">
+        @foreach (var post in Channel.Content)
+        {
+            <div class="blog-card" @onclick="@(() => GoTo(post))">
+                <BlogPost Post="post" />
+            </div>
+        }
+    </section>
+}
+
+@code {
+    [Parameter] public string ChannelId { get; set; } = null!;
+    [Parameter] public int Take { get; set; } = 3;
+    IbisChannel? Channel;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Channel = await Ibis.GetAllAsync(ChannelId, asHtml: true, take: Take);
+    }
+    public void GoTo(IbisContent content) => Nav.NavigateTo($"/blog/{ChannelId}/{content.Tag}");
+}

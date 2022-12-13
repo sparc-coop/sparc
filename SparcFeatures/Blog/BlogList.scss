@@ -1,22 +1,56 @@
 ﻿@import "../App.Variables.scss";
 
-.blog-list-page {
-    margin-bottom: 100px;
-    
-    .blog {
-        &-hero {
-            max-width: 72%;
-            margin: auto;
-            text-align: center;
-            padding: 100px 20px;
+.blog-list {
+    margin: 100px 0;
 
-            @media (max-width: 838px) {
-                max-width: 100%;
+    h2 {
+        font-size: 67px;
+        line-height: 80px;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 80px;
+    }
 
-                .title {
-                    max-width: 90%;
-                }
-            }
+    .container {
+        max-width: 1024px;
+    }
+
+    .blog-post {
+        display: grid;
+        grid-template-rows: 236px auto 20px;
+        gap: 12px;
+        cursor: pointer;
+
+        header {
+            margin-top: 0;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 112%;
+            text-align: left;
+            margin: 12px 0;
+        }
+
+        figure {
+            height: 236px;
+            margin-bottom: 24px;
+            grid-row: 1;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        &:hover figure {
+            transform: scale(1.03, 1.03);
+        }
+
+        .content {
+            display: none;
+        }
+
+        aside, time {
+            font-size: 13px;
+            line-height: 130%;
         }
 
         &-featured {
@@ -26,38 +60,6 @@
             padding: 0;
             cursor: pointer;
             margin-bottom: 30px;
-
-            .left {
-                width: 100%;
-
-                img {
-                    width: 100%;
-                    border-radius: 6px;
-                }
-            }
-
-            .right {
-                max-width: 49%;
-
-                .wrapper {
-
-                    .title {
-                        margin-bottom: 40px;
-
-                        h5 {
-                            margin-bottom: 40px;
-                        }
-                    }
-                }
-            }
-
-            @media (max-width: 838px) {
-                flex-direction: column;
-
-                .right {
-                    max-width: 100%;
-                }
-            }
         }
 
         &-list {
@@ -113,5 +115,12 @@
         p {
             color: var(--primary-500);
         }
+    }
+}
+
+.blog-page {
+    margin: 100px 0;
+    .container {
+        max-width: 1024px;
     }
 }
