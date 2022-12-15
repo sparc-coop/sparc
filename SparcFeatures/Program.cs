@@ -1,6 +1,6 @@
+using Sparc.Blossom;
 using Sparc.Coop.Community;
 using Sparc.Ibis;
-using Sparc.Kernel;
 using Sparc.Notifications.Twilio;
 using System.Globalization;
 
@@ -10,8 +10,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 
-builder.AddSparcKernel();
+builder.AddBlossom();
 builder.Services
+    .AddLocalization()
     .AddIbis()
     .AddTwilio(builder.Configuration)
     .AddScoped<RegisterForCommunity>();
