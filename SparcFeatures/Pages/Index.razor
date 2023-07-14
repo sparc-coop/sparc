@@ -1,4 +1,5 @@
 @page "/"
+@layout MarketingLayout
 <PageTitle>Sparc</PageTitle>
 
 <div class="homepage" id="homepage">
@@ -99,7 +100,7 @@
                 </div>
                 <div class="right">
                     <div class="card-wrapper">
-                        <Sparc.Coop.Projects.ProjectCard 
+                        <ProjectCard 
                             Title="KodeKit" 
                             Status="Live"
                             ImgUrl="/images/Laptop.png"
@@ -107,14 +108,16 @@
                             Github="https://github.com/sparc-coop/kodekit"
                             Content="@KodekitText"
                             ChannelId="kodekit-content"/>
-                        <Sparc.Coop.Projects.ProjectCard Title="Ibis" 
+                        <ProjectCard
+                            Title="Ibis" 
                             Status="Live"
                             ImgUrl="/images/ibis.png"
                             Link="https://ibis.chat"
                             Github="https://github.com/sparc-coop/ibis"
                             Content="@IbisText"
                             ChannelId="ibis-content"/>
-                        <Sparc.Coop.Projects.ProjectCard Title="Law of 100" 
+                        <ProjectCard
+                            Title="Law of 100" 
                             Status="Live"
                             ImgUrl="/images/lawof100.png"
                             Link="https://lawof100.co/"

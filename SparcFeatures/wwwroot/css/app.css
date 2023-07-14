@@ -315,6 +315,16 @@ button {
   background: #F2EDDF;
 }
 
+main.landing {
+  display: grid;
+  grid-template-columns: 1fr repeat(12, 64px) 1fr;
+  grid-column-gap: 30px;
+  background: #F2EDDF;
+}
+main.landing .homepage {
+  grid-column: 2/14;
+}
+
 nav .nav-desktop {
   padding: 32px 48px;
   display: flex;

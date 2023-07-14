@@ -1,0 +1,12 @@
+﻿@import "../App.Variables.scss";
+
+main.landing {
+    display: grid;
+    grid-template-columns: 1fr repeat(12, 64px) 1fr;
+    grid-column-gap: 30px;
+    background: $background;
+
+    .homepage {
+        grid-column: 2/14;
+    }
+}
