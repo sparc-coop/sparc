@@ -4,34 +4,32 @@
 
 <div class="homepage" id="homepage">
     <section class="home-hero">
-        <div class="container">
-            <div class="header center">
-                <h1>
-                    We are creating a community where 
-                    <span class="invert">startups</span>
-                    are owned by those who 
-                    <span class="invert">built them</span>
-                </h1>
-                <p class="subtitle-1">Sparc is a community of individuals & organizations who believe there is a better way to fund, build and reward startups.</p>
+        <header class="center">
+            <h1>
+                We are creating a community where 
+                <span class="invert">startups</span>
+                are owned by those who 
+                <span class="invert">built them</span>
+            </h1>
+            <p class="subtitle-1">Sparc is a community of individuals & organizations who believe there is a better way to fund, build and reward startups.</p>
+        </header>
+        <div class="cta-box">
+            <div class="box-header">
+                <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
             </div>
-            <div class="cta-box">
-                <div class="box-header">
-                    <p class="subtitle-small">Join the Sparc community, and get access to a list of resources & guidance.</p>
-                </div>
-                <div class="cta-flex">
-                    <input placeholder="Your Email" @bind="@EmailAddress"/>
-                    <button @onclick="SendEmail">Join the community</button>
-                </div>
+            <div class="cta-flex">
+                <input placeholder="Your Email" @bind="@EmailAddress"/>
+                <button @onclick="SendEmail">Join the community</button>
             </div>
-            <div class="learn-more">
-                <p class="subtitle-small">learn more about our mission</p>
-                <img src="images/icons/Down.svg" />
-            </div>
+        </div>
+        <div class="learn-more">
+            <p class="subtitle-small">learn more about our mission</p>
+            <img src="images/icons/Down.svg" @onclick=Scroll/>
         </div>
     </section>
 
-    <section class="mission">
-        <div class="container">
+    <div class="content @Scrollable">
+        <section class="mission" id="mission">
             <div class="mission-wrapper">
                 <div class="mission-icon">
                     <img src="images/icons/04.svg" />
@@ -56,17 +54,15 @@
                     <h5 class="subtitle-large">And no person's skill or opinion is less important than another's.</h5>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="values">
-        <div class="container">
-            <div class="section-tag values-tag">
-                <p class="subtitle-medium">Our Core Values</p>
-            </div>
-            <div class="header">
+        <section class="values">
+            <header>
+                <div class="section-tag values-tag">
+                    <p class="subtitle-medium">Our Core Values</p>
+                </div>
                 <h2 class="subtitle-large">Our three values, by which sparc and its community function.</h2>
-            </div>
+            </header>
             <div class="card-wrapper">
                 <div class="card-value">
                     <div class="icon">
@@ -127,41 +123,41 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
         <section class="resources">
-        <div class="container">
-            <div class="header">
+            <header>
                 <div class="section-tag community-tag"><p class="subtitle-medium">Sparc Community</p></div>
                 <h5 class="subtitle-large semi-bold">
                     Our projects are just one way we plan to combat this issue within the startup world, 
                     but another way is to share information, process, resources and more with individuals 
                     and companies who align with our values and our goals.
                 </h5>
-            </div>
+            </header>
             <Sparc.Coop.Community.CommunityCta />
-        </div>
-    </section>
-    <section class="resources">
-        <div class="container">
-            <div class="header">
+        </section>
+
+        <section class="resources">
+            <header>
                 <div class="section-tag resources-tag"><p class="subtitle-medium">Sparc Resources</p></div>
                 <h5 class="subtitle-large semi-bold">
                     Our projects are just one way we plan to combat this issue within the startup world, 
                     but another way is to share information, process, resources and more with individuals 
                     and companies who align with our values and our goals.
                 </h5>
-            </div>
-        </div>
-    </section>
+            </header>
+        </section>
+    </div>
 </div>
 
+@inject IJSRuntime JSRuntime
 
 @code {
     public string? EmailAddress;
     public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
     public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
     public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
+    public string Scrollable = "";
 
     public async Task SendEmail()
     {
@@ -169,5 +165,11 @@
         {
             await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
         }       
+    }
+
+    public async void Scroll()
+    {
+        Scrollable = "scrollable";
+        await JSRuntime.InvokeAsync<Task>("scrollFunction");
     }
 }

@@ -324,6 +324,28 @@ main.landing {
 main.landing .homepage {
   grid-column: 2/14;
 }
+@media screen and (max-width: 1200px) {
+  main.landing {
+    grid-template-columns: 1fr repeat(8, 71px) 1fr;
+    grid-column-gap: 15px;
+  }
+  main.landing .homepage {
+    grid-column: 2/10;
+  }
+}
+@media screen and (max-width: 760px) {
+  main.landing {
+    grid-template-columns: 1fr repeat(4, 71px) 1fr;
+  }
+  main.landing .homepage {
+    grid-column: 2/6;
+  }
+}
+@media screen and (max-width: 480px) {
+  main.landing {
+    grid-template-columns: 1fr repeat(4, 64px) 1fr;
+  }
+}
 
 nav .nav-desktop {
   padding: 32px 48px;
@@ -347,12 +369,19 @@ nav .nav-desktop .nav-links-wrapper {
   border-radius: 100px;
   padding: 0 14px;
 }
-nav .nav-desktop .nav-links-wrapper a {
-  font-family: "NeueHaasDisplayRoman";
-}
-nav .nav-desktop .nav-link {
+nav .nav-desktop .nav-links-wrapper .nav-link {
   padding: 10px;
   cursor: pointer;
+}
+nav .nav-desktop .nav-links-wrapper .nav-link a {
+  font-family: "NeueHaasDisplayRoman";
+  transition: 200ms ease-in-out;
+}
+nav .nav-desktop .nav-links-wrapper .nav-link a:hover {
+  color: #68696E;
+}
+nav .nav-desktop .nav-links-wrapper .nav-link a:visited {
+  color: none;
 }
 nav .community-join {
   width: 148px;
@@ -433,6 +462,9 @@ nav .nav-mobile {
   nav .nav-mobile .hide-menu {
     display: none;
   }
+  nav .nav-mobile .menu-container {
+    height: calc(100vh - 63.73px);
+  }
   nav .nav-mobile .menu {
     width: 100vw;
     padding: 96px 0;
@@ -450,7 +482,6 @@ nav .nav-mobile {
     overflow: hidden;
     width: 100vw;
     padding: 90px 18px;
-    background: #F2EDDF;
     display: flex;
     gap: 15px;
     justify-content: center;
@@ -505,12 +536,12 @@ body.ibis-translating {
   background: #F2EDDF;
   position: relative;
 }
-.homepage .home-hero .header {
+.homepage .home-hero header {
   width: 100%;
   margin: 0 auto;
   margin-bottom: 72px;
 }
-.homepage .home-hero .header h1 {
+.homepage .home-hero header h1 {
   width: 100%;
   max-width: 1053px;
   margin: 0 auto;
@@ -518,7 +549,7 @@ body.ibis-translating {
   font-size: 94px;
   line-height: 115px;
 }
-.homepage .home-hero .header p.subtitle-1 {
+.homepage .home-hero header p.subtitle-1 {
   width: 70%;
   max-width: 592px;
   margin: 0 auto;
@@ -579,6 +610,13 @@ body.ibis-translating {
 .homepage .learn-more img {
   max-height: 24px;
 }
+.homepage .learn-more img:hover {
+  animation: slideDownBounce 600ms ease-in-out infinite;
+  cursor: pointer;
+}
+.homepage .content.scrollable {
+  animation: fadeIn 1000ms ease-in-out;
+}
 .homepage .mission {
   padding-bottom: 112px;
 }
@@ -598,9 +636,6 @@ body.ibis-translating {
 .homepage .values {
   padding-bottom: 160px;
   background: #F2EDDF;
-}
-.homepage .values .container {
-  padding-bottom: 0px;
   position: relative;
 }
 .homepage .values-tag {
@@ -611,7 +646,7 @@ body.ibis-translating {
 .homepage .values-tag p {
   color: var(--error-500);
 }
-.homepage .values .header {
+.homepage .values header {
   width: 70%;
   max-width: 592px;
   margin: 0 auto;
@@ -713,12 +748,12 @@ body.ibis-translating {
   max-width: 100%;
   padding-top: 100px;
 }
-.homepage .resources .header {
+.homepage .resources header {
   max-width: 1216px;
   margin: 0 auto;
   margin-bottom: 55px;
 }
-.homepage .resources .header h5.subtitle-large {
+.homepage .resources header h5.subtitle-large {
   max-width: 592px;
 }
 @media only screen and (max-width: 760px) {
@@ -735,16 +770,16 @@ body.ibis-translating {
   .homepage .home-hero {
     padding-top: 60px;
   }
-  .homepage .home-hero .header h1 {
+  .homepage .home-hero header h1 {
     font-family: "NeueHaasDisplayBold";
     font-size: 70px;
     line-height: 120%;
     margin-bottom: 16px;
   }
-  .homepage .home-hero .header .invert {
+  .homepage .home-hero header .invert {
     font-family: "NeueHaasDisplayBold";
   }
-  .homepage .home-hero .header p.subtitle-1 {
+  .homepage .home-hero header p.subtitle-1 {
     font-family: "IBMPlexSans-SemiBold";
     font-size: 20px;
   }
@@ -825,7 +860,7 @@ body.ibis-translating {
     padding-top: 64px;
     padding-bottom: 64px;
   }
-  .homepage .values .header {
+  .homepage .values header {
     width: 100%;
     margin-bottom: 48px;
   }
@@ -840,7 +875,7 @@ body.ibis-translating {
   .homepage .resources {
     padding: 40px 0;
   }
-  .homepage .resources .header h5 {
+  .homepage .resources header h5 {
     margin: 0 auto;
   }
 }
@@ -856,9 +891,6 @@ body.ibis-translating {
   .homepage {
     margin-top: 63px;
   }
-  .homepage .container {
-    padding: 0 16px;
-  }
   .homepage .homepage {
     overflow-x: hidden;
   }
@@ -866,15 +898,15 @@ body.ibis-translating {
     padding-top: 32px;
     padding-bottom: 60px;
   }
-  .homepage .home-hero .header {
+  .homepage .home-hero header {
     margin-bottom: 32px;
   }
-  .homepage .home-hero .header h1 {
+  .homepage .home-hero header h1 {
     padding: 20px;
     font-size: 48px;
     line-height: 120%;
   }
-  .homepage .home-hero .header p.subtitle-1 {
+  .homepage .home-hero header p.subtitle-1 {
     width: 100%;
     font-size: 16px;
   }
@@ -916,6 +948,22 @@ body.ibis-translating {
   }
 }
 
+@keyframes slideDownBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .project-list-page {
   padding-bottom: 130px;
 }
