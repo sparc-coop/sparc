@@ -10,6 +10,10 @@ body.ibis-translating {
         text-align: center;
     }
 
+    h5.subtitle-large {
+        width: 592px;
+    }
+
     .home-hero {
         padding-top: 100px;
         padding-bottom: 24px;
@@ -17,13 +21,11 @@ body.ibis-translating {
         position: relative;
 
         header {
-            width: 100%;
             margin: 0 auto;
             margin-bottom: 72px;
 
             h1 {
-                width: 100%;
-                max-width: 1053px;
+                width: 1053px;
                 margin: 0 auto;
                 margin-bottom: 16px;
                 font-size: 94px;
@@ -31,8 +33,7 @@ body.ibis-translating {
             }
 
             p.subtitle-1 {
-                width: 70%;
-                max-width: 592px;
+                width: 592px;
                 margin: 0 auto;
                 font-family: 'IBMPlexSans-Medium';
                 font-size: 24px;
@@ -58,6 +59,7 @@ body.ibis-translating {
                 background: $white;
                 padding: 12px 24px;
                 margin-right: 6px;
+                font-family: 'NeueHaasDisplayRoman';
             }
 
             button {
@@ -116,15 +118,19 @@ body.ibis-translating {
 
     .content {
         &.scrollable {
-            animation: fadeIn 1000ms ease-in-out;
+            /*animation: fadeIn 1000ms ease-in-out;*/
         }
     }
 
-    .mission {
-        padding-bottom: 112px;
+    .mission, .community, .resources {
+        margin: 0 calc((100vw - 1218px) / -2);
+        padding: 100px calc((100vw - 1218px) / 2);
+        background: $white;
+    }
 
+    .mission {
         &-wrapper {
-            width: 70%;
+            width: 592px;
             margin: 0 auto;
 
             &:first-child {
@@ -159,21 +165,18 @@ body.ibis-translating {
         }
 
         header {
-            width: 70%;
-            max-width: 592px;
+            width: 592px;
             margin: 0 auto;
             margin-bottom: 80px;
             text-align: center;
         }
 
         .card-wrapper {
-            width: 100%;
-            max-width: 1216px;
+            width: 1216px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
             gap: 32px;
-            flex-wrap: wrap;
             text-align: center;
 
             .card-value {
@@ -191,107 +194,99 @@ body.ibis-translating {
                 }
             }
         }
+    }
 
-        .project-wrapper {
-            max-width: 1216px;
-            padding-top: 100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            gap: 100px;
-            flex-wrap: wrap;
+    .projects {
+        width: 1216px;
+        display: flex;
+        gap: 104px;
 
-            .left {
-                width: 592px;
-                position: relative;
+        .left {
+            width: 592px;
+            position: relative;
 
-                h5.subtitle-large {
-                    margin-bottom: 55px;
-                }
-
-                a {
-                    padding: 12px 24px;
-                    border-radius: 100px;
-                    background: $grey-900;
-                    color: $white;
-                    font-family: 'NeueHaasDisplayRomanItalic';
-                    font-size: 20px;
-
-                    img {
-                        margin-left: 10px;
-                    }
-                }
+            h5.subtitle-large {
+                margin-bottom: 55px;
             }
 
-            .right {
-                width: 520px;
-                margin: 0 auto;
+            a {
+                padding: 12px 24px;
+                border-radius: 100px;
+                background: $grey-900;
+                color: $white;
+                font-family: 'NeueHaasDisplayRomanItalic';
+                font-size: 20px;
 
-                .card-wrapper {
-                    max-width: 1216px;
+                img {
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .right {
+            width: 520px;
+            align-self: end;
+
+            .card-wrapper {
+                max-width: 1216px;
+                margin-bottom: 0px;
+                padding-bottom: 15px;
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 32px;
+
+                .project-card {
+                    width: 100%;
                     margin-bottom: 0px;
-                    padding-bottom: 15px;
-                    text-align: left;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    gap: 32px;
+                    padding: 32px;
+                    border-radius: 24px;
+                    background: $white;
 
-                    .project-card {
-                        width: 100%;
-                        margin-bottom: 0px;
-                        padding: 32px;
-                        border-radius: 24px;
-                        background: $white;
+                    .image-wrapper {
+                        height: 320px;
+
+                        .project-status {
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                        }
+
+                        .in-progress {
+                            width: 109px;
+                        }
+
+                        .photo {
+                            cursor: pointer;
+                            height: 320px;
+                        }
 
                         .image-wrapper {
                             height: 320px;
-
-                            .project-status {
-                                position: absolute;
-                                top: 8px;
-                                right: 8px;
-                            }
-
-                            .in-progress {
-                                width: 109px;
-                            }
-
-                            .photo {
-                                cursor: pointer;
-                                height: 320px;
-                            }
-
-                            .image-wrapper {
-                                height: 320px;
-                            }
                         }
+                    }
 
-                        .card:last-child {
-                            margin-bottom: 0;
-                        }
+                    .card:last-child {
+                        margin-bottom: 0;
                     }
                 }
             }
         }
     }
 
-    .resources {
-        max-width: 100%;
-        padding-top: 100px;
+    .community {
 
+    }
+
+    .resources {
         header {
-            max-width: 1216px;
             margin: 0 auto;
             margin-bottom: 55px;
-
-            h5.subtitle-large {
-                max-width: 592px;
-            }
         }
     }
 
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1340px) {
     }
 
     @media only screen and (max-width: 760px) {

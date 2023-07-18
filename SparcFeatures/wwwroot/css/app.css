@@ -24,7 +24,6 @@ body .subtitle-medium {
 }
 body .subtitle-large {
   font-size: 32px;
-  max-width: 592px;
 }
 body p, body a, body button {
   font-family: "NeueHaasDisplayRoman";
@@ -206,6 +205,7 @@ body .bold {
 
 .homepage section {
   padding: 100px 0;
+  margin: 0 auto;
 }
 
 .section-tag {
@@ -317,14 +317,15 @@ button {
 
 main.landing {
   display: grid;
-  grid-template-columns: 1fr repeat(12, 64px) 1fr;
+  grid-template-columns: 1fr repeat(12, 74px) 1fr;
   grid-column-gap: 30px;
   background: #F2EDDF;
+  overflow-x: hidden;
 }
 main.landing .homepage {
   grid-column: 2/14;
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1340px) {
   main.landing {
     grid-template-columns: 1fr repeat(8, 71px) 1fr;
     grid-column-gap: 15px;
@@ -530,6 +531,9 @@ body.ibis-translating {
 .homepage .center {
   text-align: center;
 }
+.homepage h5.subtitle-large {
+  width: 592px;
+}
 .homepage .home-hero {
   padding-top: 100px;
   padding-bottom: 24px;
@@ -537,21 +541,18 @@ body.ibis-translating {
   position: relative;
 }
 .homepage .home-hero header {
-  width: 100%;
   margin: 0 auto;
   margin-bottom: 72px;
 }
 .homepage .home-hero header h1 {
-  width: 100%;
-  max-width: 1053px;
+  width: 1053px;
   margin: 0 auto;
   margin-bottom: 16px;
   font-size: 94px;
   line-height: 115px;
 }
 .homepage .home-hero header p.subtitle-1 {
-  width: 70%;
-  max-width: 592px;
+  width: 592px;
   margin: 0 auto;
   font-family: "IBMPlexSans-Medium";
   font-size: 24px;
@@ -574,6 +575,7 @@ body.ibis-translating {
   background: #FFFFFF;
   padding: 12px 24px;
   margin-right: 6px;
+  font-family: "NeueHaasDisplayRoman";
 }
 .homepage .home-hero .cta-box button {
   padding: 12px 15px;
@@ -615,13 +617,15 @@ body.ibis-translating {
   cursor: pointer;
 }
 .homepage .content.scrollable {
-  animation: fadeIn 1000ms ease-in-out;
+  /*animation: fadeIn 1000ms ease-in-out;*/
 }
-.homepage .mission {
-  padding-bottom: 112px;
+.homepage .mission, .homepage .community, .homepage .resources {
+  margin: 0 calc((100vw - 1218px) / -2);
+  padding: 100px calc((100vw - 1218px) / 2);
+  background: #FFFFFF;
 }
 .homepage .mission-wrapper {
-  width: 70%;
+  width: 592px;
   margin: 0 auto;
 }
 .homepage .mission-wrapper:first-child {
@@ -647,20 +651,17 @@ body.ibis-translating {
   color: var(--error-500);
 }
 .homepage .values header {
-  width: 70%;
-  max-width: 592px;
+  width: 592px;
   margin: 0 auto;
   margin-bottom: 80px;
   text-align: center;
 }
 .homepage .values .card-wrapper {
-  width: 100%;
-  max-width: 1216px;
+  width: 1216px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   gap: 32px;
-  flex-wrap: wrap;
   text-align: center;
 }
 .homepage .values .card-wrapper .card-value {
@@ -675,23 +676,19 @@ body.ibis-translating {
 .homepage .values .card-wrapper .card-value .subtitle-large {
   margin-bottom: 12px;
 }
-.homepage .values .project-wrapper {
-  max-width: 1216px;
-  padding-top: 100px;
-  margin: 0 auto;
+.homepage .projects {
+  width: 1216px;
   display: flex;
-  justify-content: space-between;
-  gap: 100px;
-  flex-wrap: wrap;
+  gap: 104px;
 }
-.homepage .values .project-wrapper .left {
+.homepage .projects .left {
   width: 592px;
   position: relative;
 }
-.homepage .values .project-wrapper .left h5.subtitle-large {
+.homepage .projects .left h5.subtitle-large {
   margin-bottom: 55px;
 }
-.homepage .values .project-wrapper .left a {
+.homepage .projects .left a {
   padding: 12px 24px;
   border-radius: 100px;
   background: #111321;
@@ -699,14 +696,14 @@ body.ibis-translating {
   font-family: "NeueHaasDisplayRomanItalic";
   font-size: 20px;
 }
-.homepage .values .project-wrapper .left a img {
+.homepage .projects .left a img {
   margin-left: 10px;
 }
-.homepage .values .project-wrapper .right {
+.homepage .projects .right {
   width: 520px;
-  margin: 0 auto;
+  align-self: end;
 }
-.homepage .values .project-wrapper .right .card-wrapper {
+.homepage .projects .right .card-wrapper {
   max-width: 1216px;
   margin-bottom: 0px;
   padding-bottom: 15px;
@@ -716,45 +713,37 @@ body.ibis-translating {
   justify-content: center;
   gap: 32px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card {
+.homepage .projects .right .card-wrapper .project-card {
   width: 100%;
   margin-bottom: 0px;
   padding: 32px;
   border-radius: 24px;
   background: #FFFFFF;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper {
+.homepage .projects .right .card-wrapper .project-card .image-wrapper {
   height: 320px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .project-status {
+.homepage .projects .right .card-wrapper .project-card .image-wrapper .project-status {
   position: absolute;
   top: 8px;
   right: 8px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .in-progress {
+.homepage .projects .right .card-wrapper .project-card .image-wrapper .in-progress {
   width: 109px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .photo {
+.homepage .projects .right .card-wrapper .project-card .image-wrapper .photo {
   cursor: pointer;
   height: 320px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .image-wrapper .image-wrapper {
+.homepage .projects .right .card-wrapper .project-card .image-wrapper .image-wrapper {
   height: 320px;
 }
-.homepage .values .project-wrapper .right .card-wrapper .project-card .card:last-child {
+.homepage .projects .right .card-wrapper .project-card .card:last-child {
   margin-bottom: 0;
 }
-.homepage .resources {
-  max-width: 100%;
-  padding-top: 100px;
-}
 .homepage .resources header {
-  max-width: 1216px;
   margin: 0 auto;
   margin-bottom: 55px;
-}
-.homepage .resources header h5.subtitle-large {
-  max-width: 592px;
 }
 @media only screen and (max-width: 760px) {
   .homepage section {
@@ -1484,9 +1473,8 @@ body.ibis-translating {
 .project-card {
   margin-bottom: 30px;
   padding: 0px;
-  max-width: 100%;
   width: 589px;
-  height: 516px;
+  height: auto;
 }
 .project-card .card-header {
   height: 30px;
@@ -1726,24 +1714,28 @@ body.ibis-translating {
   align-items: center;
   gap: 32px;
   margin: 80px auto;
-  background: #F2EDDF;
   border-radius: 24px;
-  padding: 48px 40px 40px;
   max-width: 1268px;
   width: 100%;
   box-sizing: border-box;
 }
 .community-cta h6 {
   font-size: 28px;
-  margin-top: 65px;
 }
 .community-cta .divider {
   border: 1px solid #68696E;
   height: 330px;
 }
 .community-cta .community-card {
-  width: 100%;
+  width: 592px;
+  height: 418px;
+  padding: 60px 40px 40px 40px;
+  border-radius: 24px;
+  background: #F2EDDF;
   position: relative;
+}
+.community-cta .community-card .card-header {
+  margin-top: 60px;
 }
 .community-cta .community-card .card-header p {
   font-size: 20px;
@@ -1752,7 +1744,7 @@ body.ibis-translating {
 .community-cta .community-card .sparc-badge {
   position: absolute;
   text-align: center;
-  top: -70px;
+  top: -20px;
 }
 .community-cta .community-card .profile-pics-wrapper {
   justify-content: center;
@@ -1789,7 +1781,11 @@ body.ibis-translating {
 .community-cta button {
   display: block;
   width: 100%;
-  font-family: "NeueHaasDisplayMedium";
+  font-family: "NeueHaasDisplayBold";
+  font-style: normal;
+}
+.community-cta a {
+  font-family: "NeueHaasDisplayBold";
 }
 @media only screen and (max-width: 1340px) {
   .community-cta {

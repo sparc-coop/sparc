@@ -2,15 +2,16 @@
 
 main.landing {
     display: grid;
-    grid-template-columns: 1fr repeat(12, 64px) 1fr;
+    grid-template-columns: 1fr repeat(12, 74px) 1fr;
     grid-column-gap: 30px;
     background: $background;
+    overflow-x: hidden;
 
     .homepage {
         grid-column: 2/14;
     }
 
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 1340px) {
         grid-template-columns: 1fr repeat(8, 71px) 1fr;
         grid-column-gap: 15px;
 

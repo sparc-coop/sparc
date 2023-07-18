@@ -6,16 +6,13 @@
     align-items: center;
     gap: 32px;
     margin: 80px auto;
-    background: $yellow-100;
     border-radius: 24px;
-    padding: 48px 40px 40px;
     max-width: 1268px;
     width: 100%;
     box-sizing: border-box;
 
     h6 {
         font-size: 28px;
-        margin-top: 65px;
     }
 
     .divider {
@@ -24,10 +21,16 @@
     }
 
     .community-card {
-        width: 100%;
+        width: 592px;
+        height: 418px;
+        padding: 60px 40px 40px 40px;
+        border-radius: 24px;
+        background: $yellow-100;
         position: relative;
 
         .card-header {
+            margin-top: 60px;
+
             p {
                 font-size: 20px;
                 padding: 12px 0 48px 0;
@@ -37,7 +40,7 @@
         .sparc-badge {
             position: absolute;
             text-align: center;
-            top: -70px;
+            top: -20px;
         }
 
         .profile-pics-wrapper {
@@ -45,7 +48,6 @@
         }
 
         .community-signup {
-
             p {
                 padding-bottom: 8px;
             }
@@ -85,7 +87,12 @@
     button {
         display: block;
         width: 100%;
-        font-family: 'NeueHaasDisplayMedium';
+        font-family: 'NeueHaasDisplayBold';
+        font-style: normal;
+    }
+
+    a {
+        font-family: 'NeueHaasDisplayBold';
     }
 
     @media only screen and (max-width: 1340px) {
