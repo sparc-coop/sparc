@@ -4,8 +4,6 @@
 @import "Shared/MarketingLayout";
 @import "Shared/NavMenu";
 
-@import "Pages/Index";
-
 @import "Projects/ProjectsList";
 @import "Projects/Project";
 @import "Projects/ProjectCard";
@@ -14,6 +12,8 @@
 @import "Blog/Blog";
 
 @import "Community/CommunityCta";
+
+@import "Pages/Index";
 
 .ibis-translate {
     padding: 0;

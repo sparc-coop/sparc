@@ -6,6 +6,7 @@
     align-items: center;
     gap: 32px;
     margin: 80px auto;
+    margin-bottom: 0;
     border-radius: 24px;
     max-width: 1268px;
     width: 100%;
@@ -95,7 +96,64 @@
         font-family: 'NeueHaasDisplayBold';
     }
 
-    @media only screen and (max-width: 1340px) {
+    @media only screen and (max-width: 600px) {
+        .community-card {
+            padding: 40px;
+            height: 100%;
+
+            p {
+                font-size: 16px;
+                line-height: 22px;
+            }
+
+            button {
+                padding: 16px 14px;
+            }
+
+            .community-signup {
+                font-size: 16px;
+            }
+
+            &.left {
+                .community-join {
+                    display: block;
+                    text-align: center;
+
+                    input, button {
+                        width: 100% !important;
+                        margin: 0 auto;
+                    }
+
+                    input {
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+
+            &.right {
+                padding-top: 0;
+
+                .card-header {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                h6 {
+                    margin-top: 0;
+                }
+            }
+
+            .sparc-badge {
+                position: relative;
+                top: -50px;
+
+                img {
+                    height: 100px;
+                }
+            }
+        }
+    }
+    /*    @media only screen and (max-width: 1340px) {
         width: 80%;
     }
 
@@ -175,43 +233,5 @@
             }
         }
     }
-
-    @media only screen and (max-width: 480px) {
-        width: 100%;
-
-        .community-card {
-            padding: 0 17px;
-
-            p {
-                font-size: 16px;
-                line-height: 22px;
-            }
-
-            button {
-                padding: 16px 14px;
-            }
-
-            &.right {
-                .card-header {
-                    padding-top: 0;
-                }
-
-                h6 {
-                    margin-top: 0;
-                }
-            }
-
-            .sparc-badge {
-                position: relative;
-
-                img {
-                    height: 100px;
-                }
-            }
-
-            .community-signup {
-                font-size: 16px;
-            }
-        }
-    }
+*/
 }

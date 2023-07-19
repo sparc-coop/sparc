@@ -71,7 +71,7 @@ body {
         font-weight: 600;
     }
 
-    @media only screen and (max-width: 760px) {
+    @media only screen and (max-width: 850px) {
         .subtitle-small {
             font-size: 14px;
         }
@@ -101,7 +101,7 @@ body {
         }
     }
 
-    @media only screen and (max-width: 480px) {
+    @media only screen and (max-width: 600px) {
         .title-1 {
             font-size: 32px;
         }
@@ -250,18 +250,6 @@ body {
     font-family: 'IBMPlexSans-BoldItalic';
     font-weight: 700;
     src: url(wwwroot/fonts/IBMPlexSans-BoldItalic.ttf) format('truetype');
-}
-
-//containers & sections
-.container {
-    max-width: 1480px;
-    margin: 0 auto;
-    padding: 0 40px;
-}
-
-.homepage section {
-    padding: 100px 0;
-    margin: 0 auto;
 }
 
 //tags

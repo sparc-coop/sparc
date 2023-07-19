@@ -10,8 +10,19 @@ body.ibis-translating {
         text-align: center;
     }
 
-    h5.subtitle-large {
-        width: 592px;
+    section {
+        padding: 100px 0;
+        margin: 0 auto;
+
+        header {
+            width: 592px;
+        }
+    }
+
+    .white-background {
+        margin: 0 calc((100vw - 1218px) / -2);
+        padding: 100px calc((100vw - 1218px) / 2);
+        background: $white;
     }
 
     .home-hero {
@@ -21,11 +32,12 @@ body.ibis-translating {
         position: relative;
 
         header {
+            width: 1053px;
             margin: 0 auto;
             margin-bottom: 72px;
 
             h1 {
-                width: 1053px;
+                width: 100%;
                 margin: 0 auto;
                 margin-bottom: 16px;
                 font-size: 94px;
@@ -122,12 +134,6 @@ body.ibis-translating {
         }
     }
 
-    .mission, .community, .resources {
-        margin: 0 calc((100vw - 1218px) / -2);
-        padding: 100px calc((100vw - 1218px) / 2);
-        background: $white;
-    }
-
     .mission {
         &-wrapper {
             width: 592px;
@@ -165,13 +171,12 @@ body.ibis-translating {
         }
 
         header {
-            width: 592px;
             margin: 0 auto;
             margin-bottom: 80px;
             text-align: center;
         }
 
-        .card-wrapper {
+        &-wrapper {
             width: 1216px;
             margin: 0 auto;
             display: flex;
@@ -179,7 +184,7 @@ body.ibis-translating {
             gap: 32px;
             text-align: center;
 
-            .card-value {
+            .value-card {
                 width: 384px;
                 background: white;
                 padding: 56px 40px 40px;
@@ -202,10 +207,7 @@ body.ibis-translating {
         gap: 104px;
 
         .left {
-            width: 592px;
-            position: relative;
-
-            h5.subtitle-large {
+            h2.subtitle-large {
                 margin-bottom: 55px;
             }
 
@@ -223,76 +225,159 @@ body.ibis-translating {
             }
         }
 
-        .right {
+        &-wrapper {
             width: 520px;
             align-self: end;
+            margin-bottom: 0px;
+            padding-bottom: 15px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 32px;
 
-            .card-wrapper {
-                max-width: 1216px;
+            .project-card {
+                width: 520px;
                 margin-bottom: 0px;
-                padding-bottom: 15px;
-                text-align: left;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                gap: 32px;
+                padding: 32px;
+                border-radius: 24px;
+                background: $white;
 
-                .project-card {
-                    width: 100%;
-                    margin-bottom: 0px;
-                    padding: 32px;
-                    border-radius: 24px;
-                    background: $white;
+                .image-wrapper {
+                    height: 320px;
+
+                    .project-status {
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                    }
+
+                    .in-progress {
+                        width: 109px;
+                    }
+
+                    .photo {
+                        cursor: pointer;
+                        height: 320px;
+                    }
 
                     .image-wrapper {
                         height: 320px;
-
-                        .project-status {
-                            position: absolute;
-                            top: 8px;
-                            right: 8px;
-                        }
-
-                        .in-progress {
-                            width: 109px;
-                        }
-
-                        .photo {
-                            cursor: pointer;
-                            height: 320px;
-                        }
-
-                        .image-wrapper {
-                            height: 320px;
-                        }
                     }
+                }
 
-                    .card:last-child {
-                        margin-bottom: 0;
-                    }
+                .card:last-child {
+                    margin-bottom: 0;
                 }
             }
         }
     }
 
-    .community {
+    @media only screen and (max-width: 1440px) {
+        .white-background {
+            margin: 0 calc((100vw - 1098px) / -2);
+            padding: 100px calc((100vw - 1098px) / 2);
+            background: $white;
+        }
 
-    }
+        .home-hero {
+            header {
+                width: 850px;
+            }
+        }
 
-    .resources {
-        header {
-            margin: 0 auto;
-            margin-bottom: 55px;
+        .values {
+            padding-top: 160px;
+
+            &-wrapper {
+                width: 800px;
+                flex-wrap: wrap;
+            }
+        }
+
+        .projects {
+            width: 100%;
+            display: block;
+
+            .left {
+                margin-bottom: 74px;
+            }
+
+            &-wrapper {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
         }
     }
 
-    @media only screen and (max-width: 1340px) {
+    @media only screen and (max-width: 1200px) {
+        .white-background {
+            margin: 0 calc((100vw - 673px) / -2);
+            padding: 100px calc((100vw - 673px) / 2);
+            background: $white;
+        }
+
+        .home-hero {
+            header {
+                width: 673px;
+                margin-bottom: 40px;
+
+                h1 {
+                    font-size: 74px;
+                    line-height: 120%;
+                }
+
+                p.subtitle-1 {
+                    width: 531px;
+                    font-size: 20px;
+                    line-height: 150%;
+                }
+            }
+        }
+
+        .mission {
+            &-wrapper {
+                &:first-child {
+                    margin-bottom: 100px;
+                }
+            }
+        }
+
+        .values {
+            &-wrapper {
+                width: 384px;
+                flex-wrap: nowrap;
+                flex-direction: column;
+            }
+        }
+
+        .community {
+            &-cta {
+                flex-direction: column-reverse;
+                justify-content: center;
+                gap: 60px;
+
+                .community-card {
+                    text-align: center;
+
+                    a {
+                        margin: 0 auto;
+                    }
+                }
+
+                &:last-child {
+                    margin-top: 100px;
+                }
+            }
+        }
     }
 
-    @media only screen and (max-width: 760px) {
-
-        section {
-            padding: 64px 0 0 0;
+    @media only screen and (max-width: 850px) {
+        .white-background {
+            margin: 0 calc((100vw - 501px) / -2);
+            padding: 100px calc((100vw - 501px) / 2);
         }
 
         .values, .community, .resources {
@@ -304,23 +389,26 @@ body.ibis-translating {
             margin-bottom: 16px;
         }
 
-        .home-hero {
-            padding-top: 60px;
-
+        section {
             header {
+                width: 501px;
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+
+        .home-hero {
+            header {
+                width: 501px;
+
                 h1 {
-                    font-family: 'NeueHaasDisplayBold';
-                    font-size: 70px;
+                    font-size: 55px;
                     line-height: 120%;
                     margin-bottom: 16px;
                 }
 
-                .invert {
-                    font-family: 'NeueHaasDisplayBold';
-                }
-
                 p.subtitle-1 {
-                    font-family: 'IBMPlexSans-SemiBold';
+                    width: 359px;
                     font-size: 20px;
                 }
             }
@@ -380,8 +468,7 @@ body.ibis-translating {
         }
 
         .mission {
-            padding-top: 64px;
-            padding-bottom: 16px;
+            padding-top: 60px;
 
             &-wrapper {
                 width: 100%;
@@ -392,8 +479,7 @@ body.ibis-translating {
             }
 
             &-wrapper {
-                width: 80%;
-                padding: 0 7px;
+                width: 100%;
 
                 &:first-child {
                     margin-bottom: 64px;
@@ -419,23 +505,9 @@ body.ibis-translating {
             }
         }
 
-        .values {
-            padding-top: 64px;
-            padding-bottom: 64px;
-
-            header {
-                width: 100%;
-                margin-bottom: 48px;
-            }
-
-            .project-wrapper {
-                gap: 84px;
-
-                .left {
-                    width: 100%;
-                    margin: 0 auto;
-                    justify-content: center;
-                }
+        .community {
+            &-card {
+                width: 501px;
             }
         }
 
@@ -443,7 +515,7 @@ body.ibis-translating {
             padding: 40px 0;
 
             header {
-                h5 {
+                h2 {
                     margin: 0 auto;
                 }
             }
@@ -451,6 +523,20 @@ body.ibis-translating {
     }
 
     @media only screen and (max-width: 600px) {
+        .white-background {
+            margin: 0 calc((100vw - 329px) / -2);
+            padding: 100px calc((100vw - 329px) / 2);
+        }
+
+        section {
+            padding-top: 80px !important;
+            padding-bottom: 80px !important;
+
+            header {
+                width: 329px;
+            }
+        }
+
         .home-hero .cta-box .cta-flex {
             input {
                 width: 100%;
@@ -460,13 +546,61 @@ body.ibis-translating {
                 margin-top: 16px;
             }
         }
+
+        .home-hero {
+            header {
+                width: 329px;
+
+                h1 {
+                    width: 100%;
+                    font-size: 48px;
+                }
+
+                p.subtitle-1 {
+                    width: 100%;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .mission {
+            padding-bottom: 30px !important;
+        }
+
+        .values {
+            .value-card {
+                width: 329px;
+            }
+        }
+
+        .projects {
+            .project-card {
+                .image-wrapper {
+                    height: 200px;
+
+                    .photo {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        .community {
+            &-card {
+                width: 300px;
+            }
+        }
     }
 
     @media only screen and (max-width: 480px) {
-        margin-top: 63px;
-
         .homepage {
             overflow-x: hidden;
+        }
+
+        .white-background {
+            margin: 0 calc((100vw - 301px) / -2);
+            padding: 100px calc((100vw - 301px) / 2);
+            background: $white;
         }
 
         .home-hero {
@@ -477,7 +611,6 @@ body.ibis-translating {
                 margin-bottom: 32px;
 
                 h1 {
-                    //max-width: 460px;
                     padding: 20px;
                     font-size: 48px;
                     line-height: 120%;
@@ -494,6 +627,7 @@ body.ibis-translating {
             }
         }
 
+
         .mission {
             padding-bottom: 17px;
 
@@ -508,40 +642,6 @@ body.ibis-translating {
             &-content {
                 h5.subtitle-large {
                     margin-bottom: 48px;
-                }
-            }
-        }
-
-        .values {
-            padding-bottom: 64px;
-
-            .project-wrapper {
-                .left {
-                    h5.subtitle-large {
-                        margin-bottom: 44px;
-                    }
-
-                    a {
-                        font-size: 16px;
-                    }
-                }
-
-                .right {
-                    .card-wrapper {
-                        gap: 16px;
-
-                        .project-card {
-                            padding: 16px;
-
-                            .card-content {
-                                width: 236px;
-
-                                img.photo {
-                                    width: 100%;
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }

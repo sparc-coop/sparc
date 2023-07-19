@@ -11,24 +11,37 @@ main.landing {
         grid-column: 2/14;
     }
 
-    @media screen and (max-width: 1340px) {
+    @media screen and (max-width: 1440px) {
+        grid-template-columns: 1fr repeat(12, 64px) 1fr;
+        grid-column-gap: 30px;
+
+        .homepage {
+            grid-column: 2/14;
+        }
+    }
+
+    @media screen and (max-width: 1200px) {
         grid-template-columns: 1fr repeat(8, 71px) 1fr;
-        grid-column-gap: 15px;
+        column-gap: 15px;
 
         .homepage {
             grid-column: 2/10;
         }
     }
 
-    @media screen and (max-width: 760px) {
+    @media screen and (max-width: 850px) {
+        grid-template-columns: 1fr repeat(6, 71px) 1fr;
+
+        .homepage {
+            grid-column: 2/8;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
         grid-template-columns: 1fr repeat(4, 71px) 1fr;
 
         .homepage {
             grid-column: 2/6;
         }
-    }
-
-    @media screen and (max-width: 480px) {
-        grid-template-columns: 1fr repeat(4, 64px) 1fr;
     }
 }
