@@ -251,9 +251,30 @@ body .bold {
 
 button {
   background: var(--grey-900);
+  border: none;
   border-radius: 100px;
   font-size: 16px;
   font-style: italic;
+}
+
+.btn-red {
+  padding: 10px 24px;
+  background: #FF756A;
+  border: none;
+  font-family: "NeueHaasDisplayMedium";
+  font-size: 14px;
+  font-style: normal;
+  text-align: center;
+}
+
+.btn-red, .btn-black {
+  transition: 200ms ease-in-out;
+}
+.btn-red:hover, .btn-black:hover {
+  background: #FF9087 !important;
+}
+.btn-red:active, .btn-black:active {
+  background: #FE4235 !important;
 }
 
 .btn-large {
@@ -1057,6 +1078,13 @@ nav .nav-mobile {
 .project-card .card-header a {
   cursor: pointer;
 }
+.project-card .card-header a svg path {
+  stroke: #111321;
+  transition: 200ms ease-in-out;
+}
+.project-card .card-header a:hover svg path {
+  stroke: #FF756A;
+}
 .project-card .btn-small {
   font-family: "NeueHaasDisplayRomanItalic";
 }
@@ -1094,7 +1122,7 @@ nav .nav-mobile {
 .project-card .card-tags-wrapper .card-tags button:hover {
   background: var(--secondary-300);
 }
-.project-card .card-tags-wrapper .card-github {
+.project-card .card-tags-wrapper .github-link {
   width: 44px;
   height: 28px;
   border-radius: 50px;
@@ -1103,9 +1131,16 @@ nav .nav-mobile {
   text-align: center;
   padding-top: 4px;
   cursor: pointer;
+  transition: 200ms ease-in-out;
 }
-.project-card .card-tags-wrapper .card-github img {
+.project-card .card-tags-wrapper .github-link img {
   width: 15px;
+}
+.project-card .card-tags-wrapper .github-link:hover {
+  background: rgba(17, 19, 33, 0.04);
+}
+.project-card .card-tags-wrapper .github-link:active {
+  background: rgba(17, 19, 33, 0.12);
 }
 
 .blog-list {
@@ -1380,8 +1415,8 @@ nav .nav-mobile {
 }
 .community-cta .community-card {
   width: 592px;
-  height: 418px;
-  padding: 60px 40px 40px 40px;
+  height: 389px;
+  padding: 48px 40px 40px 40px;
   border-radius: 24px;
   background: #F2EDDF;
   position: relative;
@@ -1393,10 +1428,16 @@ nav .nav-mobile {
   font-size: 20px;
   padding: 12px 0 48px 0;
 }
+.community-cta .community-card.left .hero {
+  margin-top: 10px;
+}
+.community-cta .community-card.left .card-header {
+  margin-top: 36px;
+}
 .community-cta .community-card .sparc-badge {
   position: absolute;
   text-align: center;
-  top: -20px;
+  top: -40px;
 }
 .community-cta .community-card .profile-pics-wrapper {
   justify-content: center;
@@ -1419,25 +1460,22 @@ nav .nav-mobile {
   border-radius: 60px;
   padding: 13.5px 24px;
 }
-.community-cta .community-card .community-signup .community-join a, .community-cta .community-card .community-signup .community-join .btn-large {
-  background: #FF756A;
-  color: white;
+.community-cta .community-card .community-signup .community-join a {
+  padding: 16px 32px;
   border: none;
   border-radius: 100px;
-  padding: 16px 32px;
+  background: #FF756A;
+  color: white;
+  font-family: "NeueHaasDisplayBold";
 }
-.community-cta .community-card .community-signup .community-join .btn-large {
-  height: 48px;
-  width: 94px;
-}
-.community-cta button {
+.community-cta .community-card .community-signup .community-join button {
   display: block;
   width: 100%;
   font-family: "NeueHaasDisplayBold";
   font-style: normal;
-}
-.community-cta a {
-  font-family: "NeueHaasDisplayBold";
+  height: 48px;
+  width: 94px;
+  padding: 16px 32px;
 }
 @media only screen and (max-width: 600px) {
   .community-cta .community-card {
@@ -1565,6 +1603,9 @@ body.ibis-translating {
 }
 .homepage .cta-box .cta-flex {
   justify-content: space-between;
+}
+.homepage .cta-box .cta-flex input {
+  color: #68696E;
 }
 .homepage .cta-box .cta-email {
   display: none;

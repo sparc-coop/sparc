@@ -12,9 +12,24 @@
         justify-content: space-between;
         margin-bottom: 8px;
         margin-top: 20px;
-        
+
         a {
             cursor: pointer;
+
+            svg {
+                path {
+                    stroke: $grey-900;
+                    transition: 200ms ease-in-out;
+                }
+            }
+
+            &:hover {
+                svg {
+                    path {
+                        stroke: $peach-500;
+                    }
+                }
+            }
         }
     }
 
@@ -65,7 +80,7 @@
             }
         }
 
-        .card-github {
+        .github-link {
             width: 44px;
             height: 28px;
             border-radius: 50px;
@@ -74,9 +89,18 @@
             text-align: center;
             padding-top: 4px;
             cursor: pointer;
+            transition: 200ms ease-in-out;
 
             img {
                 width: 15px;
+            }
+
+            &:hover {
+                background: rgba(17, 19, 33, 0.04);
+            }
+
+            &:active {
+                background: rgba(17, 19, 33, 0.12);
             }
         }
     }

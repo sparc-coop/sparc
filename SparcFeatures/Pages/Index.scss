@@ -98,6 +98,10 @@ body.ibis-translating {
 
         .cta-flex {
             justify-content: space-between;
+
+            input {
+                color: $grey-500;
+            }
         }
 
         .cta-email {
