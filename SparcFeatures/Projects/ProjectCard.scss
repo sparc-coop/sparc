@@ -14,7 +14,7 @@
         margin-top: 20px;
 
         a {
-            cursor: pointer;
+            /*cursor: pointer;*/
 
             svg {
                 path {
@@ -60,6 +60,10 @@
         border-radius: 6px;
         height: 100%;
         width: 100%;
+
+        &:hover {
+            cursor: default !important;
+        }
     }
 
     .card-tags-wrapper {
@@ -77,6 +81,7 @@
 
             button:hover {
                 background: var(--secondary-300);
+                cursor: default !important;
             }
         }
 

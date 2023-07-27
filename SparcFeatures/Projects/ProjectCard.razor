@@ -2,8 +2,8 @@
 
 <div class="project-card">
     <div class="image-wrapper">
-        <a href="/Projects/@titleURL/@ChannelId" title="Project Information">
-            <img class="photo" src="@ImgUrl" />
+@*        <a href="/Projects/@titleURL/@ChannelId" title="Project Information">
+*@            <img class="photo" src="@ImgUrl" />
             @if(Status.ToLower() == "live")
             {
                 <img class="project-status live" src="images/icons/Status Pin Live.svg" />
@@ -11,7 +11,7 @@
             {
                 <img class="project-status in-progress" src="images/icons/Status Pin In Progress.svg" />
             }
-        </a>
+@*        </a>*@
     </div>
     <div class="card-header">
         <h5 class="title-2 semi-bold">@Title</h5>

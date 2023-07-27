@@ -1076,7 +1076,7 @@ nav .nav-mobile {
   margin-top: 20px;
 }
 .project-card .card-header a {
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 .project-card .card-header a svg path {
   stroke: #111321;
@@ -1108,6 +1108,9 @@ nav .nav-mobile {
   height: 100%;
   width: 100%;
 }
+.project-card .photo:hover {
+  cursor: default !important;
+}
 .project-card .card-tags-wrapper {
   padding-top: 20px;
   display: flex;
@@ -1121,6 +1124,7 @@ nav .nav-mobile {
 }
 .project-card .card-tags-wrapper .card-tags button:hover {
   background: var(--secondary-300);
+  cursor: default !important;
 }
 .project-card .card-tags-wrapper .github-link {
   width: 44px;
