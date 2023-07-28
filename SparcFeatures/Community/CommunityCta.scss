@@ -120,6 +120,11 @@
             }
 
             &.left {
+                .hero {
+                    width: 200px;
+                    height: auto;
+                }
+
                 .community-join {
                     display: block;
                     text-align: center;

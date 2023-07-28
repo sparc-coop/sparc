@@ -1,39 +1,39 @@
 ﻿@import "../App.Variables.scss";
 
 .project-list-page {
-    padding-bottom: 130px;
+    background: $background;
 
-    .hero-header {
+    header {
         text-align: center;
         padding: 120px 0 140px 0;
+        width: 100%;
+        margin: auto;
+        background: $yellow-100;
 
-        .header {
-            max-width: 1007px;
+        .icon-wrapper {
+            margin-bottom: 8px;
+        }
+
+        .title-1 {
+            width: 1007px;
+            margin: 0 auto;
+            margin-bottom: 26px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 481px;
             margin: auto;
 
-            .icon-wrapper {
-                margin-bottom: 8px;
-            }
-
-            .title-1 {
-                margin-bottom: 26px;
-            }
-
-            .project-tags {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                max-width: 76%;
-                margin: auto;
-
-                .tag {
-                    border: 1px solid $peach-500;
-                    background: inherit;
-                    color: $peach-500;
-                    border-radius: 100px;
-                }
+            .tag {
+                border: 1px solid $peach-500;
+                background: inherit;
+                color: $peach-500;
+                border-radius: 100px;
             }
         }
     }
@@ -44,7 +44,7 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
-        max-width: 76%;
+        width: 481px;
         margin: auto;
 
         .tag {
@@ -56,22 +56,9 @@
     }
 
     .project-list-wrapper {
-        padding: 140px 30px 100px 30px;
-        width: 100%;
-        max-width: 1276px;
-        margin: 0 auto;
-
-        @media only screen and (max-width: 1293px) {
-            width: 80%;
-
-            .project-card {
-                max-width: 47%;
-            }
-        }
-
-        @media only screen and (max-width: 885px) {
-            width: 95%;
-        }
+        margin: 0 calc((100vw - 1098px) / -2);
+        padding: 140px calc((100vw - 1098px) / 2);
+        background: $yellow-50;
 
         .filters {
             display: flex;
@@ -102,44 +89,71 @@
         }
 
         .project-list {
+            width: 1098px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
-            gap: 38px;
+            gap: 30px;
             flex-wrap: wrap;
         }
     }
 
-    @media only screen and (max-width: 760px) {
-        .hero-header {
-            padding-top: 76px;
-            padding-bottom: 30px;
+    @media only screen and (max-width: 1200px) {
+        header {
+            .title-1 {
+                width: 673px;
+            }
+        }
 
-            .container {
-                padding: 0 42px;
+        .project-list-wrapper {
+            margin: 0 calc((100vw - 673px) / -2);
+            padding: 140px calc((100vw - 673px) / 2);
+
+            .project-list {
+                width: 501px;
+                display: block;
+                margin: 0 auto;
+
+                .project-card {
+                    width: 100%;
+                    margin-bottom: 38px;
+
+                    .image-wrapper {
+                        height: 317px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 850px) {
+        header {
+            width: 501px;
+            padding-bottom: 80px;
+
+            .title-1 {
+                width: 100%;
+                font-size: 52px;
             }
 
-            .header {
-                max-width: 760px;
+            .icon-wrapper {
+                margin-bottom: 16px;
+            }
 
-                .icon-wrapper {
-                    margin-bottom: 16px;
-                }
+            .project-tags {
+                width: 329px;
+                margin: auto;
 
-                .project-tags {
-                    width: 95%;
-                    max-width: 390px;
-                    margin: auto;
-
-                    .tag {
-                        padding: 3px 12px;
-                        font-size: 14px;
-                    }
+                .tag {
+                    padding: 3px 12px;
+                    font-size: 14px;
                 }
             }
         }
 
         .project-list-wrapper {
-            padding: 70px 30px;
+            margin: 0 calc((100vw - 501px) / -2);
+            padding: 80px calc((100vw - 501px) / 2);
 
             .filters {
                 display: flex;
@@ -169,75 +183,32 @@
                     font-size: 16px;
                 }
             }
-
-            .project-list {
-                justify-content: center;
-                gap: 30px;
-
-                .project-card {
-                    margin: 16px 0;
-                    padding: 0px;
-                    max-width: none;
-
-                    .card-content {
-                        .image-wrapper {
-                            position: relative;
-
-                            img {
-                                width: 100%;
-                            }
-
-                            .project-status {
-                                position: absolute;
-                                top: 8px;
-                                right: 8px;
-                            }
-
-                            .in-progress {
-                                width: 109px;
-                            }
-
-                            .live {
-                                width: 67px;
-                            }
-                        }
-
-                        .card-header {
-                            margin-bottom: 12px;
-                        }
-
-                        .card-tags-wrapper {
-                            display: block;
-                            margin-top: 16px;
-
-                            .card-tags {
-                                width: 100%;
-                                display: flex;
-                                justify-content: flex-start;
-                                gap: 5px;
-                                margin-bottom: 16px;
-
-                                button {
-                                    font-size: 14px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
-    @media only screen and (max-width: 480px) {
-        padding-bottom: 60px;
+    @media only screen and (max-width: 600px) {
+        header {
+            width: 329px;
+            padding-top: 80px;
+            padding-bottom: 40px;
 
-        .hero-header {
-            text-align: center;
-            padding-top: 76px;
-            padding-bottom: 30px;
+            .title-1 {
+                font-size: 40px;
+            }
+        }
 
-            .header {
-                max-width: 390px;
+        .project-list-wrapper {
+            margin: 0 calc((100vw - 329px) / -2);
+            padding: 40px calc((100vw - 329px) / 2);
+
+            .project-list {
+                width: 329px;
+
+                .project-card {
+                    .image-wrapper {
+                        height: 208px;
+                    }
+                }
             }
         }
     }
