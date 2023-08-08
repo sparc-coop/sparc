@@ -1135,7 +1135,7 @@ nav .nav-mobile {
   border-radius: 100px;
 }
 .project-card .card-tags-wrapper .card-tags button:hover {
-  background: var(--secondary-300);
+  /*background: var(--secondary-300);*/
   cursor: default !important;
 }
 .project-card .card-tags-wrapper .github-link {
