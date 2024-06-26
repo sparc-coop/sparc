@@ -15,6 +15,7 @@
 @import "Community/CommunityCta";
 
 @import "Pages/Index";
+@import "Pages/KoriTestPage";
 
 .ibis-translate {
     padding: 0;
@@ -26,3 +27,6 @@
     opacity: 0.3;
 }
 
+:root {
+    --orange: #FF801E;
+}
