@@ -2045,19 +2045,39 @@ body.ibis-translating {
     opacity: 1;
   }
 }
+.ibis-translate {
+  padding: 0;
+  margin: 0;
+}
+
+.ibis-translating {
+  visibility: visible;
+  opacity: 0.3;
+}
+
+@font-face {
+  font-family: "Love Ya Like A Sister";
+  font-weight: 400;
+  src: url("/kori/fonts/LoveYaLikeASister-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "ArticulatCF";
+  font-weight: 500;
+  src: url("/kori/fonts/ArticulatCF-Medium.otf") format("opentype");
+}
 .kori-enabled {
   border: 0px solid transparent;
   transition: 200ms ease-in-out;
 }
 .kori-enabled:hover {
-  border: 1px solid var(--orange);
+  border: 1px solid var(--orange-300);
   cursor: pointer;
 }
 .kori-enabled.selected {
   background: white;
   border: 15px solid transparent;
   border-radius: 24px;
-  border-image: url("../../kori/brush-effect__content.svg") 15 round;
+  border-image: url("../../kori/images/brush-effect__content.svg") 15 round;
 }
 
 body.ibis-translating {
@@ -2563,16 +2583,112 @@ body.ibis-translating {
     opacity: 1;
   }
 }
-.ibis-translate {
-  padding: 0;
-  margin: 0;
+.kori-widget {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  transition: 200ms ease-in-out;
 }
-
-.ibis-translating {
-  visibility: visible;
-  opacity: 0.3;
+.kori-widget h5 {
+  padding: 0;
+  font-family: "Love Ya Like A Sister" !important;
+  font-weight: 400;
+  font-size: 16px;
+}
+.kori-widget__actions {
+  display: flex;
+  justify-content: center;
+}
+.kori-widget__actions .kori-widget__content {
+  width: 300px;
+  padding: 12px;
+  background: var(--white);
+  border: 15px solid transparent;
+  border-radius: 24px;
+  border-image: url("../../kori/images/brush-effect.svg") 15 round;
+}
+.kori-widget__actions .kori-widget__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.kori-widget__actions .kori-widget__header div {
+  display: flex;
+  gap: 8px;
+}
+.kori-widget__actions .kori-widget__header button {
+  padding: 0;
+  background: none;
+  color: var(--grey-900);
+  border: none;
+  border-radius: 0px;
+  font-family: "Love Ya Like A Sister" !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  transition: 200ms ease-in-out;
+}
+.kori-widget__actions .kori-widget__header button:hover {
+  filter: opacity(0.6);
+}
+.kori-widget__actions .kori-widget__header button:active {
+  filter: opacity(1);
+}
+.kori-widget__actions .kori-widget__options {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.kori-widget__actions .kori-widget__options button {
+  width: 100%;
+  padding: 6px;
+  background: none;
+  border: 10px solid transparent;
+  border-radius: 24px;
+  border-image: url("../../kori/images/brush-effect.svg") 15 round;
+  color: var(--grey-900);
+  font-family: "Love Ya Like A Sister" !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 100%;
+  text-align: left;
+  transition: 200ms ease-in-out;
+}
+.kori-widget__actions .kori-widget__options button:hover {
+  filter: opacity(0.6);
+}
+.kori-widget__actions .kori-widget__options button:active {
+  filter: opacity(1);
 }
 
 :root {
-  --orange: #FF801E;
+  --white: #FFFFFF;
+  --grey-50: #F2F2F2;
+  --grey-100: #E6E6E6;
+  --grey-200: #CCCCCC;
+  --grey-300: #B3B3B3;
+  --grey-400: #999999;
+  --grey-500: #808080;
+  --grey-600: #666666;
+  --grey-700: #4D4D4D;
+  --grey-800: #333333;
+  --grey-900: #1A1A1A;
+  --black: #000000;
+  --yellow-200: #FCF29E;
+  --yellow-300: #FEF07E;
+  --yellow-400: #FDF37A;
+  --yellow-500: #ECDD2A;
+  --blue-200: #80C3E4;
+  --blue-300: #6DC8F4;
+  --blue-400: #4288CD;
+  --blue-500: #227CD3;
+  --orange-200: #DBA57F;
+  --orange-300: #FF801E;
+  --orange-400: #E67976;
+  --orange-500: #E84141;
+  --green-200: #9EBF94;
+  --green-300: #86D170;
+  --green-400: #31726E;
+  --green-500: #0E7973;
 }

@@ -15,7 +15,6 @@
 @import "Community/CommunityCta";
 
 @import "Pages/Index";
-@import "Pages/KoriTestPage";
 
 .ibis-translate {
     padding: 0;
@@ -27,6 +26,50 @@
     opacity: 0.3;
 }
 
+// kori
+
+@font-face {
+    font-family: 'Love Ya Like A Sister';
+    font-weight: 400;
+    src: url('/kori/fonts/LoveYaLikeASister-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ArticulatCF';
+    font-weight: 500;
+    src: url('/kori/fonts/ArticulatCF-Medium.otf') format('opentype');
+}
+
+@import "Kori/KoriTestPage";
+@import "Kori/KoriWidget.scss";
+
 :root {
-    --orange: #FF801E;
+    --white: #FFFFFF;
+    --grey-50: #F2F2F2;
+    --grey-100: #E6E6E6;
+    --grey-200: #CCCCCC;
+    --grey-300: #B3B3B3;
+    --grey-400: #999999;
+    --grey-500: #808080;
+    --grey-600: #666666;
+    --grey-700: #4D4D4D;
+    --grey-800: #333333;
+    --grey-900: #1A1A1A;
+    --black: #000000;
+    --yellow-200: #FCF29E;
+    --yellow-300: #FEF07E;
+    --yellow-400: #FDF37A;
+    --yellow-500: #ECDD2A;
+    --blue-200: #80C3E4;
+    --blue-300: #6DC8F4;
+    --blue-400: #4288CD;
+    --blue-500: #227CD3;
+    --orange-200: #DBA57F;
+    --orange-300: #FF801E;
+    --orange-400: #E67976;
+    --orange-500: #E84141;
+    --green-200: #9EBF94;
+    --green-300: #86D170;
+    --green-400: #31726E;
+    --green-500: #0E7973;
 }

@@ -144,21 +144,50 @@
         </section>*@
     </div>
 </div>
+<KoriWidget />
 
 <script>
     function toggleSelected(e) {
         var t = e.target;
 
-        document.getElementsByClassName("selected")[0]?.classList.remove("selected");
+        if (!t.classList.contains("kori-widget") || !t.parentElement.classList.contains("kori-widget")) {
+            document.getElementsByClassName("selected")[0]?.classList.remove("selected");
+            document.getElementById("kori-widget").style.display = "none";
+        }
 
-        if (!t.classList.contains("selected")) {
-            t.classList.add("selected");
-        } else {
-            t.classList.remove("selected");
+        if (t.classList.contains("kori-enabled")) {
+            if (!t.classList.contains("selected")) {
+                t.classList.add("selected");
+                toggleWidget(e);
+            } else {
+                t.classList.remove("selected");
+                toggleWidget(e);
+            }
         }
     }
 
-    window.addEventListener("mousedown", e => toggleSelected(e)); 
+    window.addEventListener("mousedown", e => toggleSelected(e));
+
+    function toggleWidget(e) {
+        var t = e.target;
+        var w = document.getElementById("kori-widget");
+        var bodyRect = document.body.getBoundingClientRect();
+        var elemRect = t.getBoundingClientRect();
+        var offset = elemRect.top - bodyRect.top;
+        console.log(offset);
+        var positionX = t.getBoundingClientRect().right;
+        var positionY = t.getBoundingClientRect().top;
+
+        if (w.style.display == "none") {
+            w.style.display = "block";
+            w.style.left = (positionX + 20) + "px";
+            w.style.top = offset + "px";
+        } else {
+            w.style.display = "none";
+        }
+
+    }
+
 </script>
 
 @inject IJSRuntime JSRuntime
