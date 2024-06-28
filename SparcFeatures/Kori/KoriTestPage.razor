@@ -148,44 +148,45 @@
 
 <script>
     function toggleSelected(e) {
-        var t = e.target;
+        if (e.target.closest('.kori-widget'))
+            return;
 
-        if (!t.classList.contains("kori-widget") || !t.parentElement.classList.contains("kori-widget")) {
-            document.getElementsByClassName("selected")[0]?.classList.remove("selected");
+        console.log('unselecting');
+        document.getElementsByClassName("selected")[0]?.classList.remove("selected");
+
+        var t = e.target.closest('.kori-enabled');
+        if (!t) {
+            // clicked outside of all kori elements
+            console.log('disable');
             document.getElementById("kori-widget").style.display = "none";
+            return;
         }
 
-        if (t.classList.contains("kori-enabled")) {
-            if (!t.classList.contains("selected")) {
-                t.classList.add("selected");
-                toggleWidget(e);
-            } else {
-                t.classList.remove("selected");
-                toggleWidget(e);
-            }
+        if (!t.classList.contains('selected')) {
+            console.log('selecting');
+            t.classList.add("selected");
+            toggleWidget(t);
         }
     }
 
-    window.addEventListener("mousedown", e => toggleSelected(e));
+    window.addEventListener("click", e => {
+        e.stopImmediatePropagation();
+        toggleSelected(e);
+    });
 
-    function toggleWidget(e) {
-        var t = e.target;
+    function toggleWidget(t) {
         var w = document.getElementById("kori-widget");
+
         var bodyRect = document.body.getBoundingClientRect();
         var elemRect = t.getBoundingClientRect();
         var offset = elemRect.top - bodyRect.top;
-        console.log(offset);
+        console.log(offset, w.style.display);
         var positionX = t.getBoundingClientRect().right;
         var positionY = t.getBoundingClientRect().top;
 
-        if (w.style.display == "none") {
-            w.style.display = "block";
-            w.style.left = (positionX + 20) + "px";
-            w.style.top = offset + "px";
-        } else {
-            w.style.display = "none";
-        }
-
+        w.style.display = "block";
+        w.style.left = (positionX + 20) + "px";
+        w.style.top = offset + "px";
     }
 
 </script>
