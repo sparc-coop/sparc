@@ -176,17 +176,12 @@
 
     function toggleWidget(t) {
         var w = document.getElementById("kori-widget");
-
-        var bodyRect = document.body.getBoundingClientRect();
-        var elemRect = t.getBoundingClientRect();
-        var offset = elemRect.top - bodyRect.top;
-        console.log(offset, w.style.display);
-        var positionX = t.getBoundingClientRect().right;
-        var positionY = t.getBoundingClientRect().top;
+        t.appendChild(w);
 
         w.style.display = "block";
-        w.style.left = (positionX + 20) + "px";
-        w.style.top = offset + "px";
+        w.style.right = "-444px";
+        w.style.top = "50%";
+        w.style.transform = "translateY(-50%)";
     }
 
 </script>

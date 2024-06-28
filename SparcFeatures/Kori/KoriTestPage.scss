@@ -1,6 +1,7 @@
 @import "../App.Variables.scss";
 
 .kori-enabled {
+    position: relative;
     border: 0px solid transparent;
     transition: 200ms ease-in-out;
 

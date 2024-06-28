@@ -2066,6 +2066,7 @@ body.ibis-translating {
   src: url("/kori/fonts/ArticulatCF-Medium.otf") format("opentype");
 }
 .kori-enabled {
+  position: relative;
   border: 0px solid transparent;
   transition: 200ms ease-in-out;
 }
