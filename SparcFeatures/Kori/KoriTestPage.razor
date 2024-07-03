@@ -146,45 +146,7 @@
 </div>
 <KoriWidget />
 
-<script>
-    function toggleSelected(e) {
-        if (e.target.closest('.kori-widget'))
-            return;
-
-        console.log('unselecting');
-        document.getElementsByClassName("selected")[0]?.classList.remove("selected");
-
-        var t = e.target.closest('.kori-enabled');
-        if (!t) {
-            // clicked outside of all kori elements
-            console.log('disable');
-            document.getElementById("kori-widget").style.display = "none";
-            return;
-        }
-
-        if (!t.classList.contains('selected')) {
-            console.log('selecting');
-            t.classList.add("selected");
-            toggleWidget(t);
-        }
-    }
-
-    window.addEventListener("click", e => {
-        e.stopImmediatePropagation();
-        toggleSelected(e);
-    });
-
-    function toggleWidget(t) {
-        var w = document.getElementById("kori-widget");
-        t.appendChild(w);
-
-        w.style.display = "block";
-        w.style.right = "-444px";
-        w.style.top = "50%";
-        w.style.transform = "translateY(-50%)";
-    }
-
-</script>
+<script src="kori/js/kori.js" />
 
 @inject IJSRuntime JSRuntime
 

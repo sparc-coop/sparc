@@ -1,8 +1,21 @@
 .kori-widget {
     display: none;
     position: absolute;
+    height: 100%;
+    line-height: 0;
+    top: 0;
+    right: 0;
     z-index: 1000;
     transition: 200ms ease-in-out;
+
+    &.show, .show {
+        display: block !important;
+    }
+
+    .show {
+        top: 50%;
+        transform: translateY(-50%);
+    }
 
     h5 {
         padding: 0;
@@ -12,8 +25,15 @@
     }
 
     &__actions {
-        display: flex;
+        display: none;
+        flex-direction: row;
         justify-content: center;
+        gap: 20px;
+        position: absolute;
+
+        &.show {
+            display: flex !important;
+        }
 
         .kori-widget__content {
             width: 300px;
@@ -83,6 +103,105 @@
 
                 &:active {
                     filter: opacity(1);
+                }
+            }
+        }
+    }
+
+    .kori-edit {
+        display: none;
+        width: 298px;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        right: -322px;
+        transform: translatey(-50%);
+        background: var(--white);
+        border: 15px solid transparent;
+        border-radius: 24px;
+        border-image: url('kori/images/brush-effect.svg') 15 round;
+        text-align: left;
+
+        &__back {
+            margin-bottom: 11px;
+            font-size: 14px;
+            line-height: 0;
+
+            button {
+                background: none;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                color: var(--grey-900);
+                font-family: 'Love Ya Like A Sister' !important;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 14px;
+                line-height: 100%;
+                text-align: left;
+            }
+        }
+
+        &__options {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+
+            button {
+                display: flex;
+                height: 32px;
+                width: 32px;
+                padding: 4px;
+                justify-content: center;
+                align-items: center;
+                background: none;
+                border: 1px solid var(--grey-200);
+                border-radius: 8px;
+                transition: 200ms ease-in-out;
+
+                img {
+                    max-width: 18px;
+                    max-height: 18px;
+                    margin: auto 0;
+                }
+
+                &:hover {
+                    border: 1px solid var(--grey-700);
+                }
+
+                &:active {
+                    border: 1px solid var(--grey-200);
+                }
+            }
+        }
+
+        &__actions {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 11px;
+
+            button {
+                width: 100%;
+                background: none;
+                padding: 0;
+                border: 15px solid transparent;
+                border-radius: 8px;
+                border-image: url('kori/images/brush-effect__button.svg') 15 round;
+                border-image-outset: 3px;
+                color: var(--grey-900);
+                font-family: 'Love Ya Like A Sister' !important;
+                font-weight: 400;
+                font-style: normal;
+                font-size: 14px;
+                line-height: 100%;
+
+                &.kori-edit__save {
+                    background: var(--orange-500);
                 }
             }
         }

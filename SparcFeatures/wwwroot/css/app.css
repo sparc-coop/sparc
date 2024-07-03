@@ -2071,7 +2071,7 @@ body.ibis-translating {
   transition: 200ms ease-in-out;
 }
 .kori-enabled:hover {
-  border: 1px solid var(--orange-300);
+  border: 1px solid var(--orange-500);
   cursor: pointer;
 }
 .kori-enabled.selected {
@@ -2587,8 +2587,19 @@ body.ibis-translating {
 .kori-widget {
   display: none;
   position: absolute;
+  height: 100%;
+  line-height: 0;
+  top: 0;
+  right: 0;
   z-index: 1000;
   transition: 200ms ease-in-out;
+}
+.kori-widget.show, .kori-widget .show {
+  display: block !important;
+}
+.kori-widget .show {
+  top: 50%;
+  transform: translateY(-50%);
 }
 .kori-widget h5 {
   padding: 0;
@@ -2597,8 +2608,14 @@ body.ibis-translating {
   font-size: 16px;
 }
 .kori-widget__actions {
-  display: flex;
+  display: none;
+  flex-direction: row;
   justify-content: center;
+  gap: 20px;
+  position: absolute;
+}
+.kori-widget__actions.show {
+  display: flex !important;
 }
 .kori-widget__actions .kori-widget__content {
   width: 300px;
@@ -2662,6 +2679,94 @@ body.ibis-translating {
 .kori-widget__actions .kori-widget__options button:active {
   filter: opacity(1);
 }
+.kori-widget .kori-edit {
+  display: none;
+  width: 298px;
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  right: -322px;
+  transform: translatey(-50%);
+  background: var(--white);
+  border: 15px solid transparent;
+  border-radius: 24px;
+  border-image: url("../../kori/images/brush-effect.svg") 15 round;
+  text-align: left;
+}
+.kori-widget .kori-edit__back {
+  margin-bottom: 11px;
+  font-size: 14px;
+  line-height: 0;
+}
+.kori-widget .kori-edit__back button {
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  color: var(--grey-900);
+  font-family: "Love Ya Like A Sister" !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 100%;
+  text-align: left;
+}
+.kori-widget .kori-edit__options {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+.kori-widget .kori-edit__options button {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--grey-200);
+  border-radius: 8px;
+  transition: 200ms ease-in-out;
+}
+.kori-widget .kori-edit__options button img {
+  max-width: 18px;
+  max-height: 18px;
+  margin: auto 0;
+}
+.kori-widget .kori-edit__options button:hover {
+  border: 1px solid var(--grey-700);
+}
+.kori-widget .kori-edit__options button:active {
+  border: 1px solid var(--grey-200);
+}
+.kori-widget .kori-edit__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 11px;
+}
+.kori-widget .kori-edit__actions button {
+  width: 100%;
+  background: none;
+  padding: 0;
+  border: 15px solid transparent;
+  border-radius: 8px;
+  border-image: url("../../kori/images/brush-effect__button.svg") 15 round;
+  border-image-outset: 3px;
+  color: var(--grey-900);
+  font-family: "Love Ya Like A Sister" !important;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 100%;
+}
+.kori-widget .kori-edit__actions button.kori-edit__save {
+  background: var(--orange-500);
+}
 
 :root {
   --white: #FFFFFF;
@@ -2676,20 +2781,21 @@ body.ibis-translating {
   --grey-800: #333333;
   --grey-900: #1A1A1A;
   --black: #000000;
-  --yellow-200: #FCF29E;
-  --yellow-300: #FEF07E;
-  --yellow-400: #FDF37A;
-  --yellow-500: #ECDD2A;
-  --blue-200: #80C3E4;
-  --blue-300: #6DC8F4;
-  --blue-400: #4288CD;
-  --blue-500: #227CD3;
-  --orange-200: #DBA57F;
-  --orange-300: #FF801E;
-  --orange-400: #E67976;
-  --orange-500: #E84141;
-  --green-200: #9EBF94;
-  --green-300: #86D170;
-  --green-400: #31726E;
-  --green-500: #0E7973;
+  --yellow-300: #FCF29E;
+  --yellow-500: #FEF07E;
+  --yellow-600: #FDF37A;
+  --yellow-700: #ECDD2A;
+  --blue-300: #80C3E4;
+  --blue-500: #6DC8F4;
+  --blue-600: #4288CD;
+  --blue-700: #227CD3;
+  --orange-200: #FFA158;
+  --orange-300: #DBA57F;
+  --orange-500: #FF801E;
+  --orange-600: #E67976;
+  --orange-700: #E84141;
+  --green-300: #9EBF94;
+  --green-500: #86D170;
+  --green-600: #31726E;
+  --green-700: #0E7973;
 }

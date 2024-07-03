@@ -1,5 +1,6 @@
 ﻿<div id="kori-widget" class="kori-widget" @onclick:stopPropagation="true" @onclick:preventDefault="true">
-    <div class="kori-widget__actions kori-buddy__enabled">
+
+    <div id="kori-widget__actions" class="kori-widget__actions kori-buddy__enabled">
         <img class="kori-buddy" src="kori/images/kori-buddy.svg" />
         <div class="kori-widget__content">
             <div class="kori-widget__header">
@@ -10,18 +11,45 @@
                 </div>
             </div>
             <div class="kori-widget__options">
-                <button>Edit Content</button>
-                <button>A/B Testing</button>
-                <button>Publish</button>
-                <button>Search</button>
+                <button class="options__edit">Edit Content</button>
+                <button class="options__ab">A/B Testing</button>
+                <button class="options__publish">Publish</button>
+                <button class="options__search">Search</button>
             </div>
         </div>
     </div>
-    <div class="kori-edit">
-        <div class="kori-widget-content"></div>
+
+    <div id="kori-edit" class="kori-edit">
+        <div class="kori-edit__content">
+            <div class="kori-edit__back">
+                <button id="kori-edit__back">&lt; Back to edit</button>
+            </div>
+            <div class="kori-edit__header">
+                <h5>Edit your content.</h5>
+            </div>
+            <div class="kori-edit__options">
+                <button><img src="kori/icons/Bold.svg" /></button>
+                <button><img src="kori/icons/Italic.svg" /></button>
+                <button><img src="kori/icons/Strikethrough.svg" /></button>
+                <button><img src="kori/icons/Union.svg" /></button>
+                <button><img src="kori/icons/Code.svg" /></button>
+                <button><img src="kori/icons/Quote.svg" /></button>
+                <button><img src="kori/icons/Numbered.svg" /></button>
+                <button><img src="kori/icons/Bullet.svg" /></button>
+                <button><img src="kori/icons/Attachment.svg" /></button>
+                <button><img src="kori/icons/Link.svg" /></button>
+            </div>
+            <div class="kori-edit__actions">
+                <button class="kori-edit__cancel">Cancel</button>
+                <button class="kori-edit__save">Save</button>
+            </div>
+        </div>
     </div>
+
 </div>
 
 @code {
-
+    [Parameter] public string Id { get; set; }
+    bool ShowActions = true;
+    bool ShowEdit;
 }
