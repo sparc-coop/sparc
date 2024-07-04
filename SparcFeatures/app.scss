@@ -41,7 +41,8 @@
 }
 
 @import "Kori/KoriTestPage";
-@import "Kori/KoriWidget.scss";
+@import "Kori/KoriWidget";
+@import "Kori/KoriLogin";
 
 :root {
     --white: #FFFFFF;

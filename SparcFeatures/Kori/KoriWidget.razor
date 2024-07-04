@@ -1,5 +1,4 @@
-﻿<div id="kori-widget" class="kori-widget" @onclick:stopPropagation="true" @onclick:preventDefault="true">
-
+﻿<div id="kori-widget" class="kori-widget">
     <div id="kori-widget__actions" class="kori-widget__actions kori-buddy__enabled">
         <img class="kori-buddy" src="kori/images/kori-buddy.svg" />
         <div class="kori-widget__content">
@@ -47,9 +46,3 @@
     </div>
 
 </div>
-
-@code {
-    [Parameter] public string Id { get; set; }
-    bool ShowActions = true;
-    bool ShowEdit;
-}
