@@ -11,10 +11,8 @@
     }
 
     &.selected {
+        @extend .kori__border_orange-15-16;
         background: white;
-        border: 15px solid transparent;
-        border-radius: 24px;
-        border-image: url('kori/images/brush-effect__content.svg') 15 round;
     }
 }
 
