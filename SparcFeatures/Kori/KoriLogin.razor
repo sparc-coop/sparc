@@ -4,20 +4,18 @@
         <div class="kori-login__header">
             <h5>Please login to use service</h5>
         </div>
-        <form>
-            <div class="kori-login__input">
-                <img src="kori/icons/User.svg" />
-                <input type="text" placeholder="Phone or Email" @* pattern=@($"^([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3})|(\d{3}-\d{3}-\d{4})$")" *@ required />
-            </div>
-            <div class="kori-login__keep">
-                <input id="kori-login__keep" type="checkbox" />
-                <label for="kori-login__keep">Keep me logged in</label>
-            </div>
-            <div class="kori-login__actions">
-                <button type="submit" class="kori-login__btn kori__btn-primary">Login</button>
-                <button class="kori-login__cancel kori__btn">Cancel</button>
-            </div>
-        </form>
+        <div class="kori-login__input">
+            <img src="kori/icons/User.svg" />
+            <input type="text" placeholder="Phone or Email" @* pattern=@($"^([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3})|(\d{3}-\d{3}-\d{4})$")" *@ required />
+        </div>
+        <div class="kori-login__keep">
+            <input id="kori-login__keep" type="checkbox" />
+            <label for="kori-login__keep">Keep me logged in</label>
+        </div>
+        <div class="kori-login__actions">
+            <button class="kori-login__btn kori__btn-primary">Login</button>
+            <button class="kori-login__cancel kori__btn">Cancel</button>
+        </div>
     </div>
 </div>
 

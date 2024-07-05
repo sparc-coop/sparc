@@ -2817,10 +2817,6 @@ body.ibis-translating {
 .kori-login__header {
   margin-bottom: 12px;
 }
-.kori-login form {
-  display: flex;
-  flex-direction: column;
-}
 .kori-login__input {
   display: flex;
   gap: 8px;
