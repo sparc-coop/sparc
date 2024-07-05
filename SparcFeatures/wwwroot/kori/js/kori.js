@@ -1,44 +1,62 @@
-﻿// selecting and unselecting kori-enabled elements
-function toggleSelected(e) {
-    if (e.target.closest('.kori-widget')) {
-        console.log("clicked widget");
-        if (e.target.closest('.options__edit')) {
-            console.log("clicking edit content");
-            toggleEdit(e.target);
-            return;
-        } else if (e.target.closest('.kori-edit__back') || e.target.closest('.kori-edit__cancel')) {
-            console.log("closing edit");
-            closeEdit();
-        } else {
-            return;
+﻿var koriAuthorized = false;
+
+// mouse click handler for kori widget and elements
+function mouseClickHandler(e) {
+    var t = e.target;
+
+    // click login menu
+    if (t.closest(".kori-login__btn")) {
+        koriAuthorized = true;
+        if (koriAuthorized) {
+            document.getElementById("kori-login").classList.remove("show");
         }
     }
 
+    if (koriAuthorized) {
+        // click kori widget
+        if (t.closest(".kori-widget")) {
+            if (t.closest('.options__edit')) {
+                toggleEdit(true);
+                return;
+            } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
+                toggleEdit(false);
+            } else {
+                return;
+            }
+        }
 
-    console.log('unselecting');
+        // click kori enabled elements
+        toggleSelected(t);
+    } else {
+        console.log("please login to use kori services");
+        return;
+    }
+}
+
+// mouse click event listener
+window.addEventListener("click", e => {
+    e.stopImmediatePropagation();
+    mouseClickHandler(e);
+});
+
+// selecting and unselecting kori-enabled elements
+function toggleSelected(t) {
     document.getElementsByClassName("selected")[0]?.classList.remove("selected");
     document.getElementsByClassName("show")[0]?.classList.remove("show");
 
-    var t = e.target.closest('.kori-enabled');
-    if (!t) {
+    var koriElem = t.closest('.kori-enabled');
+    if (!koriElem) {
         // clicked outside of all kori elements
-        console.log('disable');
         document.getElementsByClassName("show")[0]?.classList.remove("show");
         return;
     }
 
-    if (!t.classList.contains('selected')) {
-        console.log('selecting');
-        t.classList.add("selected");
+    if (!koriElem.classList.contains("selected")) {
+        koriElem.classList.add("selected");
         document.getElementsByClassName("show")[0]?.classList.remove("show");
-        toggleWidget(t);
+        toggleWidget(koriElem);
     }
 }
-
-window.addEventListener("click", e => {
-    e.stopImmediatePropagation();
-    toggleSelected(e);
-});
 
 // showing and hiding kori widget
 function toggleWidget(t) {
@@ -46,22 +64,30 @@ function toggleWidget(t) {
     var widgetActions = document.getElementById("kori-widget__actions");
     t.appendChild(widget);
 
-    widget.classList.add('show');
-    widgetActions.classList.add('show');
+    widget.classList.add("show");
+    widgetActions.classList.add("show");
     widgetActions.style.right = "-444px";
 }
 
 // showing and hiding kori edit content menu
-function toggleEdit(t) {
-    console.log("opening edit content");
+function toggleEdit(isOpen) {
+    var edit = document.getElementById("kori-edit");
     var widgetActions = document.getElementById("kori-widget__actions");
-    widgetActions.classList.remove('show');
-    document.getElementById("kori-edit").classList.add('show');
-    //document.getElementById("kori-widget").classList.add('show');
+
+    if (!edit.classList.contains("show") && isOpen == true) {
+        widgetActions.classList.remove("show");
+        edit.classList.add("show");
+        widgetActions.classList.remove("show");
+    }
+
+    if (edit.classList.contains("show") && isOpen == false) {
+        edit.classList.remove("show");
+        widgetActions.classList.add("show");
+    }
 }
 
-function closeEdit() {
-    console.log("closing edit content");
-    document.getElementById("kori-edit").classList.remove('show');
-    document.getElementById("kori-widget__actions").classList.add('show');
+// login to use kori services
+function login() {
+    console.log("logging in...");
+
 }

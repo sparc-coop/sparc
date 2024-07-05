@@ -1,10 +1,14 @@
 .kori-login {
-    display: flex;
-    gap: 12px;
+    display: none;
     position: absolute;
     top: 0;
     right: 24px;
     animation: login_fadeIn 1000ms linear;
+
+    &.show {
+        display: flex;
+        gap: 12px;
+    }
 
     .kori-buddy {
         width: 88px;
@@ -24,6 +28,11 @@
 
     &__header {
         margin-bottom: 12px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
     }
 
     &__input {

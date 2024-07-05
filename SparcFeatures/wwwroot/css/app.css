@@ -2791,12 +2791,15 @@ body.ibis-translating {
 }
 
 .kori-login {
-  display: flex;
-  gap: 12px;
+  display: none;
   position: absolute;
   top: 0;
   right: 24px;
   animation: login_fadeIn 1000ms linear;
+}
+.kori-login.show {
+  display: flex;
+  gap: 12px;
 }
 .kori-login .kori-buddy {
   width: 88px;
@@ -2813,6 +2816,10 @@ body.ibis-translating {
 }
 .kori-login__header {
   margin-bottom: 12px;
+}
+.kori-login form {
+  display: flex;
+  flex-direction: column;
 }
 .kori-login__input {
   display: flex;
