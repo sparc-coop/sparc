@@ -71,6 +71,11 @@ function toggleWidget(t) {
     widget.classList.add("show");
     widgetActions.classList.add("show");
     //widgetActions.style.right = "-444px";
+
+    // add data attribute to widget with related element ID
+    var relatedElementId = t.id || 'element-' + new Date().getTime();
+    t.id = relatedElementId; 
+    widget.setAttribute('data-related-element', relatedElementId);
 }
 
 // showing and hiding kori edit content menu
@@ -115,6 +120,17 @@ function startDrag(e) {
     // reset right to 0 when starting to drag
     //var widgetActions = document.getElementById("kori-widget__actions");
     //widgetActions.style.right = 'auto';
+
+    // add data attribute to widget with related element ID
+    var relatedElementId = widget.getAttribute('data-related-element');
+    if (!relatedElementId) {
+        var relatedElement = document.querySelector('.selected');
+        if (relatedElement) {
+            relatedElementId = relatedElement.id || 'element-' + new Date().getTime();
+            relatedElement.id = relatedElementId; 
+            widget.setAttribute('data-related-element', relatedElementId);
+        }
+    }
 }
 
 function drag(e) {
@@ -133,6 +149,15 @@ function stopDrag() {
 
     // remove the no-transition class to restore transitions
     widget.classList.remove('no-transition');
+
+    // maintain related element ID
+    var relatedElementId = widget.getAttribute('data-related-element');
+    if (relatedElementId) {
+        var relatedElement = document.getElementById(relatedElementId);
+        if (relatedElement) {
+            relatedElement.appendChild(widget);
+        }
+    }
 }
 
 // reset widget position to initial position
