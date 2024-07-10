@@ -1,4 +1,5 @@
 ﻿var koriAuthorized = false;
+var initialPosition = { top: 0, left: 0 };
 
 // mouse click handler for kori widget and elements
 function mouseClickHandler(e) {
@@ -19,8 +20,7 @@ function mouseClickHandler(e) {
                 toggleEdit(true);
                 return;
             } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
-                toggleEdit(false);
-                resetWidgetPosition(); // Reset position here
+                toggleEdit(false);                
             } else {
                 return;
             }
@@ -64,17 +64,13 @@ function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
     var widgetActions = document.getElementById("kori-widget__actions");
 
-    // Save initial position
-    initialPosition = {
-        top: widget.offsetTop,
-        left: widget.offsetLeft
-    };
+    resetWidgetPosition();
 
     t.appendChild(widget);
 
     widget.classList.add("show");
     widgetActions.classList.add("show");
-    widgetActions.style.right = "-444px";
+    //widgetActions.style.right = "-444px";
 }
 
 // showing and hiding kori edit content menu
@@ -100,10 +96,8 @@ function login() {
 
 }
 
-
 var startX, startY;
 var widgetStartX, widgetStartY;
-
 var widget = document.getElementById("kori-widget");
 
 function startDrag(e) {
@@ -113,7 +107,14 @@ function startDrag(e) {
     widgetStartX = widget.offsetLeft;
     widgetStartY = widget.offsetTop;
     document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDrag);
+    document.addEventListener('mouseup', stopDrag); 
+
+    // Add the no-transition class to remove transitions
+    widget.classList.add('no-transition');
+
+    // reset right to 0 when starting to drag
+    //var widgetActions = document.getElementById("kori-widget__actions");
+    //widgetActions.style.right = 'auto';
 }
 
 function drag(e) {
@@ -122,12 +123,6 @@ function drag(e) {
     var newX = widgetStartX + offsetX;
     var newY = widgetStartY + offsetY;
 
-    
-    newX = Math.max(newX, 0); 
-    newY = Math.max(newY, 0);
-    newX = Math.min(newX, window.innerWidth - widget.offsetWidth);
-    newY = Math.min(newY, window.innerHeight - widget.offsetHeight); 
-
     widget.style.left = newX + 'px';
     widget.style.top = newY + 'px';
 }
@@ -135,83 +130,30 @@ function drag(e) {
 function stopDrag() {
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('mouseup', stopDrag);
+
+    // remove the no-transition class to restore transitions
+    widget.classList.remove('no-transition');
 }
 
+// reset widget position to initial position
+function resetWidgetPosition() {
+    var widgetActions = document.getElementById("kori-widget__actions");
+    
+    widget.style.left = initialPosition.left + 'px';
+    widget.style.top = initialPosition.top + 'px';
+    //widgetActions.style.right = '-444px';
+}
 
-/*code relative to the commented div in KoriWidget.razor*/
+// get the widget's initial position
+function getInitialPosition() {
+    var widget = document.getElementById("kori-widget");
+    return {
+        top: widget.offsetTop,
+        left: widget.offsetLeft
+    };
+}
 
-//var initialPosition = { top: 0, left: 0 };
-//var offset = { x: 0, y: 0 };
-
-//function dragStart(event) {
-//    var widget = document.getElementById("kori-widget");
-//    offset.x = event.clientX - widget.getBoundingClientRect().left;
-//    offset.y = event.clientY - widget.getBoundingClientRect().top;
-//    widget.style.opacity = 0.5;
-//    event.dataTransfer.setData("text/plain", null); // Necessary for Firefox
-//}
-
-//function dragging(event) {
-//    var widget = document.getElementById("kori-widget");
-//    var newX = event.clientX - offset.x;
-//    var newY = event.clientY - offset.y;
-
-//    var maxX = window.innerWidth - widget.offsetWidth;
-//    var maxY = window.innerHeight - widget.offsetHeight;
-
-//    newX = Math.max(0, Math.min(newX, maxX));
-//    newY = Math.max(0, Math.min(newY, maxY));
-
-//    widget.style.left = newX + 'px';
-//    widget.style.top = newY + 'px';
-//}
-
-//function dragEnd(event) {
-//    var widget = document.getElementById("kori-widget");
-//    widget.style.opacity = 1;
-//}
-
-//window.addEventListener("dragover", function (e) {
-//    e.preventDefault();
-//});
-
-//window.addEventListener("drop", function (e) {
-//    e.preventDefault();
-//    var widget = document.getElementById("kori-widget");
-//    widget.style.left = (e.clientX - offset.x) + 'px';
-//    widget.style.top = (e.clientY - offset.y) + 'px';
-//});
-
-//// Event listener for clicking and dragging the widget
-//var isDragging = false;
-
-//window.addEventListener("mousedown", function (event) {
-//    var widget = document.getElementById("kori-widget");
-
-//    if (event.target === widget) {
-//        isDragging = true;
-//        dragStart(event);
-//    }
-//});
-
-//window.addEventListener("mousemove", function (event) {
-//    if (isDragging) {
-//        dragging(event);
-//    }
-//});
-
-//window.addEventListener("mouseup", function (event) {
-//    if (isDragging) {
-//        isDragging = false;
-//        dragEnd(event);
-//    }
-//});
-
-
-
-
-
-
-
+// add event listener to start dragging
+widget.addEventListener('mousedown', startDrag);
 
 

@@ -17,6 +17,10 @@
         transform: translateY(-50%);
     }
 
+    &.no-transition {
+        transition: none !important;
+    }
+
     h5 {
         padding: 0;
         font-family: 'Love Ya Like A Sister' !important;
@@ -61,7 +65,7 @@
             button {
                 width: 100%;
                 text-align: left !important;
-               /* padding: 6px;
+                /* padding: 6px;
                 background: none;
                 border: 10px solid transparent;
                 border-radius: 24px;
@@ -93,7 +97,7 @@
         padding: 12px;
         position: absolute;
         top: 50%;
-        right: -322px;
+        /*right: -322px;*/
         transform: translatey(-50%);
         background: var(--white);
         text-align: left;
