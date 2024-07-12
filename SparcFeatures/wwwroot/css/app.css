@@ -2740,9 +2740,7 @@ body.ibis-translating {
   transition: 200ms ease-in-out !important;
 }
 
-.kori-loggedin .kori-enabled:hover,
-.kori-loggedin .kori__btn:hover,
-.kori-loggedin .kori__btn-primary:hover,
+.kori-loggedin .kori__btn:hover, .kori-loggedin .kori__btn-primary:hover,
 .kori-loggedin .kori__btn-text:hover {
   filter: opacity(0.6) !important;
 }
@@ -2759,11 +2757,9 @@ body.ibis-translating {
 .kori-loggedin .kori__btn-primary:active {
   background: var(--orange-500) !important;
 }
-.kori-loggedin .kori-widget__options button:hover,
 .kori-loggedin .kori-edit__options button:hover {
   border: 1px solid var(--grey-700);
 }
-.kori-loggedin .kori-widget__options button:active,
 .kori-loggedin .kori-edit__options button:active {
   border: 1px solid var(--grey-200);
 }

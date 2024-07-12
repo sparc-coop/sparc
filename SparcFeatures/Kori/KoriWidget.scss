@@ -181,7 +181,6 @@
 }
 
 .kori-loggedin {
-    .kori-enabled:hover,
     .kori__btn:hover,
     .kori__btn-text:hover {
         filter: opacity(0.6) !important;
@@ -202,12 +201,10 @@
         background: var(--orange-500) !important;
     }
 
-    .kori-widget__options button:hover,
     .kori-edit__options button:hover {
         border: 1px solid var(--grey-700);
     }
 
-    .kori-widget__options button:active,
     .kori-edit__options button:active {
         border: 1px solid var(--grey-200);
     }
