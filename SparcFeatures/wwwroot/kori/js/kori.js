@@ -10,6 +10,7 @@ function mouseClickHandler(e) {
         koriAuthorized = true;
         if (koriAuthorized) {
             document.getElementById("kori-login").classList.remove("show");
+            document.body.classList.add("kori-loggedin"); // add the class to <body>
         }
     }
 

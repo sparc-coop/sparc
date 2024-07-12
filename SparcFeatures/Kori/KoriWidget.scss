@@ -132,15 +132,7 @@
                     max-width: 18px;
                     max-height: 18px;
                     margin: auto 0;
-                }
-
-                &:hover {
-                    border: 1px solid var(--grey-700);
-                }
-
-                &:active {
-                    border: 1px solid var(--grey-200);
-                }
+                }                
             }
         }
 
@@ -170,28 +162,11 @@
     line-height: 100% !important;
     text-align: center !important;
     transition: 200ms ease-in-out !important;
-
-    &:hover {
-        filter: opacity(0.6) !important;
-    }
-
-    &:active {
-        filter: opacity(1) !important;
-    }
 }
 
 .kori__btn-primary {
     @extend .kori__btn;
     background: var(--orange-500) !important;
-
-    &:hover {
-        background: var(--orange-200) !important;
-        filter: opacity(1) !important;
-    }
-
-    &:active {
-        background: var(--orange-500) !important;
-    }
 }
 
 .kori__btn-text {
@@ -203,13 +178,38 @@
     font-size: 14px !important;
     line-height: 100% !important;
     transition: 200ms ease-in-out !important;
+}
 
-    &:hover {
-        opacity: 0.6 !important;
+.kori-loggedin {
+    .kori-enabled:hover,
+    .kori__btn:hover,
+    .kori__btn-text:hover {
+        filter: opacity(0.6) !important;
     }
 
-    &:active {
-        opacity: 1 !important;
+    .kori__btn-primary:hover {
+        background: var(--orange-200) !important;
+        filter: opacity(1) !important;
+    }
+
+    .kori-enabled:active,
+    .kori__btn:active,
+    .kori__btn-text:active {
+        filter: opacity(1) !important;
+    }
+
+    .kori__btn-primary:active {
+        background: var(--orange-500) !important;
+    }
+
+    .kori-widget__options button:hover,
+    .kori-edit__options button:hover {
+        border: 1px solid var(--grey-700);
+    }
+
+    .kori-widget__options button:active,
+    .kori-edit__options button:active {
+        border: 1px solid var(--grey-200);
     }
 }
 

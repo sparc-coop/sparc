@@ -88,6 +88,25 @@
                 background: var(--orange-500);
                 border-radius: 8px;
                 border-image-outset: 2px;
+
+                &:hover {
+                    background: var(--orange-200) !important;
+                    filter: opacity(1) !important;
+                }
+
+                &:active {
+                    background: var(--orange-500) !important;
+                }
+            }
+
+            &.kori-login__cancel {
+                &:hover {
+                    filter: opacity(0.6) !important;
+                }
+
+                &:active {
+                    filter: opacity(1) !important;
+                }
             }
         }
     }

@@ -2702,12 +2702,6 @@ body.ibis-translating {
   max-height: 18px;
   margin: auto 0;
 }
-.kori-widget .kori-edit__options button:hover {
-  border: 1px solid var(--grey-700);
-}
-.kori-widget .kori-edit__options button:active {
-  border: 1px solid var(--grey-200);
-}
 .kori-widget .kori-edit__actions {
   width: 100%;
   display: flex;
@@ -2730,21 +2724,8 @@ body.ibis-translating {
   text-align: center !important;
   transition: 200ms ease-in-out !important;
 }
-.kori__btn:hover, .kori__btn-primary:hover {
-  filter: opacity(0.6) !important;
-}
-.kori__btn:active, .kori__btn-primary:active {
-  filter: opacity(1) !important;
-}
 
 .kori__btn-primary {
-  background: var(--orange-500) !important;
-}
-.kori__btn-primary:hover {
-  background: var(--orange-200) !important;
-  filter: opacity(1) !important;
-}
-.kori__btn-primary:active {
   background: var(--orange-500) !important;
 }
 
@@ -2758,11 +2739,33 @@ body.ibis-translating {
   line-height: 100% !important;
   transition: 200ms ease-in-out !important;
 }
-.kori__btn-text:hover {
-  opacity: 0.6 !important;
+
+.kori-loggedin .kori-enabled:hover,
+.kori-loggedin .kori__btn:hover,
+.kori-loggedin .kori__btn-primary:hover,
+.kori-loggedin .kori__btn-text:hover {
+  filter: opacity(0.6) !important;
 }
-.kori__btn-text:active {
-  opacity: 1 !important;
+.kori-loggedin .kori__btn-primary:hover {
+  background: var(--orange-200) !important;
+  filter: opacity(1) !important;
+}
+.kori-loggedin .kori-enabled:active,
+.kori-loggedin .kori__btn:active,
+.kori-loggedin .kori__btn-primary:active,
+.kori-loggedin .kori__btn-text:active {
+  filter: opacity(1) !important;
+}
+.kori-loggedin .kori__btn-primary:active {
+  background: var(--orange-500) !important;
+}
+.kori-loggedin .kori-widget__options button:hover,
+.kori-loggedin .kori-edit__options button:hover {
+  border: 1px solid var(--grey-700);
+}
+.kori-loggedin .kori-widget__options button:active,
+.kori-loggedin .kori-edit__options button:active {
+  border: 1px solid var(--grey-200);
 }
 
 .kori__border_black-10-8, .kori__btn, .kori__btn-primary {
@@ -2872,6 +2875,19 @@ body.ibis-translating {
   background: var(--orange-500);
   border-radius: 8px;
   border-image-outset: 2px;
+}
+.kori-login__actions button.kori-login__btn:hover {
+  background: var(--orange-200) !important;
+  filter: opacity(1) !important;
+}
+.kori-login__actions button.kori-login__btn:active {
+  background: var(--orange-500) !important;
+}
+.kori-login__actions button.kori-login__cancel:hover {
+  filter: opacity(0.6) !important;
+}
+.kori-login__actions button.kori-login__cancel:active {
+  filter: opacity(1) !important;
 }
 
 @keyframes login_fadeIn {
