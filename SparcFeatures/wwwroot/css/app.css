@@ -2748,7 +2748,7 @@ body.ibis-translating {
   background: var(--orange-200) !important;
   filter: opacity(1) !important;
 }
-.kori-loggedin .kori-enabled:hover {
+.kori-loggedin .kori-enabled:not(.selected):hover {
   border: 1px solid var(--orange-500) !important;
 }
 .kori-loggedin .kori__btn:active, .kori-loggedin .kori__btn-primary:active,

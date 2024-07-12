@@ -191,7 +191,7 @@
         filter: opacity(1) !important;
     }
 
-    .kori-enabled:hover {
+    .kori-enabled:not(.selected):hover {
         border: 1px solid var(--orange-500) !important;
     }
 
