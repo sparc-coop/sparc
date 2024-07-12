@@ -2071,7 +2071,7 @@ body.ibis-translating {
   transition: 200ms ease-in-out;
 }
 .kori-enabled:hover {
-  border: 1px solid var(--orange-500);
+  /*border: 1px solid var(--orange-500);*/
   cursor: pointer;
 }
 .kori-enabled.selected {
@@ -2748,9 +2748,10 @@ body.ibis-translating {
   background: var(--orange-200) !important;
   filter: opacity(1) !important;
 }
-.kori-loggedin .kori-enabled:active,
-.kori-loggedin .kori__btn:active,
-.kori-loggedin .kori__btn-primary:active,
+.kori-loggedin .kori-enabled:hover {
+  border: 1px solid var(--orange-500) !important;
+}
+.kori-loggedin .kori__btn:active, .kori-loggedin .kori__btn-primary:active,
 .kori-loggedin .kori__btn-text:active {
   filter: opacity(1) !important;
 }

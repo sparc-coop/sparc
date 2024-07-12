@@ -191,7 +191,10 @@
         filter: opacity(1) !important;
     }
 
-    .kori-enabled:active,
+    .kori-enabled:hover {
+        border: 1px solid var(--orange-500) !important;
+    }
+
     .kori__btn:active,
     .kori__btn-text:active {
         filter: opacity(1) !important;
