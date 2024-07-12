@@ -21,7 +21,7 @@ function mouseClickHandler(e) {
                 toggleEdit(true);
                 return;
             } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
-                toggleEdit(false);                
+                toggleEdit(false);
             } else {
                 return;
             }
@@ -67,7 +67,10 @@ function toggleWidget(t) {
 
     resetWidgetPosition();
 
-    t.appendChild(widget);
+    //t.appendChild(widget);
+    // move widget to the body to allow free dragging
+    document.body.appendChild(widget);
+
 
     widget.classList.add("show");
     widgetActions.classList.add("show");
@@ -75,7 +78,7 @@ function toggleWidget(t) {
 
     // add data attribute to widget with related element ID
     var relatedElementId = t.id || 'element-' + new Date().getTime();
-    t.id = relatedElementId; 
+    t.id = relatedElementId;
     widget.setAttribute('data-related-element', relatedElementId);
 }
 
@@ -113,25 +116,13 @@ function startDrag(e) {
     widgetStartX = widget.offsetLeft;
     widgetStartY = widget.offsetTop;
     document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDrag); 
+    document.addEventListener('mouseup', stopDrag);
 
     // Add the no-transition class to remove transitions
     widget.classList.add('no-transition');
 
-    // reset right to 0 when starting to drag
-    //var widgetActions = document.getElementById("kori-widget__actions");
-    //widgetActions.style.right = 'auto';
-
-    // add data attribute to widget with related element ID
-    var relatedElementId = widget.getAttribute('data-related-element');
-    if (!relatedElementId) {
-        var relatedElement = document.querySelector('.selected');
-        if (relatedElement) {
-            relatedElementId = relatedElement.id || 'element-' + new Date().getTime();
-            relatedElement.id = relatedElementId; 
-            widget.setAttribute('data-related-element', relatedElementId);
-        }
-    }
+    // Move widget to body during drag to allow free movement
+    document.body.appendChild(widget);   
 }
 
 function drag(e) {
@@ -151,20 +142,27 @@ function stopDrag() {
     // remove the no-transition class to restore transitions
     widget.classList.remove('no-transition');
 
-    // maintain related element ID
-    var relatedElementId = widget.getAttribute('data-related-element');
-    if (relatedElementId) {
-        var relatedElement = document.getElementById(relatedElementId);
-        if (relatedElement) {
-            relatedElement.appendChild(widget);
+    // Check if widget is within body and move it back to its original parent
+    var widgetParent = widget.parentElement;
+    if (widgetParent !== document.body) {
+        var relatedElementId = widget.getAttribute('data-related-element');
+        if (relatedElementId) {
+            var relatedElement = document.getElementById(relatedElementId);
+            if (relatedElement) {
+                relatedElement.appendChild(widget);
+            }
         }
     }
+
+    // Reset right position after dragging
+    //var widgetActions = document.getElementById("kori-widget__actions");
+    //widgetActions.style.right = '-444px';
 }
 
 // reset widget position to initial position
 function resetWidgetPosition() {
     var widgetActions = document.getElementById("kori-widget__actions");
-    
+
     widget.style.left = initialPosition.left + 'px';
     widget.style.top = initialPosition.top + 'px';
     //widgetActions.style.right = '-444px';
@@ -181,5 +179,4 @@ function getInitialPosition() {
 
 // add event listener to start dragging
 widget.addEventListener('mousedown', startDrag);
-
 
