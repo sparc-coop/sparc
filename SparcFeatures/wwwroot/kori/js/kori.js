@@ -1,5 +1,5 @@
 ﻿var koriAuthorized = false;
-var initialPosition = { top: 0, left: 0 };
+var initialPosition = { top: 0, right: -25 };
 
 // mouse click handler for kori widget and elements
 function mouseClickHandler(e) {
@@ -65,21 +65,20 @@ function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
     var widgetActions = document.getElementById("kori-widget__actions");
 
-    resetWidgetPosition();
+    resetWidgetPosition();    
 
-    //t.appendChild(widget);
-    // move widget to the body to allow free dragging
-    document.body.appendChild(widget);
-
+    t.appendChild(widget);     
 
     widget.classList.add("show");
-    widgetActions.classList.add("show");
-    //widgetActions.style.right = "-444px";
+    widgetActions.classList.add("show");    
 
     // add data attribute to widget with related element ID
     var relatedElementId = t.id || 'element-' + new Date().getTime();
     t.id = relatedElementId;
     widget.setAttribute('data-related-element', relatedElementId);
+
+    // after the widget is shown, make it draggable
+    makeWidgetDraggable();
 }
 
 // showing and hiding kori edit content menu
@@ -105,78 +104,63 @@ function login() {
 
 }
 
-var startX, startY;
-var widgetStartX, widgetStartY;
+// global variables for the widget and its positions
 var widget = document.getElementById("kori-widget");
+var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-function startDrag(e) {
-    e.preventDefault();
-    startX = e.clientX;
-    startY = e.clientY;
-    widgetStartX = widget.offsetLeft;
-    widgetStartY = widget.offsetTop;
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', stopDrag);
+// function to make the widget draggable
+function makeWidgetDraggable() {
+    // add mouse event to start dragging
+    widget.onmousedown = function (e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
 
-    // Add the no-transition class to remove transitions
-    widget.classList.add('no-transition');
+        // add 'no-transition' class when starting drag
+        widget.classList.add("no-transition");
+    };
 
-    // Move widget to body during drag to allow free movement
-    document.body.appendChild(widget);   
-}
+    // function to drag the element
+    function elementDrag(e) {
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
 
-function drag(e) {
-    var offsetX = e.clientX - startX;
-    var offsetY = e.clientY - startY;
-    var newX = widgetStartX + offsetX;
-    var newY = widgetStartY + offsetY;
+        // calculates new positions
+        var newLeft = widget.offsetLeft - pos1;
+        var newTop = widget.offsetTop - pos2;
 
-    widget.style.left = newX + 'px';
-    widget.style.top = newY + 'px';
-}
-
-function stopDrag() {
-    document.removeEventListener('mousemove', drag);
-    document.removeEventListener('mouseup', stopDrag);
-
-    // remove the no-transition class to restore transitions
-    widget.classList.remove('no-transition');
-
-    // Check if widget is within body and move it back to its original parent
-    var widgetParent = widget.parentElement;
-    if (widgetParent !== document.body) {
-        var relatedElementId = widget.getAttribute('data-related-element');
-        if (relatedElementId) {
-            var relatedElement = document.getElementById(relatedElementId);
-            if (relatedElement) {
-                relatedElement.appendChild(widget);
-            }
-        }
+        // sets the new widget position
+        widget.style.left = newLeft + "px";
+        widget.style.top = newTop + "px";
     }
 
-    // Reset right position after dragging
-    //var widgetActions = document.getElementById("kori-widget__actions");
-    //widgetActions.style.right = '-444px';
+    // function to stop dragging
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+
+        // remove 'no-transition' class when stopping dragging
+        widget.classList.remove("no-transition");
+
+        // reset position variables after dragging
+        pos1 = 0;
+        pos2 = 0;
+        pos3 = 0;
+        pos4 = 0;
+    }
 }
 
 // reset widget position to initial position
 function resetWidgetPosition() {
-    var widgetActions = document.getElementById("kori-widget__actions");
-
-    widget.style.left = initialPosition.left + 'px';
+    widget.style.right = initialPosition.right + 'px';
     widget.style.top = initialPosition.top + 'px';
-    //widgetActions.style.right = '-444px';
+    widget.style.left = ''; // reset left to initial state (empty or null)
 }
 
-// get the widget's initial position
-function getInitialPosition() {
-    var widget = document.getElementById("kori-widget");
-    return {
-        top: widget.offsetTop,
-        left: widget.offsetLeft
-    };
-}
 
-// add event listener to start dragging
-widget.addEventListener('mousedown', startDrag);
 
