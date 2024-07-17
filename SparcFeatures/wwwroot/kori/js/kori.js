@@ -174,6 +174,9 @@ function toggleDock() {
 
         // remove the ability to drag
         widget.onmousedown = null;
+
+        // adjusts the right margin to match the sidebar width
+        document.body.style.marginRight = '298px'; 
     } else {        
         widget.classList.remove("docked");
         dockButton.title = 'Dock';
@@ -183,6 +186,9 @@ function toggleDock() {
 
         // add the ability to drag
         makeWidgetDraggable();
+
+        // remove dynamic page size adjustment
+        document.body.style.marginRight = '0';
     }
 }
 
