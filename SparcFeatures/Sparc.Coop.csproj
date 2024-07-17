@@ -28,4 +28,11 @@
 		<PackageReference Include="Sparc.Notifications.Twilio" Version="7.0.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="wwwroot\kori\images\dock-icon.svg">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

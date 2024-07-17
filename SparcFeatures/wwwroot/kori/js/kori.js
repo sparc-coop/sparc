@@ -151,10 +151,44 @@ function makeWidgetDraggable() {
 
 // reset widget position to initial position
 function resetWidgetPosition() {
+    // do not reset position if widget is docked
+    if (widget.classList.contains("docked")) {
+        return;
+    }
+
     widget.style.right = initialPosition.right + 'px';
     widget.style.top = initialPosition.top + 'px';
     widget.style.left = ''; // reset left to initial state (empty or null)
 }
+
+// dock and undock the widget
+function toggleDock() {    
+    var dockButton = document.getElementById("dockButton");
+
+    if (!widget.classList.contains("docked")) {
+        widget.classList.add("docked");
+        widget.style.left = '';
+        widget.style.right = '';
+        widget.style.top = '';
+        dockButton.title = 'Undock';
+
+        // remove the ability to drag
+        widget.onmousedown = null;
+    } else {        
+        widget.classList.remove("docked");
+        dockButton.title = 'Dock';
+        resetWidgetPosition();     
+
+        widget.classList.add("animate-right-to-left");
+
+        // add the ability to drag
+        makeWidgetDraggable();
+    }
+}
+
+// dock/undock button click event
+document.getElementById("dockButton").addEventListener("click", toggleDock);
+
 
 
 
