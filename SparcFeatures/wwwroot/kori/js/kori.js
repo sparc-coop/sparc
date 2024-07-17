@@ -146,12 +146,6 @@ function makeWidgetDraggable() {
 
         // remove 'no-transition' class when stopping dragging
         widget.classList.remove("no-transition");
-
-        // reset position variables after dragging
-        pos1 = 0;
-        pos2 = 0;
-        pos3 = 0;
-        pos4 = 0;
     }
 }
 
