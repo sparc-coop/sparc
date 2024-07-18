@@ -2740,6 +2740,60 @@ body.ibis-translating {
 .kori-widget .kori-edit__actions button {
   width: 100%;
 }
+.kori-widget .kori-translation {
+  display: none;
+  width: 298px;
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  /*right: -322px;*/
+  transform: translatey(-50%);
+  background: var(--white);
+  text-align: left;
+}
+.kori-widget .kori-translation__back {
+  margin-bottom: 11px;
+  font-size: 14px;
+  line-height: 0;
+}
+.kori-widget .kori-translation__options {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 30px 0;
+}
+.kori-widget .kori-translation__options .swap-translation {
+  margin: 0 auto;
+}
+.kori-widget .kori-translation__options button {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--grey-200);
+  border-radius: 8px;
+  transition: 200ms ease-in-out;
+}
+.kori-widget .kori-translation__options button img {
+  max-width: 18px;
+  max-height: 18px;
+  margin: auto 0;
+}
+.kori-widget .kori-translation__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 11px;
+}
+.kori-widget .kori-translation__actions button {
+  width: 100%;
+}
 
 .kori__btn, .kori__btn-primary {
   padding: 0 !important;
@@ -2807,7 +2861,7 @@ body.ibis-translating {
   border-radius: 16px;
 }
 
-.kori__border-black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit {
+.kori__border-black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit, .kori-widget .kori-translation {
   border: 15px solid transparent;
   border-image: url("../../kori/borders/black-16.svg") 15 round;
   border-image-outset: 4px;
