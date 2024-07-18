@@ -50,6 +50,10 @@ function toggleSelected(t) {
     if (!koriElem) {
         // clicked outside of all kori elements
         document.getElementsByClassName("show")[0]?.classList.remove("show");
+        // reset right margin if widget is docked
+        if (widget.classList.contains("docked")) {
+            document.body.style.marginRight = '0';
+        }
         return;
     }
 
