@@ -27,6 +27,11 @@ function mouseClickHandler(e) {
                 return;
             } else if (t.closest('.kori-translation__back')) {
                 toggleTranslation(false);
+            } else if (t.closest('.options__search')) {
+                toggleSearch(true);
+                return;
+            } else if (t.closest('.kori-search__back')) {
+                toggleSearch(false);
             } else {
                 return;
             }
@@ -119,7 +124,23 @@ function toggleTranslation(isOpen) {
         translation.classList.remove("show");
         widgetActions.classList.add("show");
     }
+}
 
+function toggleSearch(isOpen) {
+    console.log("opening search menu");
+    var search = document.getElementById("kori-search");
+    var widgetActions = document.getElementById("kori-widget__actions");
+
+    if (!search.classList.contains("show") && isOpen == true) {
+        widgetActions.classList.remove("show");
+        search.classList.add("show");
+        widgetActions.classList.remove("show");
+    }
+
+    if (search.classList.contains("show") && isOpen == false) {
+        search.classList.remove("show");
+        widgetActions.classList.add("show");
+    }
 }
 
 // login to use kori services

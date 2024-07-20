@@ -2696,7 +2696,7 @@ body.ibis-translating {
   position: absolute;
   top: 50%;
   /*right: -322px;*/
-  transform: translatey(-50%);
+  transform: translateY(-50%);
   background: var(--white);
   text-align: left;
 }
@@ -2712,23 +2712,6 @@ body.ibis-translating {
   gap: 8px;
   flex-wrap: wrap;
   margin: 30px 0;
-}
-.kori-widget .kori-edit__options button {
-  display: flex;
-  height: 32px;
-  width: 32px;
-  padding: 4px;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: 1px solid var(--grey-200);
-  border-radius: 8px;
-  transition: 200ms ease-in-out;
-}
-.kori-widget .kori-edit__options button img {
-  max-width: 18px;
-  max-height: 18px;
-  margin: auto 0;
 }
 .kori-widget .kori-edit__actions {
   width: 100%;
@@ -2747,7 +2730,7 @@ body.ibis-translating {
   position: absolute;
   top: 50%;
   /*right: -322px;*/
-  transform: translatey(-50%);
+  transform: translateY(-50%);
   background: var(--white);
   text-align: left;
 }
@@ -2755,6 +2738,18 @@ body.ibis-translating {
   margin-bottom: 11px;
   font-size: 14px;
   line-height: 0;
+}
+.kori-widget .kori-translation__header {
+  display: flex;
+  justify-content: space-between;
+}
+.kori-widget .kori-translation__header h5 {
+  margin: auto 0;
+}
+.kori-widget .kori-translation__header-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 .kori-widget .kori-translation__options {
   display: flex;
@@ -2767,23 +2762,6 @@ body.ibis-translating {
 .kori-widget .kori-translation__options .swap-translation {
   margin: 0 auto;
 }
-.kori-widget .kori-translation__options button {
-  display: flex;
-  height: 32px;
-  width: 32px;
-  padding: 4px;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: 1px solid var(--grey-200);
-  border-radius: 8px;
-  transition: 200ms ease-in-out;
-}
-.kori-widget .kori-translation__options button img {
-  max-width: 18px;
-  max-height: 18px;
-  margin: auto 0;
-}
 .kori-widget .kori-translation__actions {
   width: 100%;
   display: flex;
@@ -2793,6 +2771,68 @@ body.ibis-translating {
 }
 .kori-widget .kori-translation__actions button {
   width: 100%;
+}
+.kori-widget .kori-search {
+  display: none;
+  width: 298px;
+  padding: 12px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--white);
+  text-align: left;
+}
+.kori-widget .kori-search__back {
+  margin-bottom: 11px;
+  font-size: 14px;
+  line-height: 0;
+}
+.kori-widget .kori-search__header {
+  margin-bottom: 24px;
+}
+.kori-widget .kori-search__header h5 {
+  margin-bottom: 8px;
+}
+.kori-widget .kori-search__header .kori-search__searchbar {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.kori-widget .kori-search__header .kori-search__searchbar input {
+  padding: 4px;
+  border: none;
+}
+.kori-widget .kori-search__list {
+  width: 100%;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.kori-widget .kori-search__list .kori__content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.kori-widget .kori-search__list .kori__content-container .kori__content-page {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.kori-widget .kori-search__list .kori__content-container .kori__content-elements {
+  margin-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.kori-widget .kori-search__list .kori__content-container .kori__content-elements .kori__content-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
 }
 
 .kori__btn, .kori__btn-primary {
@@ -2822,6 +2862,30 @@ body.ibis-translating {
   transition: 200ms ease-in-out !important;
 }
 
+.kori__btn-icon, .kori-widget .kori-edit__options button, .kori-widget .kori-translation__header button, .kori-widget .kori-translation__options button {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: 1px solid var(--grey-200);
+  border-radius: 8px;
+  transition: 200ms ease-in-out;
+}
+.kori__btn-icon img, .kori-widget .kori-edit__options button img, .kori-widget .kori-translation__header button img, .kori-widget .kori-translation__options button img {
+  max-width: 18px;
+  max-height: 18px;
+  margin: auto 0;
+}
+.kori__btn-icon:hover, .kori-widget .kori-edit__options button:hover, .kori-widget .kori-translation__header button:hover, .kori-widget .kori-translation__options button:hover {
+  border: 1px solid var(--grey-700);
+}
+.kori__btn-icon:active, .kori-widget .kori-edit__options button:active, .kori-widget .kori-translation__header button:active, .kori-widget .kori-translation__options button:active {
+  border: 1px solid var(--grey-200);
+}
+
 .kori-loggedin .kori__btn:hover, .kori-loggedin .kori__btn-primary:hover,
 .kori-loggedin .kori__btn-text:hover {
   filter: opacity(0.6) !important;
@@ -2847,7 +2911,7 @@ body.ibis-translating {
   border: 1px solid var(--grey-200);
 }
 
-.kori__border_black-10-8, .kori__btn, .kori__btn-primary {
+.kori__border_black-10-8, .kori-widget .kori-translation__options select, .kori-widget .kori-search__header .kori-search__searchbar, .kori__btn, .kori__btn-primary {
   border: 10px solid transparent;
   border-image: url("../../kori/borders/black-8.svg") 15 round;
   border-image-outset: 2px;
@@ -2861,7 +2925,7 @@ body.ibis-translating {
   border-radius: 16px;
 }
 
-.kori__border-black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit, .kori-widget .kori-translation {
+.kori__border_black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit, .kori-widget .kori-translation, .kori-widget .kori-search {
   border: 15px solid transparent;
   border-image: url("../../kori/borders/black-16.svg") 15 round;
   border-image-outset: 4px;
@@ -2937,7 +3001,7 @@ body.ibis-translating {
 .kori-login__actions {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   margin-top: 12px;
 }
 .kori-login__actions button {
@@ -2948,9 +3012,6 @@ body.ibis-translating {
   border-image: url("../../kori/borders/black-8.svg") 15 round;
 }
 .kori-login__actions button.kori-login__btn {
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
-  margin: 0 auto;
   background: var(--orange-500);
   border-radius: 8px;
   border-image-outset: 2px;

@@ -74,7 +74,7 @@
         }
 
         .kori-widget__content {
-            @extend .kori__border-black-15-16;
+            @extend .kori__border_black-15-16;
             width: 300px;
             padding: 12px;
             background: var(--white);
@@ -125,14 +125,14 @@
     }
 
     .kori-edit {
-        @extend .kori__border-black-15-16;
+        @extend .kori__border_black-15-16;
         display: none;
         width: 298px;
         padding: 12px;
         position: absolute;
         top: 50%;
         /*right: -322px;*/
-        transform: translatey(-50%);
+        transform: translateY(-50%);
         background: var(--white);
         text-align: left;
 
@@ -151,22 +151,7 @@
             margin: 30px 0;
 
             button {
-                display: flex;
-                height: 32px;
-                width: 32px;
-                padding: 4px;
-                justify-content: center;
-                align-items: center;
-                background: none;
-                border: 1px solid var(--grey-200);
-                border-radius: 8px;
-                transition: 200ms ease-in-out;
-
-                img {
-                    max-width: 18px;
-                    max-height: 18px;
-                    margin: auto 0;
-                }
+                @extend .kori__btn-icon;
             }
         }
 
@@ -184,14 +169,14 @@
     }
 
     .kori-translation {
-        @extend .kori__border-black-15-16;
+        @extend .kori__border_black-15-16;
         display: none;
         width: 298px;
         padding: 12px;
         position: absolute;
         top: 50%;
         /*right: -322px;*/
-        transform: translatey(-50%);
+        transform: translateY(-50%);
         background: var(--white);
         text-align: left;
 
@@ -199,6 +184,25 @@
             margin-bottom: 11px;
             font-size: 14px;
             line-height: 0;
+        }
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+
+            h5 {
+                margin: auto 0;
+            }
+
+            &-actions {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            button {
+                @extend .kori__btn-icon;
+            }
         }
 
         &__options {
@@ -210,7 +214,7 @@
             margin: 30px 0;
 
             select {
-                @extend .kori__border-black-10-8 !optional;
+                @extend .kori__border_black-10-8;
             }
 
             .swap-translation {
@@ -218,22 +222,7 @@
             }
 
             button {
-                display: flex;
-                height: 32px;
-                width: 32px;
-                padding: 4px;
-                justify-content: center;
-                align-items: center;
-                background: none;
-                border: 1px solid var(--grey-200);
-                border-radius: 8px;
-                transition: 200ms ease-in-out;
-
-                img {
-                    max-width: 18px;
-                    max-height: 18px;
-                    margin: auto 0;
-                }
+                @extend .kori__btn-icon;
             }
         }
 
@@ -246,6 +235,81 @@
 
             button {
                 width: 100%;
+            }
+        }
+    }
+
+    .kori-search {
+        @extend .kori__border_black-15-16;
+        display: none;
+        width: 298px;
+        padding: 12px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--white);
+        text-align: left;
+
+        &__back {
+            margin-bottom: 11px;
+            font-size: 14px;
+            line-height: 0;
+        }
+
+        &__header {
+            margin-bottom: 24px;
+
+            h5 {
+                margin-bottom: 8px;
+            }
+
+            .kori-search__searchbar {
+                @extend .kori__border_black-10-8;
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+
+                input {
+                    padding: 4px;
+                    border: none;
+                }
+            }
+        }
+
+        &__list {
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            .kori__content-container {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+
+                .kori__content-page {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 14px;
+                }
+
+                .kori__content-elements {
+                    margin-left: 24px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+
+                    .kori__content-item {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 8px;
+                        font-size: 14px;
+                    }
+                }
             }
         }
     }
@@ -279,6 +343,33 @@
     font-size: 14px !important;
     line-height: 100% !important;
     transition: 200ms ease-in-out !important;
+}
+
+.kori__btn-icon {
+    display: flex;
+    height: 32px;
+    width: 32px;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 1px solid var(--grey-200);
+    border-radius: 8px;
+    transition: 200ms ease-in-out;
+
+    img {
+        max-width: 18px;
+        max-height: 18px;
+        margin: auto 0;
+    }
+
+    &:hover {
+        border: 1px solid var(--grey-700);
+    }
+
+    &:active {
+        border: 1px solid var(--grey-200);
+    }
 }
 
 .kori-loggedin {
@@ -329,7 +420,7 @@
     border-radius: 16px;
 }
 
-.kori__border-black-15-16 {
+.kori__border_black-15-16 {
     border: 15px solid transparent;
     border-image: url('kori/borders/black-16.svg') 15 round;
     border-image-outset: 4px;
