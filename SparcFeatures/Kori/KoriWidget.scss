@@ -52,6 +52,7 @@
             top: 0;
             transform: translateY(0);
             right: 0;
+            left: 0;
         }
     }
 
@@ -132,6 +133,7 @@
         position: absolute;
         top: 50%;
         /*right: -322px;*/
+        left: 25px;
         transform: translatey(-50%);
         background: var(--white);
         text-align: left;
