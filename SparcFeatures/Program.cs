@@ -1,7 +1,4 @@
 using Sparc.Coop.Community;
-using Sparc.Ibis;
-using Sparc.Kernel;
-using Sparc.Notifications.Twilio;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);

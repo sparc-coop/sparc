@@ -11,7 +11,7 @@
     }
 
     &.selected {
-        @extend .kori__border_orange-15-16;
+        @extend .kori__border_orange-15-16 !optional;
         background: white;
     }
 }

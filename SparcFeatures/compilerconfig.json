@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/app.css",
     "inputFile": "app.scss"
+  },
+  {
+    "outputFile": "Pages/KoriTestPage.css",
+    "inputFile": "Pages/KoriTestPage.scss"
   }
 ]
