@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/" />
+    <link rel="stylesheet" type="text/css" href="https://api.kodekit.io/greffe-winterweight.css">
+    <link href="css/app.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.typekit.net/dda1jal.css">
+    <HeadOutlet />
+    <PageTitle>Sparc Cooperative</PageTitle>
+</head>
+
+<body>
+    <App />
+    <Kori.KoriLogin @rendermode="new InteractiveServerRenderMode(false)" />
+    <Kori.KoriWidget @rendermode="new InteractiveServerRenderMode(false)" />
+    <script src="_framework/blazor.web.js"></script>
+    <script>
+        function scrollFunction() {
+            const element = document.getElementById("mission");
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

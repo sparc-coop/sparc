@@ -1,31 +1,17 @@
-using Sparc.Coop.Community;
-using System.Globalization;
+using Kori;
+using Sparc.Coop;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
-
-
-builder.AddSparcKernel();
-builder.Services
-    .AddIbis()
-    .AddTwilio(builder.Configuration)
-    .AddScoped<RegisterForCommunity>();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 
 var app = builder.Build();
 
-var supportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures)
-    .Select(x => x.Name)
-    .ToArray();
-
 app.UseStaticFiles();
+app.UseKori();
 
-app.UseRequestLocalization(options => options
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures));
-
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();
