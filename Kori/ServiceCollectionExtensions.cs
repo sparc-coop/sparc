@@ -6,18 +6,10 @@ namespace Kori;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddKori(this IServiceCollection services)
+    public static WebApplicationBuilder AddKori(this WebApplicationBuilder builder)
     {
-        //var apiBaseUrl = configuration?["IbisApi"] ?? "https://ibis.chat/";
-
-        //var client = services.AddHttpClient<KoriClient>(client =>
-        //{
-        //    client.BaseAddress = new Uri(apiBaseUrl);
-        //    client.DefaultRequestVersion = new Version(2, 0);
-        //});
-
-        //services.AddScoped<IbisTranslator>();
-        return services;
+        builder.Services.AddLocalization();
+        return builder;
     }
 
     public static IApplicationBuilder UseKori(this IApplicationBuilder app)

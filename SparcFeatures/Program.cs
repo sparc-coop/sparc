@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.AddKori();
+
 var app = builder.Build();
 
 app.UseStaticFiles();
