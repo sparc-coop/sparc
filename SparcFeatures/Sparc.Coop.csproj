@@ -29,10 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Update="wwwroot\kori\images\dock-icon.svg">
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
+	  <ProjectReference Include="..\Kori\Kori.csproj" />
 	</ItemGroup>
 
 </Project>
