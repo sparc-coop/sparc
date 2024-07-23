@@ -216,64 +216,33 @@
     transition: 200ms ease-in-out !important;
 }
 
-.kori-loggedin {
-    .kori__btn:hover,
-    .kori__btn-text:hover {
-        filter: opacity(0.6) !important;
-    }
 
-    .kori__btn-primary:hover {
-        background: var(--orange-200) !important;
-        filter: opacity(1) !important;
-    }
-
-    .kori-enabled:not(.selected):hover {
-        border: 1px solid var(--orange-500) !important;
-    }
-
-    .kori__btn:active,
-    .kori__btn-text:active {
-        filter: opacity(1) !important;
-    }
-
-    .kori__btn-primary:active {
-        background: var(--orange-500) !important;
-    }
-
-    .kori-edit__options button:hover {
-        border: 1px solid var(--grey-700);
-    }
-
-    .kori-edit__options button:active {
-        border: 1px solid var(--grey-200);
-    }
-}
 
 // borders
 .kori__border_black-10-8 {
     border: 10px solid transparent;
-    border-image: url('kori/borders/black-8.svg') 15 round;
+    border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
     border-image-outset: 2px;
     border-radius: 8px;
 }
 
 .kori__border_black-10-16 {
     border: 10px solid transparent;
-    border-image: url('kori/borders/black-16.svg') 15 round;
+    border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
     border-image-outset: 2px;
     border-radius: 16px;
 }
 
 .kori__border-black-15-16 {
     border: 15px solid transparent;
-    border-image: url('kori/borders/black-16.svg') 15 round;
+    border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
     border-image-outset: 4px;
     border-radius: 16px;
 }
 
 .kori__border_orange-15-16 {
     border: 15px solid transparent;
-    border-image: url('kori/borders/orange-16.svg') 15 round;
+    border-image: url('/_content/Kori/borders/orange-16.svg') 15 round;
     border-image-outset: 4px;
     border-radius: 16px;
 }

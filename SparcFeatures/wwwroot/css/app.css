@@ -2055,6 +2055,31 @@ body.ibis-translating {
   opacity: 0.3;
 }
 
+.kori-loggedin .kori__btn:hover,
+.kori-loggedin .kori__btn-text:hover {
+  filter: opacity(0.6) !important;
+}
+.kori-loggedin .kori__btn-primary:hover {
+  background: var(--orange-200) !important;
+  filter: opacity(1) !important;
+}
+.kori-loggedin .kori-enabled:not(.selected):hover {
+  border: 1px solid var(--orange-500) !important;
+}
+.kori-loggedin .kori__btn:active,
+.kori-loggedin .kori__btn-text:active {
+  filter: opacity(1) !important;
+}
+.kori-loggedin .kori__btn-primary:active {
+  background: var(--orange-500) !important;
+}
+.kori-loggedin .kori-edit__options button:hover {
+  border: 1px solid var(--grey-700);
+}
+.kori-loggedin .kori-edit__options button:active {
+  border: 1px solid var(--grey-200);
+}
+
 @font-face {
   font-family: "Love Ya Like A Sister";
   font-weight: 400;
@@ -2065,24 +2090,6 @@ body.ibis-translating {
   font-weight: 500;
   src: url("/kori/fonts/ArticulatCF-Medium.otf") format("opentype");
 }
-.kori-enabled {
-  position: relative;
-  border: 0px solid transparent;
-  transition: 200ms ease-in-out;
-}
-.kori-enabled:hover {
-  /*border: 1px solid var(--orange-500);*/
-  cursor: pointer;
-}
-.kori-enabled.selected {
-  background: white;
-}
-
-body.ibis-translating {
-  visibility: hidden;
-  opacity: 0;
-}
-
 .kori.homepage .center {
   text-align: center;
 }

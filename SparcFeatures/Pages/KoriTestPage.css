@@ -1,22 +1,4 @@
-﻿.kori-enabled {
-  position: relative;
-  border: 0px solid transparent;
-  transition: 200ms ease-in-out;
-}
-.kori-enabled:hover {
-  /*border: 1px solid var(--orange-500);*/
-  cursor: pointer;
-}
-.kori-enabled.selected {
-  background: white;
-}
-
-body.ibis-translating {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.kori.homepage .center {
+﻿.kori.homepage .center {
   text-align: center;
 }
 .kori.homepage section {

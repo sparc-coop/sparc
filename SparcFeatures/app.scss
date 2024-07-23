@@ -26,6 +26,40 @@
     opacity: 0.3;
 }
 
+.kori-loggedin {
+    .kori__btn:hover,
+    .kori__btn-text:hover {
+        filter: opacity(0.6) !important;
+    }
+
+    .kori__btn-primary:hover {
+        background: var(--orange-200) !important;
+        filter: opacity(1) !important;
+    }
+
+    .kori-enabled:not(.selected):hover {
+        border: 1px solid var(--orange-500) !important;
+    }
+
+    .kori__btn:active,
+    .kori__btn-text:active {
+        filter: opacity(1) !important;
+    }
+
+    .kori__btn-primary:active {
+        background: var(--orange-500) !important;
+    }
+
+    .kori-edit__options button:hover {
+        border: 1px solid var(--grey-700);
+    }
+
+    .kori-edit__options button:active {
+        border: 1px solid var(--grey-200);
+    }
+}
+
+
 // kori
 
 @font-face {
