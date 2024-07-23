@@ -1,5 +1,14 @@
-﻿namespace Kori;
+﻿using Microsoft.AspNetCore.Http;
 
-internal class KoriMiddleware
+namespace Kori;
+
+internal class KoriMiddleware(RequestDelegate next)
 {
+    private readonly RequestDelegate _next = next;
+
+    public async Task InvokeAsync(HttpContext context, Kori kori)
+    {
+        await kori.InitializeAsync(context);
+        await _next(context);
+    }
 }

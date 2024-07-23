@@ -3,36 +3,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
-public record KoriContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
+public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
-    public static string ChannelId { get; set; } = "";
+    public static Uri BaseUri { get; set; } = new("https://localhost");
+    public string RoomSlug { get; set; } = "";
     public string Language { get; set; } = "";
-    Dictionary<string, KoriContent> _content { get; set; } = [];
+    Dictionary<string, KoriTextContent> _content { get; set; } = [];
     private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis.chat") };
 
-    readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/Kori.razor.js").AsTask());
+    readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
-    public record IbisContent(string Name, string Slug, string Language, ICollection<KoriContent> Content);
+    public record IbisContent(string Name, string Slug, string Language, ICollection<KoriTextContent> Content);
     public async Task InitializeAsync(HttpContext context)
     {
-        var request = new
-        {
-            RoomSlug = ChannelId,
-            Language
-        };
-
-        var response = await Client.PostAsJsonAsync("publicapi/GetAllContent", request);
-        var content = await response.Content.ReadFromJsonAsync<IbisContent>();
-        _content = content!.Content.ToDictionary(x => x.Tag, x => x with { Nodes = [] });
+        await GetContentAsync(context.Request.Path);
     }
 
-    public async Task InitializeAsync(ComponentBase component, string elementId)
+   
+    public async Task InitializeAsync(ComponentBase component, string currentUrl, string elementId)
     {
+        var path = new Uri(currentUrl).AbsolutePath;
+        await GetContentAsync(path);
+
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
     }
@@ -45,18 +43,17 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         var js = await KoriJs.Value;
 
         var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
-        var request = new { RoomSlug = ChannelId, Language, Messages = nodesToTranslate, AsHtml = false };
-        var response = await Client.PostAsJsonAsync("publicapi/PostContent", request);
-        var content = await response.Content.ReadFromJsonAsync<IbisContent>();
+        var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
+        var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
         foreach (var item in content!.Content)
             _content[item.Tag] = item with { Nodes = [] };
 
         // Replace nodes with their translation
-        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriContent? value) ? value.Text : x).ToList();
+        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? value.Text : x).ToList();
         return nodes;
     }
 
-    public async Task PlayAsync(KoriContent content)
+    public async Task PlayAsync(KoriTextContent content)
     {
         if (content?.Audio?.Url == null)
             return;
@@ -67,7 +64,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
     public MarkupString Content(string tag, int loremIpsumWordCount = 0)
     {
-        if (!_content.TryGetValue(tag, out KoriContent? value))
+        if (!_content.TryGetValue(tag, out KoriTextContent? value))
             return new(LoremIpsum(loremIpsumWordCount));
 
         return new(value.Text);
@@ -107,4 +104,33 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         return result.ToString();
     }
 
+    private async Task GetContentAsync(string path)
+    {
+        RoomSlug = $"{BaseUri.Host}{path}";
+
+        var request = new
+        {
+            RoomSlug,
+            Language
+        };
+
+        var content = await PostAsync<IbisContent>("publicapi/GetAllContent", request)
+            ?? new IbisContent(RoomSlug, RoomSlug, Language, []);
+
+        _content = content!.Content.ToDictionary(x => x.Tag, x => x with { Nodes = [] });
+    }
+
+    async Task<TResponse?> PostAsync<TResponse>(string url, object request)
+    {
+        try
+        {
+            var response = await Client.PostAsJsonAsync(url, request);
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TResponse>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        }
+        catch (Exception e)
+        {
+            return default;
+        }
+    }
 }

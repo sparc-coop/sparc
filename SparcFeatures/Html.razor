@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <base href="/" />
     <link rel="stylesheet" type="text/css" href="https://api.kodekit.io/greffe-winterweight.css">
-    <link href="css/app.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="Sparc.Coop.styles.css" />
     <link rel="stylesheet" href="https://use.typekit.net/dda1jal.css">
-    <HeadOutlet />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(false)" />
     <PageTitle>Sparc Cooperative</PageTitle>
 </head>
 
 <body>
-    <App />
-    <Kori.KoriWidget @rendermode="new InteractiveServerRenderMode(false)" />
+    <App @rendermode="new InteractiveServerRenderMode(false)" />
     <script src="_framework/blazor.web.js"></script>
     <script>
         function scrollFunction() {

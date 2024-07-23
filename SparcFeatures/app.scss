@@ -16,12 +16,12 @@
 
 @import "Pages/Index";
 
-.ibis-translate {
+.kori-content {
     padding: 0;
     margin: 0;
 }
 
-.ibis-translating {
+.kori-initializing {
     visibility: visible;
     opacity: 0.3;
 }
@@ -40,9 +40,7 @@
     src: url('/kori/fonts/ArticulatCF-Medium.otf') format('opentype');
 }
 
-@import "Kori/KoriTestPage";
-@import "Kori/KoriWidget";
-@import "Kori/KoriLogin";
+@import "Pages/KoriTestPage";
 
 :root {
     --white: #FFFFFF;
