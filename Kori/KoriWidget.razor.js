@@ -180,6 +180,16 @@ function mouseClickHandler(e) {
                 return;
             } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
                 toggleEdit(false);
+            } else if (t.closest('.options__translation')) {
+                toggleTranslation(true);
+                return;
+            } else if (t.closest('.kori-translation__back')) {
+                toggleTranslation(false);
+            } else if (t.closest('.options__search')) {
+                toggleSearch(true);
+                return;
+            } else if (t.closest('.kori-search__back')) {
+                toggleSearch(false);
             } else {
                 return;
             }
@@ -250,6 +260,43 @@ function toggleEdit(isOpen) {
 
     if (edit.classList.contains("show") && isOpen == false) {
         edit.classList.remove("show");
+        widgetActions.classList.add("show");
+    }
+}
+
+// show and hide translation menu
+function toggleTranslation(isOpen) {
+    console.log("opening translation menu");
+    var translation = document.getElementById("kori-translation");
+    var widgetActions = document.getElementById("kori-widget__actions");
+
+    if (!translation.classList.contains("show") && isOpen == true) {
+        widgetActions.classList.remove("show");
+        translation.classList.add("show");
+        widgetActions.classList.remove("show");
+    }
+
+    if (translation.classList.contains("show") && isOpen == false) {
+        translation.classList.remove("show");
+        widgetActions.classList.add("show");
+    }
+}
+
+// show and hide search/content navigation menu
+
+function toggleSearch(isOpen) {
+    console.log("opening search menu");
+    var search = document.getElementById("kori-search");
+    var widgetActions = document.getElementById("kori-widget__actions");
+
+    if (!search.classList.contains("show") && isOpen == true) {
+        widgetActions.classList.remove("show");
+        search.classList.add("show");
+        widgetActions.classList.remove("show");
+    }
+
+    if (search.classList.contains("show") && isOpen == false) {
+        search.classList.remove("show");
         widgetActions.classList.add("show");
     }
 }
