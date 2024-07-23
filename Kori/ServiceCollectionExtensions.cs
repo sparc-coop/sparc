@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
             .AddSupportedCultures(supportedCultures)
             .AddSupportedUICultures(supportedCultures));
 
-        app.UseMiddleware<KoriMiddleware>();
+        //app.UseMiddleware<KoriMiddleware>();
 
         return app;
     }

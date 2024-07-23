@@ -13,9 +13,9 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");
     public string RoomSlug { get; set; } = "";
-    public string Language { get; set; } = "";
+    public string Language { get; set; } = "en";
     Dictionary<string, KoriTextContent> _content { get; set; } = [];
-    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis.chat") };
+    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://localhost:7117/") };
 
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 

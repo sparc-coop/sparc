@@ -113,12 +113,12 @@ function replaceWithTranslatedText() {
     for (let key in translationCache) {
         var translation = translationCache[key];
 
-        if (!translation.translation)
+        if (!translation.Translation)
             continue;
 
-        for (let node of translation.nodes) {
-            if (node.textContent != translation.translation) {
-                node.textContent = translation.translation;
+        for (let node of translation.Nodes) {
+            if (node.textContent != translation.Translation) {
+                node.textContent = translation.Translation;
                 node.koriTranslated = language;
             }
             node.parentElement?.classList.remove('kori-initializing');
