@@ -6,9 +6,10 @@ namespace Kori;
 
 public static class ServiceCollectionExtensions
 {
-    public static WebApplicationBuilder AddKori(this WebApplicationBuilder builder)
+    public static WebApplicationBuilder AddKori(this WebApplicationBuilder builder, string channelId)
     {
         builder.Services.AddLocalization();
+        Kori.ChannelId = channelId;
         return builder;
     }
 
@@ -21,6 +22,8 @@ public static class ServiceCollectionExtensions
         app.UseRequestLocalization(options => options
             .AddSupportedCultures(supportedCultures)
             .AddSupportedUICultures(supportedCultures));
+
+        app.Use<KoriMiddleware>();
 
         return app;
     }

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.AddKori();
+builder.AddKori("sparc-coop");
 
 var app = builder.Build();
 
