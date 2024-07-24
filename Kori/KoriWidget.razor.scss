@@ -75,7 +75,7 @@
         }
 
         .kori-widget__content {
-            @extend .kori__border-black-15-16;
+            @extend .kori__border_black-15-16;
             width: 300px;
             padding: 12px;
             background: var(--white);
@@ -126,7 +126,7 @@
     }
 
     .kori-edit {
-        @extend .kori__border-black-15-16;
+        @extend .kori__border_black-15-16;
         display: none;
         width: 298px;
         padding: 12px;
@@ -369,7 +369,32 @@
     transition: 200ms ease-in-out !important;
 }
 
+.kori__btn-icon {
+    display: flex;
+    height: 32px;
+    width: 32px;
+    padding: 4px;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: 1px solid var(--grey-200);
+    border-radius: 8px;
+    transition: 200ms ease-in-out;
 
+    img {
+        max-width: 18px;
+        max-height: 18px;
+        margin: auto 0;
+    }
+
+    &:hover {
+        border: 1px solid var(--grey-700);
+    }
+
+    &:active {
+        border: 1px solid var(--grey-200);
+    }
+}
 
 // borders
 .kori__border_black-10-8 {
@@ -386,7 +411,7 @@
     border-radius: 16px;
 }
 
-.kori__border-black-15-16 {
+.kori__border_black-15-16 {
     border: 15px solid transparent;
     border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
     border-image-outset: 4px;
