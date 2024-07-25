@@ -62,7 +62,6 @@
   font-family: "Love Ya Like A Sister" !important;
   font-weight: 400;
   font-size: 16px;
-  cursor: default;
 }
 .kori-widget__actions {
   display: none;
@@ -358,10 +357,10 @@
 }
 
 .kori__border_black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit, .kori-widget .kori-translation, .kori-widget .kori-search {
-  border: 15px solid transparent;
   border-image: url("/_content/Kori/borders/black-16.svg") 15 round;
   border-image-outset: 4px;
   border-radius: 16px;
+  border-image-width: 15px;
 }
 
 .kori__border_orange-15-16 {
