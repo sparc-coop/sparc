@@ -61,6 +61,7 @@
         font-family: 'Love Ya Like A Sister' !important;
         font-weight: 400;
         font-size: 16px;
+        cursor: default;
     }
 
     &__actions {
@@ -368,6 +369,7 @@
     font-size: 14px !important;
     line-height: 100% !important;
     transition: 200ms ease-in-out !important;
+    font-style: normal;
 }
 
 .kori__btn-icon {

@@ -2055,9 +2055,11 @@ body.ibis-translating {
   opacity: 0.3;
 }
 
-.kori-loggedin .kori__btn:hover,
+.kori-loggedin .kori__btn:hover {
+  background: var(--orange-500) !important;
+}
 .kori-loggedin .kori__btn-text:hover {
-  filter: opacity(0.6) !important;
+  color: var(--orange-500) !important;
 }
 .kori-loggedin .kori__btn-primary:hover {
   background: var(--orange-200) !important;
@@ -2066,9 +2068,11 @@ body.ibis-translating {
 .kori-loggedin .kori-enabled:not(.selected):hover {
   border: 1px solid var(--orange-500) !important;
 }
-.kori-loggedin .kori__btn:active,
-.kori-loggedin .kori__btn-text:active {
+.kori-loggedin .kori__btn:active {
   filter: opacity(1) !important;
+}
+.kori-loggedin .kori__btn-text:active {
+  color: var(--grey-600) !important;
 }
 .kori-loggedin .kori__btn-primary:active {
   background: var(--orange-500) !important;

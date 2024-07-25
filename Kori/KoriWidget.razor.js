@@ -383,6 +383,7 @@ function resetWidgetPosition() {
 // dock and undock the widget
 function toggleDock() {
     var dockButton = document.getElementById("dockButton");
+    var dockIcon = dockButton.querySelector("img");
 
     if (!widget.classList.contains("docked")) {
         widget.classList.add("docked");
@@ -390,6 +391,9 @@ function toggleDock() {
         widgetActions.style.right = '';
         widgetActions.style.top = '';
         dockButton.title = 'Undock';
+
+        // Change the icon to undock
+        dockIcon.src = '_content/Kori/images/undock-icon.svg';
 
         // remove the ability to drag
         widgetActions.onmousedown = null;
@@ -399,6 +403,10 @@ function toggleDock() {
     } else {
         widget.classList.remove("docked");
         dockButton.title = 'Dock';
+
+        // Change the icon to dock
+        dockIcon.src = '_content/Kori/images/dock-icon.svg';
+
         resetWidgetPosition();
 
         widget.classList.add("animate-right-to-left");

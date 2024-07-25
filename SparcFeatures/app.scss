@@ -27,10 +27,13 @@
 }
 
 .kori-loggedin {
-    .kori__btn:hover,
-    .kori__btn-text:hover {
-        filter: opacity(0.6) !important;
+    .kori__btn:hover {
+        background: var(--orange-500) !important;
     }
+
+    .kori__btn-text:hover {
+        color: var(--orange-500) !important;
+    }    
 
     .kori__btn-primary:hover {
         background: var(--orange-200) !important;
@@ -41,9 +44,12 @@
         border: 1px solid var(--orange-500) !important;
     }
 
-    .kori__btn:active,
-    .kori__btn-text:active {
+    .kori__btn:active {
         filter: opacity(1) !important;
+    }
+
+    .kori__btn-text:active {
+        color: var(--grey-600) !important;
     }
 
     .kori__btn-primary:active {
