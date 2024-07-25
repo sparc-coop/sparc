@@ -42,7 +42,11 @@
             padding: 0;
             border: none;
 
-            placeholder {
+            &::placeholder {
+                color: var(--grey-500);
+            }
+
+            &:-ms-input-placeholder {
                 color: var(--grey-500);
             }
         }
@@ -80,6 +84,7 @@
             background: none;
             border: 10px solid transparent;
             border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
+            font-style: normal;
 
             &.kori-login__btn {
                 width: calc(100% - 4px);
