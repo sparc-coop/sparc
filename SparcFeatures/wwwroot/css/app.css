@@ -2084,16 +2084,17 @@ body.ibis-translating {
   border: 1px solid var(--grey-200);
 }
 
-@font-face {
-  font-family: "Love Ya Like A Sister";
-  font-weight: 400;
-  src: url("/kori/fonts/LoveYaLikeASister-Regular.ttf") format("truetype");
+/*@font-face {
+    font-family: 'Love Ya Like A Sister';
+    font-weight: 400;
+    src: url('/kori/fonts/LoveYaLikeASister-Regular.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: "ArticulatCF";
-  font-weight: 500;
-  src: url("/kori/fonts/ArticulatCF-Medium.otf") format("opentype");
-}
+    font-family: 'ArticulatCF';
+    font-weight: 500;
+    src: url('/kori/fonts/ArticulatCF-Medium.otf') format('opentype');
+}*/
 .kori.homepage .center {
   text-align: center;
 }

@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'Love Ya Like A Sister';
+    font-weight: 400;
+    src: url('/_content/Kori/fonts/LoveYaLikeASister-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ArticulatCF';
+    font-weight: 500;
+    src: url('/_content/Kori/fonts/ArticulatCF-Medium.otf') format('opentype');
+}
+
 .kori-widget {
     display: none;
     position: absolute;
@@ -233,7 +245,7 @@
 
             select {
                 @extend .kori__border_black-10-8;
-                background: url('kori/icons/Chevron down.svg') no-repeat right white;
+                background: url('icons/Chevron down.svg') no-repeat right white;
                 font-family: 'Love Ya Like A Sister';
                 font-size: 14px;
                 line-height: 100%;
