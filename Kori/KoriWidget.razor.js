@@ -28,14 +28,20 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     language = selectedLanguage;
     dotNet = dotNetObjectReference;
     
-    if (serverTranslationCache)
+    if (serverTranslationCache) {
         translationCache = serverTranslationCache;
+        for (let key in translationCache)
+            translationCache[key].Nodes = [];
+    }
     else {
         for (let key in translationCache) {
-            translationCache[key].submitted = false;
-            translationCache[key].translation = null;
+            translationCache[key].Submitted = false;
+            translationCache[key].Translation = null;
+            translationCache[key].Nodes = [];
         }
     }
+
+    console.log('Kori translation cache initialized from Ibis, ' + Object.keys(translationCache).length + ' items.');
 
     if (/complete|interactive|loaded/.test(document.readyState)) {
         initElement(targetElementId);
@@ -52,6 +58,8 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     widget = document.getElementById("kori-widget");
     widgetActions = document.getElementById("kori-widget__actions");
     document.getElementById("dockButton").addEventListener("click", toggleDock);
+
+    console.log('Kori widget initialized.');
 }
 
 function initElement(targetElementId) {
@@ -61,6 +69,8 @@ function initElement(targetElementId) {
 
     observer = new MutationObserver(observeCallback);
     observer.observe(app, { childList: true, characterData: true, subtree: true });
+
+    console.log('Observer registered for ' + targetElementId + '.');
 }
 
 function observeCallback(mutations) {
@@ -115,6 +125,7 @@ function translateNodes() {
     }
 
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
+        console.log('Received new translations from Ibis.');
         for (var i = 0; i < translations.length; i++) {
             translationCache[contentToTranslate[i]].Translation = translations[i];
         }
@@ -141,6 +152,8 @@ function replaceWithTranslatedText() {
             node.parentElement?.classList.add('kori-enabled');
         }
     }
+
+    console.log('Translated page from Ibis and enabled Kori widget.');
 
     observer.observe(app, { childList: true, characterData: true, subtree: true });
 }

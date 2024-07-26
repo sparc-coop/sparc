@@ -15,7 +15,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public string RoomSlug { get; set; } = "";
     public string Language { get; set; } = "en";
     Dictionary<string, KoriTextContent> _content { get; set; } = [];
-    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://localhost:7117/") };
+    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis-web-kori.azurewebsites.net/") };
 
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
@@ -24,7 +24,6 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     {
         await GetContentAsync(context.Request.Path);
     }
-
    
     public async Task InitializeAsync(ComponentBase component, string currentUrl, string elementId)
     {
@@ -43,9 +42,15 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         var js = await KoriJs.Value;
 
         var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
+        if (nodesToTranslate.Count == 0)
+            return nodes;
+
         var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
         var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
-        foreach (var item in content!.Content)
+        if (content == null)
+            return nodes;
+
+        foreach (var item in content.Content)
             _content[item.Tag] = item with { Nodes = [] };
 
         // Replace nodes with their translation
@@ -114,19 +119,19 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             Language
         };
 
-        var content = await PostAsync<IbisContent>("publicapi/GetAllContent", request)
-            ?? new IbisContent(RoomSlug, RoomSlug, Language, []);
-
-        _content = content!.Content.ToDictionary(x => x.Tag, x => x with { Nodes = [] });
+        var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
+        if (content != null)
+            _content = content.Content.ToDictionary(x => x.Tag, x => x with { Nodes = [] });
     }
 
+    private static JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
     async Task<TResponse?> PostAsync<TResponse>(string url, object request)
     {
         try
         {
             var response = await Client.PostAsJsonAsync(url, request);
             var result = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<TResponse>(result, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return JsonSerializer.Deserialize<TResponse>(result, JsonOptions);
         }
         catch (Exception e)
         {
