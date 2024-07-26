@@ -7,6 +7,7 @@ var koriAuthorized = false;
 var initialPosition = { left: 25 };
 let widget = {};
 let widgetActions = {};
+let activeNode = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
 
@@ -27,7 +28,7 @@ let koriIgnoreFilter = function (node) {
 function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTranslationCache) {
     language = selectedLanguage;
     dotNet = dotNetObjectReference;
-    
+
     if (serverTranslationCache) {
         translationCache = serverTranslationCache;
         for (let key in translationCache)
@@ -188,12 +189,7 @@ function mouseClickHandler(e) {
     if (koriAuthorized) {
         // click kori widget
         if (t.closest(".kori-widget")) {
-            if (t.closest('.options__edit')) {
-                toggleEdit(true);
-                return;
-            } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
-                toggleEdit(false);
-            } else if (t.closest('.options__translation')) {
+            if (t.closest('.options__translation')) {
                 toggleTranslation(true);
                 return;
             } else if (t.closest('.kori-translation__back')) {
@@ -229,6 +225,7 @@ function toggleSelected(t) {
         if (widget.classList.contains("docked")) {
             document.body.style.marginRight = '0';
         }
+        activeNode = null;
         return;
     }
 
@@ -251,30 +248,32 @@ function toggleWidget(t) {
     widget.classList.add("show");
     widgetActions.classList.add("show");
 
-    // add data attribute to widget with related element ID
-    var relatedElementId = t.id || 'element-' + new Date().getTime();
-    t.id = relatedElementId;
-    widget.setAttribute('data-related-element', relatedElementId);
+    // search for matching node in translation cache
+    for (let key in translationCache) {
+        for (var i = 0; i < translationCache[key].Nodes.length; i++)
+            if (t.contains(translationCache[key].Nodes[i])) {
+                activeNode = translationCache[key].Nodes[i];
+                break;
+            }
+    }
+
+    console.log('Set active node', activeNode);
 
     // after the widget is shown, make it draggable
     makeWidgetDraggable();
 }
 
-// showing and hiding kori edit content menu
-function toggleEdit(isOpen) {
-    var edit = document.getElementById("kori-edit");
-    var widgetActions = document.getElementById("kori-widget__actions");
-
-    if (!edit.classList.contains("show") && isOpen == true) {
-        widgetActions.classList.remove("show");
-        edit.classList.add("show");
-        widgetActions.classList.remove("show");
+function edit() {
+    if (!activeNode) {
+        console.log('Unable to edit element', activeNode);
+        return;
     }
 
-    if (edit.classList.contains("show") && isOpen == false) {
-        edit.classList.remove("show");
-        widgetActions.classList.add("show");
-    }
+    console.log('editing', activeNode.parentElement);
+
+    activeNode.parentElement.classList.add('kori-ignore');
+    activeNode.parentElement.contentEditable = "true";
+    activeNode.parentElement.focus();
 }
 
 // show and hide translation menu
@@ -432,4 +431,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit };

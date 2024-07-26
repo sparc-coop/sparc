@@ -10,6 +10,7 @@
 @inject NavigationManager Nav
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
     string _id = $"kori-{Guid.NewGuid()}";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

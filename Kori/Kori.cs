@@ -14,6 +14,8 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public static Uri BaseUri { get; set; } = new("https://localhost");
     public string RoomSlug { get; set; } = "";
     public string Language { get; set; } = "en";
+    public string Mode { get; set; } = "";
+
     Dictionary<string, KoriTextContent> _content { get; set; } = [];
     private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis-web-kori.azurewebsites.net/") };
 
@@ -56,6 +58,24 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         // Replace nodes with their translation
         nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? value.Text : x).ToList();
         return nodes;
+    }
+
+    public async Task EditAsync()
+    {
+        Mode = "Edit";
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("edit");
+    }
+
+    public Task CancelAsync()
+    {
+        Mode = "";
+        return Task.CompletedTask;
+    }
+
+    public async Task SaveAsync()
+    {
+
     }
 
     public async Task PlayAsync(KoriTextContent content)

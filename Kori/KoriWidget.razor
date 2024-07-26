@@ -1,52 +1,58 @@
-﻿<div id="kori-widget" class="kori-widget kori-ignore">
-    <div id="kori-widget__actions" class="kori-widget__actions kori-buddy__enabled">
-        <img class="kori-buddy" src="/_content/Kori/images/kori-buddy.svg" />
-        <div class="kori-widget__content">
-            <div class="kori-widget__header">
-                <h5>How can I help you?</h5>
-                <div>
-                    <button class="kori__btn-text">Edit</button>
-                    <button class="kori__btn-text">Review</button>
-                    <button id="dockButton" class="kori__btn-text" title="Dock">
-                        <img class="dock-icon" src="/_content/Kori/images/dock-icon.svg" alt="Dock/Undock" />
-                    </button>
+﻿@using Microsoft.JSInterop
+<div id="kori-widget" class="kori-widget kori-ignore">
+    @if (Kori.Mode == "")
+    {
+        <div id="kori-widget__actions" class="kori-widget__actions kori-buddy__enabled">
+            <img class="kori-buddy" src="/_content/Kori/images/kori-buddy.svg" />
+            <div class="kori-widget__content">
+                <div class="kori-widget__header">
+                    <h5>How can I help you?</h5>
+                    <div>
+                        <button class="kori__btn-text">Edit</button>
+                        <button class="kori__btn-text">Review</button>
+                        <button id="dockButton" class="kori__btn-text" title="Dock">
+                            <img class="dock-icon" src="/_content/Kori/images/dock-icon.svg" alt="Dock/Undock" />
+                        </button>
+                    </div>
+                </div>
+                <div class="kori-widget__options">
+                    <button class="options__edit kori__btn" @onclick=Kori.EditAsync>Edit Content</button>
+                    <button class="options__translation kori__btn">Translation</button>
+                    <button class="options__ab kori__btn">A/B Testing</button>
+                    <button class="options__search kori__btn">Search</button>
                 </div>
             </div>
-            <div class="kori-widget__options">
-                <button class="options__edit kori__btn">Edit Content</button>
-                <button class="options__translation kori__btn">Translation</button>
-                <button class="options__ab kori__btn">A/B Testing</button>
-                <button class="options__search kori__btn">Search</button>
+        </div>
+    }
+    else if (Kori.Mode == "Edit")
+    {
+        <div id="kori-edit" class="kori-edit">
+            <div class="kori-edit__content">
+                <div class="kori-edit__back">
+                    <button id="kori-edit__back" class="kori__btn-text" @onclick="Kori.CancelAsync">&lt; Back to edit</button>
+                </div>
+                <div class="kori-edit__header">
+                    <h5>Edit your content.</h5>
+                </div>
+                <div class="kori-edit__options">
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Bold.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Italic.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Strikethrough.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Union.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Code.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Quote.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Numbered.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Bullet.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Attachment.svg" /></button>
+                    <button class="kori__btn-icon"><img src="/_content/Kori/icons/Link.svg" /></button>
+                </div>
+                <div class="kori-edit__actions">
+                    <button class="kori-edit__cancel kori__btn" @onclick="Kori.CancelAsync">Cancel</button>
+                    <button class="kori-edit__save kori__btn-primary" @onclick="Kori.SaveAsync">Save</button>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div id="kori-edit" class="kori-edit">
-        <div class="kori-edit__content">
-            <div class="kori-edit__back">
-                <button id="kori-edit__back" class="kori__btn-text">&lt; Back to edit</button>
-            </div>
-            <div class="kori-edit__header">
-                <h5>Edit your content.</h5>
-            </div>
-            <div class="kori-edit__options">
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Bold.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Italic.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Strikethrough.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Union.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Code.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Quote.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Numbered.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Bullet.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Attachment.svg" /></button>
-                <button class="kori__btn-icon"><img src="/_content/Kori/icons/Link.svg" /></button>
-            </div>
-            <div class="kori-edit__actions">
-                <button class="kori-edit__cancel kori__btn">Cancel</button>
-                <button class="kori-edit__save kori__btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
+    }
 
     <div id="kori-translation" class="kori-translation">
         <div class="kori-translation__content">
@@ -129,3 +135,5 @@
         </div>
     </div>
 </div>
+
+@inject Kori Kori
