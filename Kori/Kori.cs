@@ -67,10 +67,11 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("edit");
     }
 
-    public Task CancelAsync()
+    public async Task CancelAsync()
     {
         Mode = "";
-        return Task.CompletedTask;
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("cancelEdit");
     }
 
     public async Task SaveAsync()
@@ -157,5 +158,15 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         {
             return default;
         }
+    }
+
+    public void OpenTranslationMenu()
+    {
+        Mode = "Translate";
+    }
+
+    public void OpenSearchMenu()
+    {
+        Mode = "Search";
     }
 }

@@ -20,6 +20,16 @@
     z-index: 1000;
     transition: 200ms ease-in-out;
 
+    & > * {
+        top: 50% !important;
+        left: 25px;
+        transform: translateY(-50%) !important;
+    }
+
+    .kori-edit, .kori-translation, .kori-search {
+        right: -322px;
+    }
+
     &.show, .show {
         display: block !important;
     }
@@ -76,8 +86,8 @@
     }
 
     &__actions {
-        display: none;
-        flex-direction: row;
+        display: flex !important;
+        flex-direction: row !important;
         justify-content: center;
         gap: 20px;
         position: absolute;
@@ -139,14 +149,9 @@
 
     .kori-edit {
         @extend .kori__border_black-15-16;
-        //display: none;
         width: 298px;
         padding: 12px;
         position: absolute;
-        top: 50%;
-        /*right: -322px;*/
-        left: 25px;
-        transform: translatey(-50%);
         background: var(--white);
         text-align: left;
 
@@ -199,13 +204,9 @@
 
     .kori-translation {
         @extend .kori__border_black-15-16;
-        display: none;
         width: 298px;
         padding: 12px;
         position: absolute;
-        top: 50%;
-        right: -322px;
-        transform: translateY(-50%);
         background: var(--white);
         text-align: left;
 
@@ -289,13 +290,9 @@
 
     .kori-search {
         @extend .kori__border_black-15-16;
-        display: none;
         width: 298px;
         padding: 12px;
         position: absolute;
-        top: 50%;
-        right: -322px;
-        transform: translateY(-50%);
         background: var(--white);
         text-align: left;
 

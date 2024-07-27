@@ -188,21 +188,21 @@ function mouseClickHandler(e) {
 
     if (koriAuthorized) {
         // click kori widget
-        if (t.closest(".kori-widget")) {
-            if (t.closest('.options__translation')) {
-                toggleTranslation(true);
-                return;
-            } else if (t.closest('.kori-translation__back')) {
-                toggleTranslation(false);
-            } else if (t.closest('.options__search')) {
-                toggleSearch(true);
-                return;
-            } else if (t.closest('.kori-search__back')) {
-                toggleSearch(false);
-            } else {
-                return;
-            }
-        }
+        //if (t.closest(".kori-widget")) {
+        //    if (t.closest('.options__translation')) {
+        //        toggleTranslation(true);
+        //        return;
+        //    } else if (t.closest('.kori-translation__back')) {
+        //        toggleTranslation(false);
+        //    } else if (t.closest('.options__search')) {
+        //        toggleSearch(true);
+        //        return;
+        //    } else if (t.closest('.kori-search__back')) {
+        //        toggleSearch(false);
+        //    } else {
+        //        return;
+        //    }
+        //}
 
         // click kori enabled elements
         toggleSelected(t);
@@ -239,14 +239,14 @@ function toggleSelected(t) {
 // showing and hiding kori widget
 function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
-    var widgetActions = document.getElementById("kori-widget__actions");
+    //var widgetActions = document.getElementById("kori-widget__actions");
 
     resetWidgetPosition();
 
     t.appendChild(widget);
 
     widget.classList.add("show");
-    widgetActions.classList.add("show");
+    //widgetActions.classList.add("show");
 
     // search for matching node in translation cache
     for (let key in translationCache) {
@@ -274,7 +274,27 @@ function edit() {
     activeNode.parentElement.classList.add('kori-ignore');
     activeNode.parentElement.contentEditable = "true";
     activeNode.parentElement.focus();
+    document.getElementById("kori-widget").contentEditable = "false";
+
+    //generateMarkdownEditor(activeNode.parentElement);
 }
+
+function cancelEdit() {
+    console.log("cancelling edit");
+    activeNode.parentElement.contentEditable = "false";
+    toggleWidget(activeNode.parentElement);
+}
+
+//function generateMarkdownEditor(koriElem) {
+//    console.log(koriElem);
+//    console.log(koriElem.textContent);
+//    simplemde = new SimpleMDE();
+//    simplemde.value(html.textContent);
+
+//    var parentElem = koriElem.parentElement;
+//    parentElem.appendChild(simplemde);
+//    parentElemn.remove(koriElem);
+//}
 
 // show and hide translation menu
 function toggleTranslation(isOpen) {
@@ -431,4 +451,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit };
