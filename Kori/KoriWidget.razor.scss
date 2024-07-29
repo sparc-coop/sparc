@@ -102,6 +102,10 @@
                 display: flex;
                 gap: 8px;
             }
+
+            h5 {
+                color: var(--grey-900);
+            }
         }
 
         .kori-widget__options {

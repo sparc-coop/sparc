@@ -87,6 +87,9 @@
   display: flex;
   gap: 8px;
 }
+.kori-widget__actions .kori-widget__header h5 {
+  color: var(--grey-900);
+}
 .kori-widget__actions .kori-widget__options {
   display: flex;
   flex-direction: column;
