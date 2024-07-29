@@ -46,9 +46,11 @@
 .kori-widget.docked .kori-widget__actions {
   top: 0;
   transform: translateY(0);
+  width: 300px;
 }
 .kori-widget.docked .kori-widget__content {
   border: none;
+  border-radius: 0;
 }
 .kori-widget.docked .kori-edit {
   border: none;
