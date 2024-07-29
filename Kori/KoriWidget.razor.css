@@ -54,9 +54,11 @@
 .kori-widget.docked .kori-widget__actions {
   top: 0;
   transform: translateY(0);
+  width: 300px;
 }
 .kori-widget.docked .kori-widget__content {
   border: none;
+  border-radius: 0;
 }
 .kori-widget.docked .kori-edit {
   border: none;
@@ -94,6 +96,9 @@
 .kori-widget__actions .kori-widget__header div {
   display: flex;
   gap: 8px;
+}
+.kori-widget__actions .kori-widget__header h5 {
+  color: var(--grey-900);
 }
 .kori-widget__actions .kori-widget__options {
   display: flex;

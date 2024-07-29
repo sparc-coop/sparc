@@ -16,4 +16,5 @@
 }
 ::deep .kori-enabled.selected {
   background: white;
+  color: var(--grey-900);
 }

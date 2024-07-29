@@ -18,5 +18,6 @@
     &.selected {
         @extend .kori__border_orange-15-16;
         background: white;
+        color: var(--grey-900);
     }
 }

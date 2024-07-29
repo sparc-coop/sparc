@@ -4,6 +4,7 @@
   top: 0;
   right: 24px;
   animation: login_fadeIn 1000ms linear;
+  z-index: 1000;
 }
 .kori-login.show {
   display: flex;
@@ -21,6 +22,7 @@
   font-family: "Love Ya Like A Sister" !important;
   font-size: 14px;
   color: var(--grey-900);
+  font-weight: 400;
 }
 .kori-login__header {
   margin-bottom: 12px;
