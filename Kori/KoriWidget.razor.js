@@ -64,6 +64,7 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
 }
 
 function initElement(targetElementId) {
+    console.log("Initializing element");
     app = document.getElementById(targetElementId);
     registerTextNodesUnder(app);
     translateNodes();
@@ -75,18 +76,19 @@ function initElement(targetElementId) {
 }
 
 function observeCallback(mutations) {
+    console.log("Observe callback");
     mutations.forEach(function (mutation) {
-        if (mutation.target.classList?.contains('kori-ignore') || mutation.parentElement?.closest('kori-ignore'))
+        if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
 
         if (mutation.type == 'characterData') {
             registerTextNode(mutation.target);
+            translateNodes();
         }
         else
             mutation.addedNodes.forEach(registerTextNodesUnder);
-    });
-
-    translateNodes();
+            translateNodes();
+        });
 }
 
 function registerTextNodesUnder(el) {
