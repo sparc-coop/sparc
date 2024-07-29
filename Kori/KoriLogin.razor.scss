@@ -4,6 +4,7 @@
     top: 0;
     right: 24px;
     animation: login_fadeIn 1000ms linear;
+    z-index: 1000;
 
     &.show {
         display: flex;
