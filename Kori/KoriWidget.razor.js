@@ -42,7 +42,7 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
         }
     }
 
-    console.log('Kori translation cache initialized from Ibis, ' + Object.keys(translationCache).length + ' items.');
+    console.log('Kori translation cache initialized from Ibis, ', translationCache);
 
     if (/complete|interactive|loaded/.test(document.readyState)) {
         initElement(targetElementId);
@@ -78,7 +78,7 @@ function initElement(targetElementId) {
 function observeCallback(mutations) {
     console.log("Observe callback");
     mutations.forEach(function (mutation) {
-        if (mutation.target.closest('kori-ignore'))
+        if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
 
         if (mutation.type == 'characterData')
@@ -127,7 +127,7 @@ function translateNodes() {
     }
 
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
-        console.log('Received new translations from Ibis.');
+        console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
             translationCache[contentToTranslate[i]].Translation = translations[i];
         }
@@ -297,7 +297,6 @@ function save() {
 
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('kori-ignore');
-        activeNode = null;
 
         replaceWithTranslatedText();
     });
@@ -469,4 +468,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save };

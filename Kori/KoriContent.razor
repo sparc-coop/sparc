@@ -35,6 +35,8 @@
     [JSInvokable]
     public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
-        return await Kori.SaveAsync(key, text);
+        var result = await Kori.SaveAsync(key, text);
+        StateHasChanged();
+        return result;
     }
 }

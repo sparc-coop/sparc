@@ -44,8 +44,6 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         var js = await KoriJs.Value;
 
         var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
-        if (nodesToTranslate.Count == 0)
-            return nodes;
 
         var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
         var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
@@ -74,10 +72,17 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("cancelEdit");
     }
 
+    public async Task BeginSaveAsync()
+    {
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("save");
+    }
+
     public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
         var request = new { RoomSlug, Language, Tag = key, Text = text };
         var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
+        await CancelAsync();
         return result;
     }
 
