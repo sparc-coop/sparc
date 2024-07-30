@@ -7,7 +7,7 @@ var koriAuthorized = false;
 var initialPosition = { left: 25 };
 let widget = {};
 let widgetActions = {};
-let activeNode = null;
+let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
 
@@ -78,17 +78,16 @@ function initElement(targetElementId) {
 function observeCallback(mutations) {
     console.log("Observe callback");
     mutations.forEach(function (mutation) {
-        if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.closest('kori-ignore'))
+        if (mutation.target.closest('kori-ignore'))
             return;
 
-        if (mutation.type == 'characterData') {
+        if (mutation.type == 'characterData')
             registerTextNode(mutation.target);
-            translateNodes();
-        }
         else
             mutation.addedNodes.forEach(registerTextNodesUnder);
-            translateNodes();
-        });
+
+        translateNodes();
+    });
 }
 
 function registerTextNodesUnder(el) {
@@ -255,6 +254,7 @@ function toggleWidget(t) {
         for (var i = 0; i < translationCache[key].Nodes.length; i++)
             if (t.contains(translationCache[key].Nodes[i])) {
                 activeNode = translationCache[key].Nodes[i];
+                activeMessageId = key;
                 break;
             }
     }
@@ -285,6 +285,22 @@ function cancelEdit() {
     console.log("cancelling edit");
     activeNode.parentElement.contentEditable = "false";
     toggleWidget(activeNode.parentElement);
+}
+
+function save() {
+    if (!activeNode)
+        return;
+
+    dotNet.invokeMethodAsync("SaveAsync", activeMessageId, activeNode.textContent).then(content => {
+        console.log('Saved new content to Ibis.');
+        translationCache[activeMessageId].Translation = content.Text;
+
+        activeNode.parentElement.contentEditable = "false";
+        activeNode.parentElement.classList.remove('kori-ignore');
+        activeNode = null;
+
+        replaceWithTranslatedText();
+    });
 }
 
 //function generateMarkdownEditor(koriElem) {
