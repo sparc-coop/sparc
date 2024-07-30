@@ -28,4 +28,10 @@
     {
         return await Kori.TranslateAsync(content);
     }
+
+    [JSInvokable]
+    public async Task<KoriTextContent> SaveAsync(string key, string text)
+    {
+        return await Kori.SaveAsync(key, text);
+    }
 }

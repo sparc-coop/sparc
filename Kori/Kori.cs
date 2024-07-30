@@ -73,9 +73,11 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         return Task.CompletedTask;
     }
 
-    public async Task SaveAsync()
+    public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
-
+        var request = new { RoomSlug, Language, Tag = key, Text = text };
+        var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
+        return result;
     }
 
     public async Task PlayAsync(KoriTextContent content)
