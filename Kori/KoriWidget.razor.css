@@ -76,6 +76,9 @@
 .kori-widget__actions.show {
   display: flex !important;
 }
+.kori-widget__actions .kori-buddy {
+  height: initial;
+}
 .kori-widget__actions .kori-widget__content {
   width: 300px;
   padding: 12px;

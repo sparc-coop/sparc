@@ -89,6 +89,10 @@
             display: flex !important;
         }
 
+        .kori-buddy {
+            height: initial;
+        } 
+        
         .kori-widget__content {
             @extend .kori__border_black-15-16;
             width: 300px;
