@@ -108,6 +108,10 @@
 
             h5 {
                 color: var(--grey-900);
+                margin-top: 0;
+                margin-bottom: 0;
+                align-items: center;
+                display: flex;
             }
         }
 
@@ -434,7 +438,7 @@
 
 .kori__border_black-15-16 {
     border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
-    border-image-outset: 4px;
+    border-image-outset: 2px;
     border-radius: 16px;
     border-image-width: 15px;
 }
