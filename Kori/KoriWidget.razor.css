@@ -17,6 +17,7 @@
   right: 0;
   z-index: 1000;
   transition: 200ms ease-in-out;
+  -webkit-text-stroke: initial;
 }
 .kori-widget.show, .kori-widget .show {
   display: block !important;
