@@ -15,7 +15,7 @@ let koriIgnoreFilter = function (node) {
         return NodeFilter.FILTER_SKIP;
 
     if (!node.textContent.trim())
-        return NodeFilter.FILTER_SKIP;
+        return NodeFilter.FILTER_SKIP;    
 
     var closest = node.parentElement.closest('.kori-ignore');
     if (closest)
@@ -149,7 +149,30 @@ function replaceWithTranslatedText() {
                 node.koriTranslated = language;
             }
             node.parentElement?.classList.remove('kori-initializing');
-            node.parentElement?.classList.add('kori-enabled');
+            //node.parentElement?.classList.add('kori-enabled');
+
+            // Checks if the parent element has the class 'kori-ignore'
+            let parentNode = node.parentElement;
+            let shouldIgnore = false;
+
+            while (parentNode) {
+                if (parentNode.classList && parentNode.classList.contains('kori-ignore')) {
+                    shouldIgnore = true;
+                    break;
+                }
+                parentNode = parentNode.parentElement;
+            }
+
+            if (!shouldIgnore) {
+                // Temporarily remove the 'kori-ignore' class from the widget
+                if (node.parentElement.closest('.kori-ignore')) {
+                    node.parentElement.closest('.kori-ignore').classList.remove('kori-ignore');
+                    node.parentElement?.classList.add('kori-enabled');
+                    node.parentElement.closest('.kori-ignore').classList.add('kori-ignore');
+                } else {
+                    node.parentElement?.classList.add('kori-enabled');
+                }
+            }
         }
     }
 
@@ -244,7 +267,7 @@ function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
     var widgetActions = document.getElementById("kori-widget__actions");
 
-    resetWidgetPosition();
+    resetWidgetPosition();    
 
     t.appendChild(widget);
 
@@ -379,17 +402,22 @@ function makeWidgetDraggable() {
         document.onmouseup = null;
         document.onmousemove = null;
 
+        console.log('closeDragElement before remove class widget.classList: ' + widget.classList);
+
         // remove 'no-transition' class when stopping dragging
         widget.classList.remove("no-transition");
+
+        console.log('closeDragElement after remove class widget.classList: ' + widget.classList);
     }
 }
 
 // reset widget position to initial position
 function resetWidgetPosition() {
+    console.log('resetWidgetPosition widget.classList: ' + widget.classList);
     // do not reset position if widget is docked
     if (widget.classList.contains("docked")) {
         return;
-    }
+    }   
 
     widgetActions.style.left = initialPosition.left + 'px';
     widgetActions.style.top = '';
@@ -399,6 +427,8 @@ function resetWidgetPosition() {
 function toggleDock() {
     var dockButton = document.getElementById("dockButton");
     var dockIcon = dockButton.querySelector("img");
+
+    console.log('toggleDock widget.classList: ' + widget.classList);
 
     if (!widget.classList.contains("docked")) {
         widget.classList.add("docked");
