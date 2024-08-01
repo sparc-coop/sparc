@@ -17,6 +17,7 @@
   right: 0;
   z-index: 1000;
   transition: 200ms ease-in-out;
+  -webkit-text-stroke: initial;
 }
 .kori-widget > * {
   top: 50% !important;
@@ -83,6 +84,9 @@
 .kori-widget__actions.show {
   display: flex !important;
 }
+.kori-widget__actions .kori-buddy {
+  height: initial;
+}
 .kori-widget__actions .kori-widget__content {
   width: 300px;
   padding: 12px;
@@ -99,6 +103,10 @@
 }
 .kori-widget__actions .kori-widget__header h5 {
   color: var(--grey-900);
+  margin-top: 0;
+  margin-bottom: 0;
+  align-items: center;
+  display: flex;
 }
 .kori-widget__actions .kori-widget__options {
   display: flex;
@@ -358,7 +366,7 @@
 
 .kori__border_black-15-16, .kori-widget__actions .kori-widget__content, .kori-widget .kori-edit, .kori-widget .kori-translation, .kori-widget .kori-search {
   border-image: url("/_content/Kori/borders/black-16.svg") 15 round;
-  border-image-outset: 4px;
+  border-image-outset: 2px;
   border-radius: 16px;
   border-image-width: 15px;
 }

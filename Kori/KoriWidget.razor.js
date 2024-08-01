@@ -393,11 +393,13 @@ function makeWidgetDraggable() {
         var widgetWidth = widgetActions.offsetWidth;
         var widgetHeight = widgetActions.offsetHeight;
 
+        const topBarHeight = 110; 
+
         // calculate max and min positions
         var maxLeft = viewportWidth - (parentRect.left + widgetWidth);
         var maxTop = viewportHeight - (parentRect.top + (widgetHeight / 2));
         var minLeft = -parentRect.left;
-        var minTop = -parentRect.top;
+        var minTop = -parentRect.top + topBarHeight;
 
         // constrain the widget within the viewport, considering parent element bounds
         newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
