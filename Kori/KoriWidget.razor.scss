@@ -101,8 +101,8 @@
 
         .kori-buddy {
             height: initial;
-        } 
-        
+        }
+
         .kori-widget__content {
             @extend .kori__border_black-15-16;
             width: 300px;
@@ -160,203 +160,202 @@
                 }*/
             }
         }
-    }
 
-    .kori-edit {
-        @extend .kori__border_black-15-16;
-        width: 298px;
-        padding: 12px;
-        position: absolute;
-        background: var(--white);
-        text-align: left;
 
-        &__back {
-            margin-bottom: 11px;
-            font-size: 14px;
-            line-height: 0;
-        }
+        .kori-edit {
+            @extend .kori__border_black-15-16;
+            width: 300px;
+            padding: 12px;
+            /*position: absolute;*/
+            background: var(--white);
+            text-align: left;
 
-        &__options {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 30px 0;
+            &__back {
+                margin-bottom: 11px;
+                font-size: 14px;
+                line-height: 0;
+            }
 
-            button {
+            &__options {
                 display: flex;
-                height: 32px;
-                width: 32px;
-                padding: 4px;
-                justify-content: center;
-                align-items: center;
-                background: none;
-                border: 1px solid var(--grey-200);
-                border-radius: 8px;
-                transition: 200ms ease-in-out;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin: 30px 0;
 
-                img {
-                    max-width: 18px;
-                    max-height: 18px;
-                    margin: auto 0;
+                button {
+                    display: flex;
+                    height: 32px;
+                    width: 32px;
+                    padding: 4px;
+                    justify-content: center;
+                    align-items: center;
+                    background: none;
+                    border: 1px solid var(--grey-200);
+                    border-radius: 8px;
+                    transition: 200ms ease-in-out;
+
+                    img {
+                        max-width: 18px;
+                        max-height: 18px;
+                        margin: auto 0;
+                    }
+                }
+            }
+
+            &__actions {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 11px;
+
+                button {
+                    width: 100%;
                 }
             }
         }
 
-        &__actions {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 11px;
+        .kori-translation {
+            @extend .kori__border_black-15-16;
+            width: 298px;
+            padding: 12px;
+            background: var(--white);
+            text-align: left;
 
-            button {
-                width: 100%;
-            }
-        }
-    }
-
-    .kori-translation {
-        @extend .kori__border_black-15-16;
-        width: 298px;
-        padding: 12px;
-        position: absolute;
-        background: var(--white);
-        text-align: left;
-
-        &__back {
-            margin-bottom: 11px;
-            font-size: 14px;
-            line-height: 0;
-        }
-
-        &__header {
-            display: flex;
-            justify-content: space-between;
-
-            h5 {
-                margin: auto 0;
-            }
-
-            &-actions {
-                display: flex;
-                flex-direction: row;
-                gap: 8px;
-            }
-
-            button {
-                @extend .kori__btn-icon;
-            }
-        }
-
-        &__options {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin: 30px 0;
-
-            select {
-                @extend .kori__border_black-10-8;
-                background: url('icons/Chevron down.svg') no-repeat right white;
-                font-family: 'Love Ya Like A Sister';
+            &__back {
+                margin-bottom: 11px;
                 font-size: 14px;
-                line-height: 100%;
+                line-height: 0;
+            }
 
-                option {
-                    background-color: var(--white);
+            &__header {
+                display: flex;
+                justify-content: space-between;
+
+                h5 {
+                    margin: auto 0;
+                }
+
+                &-actions {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 8px;
+                }
+
+                button {
+                    @extend .kori__btn-icon;
+                }
+            }
+
+            &__options {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin: 30px 0;
+
+                select {
+                    @extend .kori__border_black-10-8;
+                    background: url('icons/Chevron down.svg') no-repeat right white;
                     font-family: 'Love Ya Like A Sister';
                     font-size: 14px;
                     line-height: 100%;
 
-                    &:hover {
-                        background-color: var(--grey-200);
-                    }
+                    option {
+                        background-color: var(--white);
+                        font-family: 'Love Ya Like A Sister';
+                        font-size: 14px;
+                        line-height: 100%;
 
-                    &:checked {
-                        background-color: none;
+                        &:hover {
+                            background-color: var(--grey-200);
+                        }
+
+                        &:checked {
+                            background-color: none;
+                        }
                     }
+                }
+
+                .swap-translation {
+                    margin: 0 auto;
+                }
+
+                button {
+                    @extend .kori__btn-icon;
                 }
             }
 
-            .swap-translation {
-                margin: 0 auto;
-            }
-
-            button {
-                @extend .kori__btn-icon;
-            }
-        }
-
-        &__actions {
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 11px;
-
-            button {
+            &__actions {
                 width: 100%;
-            }
-        }
-    }
-
-    .kori-search {
-        @extend .kori__border_black-15-16;
-        width: 298px;
-        padding: 12px;
-        position: absolute;
-        background: var(--white);
-        text-align: left;
-
-        &__back {
-            margin-bottom: 11px;
-            font-size: 14px;
-            line-height: 0;
-        }
-
-        &__header {
-            margin-bottom: 24px;
-
-            h5 {
-                margin-bottom: 8px;
-            }
-
-            .kori-search__searchbar {
-                @extend .kori__border_black-10-8;
                 display: flex;
                 flex-direction: row;
-                gap: 8px;
+                justify-content: center;
+                gap: 11px;
 
-                input {
-                    padding: 4px;
-                    border: none;
+                button {
+                    width: 100%;
                 }
             }
         }
 
-        &__list {
-            width: 100%;
-            padding: 0 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .kori-search {
+            @extend .kori__border_black-15-16;
+            width: 298px;
+            padding: 12px;
+            background: var(--white);
+            text-align: left;
 
-            .kori__content-container {
+            &__back {
+                margin-bottom: 11px;
+                font-size: 14px;
+                line-height: 0;
+            }
+
+            &__header {
+                margin-bottom: 24px;
+
+                h5 {
+                    margin-bottom: 8px;
+                }
+
+                .kori-search__searchbar {
+                    @extend .kori__border_black-10-8;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 8px;
+
+                    input {
+                        padding: 4px;
+                        border: none;
+                    }
+                }
+            }
+
+            &__list {
+                width: 100%;
+                padding: 0 24px;
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
 
-                .kori__content-page {
+                .kori__content-container {
                     display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 8px;
-                    font-family: 'Love Ya Like A Sister';
-                    font-size: 14px;
-                    line-height: 100%;
+                    flex-direction: column;
+                    gap: 16px;
+
+                    .kori__content-page, .kori__content-item {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 8px;
+                        font-family: 'Love Ya Like A Sister';
+                        font-size: 14px;
+                        line-height: 100%;
+                    }
                 }
             }
         }
