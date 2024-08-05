@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Markdig;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
@@ -62,8 +66,27 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     {
         Mode = "Edit";
         var js = await KoriJs.Value;
-        await js.InvokeVoidAsync("edit");
+        //await js.InvokeVoidAsync("edit");
+        await js.InvokeVoidAsync("editMarkdown");
     }
+
+    public async Task EditMarkdownAsync(string key, string text)
+    {
+        Mode = "Edit";
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("editMarkdown");
+    }
+
+    //public async Task<string> GenerateMarkdown(string markdown)
+    //{
+    //    var js = await KoriJs.Value;
+    //    return await editor.SetParametersAsync("markdownValue", markdown);
+
+    //    var request = new { RoomSlug, Language, Tag = key, Text = text };
+    //    var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
+    //    await CancelAsync();
+    //    return result;
+    //}
 
     public async Task CancelAsync()
     {

@@ -5,9 +5,9 @@
 
 <Kori.KoriLogin />
 <Kori.KoriWidget />
+<MarkdownEditorComponent markdownValue="@markdownValue" />
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+@* <textarea id="kori-markdown" class="kori__markdown-editor" style="display: none;"></textarea> *@
 
 @inject Kori Kori
 @inject NavigationManager Nav
@@ -15,6 +15,8 @@
     [Parameter] public RenderFragment? ChildContent { get; set; }
 
     string _id = $"kori-{Guid.NewGuid()}";
+
+    string markdownValue = "";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -38,5 +40,19 @@
         var result = await Kori.SaveAsync(key, text);
         StateHasChanged();
         return result;
+    }
+
+    // [JSInvokable]
+    // public async Task<KoriTextContent> EditMarkdownAsync(string key, string text)
+    // {
+    //     var result = await Kori.EditMarkdownAsync(key, text);
+    //     StateHasChanged();
+    //     return result
+
+    [JSInvokable]
+    public string GenerateMarkdownAsync(string markdown)
+    {
+        markdownValue = markdown;
+        return markdownValue;
     }
 }

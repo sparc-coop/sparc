@@ -1,6 +1,6 @@
 @page "/MarkdownEditor"
 
-<div class="MarkdownEditorComponent">
+<div id="kori-markdown" class="MarkdownEditorComponent" style="display: none;">
     <MarkdownEditor @bind-Value="@markdownValue" ValueHTMLChanged="@OnMarkdownValueHTMLChanged" />
 
     <hr />
@@ -11,7 +11,8 @@
 </div>
 
 @code {
-    string markdownValue = "#Markdown Editor\nThis is a test";
+    [Parameter] public string markdownValue { get; set; }
+    // string markdownValue = "#Markdown Editor\nThis is a test";
     string markdownHtml;
 
     protected override void OnInitialized()

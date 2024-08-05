@@ -10,7 +10,6 @@ let widgetActions = {};
 let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-
 let koriIgnoreFilter = function (node) {
     if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
         return NodeFilter.FILTER_SKIP;
@@ -277,14 +276,56 @@ function edit() {
     activeNode.parentElement.contentEditable = "true";
     activeNode.parentElement.focus();
     document.getElementById("kori-widget").contentEditable = "false";
-
-    //generateMarkdownEditor(activeNode.parentElement);
 }
 
 function cancelEdit() {
     console.log("cancelling edit");
     activeNode.parentElement.contentEditable = "false";
     toggleWidget(activeNode.parentElement);
+}
+
+// open markdown editor with content text
+// will try to use blazor.web.js to add markdown editor blazor component in js
+
+function editMarkdown() {
+    if (!activeNode) {
+        console.log('Unable to edit element', activeNode);
+        return;
+    }
+
+    var parentElem = activeNode.parentElement;
+    var textarea = document.getElementById("kori-markdown");
+    var simpleMde = new SimpleMDE({ element: textarea });
+    console.log(activeNode.textContent);
+    //simpleMde.value(activeNode.textContent);
+    simpleMde.value("this is a test");
+    var mde = simpleMde.element;
+
+    parentElem.classList.add('kori-ignore');
+    parentElem.contentEditable = "true";
+    //document.getElementById("kori-widget").contentEditable = "false";
+
+    parentElem.appendChild(mde);
+    mde.style.display = "block";
+}
+
+function generateMarkdown() {
+    if (!activeNode) {
+        console.log('Unable to edit element', activeNode);
+        return;
+    }
+
+    var parentElem = activeNode.parentElement;
+    var markdown = turndownService.turndown(parentElem);
+    console.log(markdown);
+
+    dotNet.invokeMethodAsync("GenerateMarkdown", markdown).then(content => {
+        parentElem.style.display = "none";
+    });
+
+    // possible solutions...
+    // move .kori-markdown to parent element, hide all other children
+    // temporarily replace parent element with the .kori-markdown while in edit mode
 }
 
 function save() {
@@ -301,17 +342,6 @@ function save() {
         replaceWithTranslatedText();
     });
 }
-
-//function generateMarkdownEditor(koriElem) {
-//    console.log(koriElem);
-//    console.log(koriElem.textContent);
-//    simplemde = new SimpleMDE();
-//    simplemde.value(html.textContent);
-
-//    var parentElem = koriElem.parentElement;
-//    parentElem.appendChild(simplemde);
-//    parentElemn.remove(koriElem);
-//}
 
 // show and hide translation menu
 function toggleTranslation(isOpen) {
@@ -468,4 +498,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, editMarkdown, generateMarkdown};
