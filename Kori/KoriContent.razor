@@ -5,7 +5,8 @@
 
 <Kori.KoriLogin />
 <Kori.KoriWidget />
-<MarkdownEditorComponent markdownValue="@markdownValue" />
+@if(markdownValue != null) <MarkdownEditorComponent markdownValue="@markdownValue" />
+
 
 @* <textarea id="kori-markdown" class="kori__markdown-editor" style="display: none;"></textarea> *@
 
@@ -50,7 +51,7 @@
     //     return result
 
     [JSInvokable]
-    public string GenerateMarkdownAsync(string markdown)
+    public string GenerateMarkdown(string markdown)
     {
         markdownValue = markdown;
         return markdownValue;

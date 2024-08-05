@@ -287,27 +287,27 @@ function cancelEdit() {
 // open markdown editor with content text
 // will try to use blazor.web.js to add markdown editor blazor component in js
 
-function editMarkdown() {
-    if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
-        return;
-    }
+//function editMarkdown() {
+//    if (!activeNode) {
+//        console.log('Unable to edit element', activeNode);
+//        return;
+//    }
 
-    var parentElem = activeNode.parentElement;
-    var textarea = document.getElementById("kori-markdown");
-    var simpleMde = new SimpleMDE({ element: textarea });
-    console.log(activeNode.textContent);
-    //simpleMde.value(activeNode.textContent);
-    simpleMde.value("this is a test");
-    var mde = simpleMde.element;
+//    var parentElem = activeNode.parentElement;
+//    var textarea = document.getElementById("kori-markdown");
+//    var simpleMde = new SimpleMDE({ element: textarea });
+//    console.log(activeNode.textContent);
+//    //simpleMde.value(activeNode.textContent);
+//    simpleMde.value("this is a test");
+//    var mde = simpleMde.element;
 
-    parentElem.classList.add('kori-ignore');
-    parentElem.contentEditable = "true";
-    //document.getElementById("kori-widget").contentEditable = "false";
+//    parentElem.classList.add('kori-ignore');
+//    parentElem.contentEditable = "true";
+//    //document.getElementById("kori-widget").contentEditable = "false";
 
-    parentElem.appendChild(mde);
-    mde.style.display = "block";
-}
+//    parentElem.appendChild(mde);
+//    mde.style.display = "block";
+//}
 
 function generateMarkdown() {
     if (!activeNode) {
@@ -316,11 +316,15 @@ function generateMarkdown() {
     }
 
     var parentElem = activeNode.parentElement;
+    var turndownService = new TurndownService();
     var markdown = turndownService.turndown(parentElem);
     console.log(markdown);
+    var koriMarkdown = document.getElementById("kori-markdown");
 
     dotNet.invokeMethodAsync("GenerateMarkdown", markdown).then(content => {
-        parentElem.style.display = "none";
+        //parentElem.style.display = "none";
+        parentElem.append(koriMarkdown);
+        koriMarkdown.style.display = "block";
     });
 
     // possible solutions...
@@ -498,4 +502,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, editMarkdown, generateMarkdown};
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, generateMarkdown};

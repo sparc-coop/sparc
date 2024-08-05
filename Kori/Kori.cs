@@ -67,14 +67,16 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         Mode = "Edit";
         var js = await KoriJs.Value;
         //await js.InvokeVoidAsync("edit");
-        await js.InvokeVoidAsync("editMarkdown");
+        //await js.InvokeVoidAsync("editMarkdown");
+        await js.InvokeVoidAsync("generateMarkdown");
     }
 
     public async Task EditMarkdownAsync(string key, string text)
     {
         Mode = "Edit";
         var js = await KoriJs.Value;
-        await js.InvokeVoidAsync("editMarkdown");
+        //await js.InvokeVoidAsync("editMarkdown");
+        await js.InvokeVoidAsync("generateMarkdown");
     }
 
     //public async Task<string> GenerateMarkdown(string markdown)
