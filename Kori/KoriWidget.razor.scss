@@ -20,16 +20,14 @@
     z-index: 1000;
     transition: 200ms ease-in-out;
     -webkit-text-stroke: initial;
-
-    & > * {
+    /*& > * {
         top: 50% !important;
         left: 25px;
         transform: translateY(-50%) !important;
-    }
-
-    .kori-edit, .kori-translation, .kori-search {
+    }*/
+    /*.kori-edit, .kori-translation, .kori-search {
         right: -322px;
-    }
+    }*/
 
     &.show, .show {
         display: block !important;
@@ -67,12 +65,15 @@
             width: 300px;
         }
 
-        .kori-widget__content {
+        .kori-widget__content,
+        .kori-edit,
+        .kori-translation,
+        .kori-search {
             border: none;
             border-radius: 0;
         }
 
-        .kori-edit {
+        .kori-edit, .kori-translation, .kori-search {
             border: none;
             top: 0;
             transform: translateY(0);
@@ -94,6 +95,8 @@
         justify-content: center;
         gap: 20px;
         position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
 
         &.show {
             display: flex !important;

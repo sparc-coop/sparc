@@ -226,6 +226,7 @@ function toggleSelected(t) {
         if (widget.classList.contains("docked")) {
             document.body.style.marginRight = '0';
         }
+        resetWidgetPosition();
         activeNode = null;
         return;
     }
@@ -241,8 +242,6 @@ function toggleSelected(t) {
 function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
     //var widgetActions = document.getElementById("kori-widget__actions");
-
-    resetWidgetPosition();
 
     t.appendChild(widget);
 
@@ -357,6 +356,12 @@ function login() {
 
 // function to make the widget draggable
 function makeWidgetDraggable() {
+    // if widget is docked, do not make it draggable
+    if (widget.classList.contains("docked")) {
+        console.log("Widget is docked, cannot be dragged.");
+        return;
+    }
+
     // add mouse event to start dragging
     widgetActions.onmousedown = function (e) {
         e.preventDefault();
