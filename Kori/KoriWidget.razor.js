@@ -145,8 +145,9 @@ function replaceWithTranslatedText() {
             continue;
 
         for (let node of translation.Nodes) {
-            if (node.textContent != translation.Translation) {
-                node.textContent = translation.Translation;
+            if (translation.tag != translation.text) {
+                console.log('Replacing text', translation);
+                node.innerHTML = translation.Translation;
                 node.koriTranslated = language;
             }
             node.parentElement?.classList.remove('kori-initializing');

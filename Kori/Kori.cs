@@ -7,12 +7,11 @@ using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
-public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
+public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, string? Html, bool Submitted = true);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");
@@ -58,7 +57,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             _content[item.Tag] = item with { Nodes = [] };
 
         // Replace nodes with their translation
-        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? value.Text : x).ToList();
+        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Html ?? value.Text): x).ToList();
         return nodes;
     }
 
@@ -123,7 +122,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         if (!_content.TryGetValue(tag, out KoriTextContent? value))
             return new(LoremIpsum(loremIpsumWordCount));
 
-        return new(value.Text);
+        return new(value.Html ?? value.Text);
     }
 
     public MarkupString this[string tag] => Content(tag);
