@@ -130,6 +130,15 @@ function translateNodes() {
         console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
             translationCache[contentToTranslate[i]].Translation = translations[i];
+
+            // if the translation is an empty string, remove the node immediately
+            if (translations[i] === "") {
+                var nodes = translationCache[contentToTranslate[i]].Nodes || translationCache[contentToTranslate[i]].nodes;
+                for (var node of nodes) {
+                    console.log('Removing node because translation is an empty string:', node);
+                    node.remove();
+                }
+            }
         }
 
         replaceWithTranslatedText();
