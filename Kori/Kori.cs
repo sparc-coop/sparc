@@ -26,7 +26,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     {
         await GetContentAsync(context.Request.Path);
     }
-   
+
     public async Task InitializeAsync(ComponentBase component, string currentUrl, string elementId)
     {
         var path = new Uri(currentUrl).AbsolutePath;
@@ -78,10 +78,23 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("save");
     }
 
+    // If the node is text, call this
     public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
         var request = new { RoomSlug, Language, Tag = key, Text = text };
         var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
+        await CancelAsync();
+        return result;
+    }
+
+    // If the node is IMG, call this
+    public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes)
+    {
+        var request = new { RoomSlug, Language, Tag = key };
+
+        // How to upload image to server API????
+        // One possible hint: https://learn.microsoft.com/en-us/aspnet/core/blazor/file-uploads?view=aspnetcore-8.0#upload-files-to-a-server
+        var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request)//, bytes);
         await CancelAsync();
         return result;
     }
@@ -131,7 +144,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             if (i > 0)
                 result.Append($" {word}{punctuation}");
             else
-                result.Append($"{word[0].ToString().ToUpper()}{word.AsSpan(1)}" );
+                result.Append($"{word[0].ToString().ToUpper()}{word.AsSpan(1)}");
         }
 
         return result.ToString();

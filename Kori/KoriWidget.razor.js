@@ -94,23 +94,31 @@ function registerTextNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
     while (n = walk.nextNode())
         registerTextNode(n);
+
+    // Figure out how to create a tree walker for image elements
+    // Register the "src" attribute of the image element in exactly the same way as text content
+    // Use the same translationCache, etc.
+   //var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
+    //while (n = walk.nextNode())
+    //   if (n.nodeName == 'IMG')
+    //    registerImageNode(n);
 }
 
 function registerTextNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var nodeText = node.koriContent ?? node.textContent.trim();
-    if (!nodeText)
+    var tag = node.koriContent ?? node.textContent.trim();
+    if (!tag)
         return;
 
     node.koriRegistered = language;
-    node.koriContent = nodeText;
+    node.koriContent = tag;
     node.parentElement?.classList.add('kori-initializing');
-    if (nodeText in translationCache && translationCache[nodeText].Nodes.indexOf(node) < 0) {
-        translationCache[nodeText].Nodes.push(node);
+    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
+        translationCache[tag].Nodes.push(node);
     } else {
-        translationCache[nodeText] = {
+        translationCache[tag] = {
             Nodes: [node],
             Translation: null
         };
@@ -155,6 +163,13 @@ function replaceWithTranslatedText() {
             continue;
 
         for (let node of translation.Nodes) {
+            // if the node is an img, replace the src attribute
+            //if (node.nodeName == 'IMG') {
+            //   node.src = translation.Translation;
+            //   node.koriTranslated = language;
+            // continue;
+            // }
+
             if (node.textContent != translation.Translation) {
                 node.textContent = translation.Translation;
                 node.koriTranslated = language;
@@ -301,11 +316,16 @@ function save() {
 
     dotNet.invokeMethodAsync("SaveAsync", activeMessageId, activeNode.textContent).then(content => {
         console.log('Saved new content to Ibis.');
+        // I don't think anything needs to change here for images,
+        // because we are treating img src the same way as text content
+
         translationCache[activeMessageId].Translation = content.Text;
 
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('kori-ignore');
 
+        // Here we just need to make sure that we are updating img src in the same way as 
+        // we are updating text content
         replaceWithTranslatedText();
     });
 }
