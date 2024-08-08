@@ -15,9 +15,6 @@ let koriIgnoreFilter = function (node) {
     if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
         return NodeFilter.FILTER_SKIP;
 
-    if (!node.textContent.trim())
-        return NodeFilter.FILTER_SKIP;
-
     var closest = node.parentElement.closest('.kori-ignore');
     if (closest)
         return NodeFilter.FILTER_SKIP;
@@ -108,9 +105,9 @@ function registerTextNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var tag = node.koriContent ?? node.textContent.trim();
+    var tag = node.koriContent ?? node.textContent.trim();   
     if (!tag)
-        return;
+        return;   
 
     node.koriRegistered = language;
     node.koriContent = tag;
@@ -137,16 +134,10 @@ function translateNodes() {
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
         console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
-            translationCache[contentToTranslate[i]].Translation = translations[i];
-
-            // if the translation is an empty string, remove the node immediately
-            if (translations[i] === "") {
-                var nodes = translationCache[contentToTranslate[i]].Nodes || translationCache[contentToTranslate[i]].nodes;
-                for (var node of nodes) {
-                    console.log('Removing node because translation is an empty string:', node);
-                    node.remove();
-                }
+            if (translations[i] === "") {                
+                translations[i] = " ";
             }
+            translationCache[contentToTranslate[i]].Translation = translations[i];           
         }
 
         replaceWithTranslatedText();
@@ -171,11 +162,16 @@ function replaceWithTranslatedText() {
             // }
 
             if (node.textContent != translation.Translation) {
-                node.textContent = translation.Translation;
+                node.textContent = translation.Translation || "";
                 node.koriTranslated = language;
-            }
+            }                          
+            
             node.parentElement?.classList.remove('kori-initializing');
             node.parentElement?.classList.add('kori-enabled');
+
+            if (node.textContent.trim() == "") {
+                node.parentElement?.classList.add('empty-content');                
+            }
         }
     }
 

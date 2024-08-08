@@ -20,4 +20,10 @@
         background: white;
         color: var(--grey-900);
     }
+
+    &.empty-content {
+        min-height: 1em;
+    }
 }
+
+
