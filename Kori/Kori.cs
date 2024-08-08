@@ -94,7 +94,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
         // How to upload image to server API????
         // One possible hint: https://learn.microsoft.com/en-us/aspnet/core/blazor/file-uploads?view=aspnetcore-8.0#upload-files-to-a-server
-        var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request)//, bytes);
+        var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request);//, bytes);
         await CancelAsync();
         return result;
     }
