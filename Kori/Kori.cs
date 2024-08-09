@@ -59,10 +59,21 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     }
 
     public async Task EditAsync()
-    {
-        Mode = "Edit";
+    {        
         var js = await KoriJs.Value;
-        await js.InvokeVoidAsync("edit");
+
+        var contentType = await js.InvokeAsync<string>("checkSelectedContentType");
+
+        if (contentType == "image")
+        {
+            Mode = "EditImage";
+            await js.InvokeVoidAsync("editImage");            
+        }
+        else
+        {
+            Mode = "Edit";
+            await js.InvokeVoidAsync("edit");
+        }
     }
 
     public async Task CancelAsync()

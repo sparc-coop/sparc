@@ -95,19 +95,40 @@ function registerTextNodesUnder(el) {
     // Figure out how to create a tree walker for image elements
     // Register the "src" attribute of the image element in exactly the same way as text content
     // Use the same translationCache, etc.
-   //var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
-    //while (n = walk.nextNode())
-    //   if (n.nodeName == 'IMG')
-    //    registerImageNode(n);
+    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
+    while (n = walk.nextNode())
+        if (n.nodeName == 'IMG')
+            registerImageNode(n);
 }
 
 function registerTextNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var tag = node.koriContent ?? node.textContent.trim();   
+    var tag = node.koriContent ?? node.textContent.trim();
     if (!tag)
-        return;   
+        return;
+
+    node.koriRegistered = language;
+    node.koriContent = tag;
+    node.parentElement?.classList.add('kori-initializing');
+    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
+        translationCache[tag].Nodes.push(node);
+    } else {
+        translationCache[tag] = {
+            Nodes: [node],
+            Translation: null
+        };
+    }
+}
+
+function registerImageNode(node) {
+    if (node.koriRegistered == language || node.koriTranslated == language)
+        return;
+
+    var tag = node.koriContent ?? node.src.trim();
+    if (!tag)
+        return;
 
     node.koriRegistered = language;
     node.koriContent = tag;
@@ -134,10 +155,10 @@ function translateNodes() {
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
         console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
-            if (translations[i] === "") {                
+            if (translations[i] === "") {
                 translations[i] = " ";
             }
-            translationCache[contentToTranslate[i]].Translation = translations[i];           
+            translationCache[contentToTranslate[i]].Translation = translations[i];
         }
 
         replaceWithTranslatedText();
@@ -156,21 +177,21 @@ function replaceWithTranslatedText() {
         for (let node of translation.Nodes) {
             // if the node is an img, replace the src attribute
             //if (node.nodeName == 'IMG') {
-            //   node.src = translation.Translation;
-            //   node.koriTranslated = language;
-            // continue;
-            // }
+            //    node.src = translation.Translation;
+            //    node.koriTranslated = language;
+            //    continue;
+            //}
 
             if (node.textContent != translation.Translation) {
                 node.textContent = translation.Translation || "";
                 node.koriTranslated = language;
-            }                          
-            
+            }
+
             node.parentElement?.classList.remove('kori-initializing');
             node.parentElement?.classList.add('kori-enabled');
 
             if (node.textContent.trim() == "") {
-                node.parentElement?.classList.add('empty-content');                
+                node.parentElement?.classList.add('empty-content');
             }
         }
     }
@@ -300,6 +321,10 @@ function edit() {
     //generateMarkdownEditor(activeNode.parentElement);
 }
 
+function editImage() {
+    console.log("Entered the edit image function");
+}
+
 function cancelEdit() {
     console.log("cancelling edit");
     activeNode.parentElement.contentEditable = "false";
@@ -326,16 +351,44 @@ function save() {
     });
 }
 
-//function generateMarkdownEditor(koriElem) {
-//    console.log(koriElem);
-//    console.log(koriElem.textContent);
-//    simplemde = new SimpleMDE();
-//    simplemde.value(html.textContent);
+// function to check if an element is a descendant of an element with a specific class
+function isDescendantOfClass(element, className) {
+    while (element) {
+        if (element.classList && element.classList.contains(className)) {
+            return true;
+        }
+        element = element.parentElement;
+    }
+    return false;
+}
 
-//    var parentElem = koriElem.parentElement;
-//    parentElem.appendChild(simplemde);
-//    parentElemn.remove(koriElem);
-//}
+function checkSelectedContentType() {
+    var selectedElement = document.getElementsByClassName("selected")[0];
+
+    if (!selectedElement) {
+        return "none";
+    }
+
+    if (selectedElement.tagName.toLowerCase() === 'img') {
+        return "image";
+    }
+
+    // checks if the selected element has the classes 'kori-enabled' and 'selected'
+    if (selectedElement.classList.contains('kori-enabled') && selectedElement.classList.contains('selected')) {
+        var imgChildren = selectedElement.querySelectorAll('img');
+
+        // Iterates over the child images to check for the presence of 'kori-ignore'
+        for (var img of imgChildren) {
+            // checks if the image is not inside a parent element with class 'kori-ignore'
+            if (!isDescendantOfClass(img, 'kori-ignore')) {
+                return "image";
+            }
+        }
+    }
+
+    // if it is not an image, assume it is text
+    return "text";
+}
 
 // show and hide translation menu
 function toggleTranslation(isOpen) {
@@ -423,7 +476,7 @@ function makeWidgetDraggable() {
         var widgetWidth = widgetActions.offsetWidth;
         var widgetHeight = widgetActions.offsetHeight;
 
-        const topBarHeight = 110; 
+        const topBarHeight = 110;
 
         // calculate max and min positions
         var maxLeft = viewportWidth - (parentRect.left + widgetWidth);
@@ -500,4 +553,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage };
