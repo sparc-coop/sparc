@@ -75,7 +75,7 @@ function initElement(targetElementId) {
 }
 
 function observeCallback(mutations) {
-    console.log("Observe callback");
+    //console.log("Observe callback");
     mutations.forEach(function (mutation) {
         if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
@@ -126,8 +126,9 @@ function translateNodes() {
     }
 
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
-        console.log('Received new translations from Ibis.', translations);
+        //console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
+            console.log(translations[i]);
             translationCache[contentToTranslate[i]].Translation = translations[i];
         }
 
@@ -147,7 +148,8 @@ function replaceWithTranslatedText() {
         for (let node of translation.Nodes) {
             if (translation.tag != translation.text) {
                 console.log('Replacing text', translation);
-                node.innerHTML = translation.Translation;
+                node.innerHTML = translation.html;
+                console.log(node);
                 node.koriTranslated = language;
             }
             node.parentElement?.classList.remove('kori-initializing');
@@ -155,11 +157,10 @@ function replaceWithTranslatedText() {
         }
     }
 
-    console.log('Translated page from Ibis and enabled Kori widget.');
+   // console.log('Translated page from Ibis and enabled Kori widget.');
 
     observer.observe(app, { childList: true, characterData: true, subtree: true });
 }
-
 
 function getBrowserLanguage() {
     var lang = (navigator.languages && navigator.languages.length) ? navigator.languages[0] :
@@ -173,6 +174,14 @@ let playAudio = function (url) {
     });
     sound.play();
 }
+
+//function convertToMarkdown() {
+//    console.log("converting content HTML to Markdown");
+//    console.log("HTML: " + selectedHtml);
+//    var turndownService = new TurndownService();
+//    var markdown = turndownService.turndown(selectedHtml.remove();
+//    console.log("markdown: " + markdown);
+//}
 
 // mouse click handler for kori widget and elements
 function mouseClickHandler(e) {
@@ -271,16 +280,22 @@ function edit() {
         return;
     }
 
-    console.log('editing', activeNode.parentElement);
+    console.log('editing active node: ', activeNode);
+    var translation = translationCache[activeMessageId];
+    console.log("translation: ", translation);
+
+    //convertToMarkdown();
 
     activeNode.parentElement.classList.add('kori-ignore');
     activeNode.parentElement.contentEditable = "true";
     activeNode.parentElement.focus();
+    activeNode.textContent = translation.text;
+    
     document.getElementById("kori-widget").contentEditable = "false";
 }
 
 function cancelEdit() {
-    console.log("cancelling edit");
+    //console.log("cancelling edit");
     activeNode.parentElement.contentEditable = "false";
     toggleWidget(activeNode.parentElement);
 }
@@ -334,13 +349,29 @@ function save() {
         return;
 
     dotNet.invokeMethodAsync("SaveAsync", activeMessageId, activeNode.textContent).then(content => {
-        console.log('Saved new content to Ibis.');
-        translationCache[activeMessageId].Translation = content.Text;
+        console.log('Saved new content to Ibis: ' + activeNode.textContent);
 
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('kori-ignore');
 
-        replaceWithTranslatedText();
+        observer.disconnect();
+
+        var translation = translationCache[activeMessageId];
+        translation.text = content.textContent;
+
+        if (translation.Translation) {
+            if (translation.tag != translation.text) {
+                var node = translation.Nodes;
+                console.log(node);
+                node.innerHTML = translation.Translation;
+                node.koriTranslated = language;
+            }
+
+            node.parentElement?.classList.remove('kori-initializing');
+            node.parentElement?.classList.add('kori-enabled');
+        }
+
+        observer.observe(app, { childList: true, characterData: true, subtree: true });
     });
 }
 
@@ -365,7 +396,7 @@ function toggleTranslation(isOpen) {
 // show and hide search/content navigation menu
 
 function toggleSearch(isOpen) {
-    console.log("opening search menu");
+    //console.log("opening search menu");
     var search = document.getElementById("kori-search");
     var widgetActions = document.getElementById("kori-widget__actions");
 
