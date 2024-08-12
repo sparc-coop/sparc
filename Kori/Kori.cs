@@ -9,6 +9,7 @@ namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
 public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
+public record Language(string id, string displayName, string nativeName, bool isRightToLeft);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");
@@ -32,6 +33,12 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
+    }
+
+    public async Task<List<Language>> GetLanguagesAsync()
+    {
+        return await Client.GetFromJsonAsync<List<Language>>("publicapi/Languages")
+            ?? [];
     }
 
     public async Task<List<string>> TranslateAsync(List<string> nodes)
