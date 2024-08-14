@@ -176,11 +176,11 @@ function replaceWithTranslatedText() {
 
         for (let node of translation.Nodes) {
             // if the node is an img, replace the src attribute
-            //if (node.nodeName == 'IMG') {
-            //    node.src = translation.Translation;
-            //    node.koriTranslated = language;
-            //    continue;
-            //}
+            if (node.nodeName == 'IMG') {
+                node.src = translation.Translation;
+                node.koriTranslated = language;
+                continue;
+            }
 
             if (node.textContent != translation.Translation) {
                 node.textContent = translation.Translation || "";

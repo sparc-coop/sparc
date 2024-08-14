@@ -99,16 +99,55 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     }
 
     // If the node is IMG, call this
-    public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes)
-    {
-        var request = new { RoomSlug, Language, Tag = key };
+    //public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes)
+    //{
+    //    var request = new { RoomSlug, Language, Tag = key };
 
-        // How to upload image to server API????
-        // One possible hint: https://learn.microsoft.com/en-us/aspnet/core/blazor/file-uploads?view=aspnetcore-8.0#upload-files-to-a-server
-        var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request);//, bytes);
-        await CancelAsync();
-        return result;
+    //    // How to upload image to server API????
+    //    // One possible hint: https://learn.microsoft.com/en-us/aspnet/core/blazor/file-uploads?view=aspnetcore-8.0#upload-files-to-a-server
+    //    var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request);//, bytes);
+    //    await CancelAsync();
+    //    return result;
+    //}
+
+    public async Task OnFileSelectedAsync(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            var file = (Microsoft.AspNetCore.Components.Forms.IBrowserFile)e.Value;
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+
+            var result = await SaveImageAsync("imageKey", buffer, file.Name);  
+                                                                               
+        }
     }
+
+    public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes, string fileName)
+    {
+        using var content = new MultipartFormDataContent();
+
+        var byteContent = new ByteArrayContent(bytes);
+        byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png"); 
+
+        content.Add(byteContent, "File", fileName);
+
+        content.Add(new StringContent(RoomSlug), "RoomSlug");
+        content.Add(new StringContent(Language), "Language");
+        content.Add(new StringContent(key), "Tag");
+
+        var response = await Client.PostAsync("publicapi/UploadImage", content);
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Error sending image: {response.ReasonPhrase}");
+        }
+
+        var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
+
+        await CancelAsync();
+        return result!;
+    }
+
 
     public async Task PlayAsync(KoriTextContent content)
     {
