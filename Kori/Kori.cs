@@ -79,24 +79,6 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         }
     }
 
-    //public async Task EditMarkdownAsync(string key, string text)
-    //{
-    //    Mode = "Edit";
-    //    var js = await KoriJs.Value;
-    //    await js.InvokeVoidAsync("editMarkdown");
-    //}
-
-    //public async Task<string> GenerateMarkdown(string markdown)
-    //{
-    //    var js = await KoriJs.Value;
-    //    return await editor.SetParametersAsync("markdownValue", markdown);
-
-    //    var request = new { RoomSlug, Language, Tag = key, Text = text };
-    //    var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
-    //    await CancelAsync();
-    //    return result;
-    //}
-
     public async Task CancelAsync()
     {
         Mode = "";
@@ -259,5 +241,11 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public void OpenSearchMenu()
     {
         Mode = "Search";
+    }
+
+    public async Task ApplyMarkdown(string symbol)
+    {
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("applyMarkdown", symbol);
     }
 }
