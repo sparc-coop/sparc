@@ -14,9 +14,6 @@ let koriIgnoreFilter = function (node) {
     if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
         return NodeFilter.FILTER_SKIP;
 
-    if (!node.textContent.trim())
-        return NodeFilter.FILTER_SKIP;
-
     var closest = node.parentElement.closest('.kori-ignore');
     if (closest)
         return NodeFilter.FILTER_SKIP;
@@ -93,23 +90,52 @@ function registerTextNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
     while (n = walk.nextNode())
         registerTextNode(n);
+
+    // Figure out how to create a tree walker for image elements
+    // Register the "src" attribute of the image element in exactly the same way as text content
+    // Use the same translationCache, etc.
+    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
+    while (n = walk.nextNode())
+        if (n.nodeName == 'IMG')
+            registerImageNode(n);
 }
 
 function registerTextNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var nodeText = node.koriContent ?? node.textContent.trim();
-    if (!nodeText)
+    var tag = node.koriContent ?? node.textContent.trim();
+    if (!tag)
         return;
 
     node.koriRegistered = language;
-    node.koriContent = nodeText;
+    node.koriContent = tag;
     node.parentElement?.classList.add('kori-initializing');
-    if (nodeText in translationCache && translationCache[nodeText].Nodes.indexOf(node) < 0) {
-        translationCache[nodeText].Nodes.push(node);
+    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
+        translationCache[tag].Nodes.push(node);
     } else {
-        translationCache[nodeText] = {
+        translationCache[tag] = {
+            Nodes: [node],
+            Translation: null
+        };
+    }
+}
+
+function registerImageNode(node) {
+    if (node.koriRegistered == language || node.koriTranslated == language)
+        return;
+
+    var tag = node.koriContent ?? node.src.trim();
+    if (!tag)
+        return;
+
+    node.koriRegistered = language;
+    node.koriContent = tag;
+    node.parentElement?.classList.add('kori-initializing');
+    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
+        translationCache[tag].Nodes.push(node);
+    } else {
+        translationCache[tag] = {
             Nodes: [node],
             Translation: null
         };
@@ -129,6 +155,9 @@ function translateNodes() {
         //console.log('Received new translations from Ibis.', translations);
         for (var i = 0; i < translations.length; i++) {
             console.log(translations[i]);
+            if (translations[i] === "") {
+                translations[i] = " ";
+            }
             translationCache[contentToTranslate[i]].Translation = translations[i];
         }
 
@@ -146,14 +175,24 @@ function replaceWithTranslatedText() {
             continue;
 
         for (let node of translation.Nodes) {
-            if (translation.tag != translation.text) {
-                console.log('Replacing text', translation);
-                node.innerHTML = translation.html;
-                console.log(node);
+            // if the node is an img, replace the src attribute
+            if (node.nodeName == 'IMG') {
+                node.src = translation.Translation;
+                node.koriTranslated = language;
+                continue;
+            }
+
+            if (node.textContent != translation.Translation) {
+                node.textContent = translation.Translation || "";
                 node.koriTranslated = language;
             }
+
             node.parentElement?.classList.remove('kori-initializing');
             node.parentElement?.classList.add('kori-enabled');
+
+            if (node.textContent.trim() == "") {
+                node.parentElement?.classList.add('empty-content');
+            }
         }
     }
 
@@ -235,6 +274,7 @@ function toggleSelected(t) {
         if (widget.classList.contains("docked")) {
             document.body.style.marginRight = '0';
         }
+        resetWidgetPosition();
         activeNode = null;
         return;
     }
@@ -250,8 +290,6 @@ function toggleSelected(t) {
 function toggleWidget(t) {
     var widget = document.getElementById("kori-widget");
     //var widgetActions = document.getElementById("kori-widget__actions");
-
-    resetWidgetPosition();
 
     t.appendChild(widget);
 
@@ -292,6 +330,10 @@ function edit() {
     activeNode.textContent = translation.text;
     
     document.getElementById("kori-widget").contentEditable = "false";
+}
+
+function editImage() {
+    console.log("Entered the edit image function");
 }
 
 function cancelEdit() {
@@ -349,30 +391,58 @@ function save() {
         return;
 
     dotNet.invokeMethodAsync("SaveAsync", activeMessageId, activeNode.textContent).then(content => {
-        console.log('Saved new content to Ibis: ' + activeNode.textContent);
+        console.log('Saved new content to Ibis.');
+        // I don't think anything needs to change here for images,
+        // because we are treating img src the same way as text content
+
+        translationCache[activeMessageId].Translation = content.Text;
 
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('kori-ignore');
 
-        observer.disconnect();
-
-        var translation = translationCache[activeMessageId];
-        translation.text = content.textContent;
-
-        if (translation.Translation) {
-            if (translation.tag != translation.text) {
-                var node = translation.Nodes;
-                console.log(node);
-                node.innerHTML = translation.Translation;
-                node.koriTranslated = language;
-            }
-
-            node.parentElement?.classList.remove('kori-initializing');
-            node.parentElement?.classList.add('kori-enabled');
-        }
-
-        observer.observe(app, { childList: true, characterData: true, subtree: true });
+        // Here we just need to make sure that we are updating img src in the same way as 
+        // we are updating text content
+        replaceWithTranslatedText();
     });
+}
+
+// function to check if an element is a descendant of an element with a specific class
+function isDescendantOfClass(element, className) {
+    while (element) {
+        if (element.classList && element.classList.contains(className)) {
+            return true;
+        }
+        element = element.parentElement;
+    }
+    return false;
+}
+
+function checkSelectedContentType() {
+    var selectedElement = document.getElementsByClassName("selected")[0];
+
+    if (!selectedElement) {
+        return "none";
+    }
+
+    if (selectedElement.tagName.toLowerCase() === 'img') {
+        return "image";
+    }
+
+    // checks if the selected element has the classes 'kori-enabled' and 'selected'
+    if (selectedElement.classList.contains('kori-enabled') && selectedElement.classList.contains('selected')) {
+        var imgChildren = selectedElement.querySelectorAll('img');
+
+        // Iterates over the child images to check for the presence of 'kori-ignore'
+        for (var img of imgChildren) {
+            // checks if the image is not inside a parent element with class 'kori-ignore'
+            if (!isDescendantOfClass(img, 'kori-ignore')) {
+                return "image";
+            }
+        }
+    }
+
+    // if it is not an image, assume it is text
+    return "text";
 }
 
 // show and hide translation menu
@@ -419,6 +489,12 @@ function login() {
 
 // function to make the widget draggable
 function makeWidgetDraggable() {
+    // if widget is docked, do not make it draggable
+    if (widget.classList.contains("docked")) {
+        console.log("Widget is docked, cannot be dragged.");
+        return;
+    }
+
     // add mouse event to start dragging
     widgetActions.onmousedown = function (e) {
         e.preventDefault();
@@ -455,11 +531,13 @@ function makeWidgetDraggable() {
         var widgetWidth = widgetActions.offsetWidth;
         var widgetHeight = widgetActions.offsetHeight;
 
+        const topBarHeight = 110;
+
         // calculate max and min positions
         var maxLeft = viewportWidth - (parentRect.left + widgetWidth);
         var maxTop = viewportHeight - (parentRect.top + (widgetHeight / 2));
         var minLeft = -parentRect.left;
-        var minTop = -parentRect.top;
+        var minTop = -parentRect.top + topBarHeight;
 
         // constrain the widget within the viewport, considering parent element bounds
         newLeft = Math.max(minLeft, Math.min(maxLeft, newLeft));
@@ -530,4 +608,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, editMarkdown, generateMarkdown};
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage };
