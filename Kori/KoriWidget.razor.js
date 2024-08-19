@@ -176,11 +176,11 @@ function replaceWithTranslatedText() {
 
         for (let node of translation.Nodes) {
             // if the node is an img, replace the src attribute
-            if (node.nodeName == 'IMG') {
-                node.src = translation.Translation;
-                node.koriTranslated = language;
-                continue;
-            }
+            //if (node.nodeName == 'IMG') {
+            //    node.src = translation.Translation;
+            //    node.koriTranslated = language;
+            //    continue;
+            //}
 
             if (node.textContent != translation.Translation) {
                 node.textContent = translation.Translation || "";
@@ -324,6 +324,15 @@ function edit() {
 function editImage() {
     console.log("Entered the edit image function");
 }
+
+function getImageFile() {
+    console.log("Getting image file");
+    const fileInput = document.getElementById('imageInput');
+    if (fileInput && fileInput.files.length > 0) {
+        return fileInput.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
+    }
+    return null;
+};
 
 function cancelEdit() {
     console.log("cancelling edit");
@@ -553,4 +562,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getImageFile };

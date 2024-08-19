@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
+using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using System.Net.Http.Headers;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
@@ -17,7 +19,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public string Mode { get; set; } = "";
 
     Dictionary<string, KoriTextContent> _content { get; set; } = [];
-    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis-web-kori.azurewebsites.net/") };
+    private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://localhost:7117/") };
 
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
@@ -86,7 +88,20 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public async Task BeginSaveAsync()
     {
         var js = await KoriJs.Value;
-        await js.InvokeVoidAsync("save");
+        //await js.InvokeVoidAsync("save");
+        var contentType = await js.InvokeAsync<string>("checkSelectedContentType");
+
+        if (contentType == "image")
+        {
+
+            await SaveImageAsync("imageTag");
+        }
+        else
+        {
+
+            await js.InvokeVoidAsync("save");
+        }
+        
     }
 
     // If the node is text, call this
@@ -110,44 +125,48 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     //    return result;
     //}
 
-    public async Task OnFileSelectedAsync(ChangeEventArgs e)
+    public async Task<KoriTextContent> SaveImageAsync(string key)
     {
-        if (e.Value is not null)
+        try
         {
-            var file = (Microsoft.AspNetCore.Components.Forms.IBrowserFile)e.Value;
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
+            var js = await KoriJs.Value;
+            // Capture the selected file in the input file via JS Interop
+            var file = await js.InvokeAsync<byte[]>("getImageFile");
 
-            var result = await SaveImageAsync("imageKey", buffer, file.Name);  
-                                                                               
+            if (file != null && file.Length > 0)
+            {
+                var formData = new MultipartFormDataContent();
+                
+                //var fileContent = new ByteArrayContent(file);
+                var fileContent = new StreamContent(new MemoryStream(file));
+                //fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+                // Add the file as IFormFile
+                formData.Add(fileContent, "File", "image.png");
+
+                // Add the other necessary parameters
+                formData.Add(new StringContent(RoomSlug), "RoomSlug");
+                formData.Add(new StringContent(Language), "Language");
+                formData.Add(new StringContent(key), "Tag");
+
+                var response = await Client.PostAsync("publicapi/UploadImage", formData);
+                response.EnsureSuccessStatusCode();
+
+                var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
+                await CancelAsync();
+                return result;
+            }
+            else
+            {
+                throw new Exception("No file selected or file is empty.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error uploading image: {ex.Message}");
+            return null;
         }
     }
-
-    public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes, string fileName)
-    {
-        using var content = new MultipartFormDataContent();
-
-        var byteContent = new ByteArrayContent(bytes);
-        byteContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/png"); 
-
-        content.Add(byteContent, "File", fileName);
-
-        content.Add(new StringContent(RoomSlug), "RoomSlug");
-        content.Add(new StringContent(Language), "Language");
-        content.Add(new StringContent(key), "Tag");
-
-        var response = await Client.PostAsync("publicapi/UploadImage", content);
-        if (!response.IsSuccessStatusCode)
-        {
-            throw new Exception($"Error sending image: {response.ReasonPhrase}");
-        }
-
-        var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
-
-        await CancelAsync();
-        return result!;
-    }
-
 
     public async Task PlayAsync(KoriTextContent content)
     {
