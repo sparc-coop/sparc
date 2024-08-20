@@ -324,15 +324,28 @@ function edit() {
 function editImage() {
     console.log("Entered the edit image function");
 }
-
-function getImageFile() {
-    console.log("Getting image file");
-    const fileInput = document.getElementById('imageInput');
-    if (fileInput && fileInput.files.length > 0) {
-        return fileInput.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
+function getImageFileAsBase64() {
+    const input = document.getElementById('imageInput');
+    if (input && input.files && input.files[0]) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result.split(',')[1]); // Returns base64 without the prefix "data:image/png;base64,"
+            reader.onerror = reject;
+            reader.readAsDataURL(input.files[0]);
+        });
+    } else {
+        return Promise.reject("No file selected");
     }
-    return null;
-};
+}
+
+//function getImageFile() {
+//    console.log("Getting image file");
+//    const fileInput = document.getElementById('imageInput');
+//    if (fileInput && fileInput.files.length > 0) {
+//        return fileInput.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
+//    }
+//    return null;
+//};
 
 function cancelEdit() {
     console.log("cancelling edit");
@@ -562,4 +575,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getImageFile };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getImageFileAsBase64, getAntiForgeryToken };
