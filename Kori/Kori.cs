@@ -9,7 +9,7 @@ namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
 public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
-public record Language(string id, string displayName, string nativeName, bool isRightToLeft);
+public record Language(string Id, string DisplayName, string NativeName, bool IsRightToLeft);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");

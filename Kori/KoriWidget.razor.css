@@ -138,7 +138,7 @@
   top: 50%;
   /*right: -322px;*/
   left: 25px;
-  transform: translatey(-50%);
+  transform: translateY(-50%);
   background: var(--white);
   text-align: left;
 }

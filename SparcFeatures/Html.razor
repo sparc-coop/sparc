@@ -20,6 +20,12 @@
             const element = document.getElementById("mission");
             element.scrollIntoView({ behavior: 'smooth' });
         }
+
+        function initHyperScript() {
+            console.log('INITTING HYPERSCRIPT.....');
+            _hyperscript.processNode(document.body);
+        }
     </script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 </body>
 </html>

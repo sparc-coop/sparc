@@ -10,5 +10,9 @@
   {
     "outputFile": "KoriContent.razor.css",
     "inputFile": "KoriContent.razor.scss"
+  },
+  {
+    "outputFile": "KoriLogin2.razor.css",
+    "inputFile": "KoriLogin2.razor.scss"
   }
 ]

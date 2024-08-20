@@ -1,0 +1,90 @@
+<div id="kori-login-2" class="kori-login-2 kori-ignore">
+    <div class="kori-login__toggle show">
+        <button class="kori-login__logged-out show">
+            <img src="/_content/Kori/icons/user-profile-x.svg" />
+        </button>
+        <button class="kori-login__logged-in">
+            <img src="/_content/Kori/icons/user-profile-check.svg" />
+        </button>
+    </div>
+    <div class="kori-login__menu @(showLogin ? "show" : "")">
+        <div class="kori-login__user">
+            <p>Username</p>
+            <img src="/_content/Kori/icons/Logout.svg" />
+        </div>
+        <div class="kori-login__actions">
+            <div class="kori-login__btn">
+                <button>Log In <img src="/_content/Kori/icons/Arrow right.svg" /></button>
+            </div>
+            <div class="kori-login__language">
+                <div class="@(showLanguages ? "show" : "")">
+                    @if (selectedLanguage != null)
+                    {
+                        <button class="toggle-languages selected" _="on click toggle .show on .language-list">@selectedLanguage.DisplayName</button>
+                    }
+                    <div class="language-list">
+                        <p class="list-header">Select your language:</p>
+                        <ul>
+                            @if (Languages != null)
+                            {
+                                @foreach (var language in Languages)
+                                {
+                                    <li>
+                                        <button>
+                                            @language.DisplayName
+
+                                            @if (language.DisplayName != language.NativeName)
+                                            {
+                                                <aside>@language.NativeName</aside>
+                                            }
+
+                                            @* @if (User.Language == language.Id)
+                                                {
+                                                <div class="right">
+                                                <img src="icons/Check.svg" />
+                                                </div>
+                                                } 
+                                            *@
+                                        </button>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@inject Kori Kori
+@inject IJSRuntime Js
+
+@code {
+    bool showLogin = false;
+    bool showLanguages = false;
+    Language? selectedLanguage;
+    List<Language>? Languages { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Languages = await Kori.GetLanguagesAsync();
+        Languages = Languages.OrderBy(x => x.DisplayName).ToList();
+        selectedLanguage = Languages.First(x => x.Id == Kori.Language);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Js.InvokeVoidAsync("initHyperScript");
+    }
+
+    void ToggleLogin()
+    {
+        showLogin = !showLogin;
+    }
+
+    void ToggleLanguages()
+    {
+        showLanguages = !showLanguages;
+    }
+}

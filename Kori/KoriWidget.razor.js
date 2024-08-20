@@ -176,6 +176,10 @@ let playAudio = function (url) {
 function mouseClickHandler(e) {
     var t = e.target;
 
+    if (t.closest(".kori-login__toggle")) {
+        document.getElementsByClassName("kori-login__menu")[0].classList.add("show");
+    }
+
     // click login menu
     if (t.closest(".kori-login__btn")) {
         koriAuthorized = true;
