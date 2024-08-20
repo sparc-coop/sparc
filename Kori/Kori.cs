@@ -132,84 +132,84 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     //    return token;
     //}
 
-    public async Task SaveImageAsync(string tag)
-    {
-        var js = await KoriJs.Value;
-
-        var base64File = await js.InvokeAsync<string>("getImageFileAsBase64");
-
-        //var antiForgeryToken = await GetAntiForgeryTokenAsync();
-
-        var content = new MultipartFormDataContent();
-        var byteArray = Convert.FromBase64String(base64File);
-        var stream = new MemoryStream(byteArray);
-
-        content.Add(new StreamContent(stream), "File", "image.png");
-        content.Add(new StringContent(RoomSlug), "RoomSlug");
-        content.Add(new StringContent(Language), "Language");
-        content.Add(new StringContent(tag), "Tag");
-        //content.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
-        //content.Headers.Add("X-XSRF-TOKEN", antiForgeryToken);
-
-        Console.WriteLine(content);
-
-        var response = await Client.PostAsync("publicapi/UploadImage", content);
-        if (!response.IsSuccessStatusCode)
-        {
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Error: {response.StatusCode}, {responseContent}");
-        }
-
-        var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
-    }
-
-    
-    //public async Task<KoriTextContent> SaveImageAsync(string key)
+    //public async Task SaveImageAsync(string tag)
     //{
-    //    try
+    //    var js = await KoriJs.Value;
+
+    //    var base64File = await js.InvokeAsync<string>("getImageFileAsBase64");
+
+    //    //var antiForgeryToken = await GetAntiForgeryTokenAsync();
+
+    //    var content = new MultipartFormDataContent();
+    //    var byteArray = Convert.FromBase64String(base64File);
+    //    var stream = new MemoryStream(byteArray);
+
+    //    content.Add(new StreamContent(stream), "File", "image.png");
+    //    content.Add(new StringContent(RoomSlug), "RoomSlug");
+    //    content.Add(new StringContent(Language), "Language");
+    //    content.Add(new StringContent(tag), "Tag");
+    //    //content.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+    //    //content.Headers.Add("X-XSRF-TOKEN", antiForgeryToken);
+
+    //    Console.WriteLine(content);
+
+    //    var response = await Client.PostAsync("publicapi/UploadImage", content);
+    //    if (!response.IsSuccessStatusCode)
     //    {
-    //        var js = await KoriJs.Value;
-    //        //var token = await js.InvokeAsync<string>("getAntiForgeryToken");
-    //        // Capture the selected file in the input file via JS Interop
-    //        var file = await js.InvokeAsync<byte[]>("getImageFile");
-
-    //        if (file != null && file.Length > 0)
-    //        {
-    //            var formData = new MultipartFormDataContent();
-
-    //            var fileContent = new ByteArrayContent(file);
-    //            //var fileContent = new StreamContent(new MemoryStream(file));
-    //            //fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-    //            fileContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
-    //            // Add the file as IFormFile
-    //            formData.Add(fileContent, "File", "image.png");
-
-    //            // Add the other necessary parameters
-    //            formData.Add(new StringContent(RoomSlug), "RoomSlug");
-    //            formData.Add(new StringContent(Language), "Language");
-    //            formData.Add(new StringContent(key), "Tag");
-
-    //            // Include the antiforgery token in the header
-    //            //formData.Headers.Add("RequestVerificationToken", token);
-
-    //            var response = await Client.PostAsync("publicapi/UploadImage", formData);
-    //            response.EnsureSuccessStatusCode();
-
-    //            var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
-    //            await CancelAsync();
-    //            return result;
-    //        }
-    //        else
-    //        {
-    //            throw new Exception("No file selected or file is empty.");
-    //        }
+    //        var responseContent = await response.Content.ReadAsStringAsync();
+    //        Console.WriteLine($"Error: {response.StatusCode}, {responseContent}");
     //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($"Error uploading image: {ex.Message}");
-    //        return null;
-    //    }
+
+    //    var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
     //}
+
+
+    public async Task<KoriTextContent> SaveImageAsync(string key)
+    {
+        try
+        {
+            var js = await KoriJs.Value;
+            //var token = await js.InvokeAsync<string>("getAntiForgeryToken");
+            // Capture the selected file in the input file via JS Interop
+            var file = await js.InvokeAsync<byte[]>("getImageFile");
+
+            if (file != null && file.Length > 0)
+            {
+                var formData = new MultipartFormDataContent();
+
+                var fileContent = new ByteArrayContent(file);
+                //var fileContent = new StreamContent(new MemoryStream(file));
+                //fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                fileContent.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+                // Add the file as IFormFile
+                formData.Add(fileContent, "File", "image.png");
+
+                // Add the other necessary parameters
+                formData.Add(new StringContent(RoomSlug), "RoomSlug");
+                formData.Add(new StringContent(Language), "Language");
+                formData.Add(new StringContent(key), "Tag");
+
+                // Include the antiforgery token in the header
+                //formData.Headers.Add("RequestVerificationToken", token);
+
+                var response = await Client.PostAsync("publicapi/UploadImage", formData);
+                response.EnsureSuccessStatusCode();
+
+                var result = await response.Content.ReadFromJsonAsync<KoriTextContent>();
+                await CancelAsync();
+                return result;
+            }
+            else
+            {
+                throw new Exception("No file selected or file is empty.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error uploading image: {ex.Message}");
+            return null;
+        }
+    }
 
     public async Task PlayAsync(KoriTextContent content)
     {
