@@ -325,53 +325,47 @@ function edit() {
         return;
     }
 
-    console.log('editing active node: ', activeNode);
     var translation = translationCache[activeMessageId];
-    console.log("translation: ", translation);
 
-    if (translation.id) {
-        //convertToMarkdown();
-        var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
-        //console.log('active node parent: ', activeNodeParent);
-        activeNodeParent.classList.add('kori-ignore');
-        activeNodeParent.contentEditable = "true";
-        activeNodeParent.focus();
-
-        replaceInnerHtml(activeNodeParent, translation.text ?? translation.Translation);
-
-        console.log('child', activeNodeParent);
+    if (isTranslationAlreadySaved(translation)) {
+        var activeNodeParent = getActiveNodeParentByKoriId(translation);
+        activateNodeEdition(activeNodeParent);
+        replaceInnerHtmlBeforeWidget(activeNodeParent, getTranslationRawMarkdownText(translation));
     }
     else {
-        activeNode.parentElement.classList.add('kori-ignore');
-        activeNode.parentElement.contentEditable = "true";
-        activeNode.parentElement.focus();
-        activeNode.textContent = translation.text ?? translation.Translation;
+        activateNodeEdition(activeNode.parentElement);
+        activeNode.textContent = getTranslationRawMarkdownText(translation);
     }
-
     
-    
-    //activeNodeParent.innerHTML = translation.text ?? translation.Translation;
-
-    //var widget = document.getElementById("kori-widget");
-    ////var widgetActions = document.getElementById("kori-widget__actions");
-
-    //document.querySelector(`[kori-id="${translation.id}"]`).appendChild(widget);
-
-
-
-    //OLD
-
-    //activeNode.parentElement.classList.add('kori-ignore');
-    //activeNode.parentElement.contentEditable = "true";
-    //activeNode.parentElement.focus();
-    //activeNode.textContent = translation.text ?? translation.Translation;
-
-
-
     document.getElementById("kori-widget").contentEditable = "false";
 }
 
-function replaceInnerHtml(node, markdownTxt) {
+function getTranslationRawMarkdownText(translation) {
+    return translation.text ?? translation.Translation;
+}
+
+function activateNodeEdition(node) {
+    node.classList.add('kori-ignore');
+    node.contentEditable = "true";
+    node.focus();
+}
+
+function deactivateNodeEdition(node) {
+    node.contentEditable = "false";
+    node.classList.remove('kori-ignore');
+    node.classList.remove('selected');
+    node.innerHTML = removePTag(translation.html);
+}
+
+function getActiveNodeParentByKoriId(translation) {
+    return document.querySelector(`[kori-id="${translation.id}"]`);
+}
+
+function isTranslationAlreadySaved(translation) {
+    return translation.id;
+}
+
+function replaceInnerHtmlBeforeWidget(node, markdownTxt) {
     while (node.firstChild) {
         if (node.firstChild.id !== "kori-widget") {
             node.removeChild(node.firstChild);
@@ -382,8 +376,6 @@ function replaceInnerHtml(node, markdownTxt) {
 
     node.firstChild.insertAdjacentHTML('beforebegin', markdownTxt);
 }
-
-
 
 function editImage() {
     console.log("Entered the edit image function");
@@ -396,58 +388,10 @@ function cancelEdit() {
 
     var translation = translationCache[activeMessageId];
 
-    if (translation.id) {
+    if (isTranslationAlreadySaved(translation)) {
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
-        console.log('active node parent', activeNodeParent);
-        activeNodeParent.contentEditable = "false";
-        activeNodeParent.classList.remove('kori-ignore');
-        activeNodeParent.classList.remove('selected');
-        activeNodeParent.innerHTML = removePTag(translation.html)
+        deactivateNodeEdition(activeNodeParent);
     }
-}
-
-// open markdown editor with content text
-// will try to use blazor.web.js to add markdown editor blazor component in js
-
-function editMarkdown() {
-    if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
-        return;
-    }
-
-    var parentElem = activeNode.parentElement;
-    var textarea = document.getElementById("kori-markdown");
-    var simpleMde = new SimpleMDE({ element: textarea });
-    console.log(activeNode.textContent);
-    //simpleMde.value(activeNode.textContent);
-    simpleMde.value("this is a test");
-    var mde = simpleMde.element;
-
-    parentElem.classList.add('kori-ignore');
-    parentElem.contentEditable = "true";
-    //document.getElementById("kori-widget").contentEditable = "false";
-
-    parentElem.appendChild(mde);
-    mde.style.display = "block";
-}
-
-function generateMarkdown() {
-    if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
-        return;
-    }
-
-    var parentElem = activeNode.parentElement;
-    var markdown = turndownService.turndown(parentElem);
-    console.log(markdown);
-
-    dotNet.invokeMethodAsync("GenerateMarkdown", markdown).then(content => {
-        parentElem.style.display = "none";
-    });
-
-    // possible solutions...
-    // move .kori-markdown to parent element, hide all other children
-    // temporarily replace parent element with the .kori-markdown while in edit mode
 }
 
 function save() {
@@ -482,6 +426,7 @@ function save() {
         if (translation.id) {
             var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
             console.log('active node parent', activeNodeParent);
+            //TODO deactivate function
             activeNodeParent.contentEditable = "false";
             activeNodeParent.classList.remove('kori-ignore');
             activeNodeParent.classList.remove('selected');
