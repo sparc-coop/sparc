@@ -9,6 +9,7 @@ let widget = {};
 let widgetActions = {};
 let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+const NodeType = Object.freeze({ TEXT: symbol("text"), IMG: symbol("img") });
 
 let koriIgnoreFilter = function (node) {
     if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
@@ -78,7 +79,7 @@ function observeCallback(mutations) {
             return;
 
         if (mutation.type == 'characterData')
-            registerTextNode(mutation.target);
+            registerNode(mutation.target, NodeType.TEXT);
         else
             mutation.addedNodes.forEach(registerTextNodesUnder);
 
@@ -89,7 +90,7 @@ function observeCallback(mutations) {
 function registerTextNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
     while (n = walk.nextNode())
-        registerTextNode(n);
+        registerNode(n, NodeType.TEXT);
 
     // Figure out how to create a tree walker for image elements
     // Register the "src" attribute of the image element in exactly the same way as text content
@@ -97,14 +98,14 @@ function registerTextNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
     while (n = walk.nextNode())
         if (n.nodeName == 'IMG')
-            registerImageNode(n);
+            registerNode(n, NodeType.IMG);
 }
 
-function registerTextNode(node) {
+function registerNode(node, nodeType) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var tag = node.koriContent ?? node.textContent.trim();
+    var tag = node.koriContent ?? nodeType == NodeType.IMG ? node.src.trim() : node.textContent.trim();
     if (!tag)
         return;
 
@@ -114,33 +115,11 @@ function registerTextNode(node) {
 
     if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
         translationCache[tag].Nodes.push(node);
-        console.log('translationCache ID', translationCache[tag].id);
-
-        if (translationCache[tag].id !== undefined) {
-            node.parentElement.setAttribute('kori-id',translationCache[tag].id);
+        
+        if (translationCache[tag].id !== undefined && nodeType == NodeType.TEXT) {
+            node.parentElement.setAttribute('kori-id', translationCache[tag].id);
         }
 
-    } else {
-        translationCache[tag] = {
-            Nodes: [node],
-            Translation: null
-        };
-    }
-}
-
-function registerImageNode(node) {
-    if (node.koriRegistered == language || node.koriTranslated == language)
-        return;
-
-    var tag = node.koriContent ?? node.src.trim();
-    if (!tag)
-        return;
-
-    node.koriRegistered = language;
-    node.koriContent = tag;
-    node.parentElement?.classList.add('kori-initializing');
-    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
-        translationCache[tag].Nodes.push(node);
     } else {
         translationCache[tag] = {
             Nodes: [node],
@@ -237,14 +216,6 @@ let playAudio = function (url) {
     });
     sound.play();
 }
-
-//function convertToMarkdown() {
-//    console.log("converting content HTML to Markdown");
-//    console.log("HTML: " + selectedHtml);
-//    var turndownService = new TurndownService();
-//    var markdown = turndownService.turndown(selectedHtml.remove();
-//    console.log("markdown: " + markdown);
-//}
 
 // mouse click handler for kori widget and elements
 function mouseClickHandler(e) {
