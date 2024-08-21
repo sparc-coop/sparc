@@ -260,23 +260,6 @@ function mouseClickHandler(e) {
     }
 
     if (koriAuthorized) {
-        // click kori widget
-        //if (t.closest(".kori-widget")) {
-        //    if (t.closest('.options__translation')) {
-        //        toggleTranslation(true);
-        //        return;
-        //    } else if (t.closest('.kori-translation__back')) {
-        //        toggleTranslation(false);
-        //    } else if (t.closest('.options__search')) {
-        //        toggleSearch(true);
-        //        return;
-        //    } else if (t.closest('.kori-search__back')) {
-        //        toggleSearch(false);
-        //    } else {
-        //        return;
-        //    }
-        //}
-
         // click kori enabled elements
         toggleSelected(t);
     } else {
@@ -312,9 +295,11 @@ function toggleSelected(t) {
 
 // showing and hiding kori widget
 function toggleWidget(t) {
+    console.log('toggleWidget', t);
+
     var widget = document.getElementById("kori-widget");
     //var widgetActions = document.getElementById("kori-widget__actions");
-    
+    console.log('wdiget', widget);
     t.appendChild(widget);
 
     widget.classList.add("show");
@@ -419,11 +404,17 @@ function editImage() {
 }
 
 function cancelEdit() {
-    //console.log("cancelling edit");
+    console.log("cancelling edit");
+
+    console.log('active node', activeNode);
+
     activeNode.parentElement.contentEditable = "false";
+    activeNode.parentElement.classList.remove('selected');
     widget.classList.remove("show");
 
     var translation = translationCache[activeMessageId];
+
+    console.log('translation', translation);
 
     if (translation.id) {
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
@@ -432,51 +423,9 @@ function cancelEdit() {
         activeNodeParent.classList.remove('kori-ignore');
         activeNodeParent.classList.remove('selected');
         activeNodeParent.innerHTML = removePTag(translation.html)
+    } else {
+        activeNode.textContent = translation.Translation;
     }
-}
-
-// open markdown editor with content text
-// will try to use blazor.web.js to add markdown editor blazor component in js
-
-function editMarkdown() {
-    if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
-        return;
-    }
-
-    var parentElem = activeNode.parentElement;
-    var textarea = document.getElementById("kori-markdown");
-    var simpleMde = new SimpleMDE({ element: textarea });
-    console.log(activeNode.textContent);
-    //simpleMde.value(activeNode.textContent);
-    simpleMde.value("this is a test");
-    var mde = simpleMde.element;
-
-    parentElem.classList.add('kori-ignore');
-    parentElem.contentEditable = "true";
-    //document.getElementById("kori-widget").contentEditable = "false";
-
-    parentElem.appendChild(mde);
-    mde.style.display = "block";
-}
-
-function generateMarkdown() {
-    if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
-        return;
-    }
-
-    var parentElem = activeNode.parentElement;
-    var markdown = turndownService.turndown(parentElem);
-    console.log(markdown);
-
-    dotNet.invokeMethodAsync("GenerateMarkdown", markdown).then(content => {
-        parentElem.style.display = "none";
-    });
-
-    // possible solutions...
-    // move .kori-markdown to parent element, hide all other children
-    // temporarily replace parent element with the .kori-markdown while in edit mode
 }
 
 function save() {
@@ -486,24 +435,29 @@ function save() {
     var translation = translationCache[activeMessageId];
     console.log("translation: ", translation);
     var textContent = activeNode.textContent;
-
+    
     if (translation.id) {
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
 
         var copyNode = activeNodeParent.cloneNode(true);
         console.log('copy node', copyNode.children);
-        copyNode.removeChild(copyNode.lastChild);
-        textContent = copyNode.textContent;
-
-        console.log('active node parent', copyNode.textContent);
+        var koriWidget = copyNode.querySelector('#kori-widget');
+        //moveWidgetToRootElement();
+        //copyNode.removeChild(copyNode.lastChild);
+        textContent = copyNode.textContent.replace(koriWidget.textContent, '');
+        
+        console.log('node', activeNodeParent);
+        console.log('active node parent', copyNode);
     }
 
     dotNet.invokeMethodAsync("SaveAsync", activeMessageId, textContent).then(content => {
         console.log('Saved new content to Ibis.', content);
+        console.log('parent element', activeNode.parentElement);
         // I don't think anything needs to change here for images,
         // because we are treating img src the same way as text content
 
-        translationCache[activeMessageId].Translation = content.Text;
+        
+        translationCache[activeMessageId].Translation = content.text;
 
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('kori-ignore');
@@ -514,11 +468,21 @@ function save() {
             activeNodeParent.contentEditable = "false";
             activeNodeParent.classList.remove('kori-ignore');
             activeNodeParent.classList.remove('selected');
-            activeNodeParent.innerHTML = removePTag(content.html)
+            //moveWidgetToRootElement();
+            //activeNodeParent.innerHTML = removePTag(content.html)
+            replaceInnerHtml(activeNodeParent, removePTag(content.html));
 
-            widget.classList.remove("show");
+
+        } else {
+            translationCache[activeMessageId].id = content.id;
+            activeNode.parentElement?.setAttribute('kori-id', content.id);
+            //moveWidgetToRootElement();
+            //activeNode.parentElement.innerHTML = removePTag(content.html);
+            replaceInnerHtml(activeNode.parentElement, removePTag(content.html));
         }
 
+        
+        dotNet.invokeMethodAsync("BackToEdit").then(r => console.log('backToEdit'));
         // Here we just need to make sure that we are updating img src in the same way as 
         // we are updating text content
         //replaceWithTranslatedText();
@@ -606,7 +570,6 @@ function login() {
     console.log("logging in...");
 }
 
-// function to make the widget draggable
 function makeWidgetDraggable() {
     // if widget is docked, do not make it draggable
     if (widget.classList.contains("docked")) {
@@ -677,7 +640,6 @@ function makeWidgetDraggable() {
     }
 }
 
-// reset widget position to initial position
 function resetWidgetPosition() {
     // do not reset position if widget is docked
     if (widget.classList.contains("docked")) {
@@ -688,7 +650,7 @@ function resetWidgetPosition() {
     widgetActions.style.top = '';
 }
 
-// dock and undock the widget
+
 function toggleDock() {
     var dockButton = document.getElementById("dockButton");
     var dockIcon = dockButton.querySelector("img");
@@ -735,5 +697,15 @@ function applyMarkdown(symbol) {
         document.execCommand('insertText', false, newText);
     }
 }
+
+function moveWidgetToRootElement() {
+    var widget = document.getElementById("kori-widget");
+    if (widget) {
+        document.documentElement.appendChild(widget);
+        widget.classList.remove('show');
+    }
+    
+}
+
 
 export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown };

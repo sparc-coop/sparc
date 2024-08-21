@@ -248,4 +248,9 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("applyMarkdown", symbol);
     }
+
+    public void BackToEdit()
+    {
+        Mode = "";
+    }
 }

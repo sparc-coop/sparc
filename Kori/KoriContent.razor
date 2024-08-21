@@ -13,8 +13,6 @@
 
     string _id = $"kori-{Guid.NewGuid()}";
 
-    string markdownValue = "";
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -39,17 +37,10 @@
         return result;
     }
 
-    // [JSInvokable]
-    // public async Task<KoriTextContent> EditMarkdownAsync(string key, string text)
-    // {
-    //     var result = await Kori.EditMarkdownAsync(key, text);
-    //     StateHasChanged();
-    //     return result
-
     [JSInvokable]
-    public string GenerateMarkdownAsync(string markdown)
+    public void BackToEdit()
     {
-        markdownValue = markdown;
-        return markdownValue;
+        Kori.BackToEdit();
+        StateHasChanged();
     }
 }

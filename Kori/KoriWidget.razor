@@ -28,7 +28,7 @@
             <div id="kori-edit" class="kori-edit">
                 <div class="kori-edit__content">
                     <div class="kori-edit__back">
-                        <button id="kori-edit__back" class="kori__btn-text" @onclick="Kori.CancelAsync">&lt; Back to edit</button>
+                        <button id="kori-edit__back" class="kori__btn-text" @onclick="Kori.BackToEdit">&lt; Back to edit</button>
                     </div>
                     <div class="kori-edit__header">
                         <h5>Edit your content.</h5>
@@ -153,7 +153,5 @@
         }
     </div>
 </div>
-
-<script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 
 @inject Kori Kori
