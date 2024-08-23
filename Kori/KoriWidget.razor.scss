@@ -205,9 +205,9 @@
                         margin: auto 0;
                     }
                 }
-
-                input[type=file] {
-                    max-width: 276px;
+                
+                #image-input {
+                    max-width: 276px !important;
                 }
             }
 
@@ -427,7 +427,6 @@
         border: 1px solid var(--grey-200);
     }
 }
-
 // borders
 .kori__border_black-10-8 {
     border: 10px solid transparent;

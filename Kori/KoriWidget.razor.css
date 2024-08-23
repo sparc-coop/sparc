@@ -180,8 +180,8 @@
   max-height: 18px;
   margin: auto 0;
 }
-.kori-widget__actions .kori-edit__options input[type=file] {
-  max-width: 276px;
+.kori-widget__actions .kori-edit__options #image-input {
+  max-width: 276px !important;
 }
 .kori-widget__actions .kori-edit__actions {
   width: 100%;

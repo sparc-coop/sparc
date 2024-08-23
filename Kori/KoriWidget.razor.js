@@ -305,6 +305,16 @@ function toggleWidget(t) {
     makeWidgetDraggable();
 }
 
+function getActiveImageSrc() {
+    if (activeNode && activeNode.tagName === 'IMG') {
+        return activeNode.src;
+        console.log('Active node is an image', activeNode.src);
+    }
+
+    console.log('Active node is not an image', activeNode)
+    return null; 
+}
+
 function edit() {
     if (!activeNode) {
         console.log('Unable to edit element', activeNode);
@@ -324,28 +334,6 @@ function edit() {
 function editImage() {
     console.log("Entered the edit image function");
 }
-//function getImageFileAsBase64() {
-//    const input = document.getElementById('imageInput');
-//    if (input && input.files && input.files[0]) {
-//        return new Promise((resolve, reject) => {
-//            const reader = new FileReader();
-//            reader.onload = () => resolve(reader.result.split(',')[1]); // Returns base64 without the prefix "data:image/png;base64,"
-//            reader.onerror = reject;
-//            reader.readAsDataURL(input.files[0]);
-//        });
-//    } else {
-//        return Promise.reject("No file selected");
-//    }
-//}
-
-function getImageFile() {
-    console.log("Getting image file");
-    const fileInput = document.getElementById('imageInput');
-    if (fileInput && fileInput.files.length > 0) {
-        return fileInput.files[0].arrayBuffer().then(buffer => new Uint8Array(buffer));
-    }
-    return null;
-};
 
 function cancelEdit() {
     console.log("cancelling edit");
@@ -575,4 +563,4 @@ function toggleDock() {
     }
 }
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage};
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getActiveImageSrc };
