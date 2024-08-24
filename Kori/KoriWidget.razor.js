@@ -9,7 +9,7 @@ let widget = {};
 let widgetActions = {};
 let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-const NodeType = Object.freeze({ TEXT: symbol("text"), IMG: symbol("img") });
+const NodeType = Object.freeze({ TEXT: "text", IMG: "img" });
 
 let koriIgnoreFilter = function (node) {
     if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
@@ -26,6 +26,35 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     language = selectedLanguage;
     dotNet = dotNetObjectReference;
 
+    buildTranslationCache(serverTranslationCache);
+    
+    initKoriElement(targetElementId);
+
+    window.addEventListener("click", e => {
+        e.stopImmediatePropagation();
+        mouseClickHandler(e);
+    });
+
+    initKoriWidget();
+}
+
+function initKoriWidget() {
+    widget = document.getElementById("kori-widget");
+    widgetActions = document.getElementById("kori-widget__actions");
+    document.getElementById("dockButton").addEventListener("click", toggleDock);
+
+    console.log('Kori widget initialized.');
+}
+
+function initKoriElement(targetElementId) {
+    if (/complete|interactive|loaded/.test(document.readyState)) {
+        initElement(targetElementId);
+    } else {
+        window.addEventListener('DOMContentLoaded', () => initElement(targetElementId));
+    }
+}
+
+function buildTranslationCache(serverTranslationCache) {
     if (serverTranslationCache) {
         translationCache = serverTranslationCache;
         for (let key in translationCache)
@@ -40,57 +69,28 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     }
 
     console.log('Kori translation cache initialized from Ibis, ', translationCache);
-
-    if (/complete|interactive|loaded/.test(document.readyState)) {
-        initElement(targetElementId);
-    } else {
-        window.addEventListener('DOMContentLoaded', () => initElement(targetElementId));
-    }
-
-    // mouse click event listener
-    window.addEventListener("click", e => {
-        e.stopImmediatePropagation();
-        mouseClickHandler(e);
-    });
-
-    widget = document.getElementById("kori-widget");
-    widgetActions = document.getElementById("kori-widget__actions");
-    document.getElementById("dockButton").addEventListener("click", toggleDock);
-
-    console.log('Kori widget initialized.');
 }
 
 function initElement(targetElementId) {
     console.log("Initializing element");
-    app = document.getElementById(targetElementId);
-    registerTextNodesUnder(app);
-    translateNodes();
 
-    observer = new MutationObserver(observeCallback);
-    observer.observe(app, { childList: true, characterData: true, subtree: true });
+    app = document.getElementById(targetElementId);
+
+    registerTextAndImgNodesUnder(app);
+    //translateNodes();
+
+    //TODO uncomment this
+    //observer = new MutationObserver(observeCallback);
+    //observer.observe(app, { childList: true, characterData: true, subtree: true });
 
     console.log('Observer registered for ' + targetElementId + '.');
 }
 
-function observeCallback(mutations) {
-    //console.log("Observe callback");
-    mutations.forEach(function (mutation) {
-        if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
-            return;
-
-        if (mutation.type == 'characterData')
-            registerNode(mutation.target, NodeType.TEXT);
-        else
-            mutation.addedNodes.forEach(registerTextNodesUnder);
-
-        translateNodes();
-    });
-}
-
-function registerTextNodesUnder(el) {
+function registerTextAndImgNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
     while (n = walk.nextNode())
-        registerNode(n, NodeType.TEXT);
+        console.log('txt', n);
+        //registerNode(n, NodeType.TEXT);
 
     // Figure out how to create a tree walker for image elements
     // Register the "src" attribute of the image element in exactly the same way as text content
@@ -98,7 +98,8 @@ function registerTextNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
     while (n = walk.nextNode())
         if (n.nodeName == 'IMG')
-            registerNode(n, NodeType.IMG);
+            console.log('img', n);
+            //registerNode(n, NodeType.IMG);
 }
 
 function registerNode(node, nodeType) {
@@ -126,6 +127,21 @@ function registerNode(node, nodeType) {
             Translation: null
         };
     }
+}
+
+function observeCallback(mutations) {
+    //console.log("Observe callback");
+    mutations.forEach(function (mutation) {
+        if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
+            return;
+
+        if (mutation.type == 'characterData')
+            registerNode(mutation.target, NodeType.TEXT);
+        else
+            mutation.addedNodes.forEach(registerTextNodesUnder);
+
+        translateNodes();
+    });
 }
 
 function translateNodes() {
