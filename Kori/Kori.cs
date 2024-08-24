@@ -2,19 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
-using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Components.Forms;
-using System.Reflection.PortableExecutable;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
-public record KoriTextContent(string Id, string Tag, string Language, string Text, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
+public record KoriTextContent(string Id, string Tag, string Language, string Text, string ContentType, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");

@@ -12,7 +12,9 @@ var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
 
 let koriIgnoreFilter = function (node) {
-    if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
+    var approvedNodes = ['#text', 'IMG'];
+
+    if (!approvedNodes.includes(node.nodeName) || node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
         return NodeFilter.FILTER_SKIP;
 
     var closest = node.parentElement.closest('.kori-ignore');
@@ -79,7 +81,7 @@ function observeCallback(mutations) {
             return;
 
         if (mutation.type == 'characterData')
-            registerTextNode(mutation.target);
+            registerNode(mutation.target);
         else
             mutation.addedNodes.forEach(registerTextNodesUnder);
 
@@ -88,45 +90,19 @@ function observeCallback(mutations) {
 }
 
 function registerTextNodesUnder(el) {
-    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
-    while (n = walk.nextNode())
-        registerTextNode(n);
-
-    // Figure out how to create a tree walker for image elements
-    // Register the "src" attribute of the image element in exactly the same way as text content
-    // Use the same translationCache, etc.
-    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
-    while (n = walk.nextNode())
-        if (n.nodeName == 'IMG')
-            registerImageNode(n);
-}
-
-function registerTextNode(node) {
-    if (node.koriRegistered == language || node.koriTranslated == language)
-        return;
-
-    var tag = node.koriContent ?? node.textContent.trim();
-    if (!tag)
-        return;
-
-    node.koriRegistered = language;
-    node.koriContent = tag;
-    node.parentElement?.classList.add('kori-initializing');
-    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
-        translationCache[tag].Nodes.push(node);
-    } else {
-        translationCache[tag] = {
-            Nodes: [node],
-            Translation: null
-        };
+    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
+    while (n = walk.nextNode()) {
+        console.log('Registering node', n.nodeName);
+        registerNode(n);
     }
 }
 
-function registerImageNode(node) {
+function registerNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var tag = node.koriContent ?? node.src.trim();
+    var content = node.nodeName == 'IMG' ? node.src : node.textContent;
+    var tag = node.koriContent ?? content.trim();
     if (!tag)
         return;
 
@@ -176,13 +152,10 @@ function replaceWithTranslatedText() {
 
         for (let node of translation.Nodes) {
             // if the node is an img, replace the src attribute
-            //if (node.nodeName == 'IMG') {
-            //    node.src = translation.Translation;
-            //    node.koriTranslated = language;
-            //    continue;
-            //}
-
-            if (node.textContent != translation.Translation) {
+            if (node.nodeName == 'IMG') {
+                node.src = translation.Translation;
+                node.koriTranslated = language;
+            } else if (node.textContent != translation.Translation) {
                 node.textContent = translation.Translation || "";
                 node.koriTranslated = language;
             }
