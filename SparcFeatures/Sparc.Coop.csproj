@@ -21,6 +21,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Include="Sparc.Blossom.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Kori\Kori.csproj" />
 	</ItemGroup>
 

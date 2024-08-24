@@ -47,11 +47,15 @@
             .kori-login__logged-out {
                 background: var(--grey-900);
             }
-
+            
             .kori-login__logged-in {
                 display: none;
                 background: #36A42C;
                 border-radius: 50%;
+
+                &.show {
+                    display: block;
+                }
             }
         }
 
@@ -81,6 +85,15 @@
                 font-family: Lato;
                 font-weight: 700;
                 line-height: 160%;
+                transition: 300ms ease-in-out;
+
+                &:hover {
+                    background: var(--grey-50);
+                }
+
+                &:active {
+                    background: var(--white);
+                }
             }
         }
 
@@ -93,7 +106,28 @@
         &__user {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 16px;
+
+            .kori-login__logout-btn {
+                padding: 0 !important;
+                background: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                &:hover {
+                    opacity: 0.5;
+                }
+
+                &:active {
+                    opacity: 1;
+                }
+            }
         }
 
         &__btn {
@@ -121,13 +155,9 @@
 
                 &.show {
                     padding-bottom: 16px;
-                    max-height: 200px;
+                    max-height: 400px;
                     opacity: 1;
                 }
-            }
-
-            .list-header {
-                font-style: italic;
             }
 
             ul {

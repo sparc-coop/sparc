@@ -24,7 +24,8 @@
             </div>
             @if(ToggleContact != "toggle-show")
             {
-                <button @onclick="@Toggle" class="join btn-red">Join Community</button>   
+                <button @onclick="@Toggle" class="join btn-red">Join Community</button>
+                <Sparc.Blossom.Passwordless.GlobalLogin LanguageId=@K.Language />
             }
         </div>
     </div>

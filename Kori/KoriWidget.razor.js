@@ -176,16 +176,31 @@ let playAudio = function (url) {
 function mouseClickHandler(e) {
     var t = e.target;
 
+    // click login menu
     if (t.closest(".kori-login__toggle")) {
         document.getElementsByClassName("kori-login__menu")[0].classList.add("show");
     }
 
-    // click login menu
+    // login
     if (t.closest(".kori-login__btn")) {
         koriAuthorized = true;
         if (koriAuthorized) {
-            document.getElementById("kori-login").classList.remove("show");
             document.body.classList.add("kori-loggedin"); // add the class to <body>
+            document.getElementsByClassName("kori-login__logged-out")[0].remove("show");
+            document.getElementsByClassName("kori-login__logged-in")[0].add("show");
+            document.getElementsByClassName("kori-login__menu")[0].remove("show");
+        }
+    }
+
+    // logout
+    if (t.closest(".kori-login__logout-btn")) {
+        koriAuthorized = false;
+        if (koriAuthorized) {
+            document.getElementById("kori-login__menu").classList.remove("show");
+            document.body.classList.remove("kori-loggedin"); // remove the class to <body>
+            document.getElementsByClassName("kori-login__logged-out")[0].add("show");
+            document.getElementsByClassName("kori-login__logged-in")[0].remove("show");
+            document.getElementsByClassName("kori-login__menu")[0].remove("show");
         }
     }
 

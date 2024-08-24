@@ -47,6 +47,9 @@
   background: #36A42C;
   border-radius: 50%;
 }
+.kori-login-2 .kori-login__toggle .kori-login__logged-in.show {
+  display: block;
+}
 .kori-login-2 .kori-login__menu {
   width: 200px;
   display: none;
@@ -71,6 +74,13 @@
   font-family: Lato;
   font-weight: 700;
   line-height: 160%;
+  transition: 300ms ease-in-out;
+}
+.kori-login-2 .kori-login__menu button:hover {
+  background: var(--grey-50);
+}
+.kori-login-2 .kori-login__menu button:active {
+  background: var(--white);
 }
 .kori-login-2 .kori-login__actions {
   display: flex;
@@ -80,7 +90,24 @@
 .kori-login-2 .kori-login__user {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 16px;
+}
+.kori-login-2 .kori-login__user .kori-login__logout-btn {
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+.kori-login-2 .kori-login__user .kori-login__logout-btn img {
+  width: 20px;
+  height: 20px;
+}
+.kori-login-2 .kori-login__user .kori-login__logout-btn:hover {
+  opacity: 0.5;
+}
+.kori-login-2 .kori-login__user .kori-login__logout-btn:active {
+  opacity: 1;
 }
 .kori-login-2 .kori-login__btn {
   display: flex;
@@ -104,11 +131,8 @@
 }
 .kori-login-2 .kori-login__language .language-list.show {
   padding-bottom: 16px;
-  max-height: 200px;
+  max-height: 400px;
   opacity: 1;
-}
-.kori-login-2 .kori-login__language .list-header {
-  font-style: italic;
 }
 .kori-login-2 .kori-login__language ul {
   display: flex;

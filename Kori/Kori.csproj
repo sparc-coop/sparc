@@ -4,6 +4,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>b07fef94-6d81-4218-9b5b-4253e113b41c</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,6 +14,11 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj" />
+		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Server.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" />
+		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Server\Sparc.Blossom.csproj" />
+		<ProjectReference Include="..\..\kodekit\Sparc.Blossom.Passwordless\Sparc.Blossom.Passwordless.csproj" />
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
