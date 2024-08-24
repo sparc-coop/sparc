@@ -1,4 +1,5 @@
-﻿@using Microsoft.JSInterop
+﻿@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.AspNetCore.Components.Forms
 <div id="kori-widget" class="kori-widget kori-ignore">
     <div id="kori-widget__actions" class="kori-widget__actions kori-buddy__enabled">
         <img class="kori-buddy" src="/_content/Kori/images/kori-buddy.svg" />
@@ -57,7 +58,9 @@
                         <h5>Edit your image.</h5>
                     </div>
                     <div class="kori-edit__options">
-                        <input type="file" id="imageInput" accept="image/*" @onchange="Kori.OnFileSelectedAsync" />
+                        <form enctype="multipart/form-data" method="post">                            
+                            <InputFile OnChange="Kori.OnImageSelected" id="image-input" accept="image/*" />
+                        </form>
                     </div>
                     <div class="kori-edit__actions">
                         <button class="kori-edit__cancel kori__btn" @onclick="Kori.CancelAsync">Cancel</button>

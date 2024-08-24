@@ -9,10 +9,12 @@ let widget = {};
 let widgetActions = {};
 let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-const NodeType = Object.freeze({ TEXT: "text", IMG: "img" });
+
 
 let koriIgnoreFilter = function (node) {
-    if (node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
+    var approvedNodes = ['#text', 'IMG'];
+
+    if (!approvedNodes.includes(node.nodeName) || node.parentNode.nodeName == 'SCRIPT' || node.koriTranslated == language)
         return NodeFilter.FILTER_SKIP;
 
     var closest = node.parentElement.closest('.kori-ignore');
@@ -76,7 +78,7 @@ function initElement(targetElementId) {
 
     app = document.getElementById(targetElementId);
 
-    registerTextAndImgNodesUnder(app);
+    registerNodesUnder(app);
     //translateNodes();
 
     //TODO uncomment this
@@ -86,27 +88,21 @@ function initElement(targetElementId) {
     console.log('Observer registered for ' + targetElementId + '.');
 }
 
-function registerTextAndImgNodesUnder(el) {
-    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, koriIgnoreFilter);
-    while (n = walk.nextNode())
-        console.log('txt', n);
-        //registerNode(n, NodeType.TEXT);
-
-    // Figure out how to create a tree walker for image elements
-    // Register the "src" attribute of the image element in exactly the same way as text content
-    // Use the same translationCache, etc.
-    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
-    while (n = walk.nextNode())
-        if (n.nodeName == 'IMG')
-            console.log('img', n);
-            //registerNode(n, NodeType.IMG);
+function registerNodesUnder(el) {
+    var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
+    while (n = walk.nextNode()){
+        console.log('Registering node', n.nodeName);
+         //registerNode(n);
+    }
+        
 }
 
-function registerNode(node, nodeType) {
+function registerNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
-    var tag = node.koriContent ?? nodeType == NodeType.IMG ? node.src.trim() : node.textContent.trim();
+    var content = node.nodeName == 'IMG' ? node.src.trim() : node.textContent.trim();
+    var tag = node.koriContent ?? content.trim();
     if (!tag)
         return;
 
@@ -117,6 +113,7 @@ function registerNode(node, nodeType) {
     if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
         translationCache[tag].Nodes.push(node);
         
+        //TODO check this logic
         if (translationCache[tag].id !== undefined && nodeType == NodeType.TEXT) {
             node.parentElement.setAttribute('kori-id', translationCache[tag].id);
         }
@@ -182,12 +179,9 @@ function replaceWithTranslatedText() {
             if (node.nodeName == 'IMG') {
                 node.src = translation.Translation;
                 node.koriTranslated = language;
-                continue;
-            }
-
-            if (translation.text && node.textContent != translation.text) {
+            } else if (node.textContent != translation.Translation) {
                 node.textContent = translation.text || "";
-                
+                //node.textContent = translation.Translation || "";
                 node.koriTranslated = language;
             }
 
@@ -204,7 +198,7 @@ function replaceWithTranslatedText() {
         }
     }
 
-   // console.log('Translated page from Ibis and enabled Kori widget.');
+    console.log('Translated page from Ibis and enabled Kori widget.');
 
     observer.observe(app, { childList: true, characterData: true, subtree: true });
 }
@@ -318,6 +312,16 @@ function toggleWidget(t) {
 
     // after the widget is shown, make it draggable
     makeWidgetDraggable();
+}
+
+function getActiveImageSrc() {
+    if (activeNode && activeNode.tagName === 'IMG') {
+        return activeNode.src;
+        console.log('Active node is an image', activeNode.src);
+    }
+
+    console.log('Active node is not an image', activeNode)
+    return null; 
 }
 
 function edit() {
@@ -682,4 +686,4 @@ function moveWidgetToRootElement() {
 }
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getActiveImageSrc };
