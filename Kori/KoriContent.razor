@@ -17,6 +17,7 @@
     {
         if (firstRender)
         {
+            
             await Kori.InitializeAsync(this, Nav.Uri, _id);
             Nav.LocationChanged += async (sender, args) => await Kori.InitializeAsync(this, args.Location, _id);
             // StateHasChanged();
@@ -38,9 +39,11 @@
     }
 
     [JSInvokable]
-    public void BackToEdit()
+    public async Task<bool> BackToEditAsync()
     {
         Kori.BackToEdit();
         StateHasChanged();
+
+        return await Task.FromResult(true);
     }
 }

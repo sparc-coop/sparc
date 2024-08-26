@@ -10,7 +10,6 @@ let widgetActions = {};
 let activeNode = null, activeMessageId = null;
 var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-
 let koriIgnoreFilter = function (node) {
     var approvedNodes = ['#text', 'IMG'];
 
@@ -40,22 +39,6 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     initKoriWidget();
 }
 
-function initKoriWidget() {
-    widget = document.getElementById("kori-widget");
-    widgetActions = document.getElementById("kori-widget__actions");
-    document.getElementById("dockButton").addEventListener("click", toggleDock);
-
-    console.log('Kori widget initialized.');
-}
-
-function initKoriElement(targetElementId) {
-    if (/complete|interactive|loaded/.test(document.readyState)) {
-        initElement(targetElementId);
-    } else {
-        window.addEventListener('DOMContentLoaded', () => initElement(targetElementId));
-    }
-}
-
 function buildTranslationCache(serverTranslationCache) {
     if (serverTranslationCache) {
         translationCache = serverTranslationCache;
@@ -73,17 +56,33 @@ function buildTranslationCache(serverTranslationCache) {
     console.log('Kori translation cache initialized from Ibis, ', translationCache);
 }
 
+function initKoriElement(targetElementId) {
+    if (/complete|interactive|loaded/.test(document.readyState)) {
+        initElement(targetElementId);
+    } else {
+        window.addEventListener('DOMContentLoaded', () => initElement(targetElementId));
+    }
+}
+
+function initKoriWidget() {
+    widget = document.getElementById("kori-widget");
+    widgetActions = document.getElementById("kori-widget__actions");
+    document.getElementById("dockButton").addEventListener("click", toggleDock);
+
+    console.log('Kori widget initialized.');
+}
+
+
 function initElement(targetElementId) {
     console.log("Initializing element");
 
     app = document.getElementById(targetElementId);
 
     registerNodesUnder(app);
-    //translateNodes();
+    translateNodes();
 
-    //TODO uncomment this
-    //observer = new MutationObserver(observeCallback);
-    //observer.observe(app, { childList: true, characterData: true, subtree: true });
+    observer = new MutationObserver(observeCallback);
+    observer.observe(app, { childList: true, characterData: true, subtree: true });
 
     console.log('Observer registered for ' + targetElementId + '.');
 }
@@ -92,7 +91,7 @@ function registerNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
     while (n = walk.nextNode()){
         console.log('Registering node', n.nodeName);
-         //registerNode(n);
+        registerNode(n);
     }
         
 }
@@ -113,8 +112,7 @@ function registerNode(node) {
     if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
         translationCache[tag].Nodes.push(node);
         
-        //TODO check this logic
-        if (translationCache[tag].id !== undefined && nodeType == NodeType.TEXT) {
+        if (translationCache[tag].id !== undefined && node.nodeName == '#text') {
             node.parentElement.setAttribute('kori-id', translationCache[tag].id);
         }
 
@@ -127,7 +125,8 @@ function registerNode(node) {
 }
 
 function observeCallback(mutations) {
-    //console.log("Observe callback");
+    console.log("Observe callback");
+    
     mutations.forEach(function (mutation) {
         if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
@@ -135,7 +134,7 @@ function observeCallback(mutations) {
         if (mutation.type == 'characterData')
             registerNode(mutation.target, NodeType.TEXT);
         else
-            mutation.addedNodes.forEach(registerTextNodesUnder);
+            mutation.addedNodes.forEach(registerNodesUnder);
 
         translateNodes();
     });
@@ -143,7 +142,9 @@ function observeCallback(mutations) {
 
 function translateNodes() {
     console.log('translateNodes');
+
     var contentToTranslate = [];
+
     for (let key in translationCache) {
         if (!translationCache[key].Submitted && !translationCache[key].Translation) {
             translationCache[key].Submitted = true;
@@ -152,7 +153,8 @@ function translateNodes() {
     }
 
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
-        //console.log('Received new translations from Ibis.', translations);
+        console.log('Received new translations from Ibis.', translations);
+
         for (var i = 0; i < translations.length; i++) {
             console.log(translations[i]);
             if (translations[i] === "") {
@@ -168,8 +170,12 @@ function translateNodes() {
 function replaceWithTranslatedText() {
     observer.disconnect();
 
+    console.log('replaceWithTranslatedText - translationCache', translationCache);
+
     for (let key in translationCache) {
         var translation = translationCache[key];
+
+        console.log('translation', translation);
 
         if (!translation.Translation)
             continue;
@@ -192,8 +198,8 @@ function replaceWithTranslatedText() {
                 node.parentElement?.classList.add('empty-content');
             }
 
-            if (translation.text && node.parentElement) {
-                node.parentElement.innerHTML = removePTag(translation.html);
+            if (node.nodeName == '#text' && translation.text && node.parentElement) {
+                node.parentElement.innerHTML = translation.html;
             }
         }
     }
@@ -201,17 +207,6 @@ function replaceWithTranslatedText() {
     console.log('Translated page from Ibis and enabled Kori widget.');
 
     observer.observe(app, { childList: true, characterData: true, subtree: true });
-}
-
-function removePTag(html) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const pTag = doc.querySelector('p');
-    if (pTag) {
-        return pTag.innerHTML;
-    } else {
-        return html;
-    }
 }
 
 function getBrowserLanguage() {
@@ -262,7 +257,11 @@ function toggleSelected(t) {
         if (widget.classList.contains("docked")) {
             document.body.style.marginRight = '0';
         }
-        resetWidgetPosition();
+
+        if (activeMessageId) {
+            cancelEdit();
+        }
+        
         activeNode = null;
         return;
     }
@@ -355,11 +354,14 @@ function activateNodeEdition(node) {
     node.focus();
 }
 
-function deactivateNodeEdition(node) {
+function deactivateNodeEdition(node, translation) {
     node.contentEditable = "false";
     node.classList.remove('kori-ignore');
     node.classList.remove('selected');
-    node.innerHTML = removePTag(translation.html);
+    
+    resetWidget();
+
+    node.innerHTML = translation.html;
 }
 
 function getActiveNodeParentByKoriId(translation) {
@@ -389,22 +391,30 @@ function editImage() {
 function cancelEdit() {
     console.log("cancelling edit");
 
-    console.log('active node', activeNode);
-
-    activeNode.parentElement.contentEditable = "false";
-    activeNode.parentElement.classList.remove('selected');
-    widget.classList.remove("show");
-
     var translation = translationCache[activeMessageId];
 
     if (isTranslationAlreadySaved(translation)) {
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
-        deactivateNodeEdition(activeNodeParent);
+        deactivateNodeEdition(activeNodeParent, translation);
     }else {
-        activeNode.textContent = translation.Translation; //TODO check this
+        activeNode.textContent = translation.Translation;
+        activeNode.parentElement.contentEditable = "false";
+        activeNode.parentElement.classList.remove('selected');
     }
+
 }
 
+function getActiveNodeTextContent(translation) {
+    var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
+
+    var copyNode = activeNodeParent.cloneNode(true);
+    var koriWidget = copyNode.querySelector('#kori-widget');
+
+    return copyNode.textContent.replace(koriWidget.textContent, '');
+}
+
+// Here we just need to make sure that we are updating img src in the same way as
+// we are updating text content
 function save() {
     if (!activeNode)
         return;
@@ -413,58 +423,36 @@ function save() {
     console.log("translation: ", translation);
     var textContent = activeNode.textContent;
     
-    if (translation.id) {
-        var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
-
-        var copyNode = activeNodeParent.cloneNode(true);
-        console.log('copy node', copyNode.children);
-        var koriWidget = copyNode.querySelector('#kori-widget');
-        //moveWidgetToRootElement();
-        //copyNode.removeChild(copyNode.lastChild);
-        textContent = copyNode.textContent.replace(koriWidget.textContent, '');
-        
-        console.log('node', activeNodeParent);
-        console.log('active node parent', copyNode);
+    if (isTranslationAlreadySaved(translation)) {
+        textContent = getActiveNodeTextContent(translation);
     }
 
-    dotNet.invokeMethodAsync("SaveAsync", activeMessageId, textContent).then(content => {
-        console.log('Saved new content to Ibis.', content);
-        console.log('parent element', activeNode.parentElement);
-        // I don't think anything needs to change here for images,
-        // because we are treating img src the same way as text content
-
+    dotNet.invokeMethodAsync("BackToEditAsync").then(r => {
         
-        translationCache[activeMessageId].Translation = content.text;
+        dotNet.invokeMethodAsync("SaveAsync", activeMessageId, textContent).then(content => {
+            console.log('Saved new content to Ibis.', content);
 
-        activeNode.parentElement.contentEditable = "false";
-        activeNode.parentElement.classList.remove('kori-ignore');
+            translationCache[activeMessageId].Translation = content.text;
+            translationCache[activeMessageId].text = content.text;
+            translationCache[activeMessageId].html = content.html;
 
-        if (translation.id) {
-            var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
-            console.log('active node parent', activeNodeParent);
-            //TODO deactivate function
-            activeNodeParent.contentEditable = "false";
-            activeNodeParent.classList.remove('kori-ignore');
-            activeNodeParent.classList.remove('selected');
-            //moveWidgetToRootElement();
-            //activeNodeParent.innerHTML = removePTag(content.html)
-            replaceInnerHtml(activeNodeParent, removePTag(content.html));
+            activeNode.parentElement.contentEditable = "false";
+            activeNode.parentElement.classList.remove('kori-ignore');
 
+            if (translation.id) {
 
-        } else {
-            translationCache[activeMessageId].id = content.id;
-            activeNode.parentElement?.setAttribute('kori-id', content.id);
-            //moveWidgetToRootElement();
-            //activeNode.parentElement.innerHTML = removePTag(content.html);
-            replaceInnerHtml(activeNode.parentElement, removePTag(content.html));
-        }
+                var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
+                deactivateNodeEdition(activeNodeParent, translation);
 
-        
-        dotNet.invokeMethodAsync("BackToEdit").then(r => console.log('backToEdit'));
-        // Here we just need to make sure that we are updating img src in the same way as 
-        // we are updating text content
-        //replaceWithTranslatedText();
+            } else {
+                translationCache[activeMessageId].id = content.id;
+                activeNode.parentElement?.setAttribute('kori-id', content.id);
+            }
+            
+        });
     });
+
+    
 }
 
 // function to check if an element is a descendant of an element with a specific class
@@ -618,6 +606,15 @@ function makeWidgetDraggable() {
     }
 }
 
+function resetWidget() {
+    resetWidgetPosition();
+
+    // Move the widget back to the body root
+    document.body.appendChild(widget);
+
+    // Hide the widget
+    widget.style.display = 'none';
+}
 function resetWidgetPosition() {
     // do not reset position if widget is docked
     if (widget.classList.contains("docked")) {
@@ -676,14 +673,16 @@ function applyMarkdown(symbol) {
     }
 }
 
-function moveWidgetToRootElement() {
-    var widget = document.getElementById("kori-widget");
-    if (widget) {
-        document.documentElement.appendChild(widget);
-        widget.classList.remove('show');
-    }
+function updateImageSrc(currentSrc, newSrc) {
+    var img = document.querySelector(`img[src="${currentSrc}"]`);
     
+    if (img) {
+        img.src = newSrc;
+        translationCache[activeMessageId].text = newSrc;
+        console.log("Image src updated", img);
+    }
 }
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, getActiveImageSrc };
+
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc };

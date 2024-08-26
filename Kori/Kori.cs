@@ -1,19 +1,16 @@
-﻿using Markdig;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Components.Forms;
 
 namespace Kori;
 public record KoriWord(string Text, long Duration, long Offset);
 public record KoriAudioContent(string Url, long Duration, string Voice, ICollection<KoriWord> Subtitles);
-public record KoriTextContent(string Id, string Tag, string Language, string Text, string ContentType, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
+public record KoriTextContent(string Id, string Tag, string Language, string Text, string Html, string ContentType, KoriAudioContent Audio, List<object>? Nodes, bool Submitted = true);
 public class Kori(IJSRuntime js) : IAsyncDisposable
 {
     public static Uri BaseUri { get; set; } = new("https://localhost");
@@ -27,6 +24,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
     public record IbisContent(string Name, string Slug, string Language, ICollection<KoriTextContent> Content);
+    
     public async Task InitializeAsync(HttpContext context)
     {
         await GetContentAsync(context.Request.Path);
@@ -59,7 +57,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             _content[item.Tag] = item with { Nodes = [] };
 
         // Replace nodes with their translation
-        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Html ?? value.Text): x).ToList();
+        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text): x).ToList();
         return nodes;
     }
 
@@ -110,12 +108,11 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         }
     }
 
-    // If the node is text, call this
     public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
         var request = new { RoomSlug, Language, Tag = key, Text = text };
         var result = await PostAsync<KoriTextContent>("publicapi/TypeMessage", request);
-        await CancelAsync();
+
         return result;
     }
 
@@ -132,12 +129,12 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         selectedImage = e.File;
     }
 
-    // If the node is IMG, call this
     private async Task SaveImageAsync(string key, IBrowserFile imageFile)
     {
         using var content = new MultipartFormDataContent();
 
-        var fileContent = new StreamContent(imageFile.OpenReadStream(maxAllowedSize: 1024 * 1024 * 15)); // tamanho máximo do arquivo 15MB
+        var size15MB = 1024 * 1024 * 15;
+        var fileContent = new StreamContent(imageFile.OpenReadStream(maxAllowedSize: size15MB));
         fileContent.Headers.ContentType = new MediaTypeHeaderValue(imageFile.ContentType);
         content.Add(fileContent, "File", imageFile.Name);
 
@@ -145,41 +142,23 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         content.Add(new StringContent(Language), "Language");
         content.Add(new StringContent(key), "Tag");
 
-        // If wanting to use the anti-forgery token
-        // Gets the JSON of the anti-forgery token
-        //var getTokenJson = await Client.GetStringAsync("/antiforgery/token");
-        // Deserialize the JSON to get the actual token
-        //var tokenObj = JsonSerializer.Deserialize<Dictionary<string, string>>(getTokenJson);
-        //var token = tokenObj["token"]; 
-        //if (!string.IsNullOrEmpty(token))
-        //{
-        //    content.Headers.Add("X-XSRF-TOKEN", token);
-        //}
+        var response = await Client.PostAsync("publicapi/UploadImage", content);
 
-        var result = await Client.PostAsync("publicapi/UploadImage", content);
+        var result = await response.Content.ReadAsStringAsync();
+        var savedImg = JsonSerializer.Deserialize<KoriTextContent>(result, JsonOptions);
 
-        if (result.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
         {
+            var js = await KoriJs.Value;
+            await js.InvokeVoidAsync("updateImageSrc", key, savedImg.Text);
             Console.WriteLine("Image sent successfully!");
         }
         else
         {
-            Console.WriteLine("Error sending image: " + result.StatusCode);
+            Console.WriteLine("Error sending image: " + response.StatusCode);
         }
     }
     
-    // If the node is IMG, call this
-    //public async Task<KoriTextContent> SaveImageAsync(string key, byte[] bytes)
-    //{
-    //    var request = new { RoomSlug, Language, Tag = key };
-
-    //    // How to upload image to server API????
-    //    // One possible hint: https://learn.microsoft.com/en-us/aspnet/core/blazor/file-uploads?view=aspnetcore-8.0#upload-files-to-a-server
-    //    var result = await PostAsync<KoriTextContent>("publicapi/UploadImage", request);//, bytes);
-    //    await CancelAsync();
-    //    return result;
-    //}
-
     public async Task PlayAsync(KoriTextContent content)
     {
         if (content?.Audio?.Url == null)
@@ -188,16 +167,6 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("playAudio", content.Audio.Url);
     }
-
-    public MarkupString Content(string tag, int loremIpsumWordCount = 0)
-    {
-        if (!_content.TryGetValue(tag, out KoriTextContent? value))
-            return new(LoremIpsum(loremIpsumWordCount));
-
-        return new(value.Html ?? value.Text);
-    }
-
-    public MarkupString this[string tag] => Content(tag);
 
     public async ValueTask DisposeAsync()
     {
