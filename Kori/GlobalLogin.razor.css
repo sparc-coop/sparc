@@ -1,22 +1,31 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-.kori-login-2 {
+﻿@font-face {
+  font-family: "Lato";
+  font-weight: 400;
+  src: url("/_content/Kori/fonts/Lato-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Lato";
+  font-weight: 700;
+  src: url("/_content/Kori/fonts/Lato-Bold.ttf") format("truetype");
+}
+.login-component {
   display: flex;
   flex-direction: row-reverse;
   gap: 16px;
   position: absolute;
   top: 0;
-  right: 24px;
+  right: 16px;
   font-family: Lato;
   font-weight: 400;
   line-height: 160%;
 }
-.kori-login-2 .kori-login__toggle {
+.login-component .login-component__toggle {
   display: none;
 }
-.kori-login-2 .kori-login__toggle.show {
+.login-component .login-component__toggle.show {
   display: block;
 }
-.kori-login-2 .kori-login__toggle > * {
+.login-component .login-component__toggle > * {
   width: 32px;
   height: 32px;
   padding: 0;
@@ -25,23 +34,23 @@
   justify-content: center;
   align-items: center;
 }
-.kori-login-2 .kori-login__toggle > * img {
+.login-component .login-component__toggle > * img {
   width: 20px;
   height: 20px;
   margin: 0;
 }
-.kori-login-2 .kori-login__toggle .kori-login__logged-out {
+.login-component .login-component__toggle .login-component__logged-out {
   background: var(--grey-900);
 }
-.kori-login-2 .kori-login__toggle .kori-login__logged-in {
+.login-component .login-component__toggle .login-component__logged-in {
   display: none;
   background: #36A42C;
   border-radius: 50%;
 }
-.kori-login-2 .kori-login__toggle .kori-login__logged-in.show {
+.login-component .login-component__toggle .login-component__logged-in.show {
   display: block;
 }
-.kori-login-2 .kori-login__menu {
+.login-component .login-component__menu {
   width: 200px;
   display: none;
   animation: login_fadeIn 1000ms linear;
@@ -49,15 +58,15 @@
   padding: 16px 16px 0px 16px;
   background: white;
 }
-.kori-login-2 .kori-login__menu.show {
+.login-component .login-component__menu.show {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.kori-login-2 .kori-login__menu li, .kori-login-2 .kori-login__menu button {
+.login-component .login-component__menu li, .login-component .login-component__menu button {
   color: var(--grey-700) !important;
 }
-.kori-login-2 .kori-login__menu button {
+.login-component .login-component__menu button {
   padding: 16px 20px !important;
   border: 1px solid var(--grey-200, #DBDBDB) !important;
   border-radius: 0 !important;
@@ -67,48 +76,48 @@
   line-height: 160%;
   transition: 300ms ease-in-out;
 }
-.kori-login-2 .kori-login__menu button:hover {
+.login-component .login-component__menu button:hover {
   background: var(--grey-50);
 }
-.kori-login-2 .kori-login__menu button:active {
+.login-component .login-component__menu button:active {
   background: var(--white);
 }
-.kori-login-2 .kori-login__actions {
+.login-component .login-component__actions {
   display: flex;
   flex-direction: column;
   gap: 16px !important;
 }
-.kori-login-2 .kori-login__user {
+.login-component .login-component__user {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
 }
-.kori-login-2 .kori-login__user .kori-login__logout-btn {
+.login-component .login-component__user .login-component__logout-btn {
   padding: 0 !important;
   background: none !important;
   border: none !important;
   border-radius: 0 !important;
 }
-.kori-login-2 .kori-login__user .kori-login__logout-btn img {
+.login-component .login-component__user .login-component__logout-btn img {
   width: 20px;
   height: 20px;
 }
-.kori-login-2 .kori-login__user .kori-login__logout-btn:hover {
+.login-component .login-component__user .login-component__logout-btn:hover {
   opacity: 0.5;
 }
-.kori-login-2 .kori-login__user .kori-login__logout-btn:active {
+.login-component .login-component__user .login-component__logout-btn:active {
   opacity: 1;
 }
-.kori-login-2 .kori-login__btn {
+.login-component .login-component__btn {
   display: flex;
   gap: 16px;
 }
-.kori-login-2 .kori-login__btn img {
+.login-component .login-component__btn img {
   width: 10px;
   height: auto;
 }
-.kori-login-2 .kori-login__language .language-list {
+.login-component .login-component__language .language-list {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
@@ -120,12 +129,12 @@
   -ms-transition: all 1s ease-in-out;
   -o-transition: all 1s ease-in-out;
 }
-.kori-login-2 .kori-login__language .language-list.show {
+.login-component .login-component__language .language-list.show {
   padding-bottom: 16px;
   max-height: 400px;
   opacity: 1;
 }
-.kori-login-2 .kori-login__language ul {
+.login-component .login-component__language ul {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -136,31 +145,31 @@
   margin-right: -16px;
   padding-right: 16px;
 }
-.kori-login-2 .kori-login__language li {
+.login-component .login-component__language li {
   list-style: none;
 }
-.kori-login-2 .kori-login.show {
+.login-component .login-component.show {
   display: flex;
   gap: 12px;
 }
-.kori-login-2 .kori-login .kori-buddy {
+.login-component .login-component .kori-buddy {
   width: 88px;
 }
-.kori-login-2 .kori-login__container {
+.login-component .login-component__container {
   padding: 12px;
   background: var(--white);
   border-radius: 0 0 16px 16px;
 }
-.kori-login-2 .kori-login h5, .kori-login-2 .kori-login input, .kori-login-2 .kori-login label, .kori-login-2 .kori-login button {
+.login-component .login-component h5, .login-component .login-component input, .login-component .login-component label, .login-component .login-component button {
   font-family: "Love Ya Like A Sister" !important;
   font-size: 14px;
   color: var(--grey-900);
   font-weight: 400;
 }
-.kori-login-2 .kori-login__header {
+.login-component .login-component__header {
   margin-bottom: 12px;
 }
-.kori-login-2 .kori-login__input {
+.login-component .login-component__input {
   display: flex;
   gap: 8px;
   padding: 0;
@@ -168,22 +177,22 @@
   border: 10px solid transparent;
   border-image: url("/_content/Kori/borders/black-16.svg") 15 round;
 }
-.kori-login-2 .kori-login__input input {
+.login-component .login-component__input input {
   padding: 0;
   border: none;
 }
-.kori-login-2 .kori-login__input input::placeholder {
+.login-component .login-component__input input::placeholder {
   color: var(--grey-500);
 }
-.kori-login-2 .kori-login__input input:-ms-input-placeholder {
+.login-component .login-component__input input:-ms-input-placeholder {
   color: var(--grey-500);
 }
-.kori-login-2 .kori-login__keep {
+.login-component .login-component__keep {
   display: flex;
   gap: 8px;
   font-size: 14px;
 }
-.kori-login-2 .kori-login__keep input {
+.login-component .login-component__keep input {
   margin-top: 6px;
   width: 14px;
   height: 14px;
@@ -191,17 +200,17 @@
   border-image: url("/_content/Kori/borders/black-8.svg") 15 round;
   border-radius: 2px;
 }
-.kori-login-2 .kori-login__keep input::before {
+.login-component .login-component__keep input::before {
   background: var(--grey-700);
   box-shadow: var(--grey-700);
 }
-.kori-login-2 .kori-login__actions {
+.login-component .login-component__actions {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 12px;
 }
-.kori-login-2 .kori-login__actions button {
+.login-component .login-component__actions button {
   width: 100%;
   padding: 0;
   background: none;
@@ -209,7 +218,7 @@
   border-image: url("/_content/Kori/borders/black-8.svg") 15 round;
   font-style: normal;
 }
-.kori-login-2 .kori-login__actions button.kori-login__btn {
+.login-component .login-component__actions button.login-component__btn {
   width: calc(100% - 4px);
   height: calc(100% - 4px);
   margin: 0 auto;
@@ -217,17 +226,17 @@
   border-radius: 8px;
   border-image-outset: 2px;
 }
-.kori-login-2 .kori-login__actions button.kori-login__btn:hover {
+.login-component .login-component__actions button.login-component__btn:hover {
   background: var(--orange-200) !important;
   filter: opacity(1) !important;
 }
-.kori-login-2 .kori-login__actions button.kori-login__btn:active {
+.login-component .login-component__actions button.login-component__btn:active {
   background: var(--orange-500) !important;
 }
-.kori-login-2 .kori-login__actions button.kori-login__cancel:hover {
+.login-component .login-component__actions button.login-component__cancel:hover {
   filter: opacity(0.6) !important;
 }
-.kori-login-2 .kori-login__actions button.kori-login__cancel:active {
+.login-component .login-component__actions button.login-component__cancel:active {
   filter: opacity(1) !important;
 }
 

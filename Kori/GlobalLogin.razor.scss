@@ -1,17 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-.kori-login-2 {
+.login-component {
     display: flex;
     flex-direction: row-reverse;
     gap: 16px;
     position: absolute;
     top: 0;
-    right: 24px;
+    right: 16px;
     font-family: Lato;
     font-weight: 400;
     line-height: 160%;
 
-    .kori-login {
+    .login-component {
         &__toggle {
             display: none;
 
@@ -35,11 +35,11 @@
                 }
             }
 
-            .kori-login__logged-out {
+            .login-component__logged-out {
                 background: var(--grey-900);
             }
-            
-            .kori-login__logged-in {
+
+            .login-component__logged-in {
                 display: none;
                 background: #36A42C;
                 border-radius: 50%;
@@ -100,7 +100,7 @@
             align-items: center;
             gap: 16px;
 
-            .kori-login__logout-btn {
+            .login-component__logout-btn {
                 padding: 0 !important;
                 background: none !important;
                 border: none !important;
@@ -250,7 +250,7 @@
                 border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
                 font-style: normal;
 
-                &.kori-login__btn {
+                &.login-component__btn {
                     width: calc(100% - 4px);
                     height: calc(100% - 4px);
                     margin: 0 auto;
@@ -268,7 +268,7 @@
                     }
                 }
 
-                &.kori-login__cancel {
+                &.login-component__cancel {
                     &:hover {
                         filter: opacity(0.6) !important;
                     }
