@@ -1,26 +1,22 @@
 ﻿@page "/Projects"
+@layout MainLayout
 
 <div class="project-list-page">
-    
-    <section class="hero-header">
-         <div class="container">
-             <div class="header">
-                <div class="icon-wrapper">
-                <img src="./images/icons/09-yellow.svg" />
-                </div>
-                <div>
-                    <h2 class="title-1">Every great idea begins with a sparc. Explore our journey to bring some of our ideas to sustainable reality.</h2>
-                </div>
-@*                <div class="project-tags">
-                    <button class="btn-small tag">Productivity</button>
-                    <button class="btn-small tag">Ideas</button>
-                    <button class="btn-small tag">Creativity</button>
-                    <button class="btn-small tag">Inpirational</button>
-                    <button class="btn-small tag">Motivative</button>
-                </div>
-*@             </div>
+    <header>
+        <div class="icon-wrapper">
+            <img src="./images/icons/09-yellow.svg" />
         </div>
-    </section>
+        <h2 class="title-1">
+            Every great idea begins with a sparc. Explore our journey to bring some of our ideas to sustainable reality.
+        </h2>
+        <div class="project-tags">
+            <button class="btn-small tag">Productivity</button>
+            <button class="btn-small tag">Ideas</button>
+            <button class="btn-small tag">Creativity</button>
+            <button class="btn-small tag">Inpirational</button>
+            <button class="btn-small tag">Motivative</button>
+        </div>      
+    </header>
 
     <section class="project-list-wrapper">
 @*        <div class="filters">
@@ -40,28 +36,28 @@
             <ProjectCard 
                 Title="KodeKit" 
                 Status="Live"
-                ImgUrl="/images/Laptop.png"
+                ImgUrl="/images/projects/Kodekit mockup.png"
                 Link="https://www.kodekit.io/"
                 Github="https://github.com/sparc-coop/kodekit"
                 Content="@KodekitText"
                 ChannelId="kodekit-content"/>
             <ProjectCard Title="Ibis" 
                 Status="Live"
-                ImgUrl="/images/ibis.png"
+                ImgUrl="/images/projects/Ibis mockup.png"
                 Link="https://ibis.chat"
                 Github="https://github.com/sparc-coop/ibis"
                 Content="@IbisText"
                 ChannelId="ibis-content"/>
             <ProjectCard Title="Law of 100" 
                 Status="Live"
-                ImgUrl="/images/lawof100.png"
+                ImgUrl="/images/projects/Law of 100 mockup.png"
                 Link="https://lawof100.co/"
                 Github="https://github.com/sparc-coop/law-of-100"
                 Content="@LawofText"
                 ChannelId="lawof100-content"/>
             <ProjectCard Title="Conseris" 
                 Status="In Progress"
-                ImgUrl="/images/conseris.png"
+                ImgUrl="/images/projects/conseris.png"
                 Link="https://conseris.io/"
                 Github="https://github.com/sparc-coop"
                 Content="@ConserisText"

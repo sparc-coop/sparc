@@ -1,0 +1,49 @@
+@using Microsoft.JSInterop
+<section id="@_id" class="kori-content">
+    @ChildContent
+</section>
+
+<Kori.KoriLogin />
+<Kori.KoriWidget />
+
+@inject Kori Kori
+@inject NavigationManager Nav
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    string _id = $"kori-{Guid.NewGuid()}";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            
+            await Kori.InitializeAsync(this, Nav.Uri, _id);
+            Nav.LocationChanged += async (sender, args) => await Kori.InitializeAsync(this, args.Location, _id);
+            // StateHasChanged();
+        }
+    }
+
+    [JSInvokable]
+    public async Task<List<string>> TranslateAsync(List<string> content)
+    {
+        return await Kori.TranslateAsync(content);
+    }
+
+    [JSInvokable]
+    public async Task<KoriTextContent> SaveAsync(string key, string text)
+    {
+        var result = await Kori.SaveAsync(key, text);
+        StateHasChanged();
+        return result;
+    }
+
+    [JSInvokable]
+    public async Task<bool> BackToEditAsync()
+    {
+        Kori.BackToEdit();
+        StateHasChanged();
+
+        return await Task.FromResult(true);
+    }
+}

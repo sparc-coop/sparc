@@ -1,7 +1,9 @@
-﻿<div class="project-card">
+﻿@using Sparc.Coop.Shared.Icons
+
+<div class="project-card">
     <div class="image-wrapper">
-        <a href="/Projects/@titleURL/@ChannelId" title="Project Information">
-            <img class="photo" src="@ImgUrl" />
+@*        <a href="/Projects/@titleURL/@ChannelId" title="Project Information">
+*@            <img class="photo" src="@ImgUrl" />
             @if(Status.ToLower() == "live")
             {
                 <img class="project-status live" src="images/icons/Status Pin Live.svg" />
@@ -9,12 +11,12 @@
             {
                 <img class="project-status in-progress" src="images/icons/Status Pin In Progress.svg" />
             }
-        </a>
+@*        </a>*@
     </div>
     <div class="card-header">
         <h5 class="title-2 semi-bold">@Title</h5>
         <a href="@Link" target="_blank" title="Site Link">
-            <img src="images/icons/Up-Right.svg" />
+            <ExternalLinkIcon />
         </a>
     </div>
     <p class="subtitle-small">
@@ -25,7 +27,7 @@
             <button class="btn-small">Design</button>
             <button class="btn-small">Productivity</button>
         </div>
-        <a href="@Github" class="card-github" title="Github Link"><img src="images/icons/Github.svg"/></a>
+        <a href="@Github" target="_blank" class="github-link" title="Github Link"><img src="images/icons/Github.svg"/></a>
     </div>
 </div>
 

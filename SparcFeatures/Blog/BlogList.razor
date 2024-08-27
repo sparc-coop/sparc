@@ -1,4 +1,4 @@
-﻿@page "/blogs"
+﻿@* @page "/blogs"
 @page "/blogs/{ChannelId}"
 
 <div class="blog-list">
@@ -42,4 +42,4 @@
     }
 
     public void GoTo(IbisContent content) => Nav.NavigateTo($"/blogs/{content.RoomSlug}/{content.Tag}");
-}
+} *@

@@ -1,17 +1,18 @@
 ﻿
 <div class="community-cta">
     <div class="community-card left">
+        <img class="hero" src="./images/Icons.svg" />
         <div class="card-header">
             <h6 class="semi-bold">Individuals</h6>
             <p>
-                Join our community to receive project updates, individual position openings, and other Sparc news.
+                At an individual level, we want to provide guidance, resources and anything else we
+                can to help you find similar companies, fit into our projects or build your own.
             </p>
         </div>
         <div class="community-signup">
-            <p>Join our community</p>
             <div class="community-join">
                 <input @bind="@EmailAddress" placeholder="Your Email"/>
-                <button @onclick="SendEmail" class="btn-large">Join</button>
+                <button @onclick="SendEmail" class="btn-red">Join</button>
             </div>
         </div>
     </div>
@@ -22,14 +23,12 @@
         <div class="card-header">
             <h6 class="semi-bold">Companies</h6>
             <p>
-                As a company, you have the ability to lead your team, and other teams, by example. Partner 
-                with us to expand our cooperative and proudly show your peers that you are a fair, equitable company.
+                As a company, you have the ability to lead your team, and other teams, by example. Partner with us to expand our cooperative and proudly show your peers that you are a fair, equitable company.
             </p>
         </div>
         <div class="community-signup">
-            <p>Join our movement</p>
             <div class="community-join">
-                <a href="mailto:info@sparc.coop?subject=Sparc Align Partner Application">Apply to Sparc</a>
+                <a class="btn-red" href="mailto:info@sparc.coop?subject=Sparc Align Partner Application">Join Sparc Movement</a>
             </div>
         </div>
     </div>
@@ -42,7 +41,7 @@
     {
         if (EmailAddress != null)
         {
-            await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
+            //await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
         }
     }
 }

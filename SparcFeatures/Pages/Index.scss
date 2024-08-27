@@ -19,7 +19,7 @@ body.ibis-translating {
         }
     }
 
-    .white-background {
+    .light-background {
         margin: 0 calc((100vw - 1218px) / -2);
         padding: 100px calc((100vw - 1218px) / 2);
         background: $white;
@@ -98,6 +98,10 @@ body.ibis-translating {
 
         .cta-flex {
             justify-content: space-between;
+
+            input {
+                color: $grey-500;
+            }
         }
 
         .cta-email {
@@ -274,7 +278,7 @@ body.ibis-translating {
     }
 
     @media only screen and (max-width: 1440px) {
-        .white-background {
+        .light-background {
             margin: 0 calc((100vw - 1098px) / -2);
             padding: 100px calc((100vw - 1098px) / 2);
             background: $white;
@@ -313,10 +317,10 @@ body.ibis-translating {
     }
 
     @media only screen and (max-width: 1200px) {
-        .white-background {
+        .light-background {
             margin: 0 calc((100vw - 673px) / -2);
             padding: 100px calc((100vw - 673px) / 2);
-            background: $white;
+            background: $yellow-50;
         }
 
         .home-hero {
@@ -375,7 +379,7 @@ body.ibis-translating {
     }
 
     @media only screen and (max-width: 850px) {
-        .white-background {
+        .light-background {
             margin: 0 calc((100vw - 501px) / -2);
             padding: 100px calc((100vw - 501px) / 2);
         }
@@ -523,7 +527,7 @@ body.ibis-translating {
     }
 
     @media only screen and (max-width: 600px) {
-        .white-background {
+        .light-background {
             margin: 0 calc((100vw - 329px) / -2);
             padding: 100px calc((100vw - 329px) / 2);
         }
@@ -597,7 +601,7 @@ body.ibis-translating {
             overflow-x: hidden;
         }
 
-        .white-background {
+        .light-background {
             margin: 0 calc((100vw - 301px) / -2);
             padding: 100px calc((100vw - 301px) / 2);
             background: $white;

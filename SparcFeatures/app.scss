@@ -2,6 +2,7 @@
 @import "App.Assets";
 
 @import "Shared/MarketingLayout";
+@import "Shared/MainLayout";
 @import "Shared/NavMenu";
 
 @import "Projects/ProjectsList";
@@ -15,13 +16,100 @@
 
 @import "Pages/Index";
 
-.ibis-translate {
+.kori-content {
     padding: 0;
     margin: 0;
 }
 
-.ibis-translating {
+.kori-initializing {
     visibility: visible;
     opacity: 0.3;
 }
 
+.kori-loggedin {
+    .kori__btn:hover {
+        background: var(--orange-500) !important;
+    }
+
+    .kori__btn-text:hover {
+        color: var(--orange-500) !important;
+    }    
+
+    .kori__btn-primary:hover {
+        background: var(--orange-200) !important;
+        filter: opacity(1) !important;
+    }
+
+    .kori-enabled:not(.selected):hover {
+        border: 1px solid var(--orange-500) !important;
+    }
+
+    .kori__btn:active {
+        filter: opacity(1) !important;
+    }
+
+    .kori__btn-text:active {
+        color: var(--grey-600) !important;
+    }
+
+    .kori__btn-primary:active {
+        background: var(--orange-500) !important;
+    }
+
+    .kori-edit__options button:hover {
+        border: 1px solid var(--grey-700);
+    }
+
+    .kori-edit__options button:active {
+        border: 1px solid var(--grey-200);
+    }
+}
+
+
+// kori
+
+/*@font-face {
+    font-family: 'Love Ya Like A Sister';
+    font-weight: 400;
+    src: url('/kori/fonts/LoveYaLikeASister-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'ArticulatCF';
+    font-weight: 500;
+    src: url('/kori/fonts/ArticulatCF-Medium.otf') format('opentype');
+}*/
+
+@import "Pages/KoriTestPage";
+
+:root {
+    --white: #FFFFFF;
+    --grey-50: #F2F2F2;
+    --grey-100: #E6E6E6;
+    --grey-200: #CCCCCC;
+    --grey-300: #B3B3B3;
+    --grey-400: #999999;
+    --grey-500: #808080;
+    --grey-600: #666666;
+    --grey-700: #4D4D4D;
+    --grey-800: #333333;
+    --grey-900: #1A1A1A;
+    --black: #000000;
+    --yellow-300: #FCF29E;
+    --yellow-500: #FEF07E;
+    --yellow-600: #FDF37A;
+    --yellow-700: #ECDD2A;
+    --blue-300: #80C3E4;
+    --blue-500: #6DC8F4;
+    --blue-600: #4288CD;
+    --blue-700: #227CD3;
+    --orange-200: #FFA158;
+    --orange-300: #DBA57F;
+    --orange-500: #FF801E;
+    --orange-600: #E67976;
+    --orange-700: #E84141;
+    --green-300: #9EBF94;
+    --green-500: #86D170;
+    --green-600: #31726E;
+    --green-700: #0E7973;
+}

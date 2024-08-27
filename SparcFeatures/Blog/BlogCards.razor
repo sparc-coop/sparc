@@ -1,4 +1,4 @@
-﻿@if (Channel != null)
+﻿@* @if (Channel != null)
 {
     <section class="blog-wrapper">
         @foreach (var post in Channel.Content)
@@ -20,4 +20,4 @@
         Channel = await Ibis.GetAllAsync(ChannelId, asHtml: true, take: Take);
     }
     public void GoTo(IbisContent content) => Nav.NavigateTo($"/blog/{ChannelId}/{content.Tag}");
-}
+} *@

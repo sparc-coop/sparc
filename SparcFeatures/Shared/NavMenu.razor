@@ -20,11 +20,11 @@
         <div class="community-join">
             <div class="@ToggleContact">
                 <input @bind="@EmailAddress" placeholder="Your Email"/>
-                <button @onclick="SendEmail">Join Now</button>
+                <button @onclick="SendEmail" class="btn-red">Join Now</button>
             </div>
             @if(ToggleContact != "toggle-show")
             {
-                <button @onclick="@Toggle" class="join">Join Community</button>   
+                <button @onclick="@Toggle" class="join btn-red">Join Community</button>   
             }
         </div>
     </div>
@@ -59,11 +59,11 @@
             <div class="community-join">
                 <div class="@ToggleContact">
                     <input @bind="@EmailAddress" placeholder="Your Email" />
-                    <button @onclick="SendEmail">Join Now</button>
+                    <button @onclick="SendEmail" class="btn-red">Join Now</button>
                 </div>
                 @if (ToggleContact != "toggle-show")
                 {
-                    <button @onclick="@Toggle" class="join">Join Community</button>
+                    <button @onclick="@Toggle" class="join btn-red">Join Community</button>
                 }
             </div>
         </div>
@@ -79,7 +79,7 @@
     {
         if (EmailAddress != null)
         {
-            await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
+            //await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
         }
         
         ToggleContact = "toggle";

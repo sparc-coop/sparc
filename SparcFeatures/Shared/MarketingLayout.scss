@@ -7,7 +7,7 @@ main.landing {
     background: $background;
     overflow-x: hidden;
 
-    .homepage {
+    .homepage, .project-list-page {
         grid-column: 2/14;
     }
 
@@ -15,7 +15,7 @@ main.landing {
         grid-template-columns: 1fr repeat(12, 64px) 1fr;
         grid-column-gap: 30px;
 
-        .homepage {
+        .homepage, .project-list-page {
             grid-column: 2/14;
         }
     }
@@ -24,7 +24,7 @@ main.landing {
         grid-template-columns: 1fr repeat(8, 71px) 1fr;
         column-gap: 15px;
 
-        .homepage {
+        .homepage, .project-list-page {
             grid-column: 2/10;
         }
     }
@@ -32,7 +32,7 @@ main.landing {
     @media screen and (max-width: 850px) {
         grid-template-columns: 1fr repeat(6, 71px) 1fr;
 
-        .homepage {
+        .homepage, .project-list-page {
             grid-column: 2/8;
         }
     }
@@ -40,7 +40,7 @@ main.landing {
     @media screen and (max-width: 600px) {
         grid-template-columns: 1fr repeat(4, 71px) 1fr;
 
-        .homepage {
+        .homepage, .project-list-page {
             grid-column: 2/6;
         }
     }

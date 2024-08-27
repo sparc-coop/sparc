@@ -315,10 +315,34 @@ body {
 //buttons
 button {
     background: var(--grey-900);
+    border: none;
     border-radius: 100px;
     font-size: 16px;
     font-style: italic;
 }
+
+.btn-red {
+    padding: 10px 24px;
+    background: $peach-500;
+    border: none;
+    font-family: 'NeueHaasDisplayMedium';
+    font-size: 14px;
+    font-style: normal;
+    text-align: center;
+}
+
+.btn-red, .btn-black {
+    transition: 200ms ease-in-out;
+
+    &:hover {
+        background: $peach-400 !important;
+    }
+
+    &:active {
+        background: $peach-600 !important;
+    }
+}
+
 
 .btn-large{
     padding: 16px 32px;

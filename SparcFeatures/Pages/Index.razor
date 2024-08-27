@@ -1,6 +1,6 @@
 @page "/"
 @layout MarketingLayout
-<PageTitle>Sparc</PageTitle>
+<PageTitle>Sparc Cooperative</PageTitle>
 
 <div class="homepage" id="homepage">
     <section class="home-hero">
@@ -19,7 +19,7 @@
             </div>
             <div class="cta-flex">
                 <input placeholder="Your Email" @bind="@EmailAddress"/>
-                <button @onclick="SendEmail">Join the community</button>
+                <button class="btn-black" @onclick="SendEmail">Join the community</button>
             </div>
         </div>
         <div class="learn-more">
@@ -29,7 +29,7 @@
     </section>
 
     <div class="content @Scrollable">
-        <section class="mission white-background" id="mission">
+        <section class="mission light-background" id="mission">
             <div class="mission-wrapper">
                 <div class="mission-icon">
                     <img src="images/icons/04.svg" />
@@ -100,7 +100,7 @@
                 <ProjectCard 
                     Title="KodeKit" 
                     Status="Live"
-                    ImgUrl="/images/Laptop.png"
+                    ImgUrl="/images/projects/Kodekit mockup.png"
                     Link="https://www.kodekit.io/"
                     Github="https://github.com/sparc-coop/kodekit"
                     Content="@KodekitText"
@@ -108,7 +108,7 @@
                 <ProjectCard
                     Title="Ibis" 
                     Status="Live"
-                    ImgUrl="/images/ibis.png"
+                    ImgUrl="/images/projects/Ibis mockup.png"
                     Link="https://ibis.chat"
                     Github="https://github.com/sparc-coop/ibis"
                     Content="@IbisText"
@@ -116,7 +116,7 @@
                 <ProjectCard
                     Title="Law of 100" 
                     Status="Live"
-                    ImgUrl="/images/lawof100.png"
+                    ImgUrl="/images/projects/Law of 100 mockup.png"
                     Link="https://lawof100.co/"
                     Github="https://github.com/sparc-coop/law-of-100"
                     Content="@LawofText"
@@ -124,7 +124,7 @@
             </div>
         </section>
 
-        <section class="community white-background">
+        <section class="community light-background">
             <header>
                 <div class="section-tag community-tag"><p class="subtitle-medium">Sparc Community</p></div>
                 <h2 class="subtitle-large semi-bold">
@@ -135,7 +135,7 @@
             <Sparc.Coop.Community.CommunityCta />
         </section>
 
-        @*<section class="resources white-background">
+        @*<section class="resources light-background">
             <header>
                 <div class="section-tag resources-tag"><p class="subtitle-medium">Sparc Resources</p></div>
                 <h2 class="subtitle-large semi-bold">
@@ -161,7 +161,7 @@
     {
         if (EmailAddress != null)
         {
-            await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
+            //await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
         }       
     }
 

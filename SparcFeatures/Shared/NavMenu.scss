@@ -125,7 +125,10 @@ nav {
             z-index: 1;
 
             .logo {
-                padding: 18px 25px;
+                width: 93px;
+                margin-top: 18px;
+                margin-bottom: 18px;
+                margin-left: 25px;
                 flex: 1;
                 display: block;
 
@@ -139,7 +142,7 @@ nav {
             }
 
             .menu-container {
-                height: calc(100vh - 63.73px);
+                height: 100vh;
             }
 
             .menu {

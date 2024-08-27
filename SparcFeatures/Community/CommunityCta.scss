@@ -23,8 +23,8 @@
 
     .community-card {
         width: 592px;
-        height: 418px;
-        padding: 60px 40px 40px 40px;
+        height: 389px;
+        padding: 48px 40px 40px 40px;
         border-radius: 24px;
         background: $yellow-100;
         position: relative;
@@ -38,10 +38,20 @@
             }
         }
 
+        &.left {
+            .hero {
+                margin-top: 10px;
+            }
+
+            .card-header {
+                margin-top: 36px;
+            }
+        }
+
         .sparc-badge {
             position: absolute;
             text-align: center;
-            top: -20px;
+            top: -40px;
         }
 
         .profile-pics-wrapper {
@@ -69,31 +79,26 @@
                     padding: 13.5px 24px;
                 }
 
-                a, .btn-large {
-                    background: $peach-500;
-                    color: white;
+                a {
+                    padding: 16px 32px;
                     border: none;
                     border-radius: 100px;
-                    padding: 16px 32px;
+                    background: $peach-500;
+                    color: white;
+                    font-family: 'NeueHaasDisplayBold';
                 }
 
-                .btn-large {
+                button {
+                    display: block;
+                    width: 100%;
+                    font-family: 'NeueHaasDisplayBold';
+                    font-style: normal;
                     height: 48px;
                     width: 94px;
+                    padding: 16px 32px;
                 }
             }
         }
-    }
-
-    button {
-        display: block;
-        width: 100%;
-        font-family: 'NeueHaasDisplayBold';
-        font-style: normal;
-    }
-
-    a {
-        font-family: 'NeueHaasDisplayBold';
     }
 
     @media only screen and (max-width: 600px) {
@@ -115,6 +120,11 @@
             }
 
             &.left {
+                .hero {
+                    width: 200px;
+                    height: auto;
+                }
+
                 .community-join {
                     display: block;
                     text-align: center;

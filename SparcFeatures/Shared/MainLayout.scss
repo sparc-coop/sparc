@@ -1,0 +1,38 @@
+﻿@import "../App.Variables.scss";
+
+main {
+    display: grid;
+    grid-template-columns: 1fr repeat(12, 64px) 1fr;
+    grid-column-gap: 30px;
+    background: $background;
+    overflow-x: hidden;
+
+    .project-list-page {
+        grid-column: 2/14;
+    }
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: 1fr repeat(8, 71px) 1fr;
+        column-gap: 15px;
+
+        .project-list-page {
+            grid-column: 2/10;
+        }
+    }
+
+    @media screen and (max-width: 850px) {
+        grid-template-columns: 1fr repeat(6, 71px) 1fr;
+
+        .project-list-page {
+            grid-column: 2/8;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        grid-template-columns: 1fr repeat(4, 71px) 1fr;
+
+        .project-list-page {
+            grid-column: 2/6;
+        }
+    }
+}

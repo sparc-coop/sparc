@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "KoriLogin.razor.css",
+    "inputFile": "KoriLogin.razor.scss"
+  },
+  {
+    "outputFile": "KoriWidget.razor.css",
+    "inputFile": "KoriWidget.razor.scss"
+  },
+  {
+    "outputFile": "KoriContent.razor.css",
+    "inputFile": "KoriContent.razor.scss"
+  }
+]
