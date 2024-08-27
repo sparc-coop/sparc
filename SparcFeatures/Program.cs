@@ -3,24 +3,12 @@ using Sparc.Blossom;
 using Sparc.Blossom.Authentication.Passwordless;
 using Sparc.Coop;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-
-builder.AddBlossom(options =>
+BlossomApplication.Run<Html, User>(args, builder =>
 {
-    options.AddKori(new Uri("https://sparc.coop"));
-    options.AddBlossomPasswordlessAuthentication<User>();
+    builder.AddKori(new Uri("https://sparc.coop"));
+    builder.AddBlossomPasswordlessAuthentication<User>();
+}, app =>
+{
+    app.UseKori();
 });
 
-var app = builder.Build();
-
-app.UseStaticFiles();
-app.UseAntiforgery();
-app.UseKori();
-
-app.MapRazorComponents<Html>()
-    .AddInteractiveServerRenderMode();
-
-app.Run();

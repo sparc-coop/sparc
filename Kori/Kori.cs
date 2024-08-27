@@ -140,7 +140,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             var result = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TResponse>(result, JsonOptions);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return default;
         }

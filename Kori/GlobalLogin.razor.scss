@@ -10,12 +10,6 @@
     line-height: 160%;
 
     .login-component {
-        &__toggle {
-            display: none;
-
-            &.show {
-                display: block;
-            }
 
             > * {
                 width: 32px;

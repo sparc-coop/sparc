@@ -81,8 +81,6 @@
     {
         if (firstRender)
         {
-            await Task.Delay(3000);
-
             if (!string.IsNullOrEmpty(Token))
             {
                 await foreach (var state in Auth.LoginAsync(User, Token))

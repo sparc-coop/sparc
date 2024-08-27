@@ -1,35 +1,79 @@
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 @using System.Net.Http.Json
+@using Sparc.Blossom.Authentication
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 </style>
 
-<div id="login-component" class="login-component kori-ignore">
-    <div class="login-component__toggle show" _="on click toggle .show on .login-component__menu">
-        <button id="user-loggedout" class="login-component__logged-out show" aria-label="user">
-            <img src="/_content/Kori/icons/user-profile-x.svg" />
-        </button>
-        <button id="user-loggedin" class="login-component__logged-in" aria-label="user">
-            <img src="/_content/Kori/icons/user-profile-check.svg" />
-        </button>
-    </div>
-    <div class="login-component__menu">
-        <div class="login-component__user">
-            <p>Username</p>
-            <button class="login-component__logout-btn" aria-label="log-out">
-                <img src="/_content/Kori/icons/Logout.svg" />
+<div class="login-component kori-ignore">
+    <AuthorizeView>
+        <Authorized>
+            <button class="@(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" _="on click toggle .show on .login-component__menu">
+                <UserIcon LoggedIn="!context.User.IsAnonymous()" />
             </button>
-        </div>
-        <LoginSignup />
-        <LanguageSelector />
-    </div>
+
+            <div class="login-component__menu">
+                @switch (Auth.LoginState)
+                {
+                    case LoginStates.ReadyForLogin:
+                        <input @ref=LoginInput type="text" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
+                        <div class="icon submit">
+                            OK
+                        </div>
+                        break;
+                    case LoginStates.VerifyingToken:
+                    case LoginStates.VerifyingEmail:
+                        <span>Signing you in...</span>
+                        break;
+                    case LoginStates.AwaitingMagicLink:
+                        <span>Click the link in your email!</span>
+                        break;
+                    case LoginStates.LoggedIn:
+                    <figcaption>Hi @Auth.User?.Username</figcaption>
+                        <button @onclick=LogoutAsync>
+                            <img src="/_content/Kori/icons/Logout.svg" />
+                        </button>
+                        break;
+                    case LoginStates.Error:
+                        <span>Error: @Auth.Message</span>
+                        break;
+                }
+                
+                <LanguageSelector />
+            </div>
+        </Authorized>
+    </AuthorizeView>
 </div>
 
 @inject IJSRuntime Js
-
+@inject IBlossomAuthenticator Auth
 @code {
+    [CascadingParameter] public ClaimsPrincipal? User { get; set; }
+    [Parameter][SupplyParameterFromQuery] public string? Token { get; set; }
+
+    public string? Email;
+    ElementReference? LoginInput;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("initHyperScript");
+        
+        if (!firstRender || User == null)
+            return;
+
+        await foreach (var state in Auth.LoginAsync(User, Token))
+                StateHasChanged();
+    }
+
+    async Task LogoutAsync()
+    {
+        await foreach (var state in Auth.LogoutAsync(User!))
+            StateHasChanged();
+
+        Auth.LoginState = LoginStates.LoggedOut;
+        StateHasChanged();
     }
 }
