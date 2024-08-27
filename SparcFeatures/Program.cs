@@ -1,6 +1,6 @@
 using Kori;
 using Sparc.Blossom;
-using Sparc.Blossom.Authentication;
+using Sparc.Blossom.Authentication.Passwordless;
 using Sparc.Coop;
 
 var builder = WebApplication.CreateBuilder(args);

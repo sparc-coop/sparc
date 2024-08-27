@@ -15,10 +15,10 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Authentication.Passwordless\Sparc.Blossom.Authentication.Passwordless.csproj" />
 		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj" />
 		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Server.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" />
 		<ProjectReference Include="..\..\blossom\Sparc.Blossom.Server\Sparc.Blossom.csproj" />
-		<ProjectReference Include="..\..\kodekit\Sparc.Blossom.Passwordless\Sparc.Blossom.Passwordless.csproj" />
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
