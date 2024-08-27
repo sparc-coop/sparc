@@ -108,37 +108,6 @@
   width: 10px;
   height: auto;
 }
-.kori-login-2 .kori-login__language .language-list {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  max-height: 0px;
-  opacity: 0;
-  transition: all 1s ease-in-out;
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-}
-.kori-login-2 .kori-login__language .language-list.show {
-  padding-bottom: 16px;
-  max-height: 400px;
-  opacity: 1;
-}
-.kori-login-2 .kori-login__language ul {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  overflow-y: auto;
-  list-style: none;
-  width: 184px;
-  margin-top: 16px;
-  margin-right: -16px;
-  padding-right: 16px;
-}
-.kori-login-2 .kori-login__language li {
-  list-style: none;
-}
 .kori-login-2 .kori-login.show {
   display: flex;
   gap: 12px;

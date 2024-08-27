@@ -20,65 +20,17 @@
             <div class="login-component__btn">
                 <button aria-label="log-in">Log In <img src="/_content/Kori/icons/Arrow right.svg" /></button>
             </div>
-            <div class="login-component__language">
-                <div class="@(showLanguages ? "show" : "")">
-                    @if (selectedLanguage != null)
-                    {
-                        <button class="toggle-languages selected" _="on click toggle .show on .language-list" aria-label="select language">@selectedLanguage.DisplayName</button>
-                    }
-                    <div class="language-list">
-                        <p class="list-header">Select your language:</p>
-                        <ul>
-                            @if (Languages != null)
-                            {
-                                @foreach (var language in Languages)
-                                {
-                                    <li>
-                                        <button>
-                                            @language.DisplayName
-
-                                            @if (language.DisplayName != language.NativeName)
-                                            {
-                                                <aside>@language.NativeName</aside>
-                                            }
-
-                                            @* @if (User.Language == language.Id)
-                                    {
-                                    <div class="right">
-                                    <img src="icons/Check.svg" />
-                                    </div>
-                                    }
-                                    *@
-                                        </button>
-                                    </li>
-                                }
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <LanguageSelector LanguageId="@LanguageId" />
         </div>
     </div>
 </div>
 
 @inject IJSRuntime Js
-@inject LanguageSelector LanguageSelector
-@using static LanguageSelector
 
 @code {
     [Parameter] public string? LanguageId { get; set; } = "en";
     bool isLoggedIn = false;
     bool showLogin = false;
-    bool showLanguages = false;
-    Language? selectedLanguage;
-    List<Language>? Languages { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Languages = await LanguageSelector.GetLanguagesAsync();
-        Languages = Languages.OrderBy(x => x.DisplayName).ToList();
-        selectedLanguage = Languages.First(x => x.Id == LanguageId);
-    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -88,10 +40,5 @@
     void ToggleLogin()
     {
         showLogin = !showLogin;
-    }
-
-    void ToggleLanguages()
-    {
-        showLanguages = !showLanguages;
     }
 }

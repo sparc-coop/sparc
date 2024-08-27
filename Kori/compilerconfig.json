@@ -14,5 +14,9 @@
   {
     "outputFile": "KoriLogin2.razor.css",
     "inputFile": "KoriLogin2.razor.scss"
+  },
+  {
+    "outputFile": "LanguageSelector.razor.css",
+    "inputFile": "LanguageSelector.razor.scss"
   }
 ]

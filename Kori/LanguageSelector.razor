@@ -1,0 +1,59 @@
+@using System.Net.Http.Json
+<div class="login-component__language">
+    <div>
+        @if (selectedLanguage != null)
+        {
+            <button class="toggle-languages selected" _="on click toggle .show on .language-list" aria-label="select language">@selectedLanguage.DisplayName</button>
+        }
+        <div class="language-list">
+            <p class="list-header">Select your language:</p>
+            <ul>
+                @if (Languages != null)
+                {
+                    @foreach (var language in Languages)
+                    {
+                        <li>
+                            <button>
+                                @language.DisplayName
+
+                                @if (language.DisplayName != language.NativeName)
+                                {
+                                    <aside>@language.NativeName</aside>
+                                }
+
+                                @* @if (User.Language == language.Id)
+                        {
+                        <div class="right">
+                        <img src="icons/Check.svg" />
+                        </div>
+                        }
+                        *@
+                            </button>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string LanguageId { get; set; } = "en";
+    
+    Language? selectedLanguage;
+    List<Language>? Languages { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Languages = await GetLanguagesAsync();
+        Languages = Languages.OrderBy(x => x.DisplayName).ToList();
+        selectedLanguage = Languages.First(x => x.Id == LanguageId);
+    }
+
+    async Task<List<Language>> GetLanguagesAsync()
+    {
+        var client = new HttpClient { BaseAddress = new Uri("https://ibis-web-kori.azurewebsites.net/") };
+        return await client.GetFromJsonAsync<List<Language>>("publicapi/Languages")
+               ?? new List<Language>();
+    }
+}
