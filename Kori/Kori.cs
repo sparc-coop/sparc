@@ -39,6 +39,15 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
     }
 
+    public KoriTextContent? this[string tag]
+    {
+        get
+        {
+            _content.TryGetValue(tag, out var content);
+            return content;
+        }
+    }
+
     public async Task<List<string>> TranslateAsync(List<string> nodes)
     {
         if (nodes.Count == 0)

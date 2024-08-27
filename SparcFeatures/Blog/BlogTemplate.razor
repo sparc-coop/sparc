@@ -1,0 +1,46 @@
+﻿@page "/blog/{slug}"
+
+<article class="blog-post">
+    <header>
+        @if (K["_title"] != null)
+        {
+            <h3>@K["_title"]?.Text</h3>
+        }
+        else
+        {
+            <h3>Untitled Post</h3>
+        }
+
+        @if (K["_author"] != null)
+        {
+            <aside>by @K["_author"]?.Text</aside>
+        }
+
+        <time datetime="@(DateTime.Now.ToString("O"))">
+            @DateTime.Now.ToString("M")
+        </time>
+    </header>
+
+    <figure>
+        @if (K["_image"] != null)
+        {
+            <img src="@K["_image"]?.Text" alt="@K["_title"]?.Text" />
+        }
+    </figure>
+
+    <section class="content">
+        @K["_content"]?.Html
+    </section>
+</article>
+
+@code {
+    [Parameter] public string? Slug { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Slug != null)
+        {
+            await K.InitializeAsync(this, Nav.Uri, "elementId");
+        }
+    }
+}
