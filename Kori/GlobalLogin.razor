@@ -1,5 +1,9 @@
 @using System.Net.Http.Json
 
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+</style>
+
 <div id="login-component" class="login-component kori-ignore">
     <div class="login-component__toggle show" _="on click toggle .show on .login-component__menu">
         <button id="user-loggedout" class="login-component__logged-out show" aria-label="user">
@@ -16,29 +20,16 @@
                 <img src="/_content/Kori/icons/Logout.svg" />
             </button>
         </div>
-        <div class="login-component__actions">
-            <div class="login-component__btn">
-                <button aria-label="log-in">Log In <img src="/_content/Kori/icons/Arrow right.svg" /></button>
-            </div>
-            <LanguageSelector LanguageId="@LanguageId" />
-        </div>
+        <LoginSignup />
+        <LanguageSelector />
     </div>
 </div>
 
 @inject IJSRuntime Js
 
 @code {
-    [Parameter] public string? LanguageId { get; set; } = "en";
-    bool isLoggedIn = false;
-    bool showLogin = false;
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("initHyperScript");
-    }
-
-    void ToggleLogin()
-    {
-        showLogin = !showLogin;
     }
 }
