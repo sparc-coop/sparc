@@ -18,5 +18,9 @@
   {
     "outputFile": "LanguageSelector.razor.css",
     "inputFile": "LanguageSelector.razor.scss"
+  },
+  {
+    "outputFile": "GlobalLogin.razor.css",
+    "inputFile": "GlobalLogin.razor.scss"
   }
 ]
