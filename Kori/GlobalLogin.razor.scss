@@ -5,35 +5,53 @@
     position: absolute;
     top: 0;
     right: 16px;
-    font-family: Lato;
+    font-family: 'Encode Sans Semi Expanded' !important;
     font-weight: 400;
     line-height: 160%;
+    color: white;
 
-    .login-component {
+    > * {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        > * {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        img {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+    }
 
-            img {
-                width: 20px;
-                height: 20px;
-                margin: 0;
-            }
+    button {
+        padding: 8px 0 !important;
+        background: none !important;
+        border: none !important;
+        font-family: 'Encode Sans Semi Expanded' !important;
+    }
+
+    button.login-component__toggle {
+        width: 24px;
+        height: 24px;
+        background: #1a1a1a !important;
+        border-radius: 50%;
+
+        .login-user-icon {
+            width: 36px !important;
+            height: auto !important;
         }
 
-        .login-component__logged-out {
-            background: var(--grey-900);
+        &.loggedout {
+            border: 1px solid var(--grey-50);
+            border-radius: 50%;
         }
 
-        .login-component__logged-in {
+        &.loggedin {
             display: none;
-            background: #36A42C;
+            border: 1px solid var(--green-500);
             border-radius: 50%;
 
             &.show {
@@ -43,12 +61,17 @@
     }
 
     &__menu {
+        background: #1a1a1a;
         width: 200px;
+        height: fit-content;
+        border-radius: 8px;
+        position: absolute;
+        top: 30px;
+        right: 0;
         display: none;
-        animation: login_fadeIn 1000ms linear;
+        animation: login_fadeIn 500ms ease-in-out;
         z-index: 1000;
         padding: 16px 16px 0px 16px;
-        background: white;
 
         &.show {
             display: flex;
@@ -61,13 +84,15 @@
         }
 
         button {
-            padding: 16px 20px !important;
-            border: 1px solid var(--grey-200, #DBDBDB) !important;
+            padding: 8px 0 !important;
+            border: none !important;
             border-radius: 0 !important;
             border-image: none !important;
-            font-family: Lato;
-            font-weight: 700;
-            line-height: 160%;
+            font-family: 'Encode Sans Semi Expanded' !important;
+            font-weight: 400;
+            line-height: 140%;
+            color: white !important;
+            text-align: left !important;
             transition: 300ms ease-in-out;
 
             &:hover {
@@ -78,37 +103,19 @@
                 background: var(--white);
             }
         }
-    }
 
-    &__actions {
-        display: flex;
-        flex-direction: column;
-        gap: 16px !important;
-    }
+        .login-menu__user {
+            width: 100%;
+        }
 
-    &__user {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
+        .login-menu__actions {
+            display: flex;
+            flex-direction: column;
 
-        .login-component__logout-btn {
-            padding: 0 !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-
-            img {
-                width: 20px;
-                height: 20px;
-            }
-
-            &:hover {
-                opacity: 0.5;
-            }
-
-            &:active {
-                opacity: 1;
+            button {
+                width: 100%;
+                padding: 8px 0;
+                text-align: left !important;
             }
         }
     }
@@ -191,11 +198,12 @@
         }
     }
 
-    &__actions {
+    .login-menu__actions {
         display: flex;
         flex-direction: column;
         gap: 4px;
         margin-top: 12px;
+        width: 100%;
 
         button {
             width: 100%;
@@ -239,11 +247,9 @@
 @keyframes login_fadeIn {
     0% {
         opacity: 0;
-        top: -211px;
     }
 
     100% {
         opacity: 1;
-        top: 0;
     }
 }

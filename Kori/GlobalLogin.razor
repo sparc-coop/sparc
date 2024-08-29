@@ -5,19 +5,32 @@
 @using System.Security.Claims
 
 <style class="kori-ignore">
-    @@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+    @@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap');
 </style>
 
 <div class="login-component kori-ignore">
     <AuthorizeView>
         <Authorized>
-            <button class="@(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" _="on click toggle .show on .login-component__menu">
+            <button class="login-component__toggle @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" _="on click toggle .show on .login-component__menu">
                 <UserIcon LoggedIn="!context.User.IsAnonymous()" />
             </button>
 
             <div class="login-component__menu">
                 @switch (Auth.LoginState)
                 {
+                    case LoginStates.LoggedOut:
+                        <div class="login-menu__user">
+                            <figcaption>Anonymous user</figcaption>
+                            <aside>@if(Language != null) @Language.DisplayName</aside>
+                        </div>
+                        <div class="login-menu__actions">
+                            <button class="login-btn" @onclick=BeginLogin>
+                                Login
+                            </button>
+                            <button class="language-btn" _="on click toggle .show on .login-component__language">Language Settings</button>
+                            <LanguageSelector />
+                        </div>
+                        break;
                     case LoginStates.ReadyForLogin:
                         <input @ref=LoginInput type="text" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
                         <div class="icon submit">
@@ -32,40 +45,56 @@
                         <span>Click the link in your email!</span>
                         break;
                     case LoginStates.LoggedIn:
-                    <figcaption>Hi @Auth.User?.Username</figcaption>
-                        <button @onclick=LogoutAsync>
-                            <img src="/_content/Kori/icons/Logout.svg" />
-                        </button>
+                        <div class="login-menu__user">
+                            <figcaption>Hi @Auth.User?.Username</figcaption>
+                            <aside>@Kori.Language.</aside>
+                        </div>
+                        <div class="login-menu__actions">
+                            <button class="profile-btn">Profile</button>
+                            <button class="logout-btn" @onclick=LogoutAsync>Logout</button>
+                            <button class="language-btn" _="on click toggle .show on .login-component__language">Language Settings</button>
+                            <LanguageSelector />
+                        </div>
                         break;
                     case LoginStates.Error:
                         <span>Error: @Auth.Message</span>
                         break;
                 }
-                
-                <LanguageSelector />
-            </div>
+                            </div>
         </Authorized>
     </AuthorizeView>
 </div>
 
 @inject IJSRuntime Js
 @inject IBlossomAuthenticator Auth
+@inject Kori Kori
+
 @code {
     [CascadingParameter] public ClaimsPrincipal? User { get; set; }
     [Parameter][SupplyParameterFromQuery] public string? Token { get; set; }
 
     public string? Email;
     ElementReference? LoginInput;
+    Language? Language;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var languages = await Kori.GetLanguagesAsync();
+        Language = languages.First(x => x.Id == Kori.Language);
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("initHyperScript");
-        
+
         if (!firstRender || User == null)
             return;
+    }
 
+    async Task BeginLogin()
+    {
         await foreach (var state in Auth.LoginAsync(User, Token))
-                StateHasChanged();
+            StateHasChanged();
     }
 
     async Task LogoutAsync()

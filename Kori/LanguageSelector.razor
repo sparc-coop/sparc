@@ -2,40 +2,40 @@
 @using System.Globalization
 
 <div class="login-component__language">
-    <div>
-        @if (selectedLanguage != null)
-        {
-            <button class="toggle-languages selected" _="on click toggle .show on .language-list" aria-label="select language">@selectedLanguage.DisplayName</button>
-        }
-        <div class="language-list">
-            <p class="list-header">Select your language:</p>
-            <ul>
-                @if (Languages != null)
+    <div class="language-list">
+        <p class="list-header">Select your language:</p>
+        <ul>
+            @if (selectedLanguage != null)
+            {
+                <li>
+                    <button class="selected">@selectedLanguage.DisplayName</button>
+                </li>
+            }
+            @if (Languages != null)
+            {
+                @foreach (var language in Languages)
                 {
-                    @foreach (var language in Languages)
+                    <li>
+                        <button @onclick=@(() => ChangeLanguage(language))>
+                            @language.DisplayName
+
+                            @if (language.DisplayName != language.NativeName)
+                            {
+                                <aside>@language.NativeName</aside>
+                            }
+
+                            @* @if (User.Language == language.Id)
                     {
-                        <li>
-                            <button @onclick=@(() => ChangeLanguage(language))>
-                                @language.DisplayName
-
-                                @if (language.DisplayName != language.NativeName)
-                                {
-                                    <aside>@language.NativeName</aside>
-                                }
-
-                                @* @if (User.Language == language.Id)
-                        {
-                        <div class="right">
-                        <img src="icons/Check.svg" />
-                        </div>
-                        }
-                        *@
-                            </button>
-                        </li>
+                    <div class="right">
+                    <img src="icons/Check.svg" />
+                    </div>
                     }
+                    *@
+                        </button>
+                    </li>
                 }
-            </ul>
-        </div>
+            }
+        </ul>
     </div>
 </div> 
 

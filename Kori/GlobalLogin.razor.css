@@ -5,11 +5,12 @@
   position: absolute;
   top: 0;
   right: 16px;
-  font-family: Lato;
+  font-family: "Encode Sans Semi Expanded" !important;
   font-weight: 400;
   line-height: 160%;
+  color: white;
 }
-.login-component .login-component > * {
+.login-component > * {
   width: 32px;
   height: 32px;
   padding: 0;
@@ -18,29 +19,51 @@
   justify-content: center;
   align-items: center;
 }
-.login-component .login-component > * img {
+.login-component > * img {
   width: 20px;
   height: 20px;
   margin: 0;
 }
-.login-component .login-component .login-component__logged-out {
-  background: var(--grey-900);
+.login-component button {
+  padding: 8px 0 !important;
+  background: none !important;
+  border: none !important;
+  font-family: "Encode Sans Semi Expanded" !important;
 }
-.login-component .login-component .login-component__logged-in {
-  display: none;
-  background: #36A42C;
+.login-component button.login-component__toggle {
+  width: 24px;
+  height: 24px;
+  background: #1a1a1a !important;
   border-radius: 50%;
 }
-.login-component .login-component .login-component__logged-in.show {
+.login-component button.login-component__toggle .login-user-icon {
+  width: 36px !important;
+  height: auto !important;
+}
+.login-component button.login-component__toggle.loggedout {
+  border: 1px solid var(--grey-50);
+  border-radius: 50%;
+}
+.login-component button.login-component__toggle.loggedin {
+  display: none;
+  border: 1px solid var(--green-500);
+  border-radius: 50%;
+}
+.login-component button.login-component__toggle.loggedin.show {
   display: block;
 }
 .login-component__menu {
+  background: #1a1a1a;
   width: 200px;
+  height: fit-content;
+  border-radius: 8px;
+  position: absolute;
+  top: 30px;
+  right: 0;
   display: none;
-  animation: login_fadeIn 1000ms linear;
+  animation: login_fadeIn 500ms ease-in-out;
   z-index: 1000;
   padding: 16px 16px 0px 16px;
-  background: white;
 }
 .login-component__menu.show {
   display: flex;
@@ -51,13 +74,15 @@
   color: var(--grey-700) !important;
 }
 .login-component__menu button {
-  padding: 16px 20px !important;
-  border: 1px solid var(--grey-200, #DBDBDB) !important;
+  padding: 8px 0 !important;
+  border: none !important;
   border-radius: 0 !important;
   border-image: none !important;
-  font-family: Lato;
-  font-weight: 700;
-  line-height: 160%;
+  font-family: "Encode Sans Semi Expanded" !important;
+  font-weight: 400;
+  line-height: 140%;
+  color: white !important;
+  text-align: left !important;
   transition: 300ms ease-in-out;
 }
 .login-component__menu button:hover {
@@ -66,32 +91,17 @@
 .login-component__menu button:active {
   background: var(--white);
 }
-.login-component__actions {
+.login-component__menu .login-menu__user {
+  width: 100%;
+}
+.login-component__menu .login-menu__actions {
   display: flex;
   flex-direction: column;
-  gap: 16px !important;
 }
-.login-component__user {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-}
-.login-component__user .login-component__logout-btn {
-  padding: 0 !important;
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-}
-.login-component__user .login-component__logout-btn img {
-  width: 20px;
-  height: 20px;
-}
-.login-component__user .login-component__logout-btn:hover {
-  opacity: 0.5;
-}
-.login-component__user .login-component__logout-btn:active {
-  opacity: 1;
+.login-component__menu .login-menu__actions button {
+  width: 100%;
+  padding: 8px 0;
+  text-align: left !important;
 }
 .login-component__btn {
   display: flex;
@@ -157,13 +167,14 @@
   background: var(--grey-700);
   box-shadow: var(--grey-700);
 }
-.login-component__actions {
+.login-component .login-menu__actions {
   display: flex;
   flex-direction: column;
   gap: 4px;
   margin-top: 12px;
+  width: 100%;
 }
-.login-component__actions button {
+.login-component .login-menu__actions button {
   width: 100%;
   padding: 0;
   background: none;
@@ -171,7 +182,7 @@
   border-image: url("/_content/Kori/borders/black-8.svg") 15 round;
   font-style: normal;
 }
-.login-component__actions button.login-component__btn {
+.login-component .login-menu__actions button.login-component__btn {
   width: calc(100% - 4px);
   height: calc(100% - 4px);
   margin: 0 auto;
@@ -179,27 +190,25 @@
   border-radius: 8px;
   border-image-outset: 2px;
 }
-.login-component__actions button.login-component__btn:hover {
+.login-component .login-menu__actions button.login-component__btn:hover {
   background: var(--orange-200) !important;
   filter: opacity(1) !important;
 }
-.login-component__actions button.login-component__btn:active {
+.login-component .login-menu__actions button.login-component__btn:active {
   background: var(--orange-500) !important;
 }
-.login-component__actions button.login-component__cancel:hover {
+.login-component .login-menu__actions button.login-component__cancel:hover {
   filter: opacity(0.6) !important;
 }
-.login-component__actions button.login-component__cancel:active {
+.login-component .login-menu__actions button.login-component__cancel:active {
   filter: opacity(1) !important;
 }
 
 @keyframes login_fadeIn {
   0% {
     opacity: 0;
-    top: -211px;
   }
   100% {
     opacity: 1;
-    top: 0;
   }
 }

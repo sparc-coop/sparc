@@ -1,15 +1,22 @@
-﻿.login-component__language .language-list {
+﻿.login-component__language {
+  color: white;
+}
+.login-component__language .language-list {
   margin-top: 16px;
   display: flex;
   flex-direction: column;
-  max-height: 0px;
+  max-height: 0;
+  transition: all 1000ms ease-in-out;
   opacity: 0;
-  transition: all 1s ease-in-out;
 }
-.login-component__language .language-list.show {
+.login-component__language.show {
+  height: fit-content;
   padding-bottom: 16px;
+}
+.login-component__language.show .language-list {
   max-height: 400px;
   opacity: 1;
+  transition: all 1000ms ease-in-out;
 }
 .login-component__language ul {
   display: flex;
@@ -24,4 +31,9 @@
 }
 .login-component__language li {
   list-style: none;
+}
+.login-component__language button {
+  padding: 8px 0;
+  background: none;
+  color: white;
 }
