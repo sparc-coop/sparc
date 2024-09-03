@@ -23,6 +23,8 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
+    public TagManager TagManager { get; } = new TagManager();
+
     public record IbisContent(string Name, string Slug, string Language, ICollection<KoriTextContent> Content);
 
     public async Task InitializeAsync(HttpContext context)
@@ -37,44 +39,44 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
-    }
+    }    
 
-    public KoriTextContent? this[string tag]
-    {
-        get
-        {
-            _content.TryGetValue(tag, out var content);
-            return content;
-        }
-    }
+    //public KoriTextContent? this[string tag]
+    //{
+    //    get
+    //    {
+    //        _content.TryGetValue(tag, out var content);
+    //        return content;
+    //    }
+    //}
 
-    public class ContentField
-    {
-        public string Tag { get; set; }
-        public string Value { get; set; }
-        public string Type { get; set; }
-    }
+    //public class ContentField
+    //{
+    //    public string Tag { get; set; }
+    //    public string Value { get; set; }
+    //    public string Type { get; set; }
+    //}
 
-    public class ContentTemplate
-    {
-        public string TemplateName { get; set; }
-        public Dictionary<string, ContentField> Fields { get; set; } = new();
-    }
+    //public class ContentTemplate
+    //{
+    //    public string TemplateName { get; set; }
+    //    public Dictionary<string, ContentField> Fields { get; set; } = new();
+    //}
 
-    public Dictionary<string, ContentTemplate> Templates = new()
-    {
-        ["Blog"] = new ContentTemplate
-        {
-            TemplateName = "Blog",
-            Fields = new Dictionary<string, ContentField>
-        {
-            { "title", new ContentField { Tag = "title", Type = "text", Value = "" } },
-            { "author", new ContentField { Tag = "author", Type = "text", Value = "" } },
-            { "image", new ContentField { Tag = "image", Type = "image", Value = "" } },
-            { "content", new ContentField { Tag = "content", Type = "text", Value = "" } }
-        }
-        }
-    };
+    //public Dictionary<string, ContentTemplate> Templates = new()
+    //{
+    //    ["Blog"] = new ContentTemplate
+    //    {
+    //        TemplateName = "Blog",
+    //        Fields = new Dictionary<string, ContentField>
+    //    {
+    //        { "title", new ContentField { Tag = "title", Type = "text", Value = "" } },
+    //        { "author", new ContentField { Tag = "author", Type = "text", Value = "" } },
+    //        { "image", new ContentField { Tag = "image", Type = "image", Value = "" } },
+    //        { "content", new ContentField { Tag = "content", Type = "text", Value = "" } }
+    //    }
+    //    }
+    //};
 
     //public async Task EditFieldAsync(string templateName, string fieldTag, string newValue)
     //{
@@ -87,29 +89,51 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     //    }
     //}
 
-    public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
-    {
-        var path = new Uri(currentUrl).AbsolutePath;
-        await GetContentAsync(path);
+    //public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
+    //{
+    //    var path = new Uri(currentUrl).AbsolutePath;
+    //    await GetContentAsync(path);
 
-        if (Templates.TryGetValue(templateName, out var template))
-        {
-            foreach (var field in template.Fields)
-            {
-                if (_content.TryGetValue(field.Key, out var content))
-                {
-                    field.Value.Value = content.Text;
-                }
-                else
-                {
-                    field.Value.Value = "";
-                }
-            }
-        }
+    //    if (Templates.TryGetValue(templateName, out var template))
+    //    {
+    //        foreach (var field in template.Fields)
+    //        {
+    //            if (_content.TryGetValue(field.Key, out var content))
+    //            {
+    //                field.Value.Value = content.Text;
+    //            }
+    //            else
+    //            {
+    //                field.Value.Value = "";
+    //            }
+    //        }
+    //    }
 
-        var js = await KoriJs.Value;
-        await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
-    }
+    //    var js = await KoriJs.Value;
+    //    await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
+    //}    //public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
+    //{
+    //    var path = new Uri(currentUrl).AbsolutePath;
+    //    await GetContentAsync(path);
+
+    //    if (Templates.TryGetValue(templateName, out var template))
+    //    {
+    //        foreach (var field in template.Fields)
+    //        {
+    //            if (_content.TryGetValue(field.Key, out var content))
+    //            {
+    //                field.Value.Value = content.Text;
+    //            }
+    //            else
+    //            {
+    //                field.Value.Value = "";
+    //            }
+    //        }
+    //    }
+
+    //    var js = await KoriJs.Value;
+    //    await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
+    //}
 
     public async Task<List<string>> TranslateAsync(List<string> nodes)
     {
@@ -321,5 +345,26 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     public void BackToEdit()
     {
         Mode = "";
+    }
+}
+
+public class TagManager
+{
+    private readonly Dictionary<string, string> dict = new Dictionary<string, string>();
+
+    public string this[string key]
+    {
+        get
+        {
+            if (!dict.ContainsKey(key))
+            {
+                dict.Add(key, "");
+            }
+            return dict[key];
+        }
+        set
+        {
+            dict[key] = value;
+        }
     }
 }

@@ -1,7 +1,12 @@
 ﻿@page "/blog/{slug}"
 
 <article class="blog-post">
-    <header>
+    <h1>Blog Template</h1>
+
+    <div>
+        <p>Tag Value: @K.TagManager["someKey"]</p>
+    </div>
+    @* <header>
         @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["title"].Value))
         {
             <h3>@K.Templates["Blog"].Fields["title"].Value</h3>
@@ -30,17 +35,29 @@
 
     <section class="content">
         @K.Templates["Blog"].Fields["content"].Value
-    </section>
+    </section> *@
 </article>
 
 @code {
     [Parameter] public string? Slug { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     if (Slug != null)
+    //     {
+    //         await K.InitializeAsync(this, Nav.Uri, "elementId");
+    //     }
+    // }
+
+    protected override void OnInitialized()
     {
-        if (Slug != null)
-        {
-            await K.InitializeAsync(this, Nav.Uri, "elementId");
-        }
+        string tagValue = K.TagManager["someKey"];
+
+        K.TagManager["someKey"] = "newValue";
+    }
+
+    private string GetTag(string key)
+    {
+        return K.TagManager[key];
     }
 }
