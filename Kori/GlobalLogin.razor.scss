@@ -195,10 +195,10 @@
                 }
 
                 .side-icon {
-                    transition: transform 300ms ease-in-out;
+                    transition: transform 1000ms ease-in-out;
 
                     &.rotate {
-                        transform: rotate(90deg);
+                        transform: rotate(180deg);
                     }
                 }
             }

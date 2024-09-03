@@ -1,6 +1,5 @@
 .login-component__language {
     color: white;
-    margin-top: 8px;
 
     .language-list {
         display: flex;
@@ -28,7 +27,7 @@
         overflow-y: auto;
         list-style: none;
         width: 100%;
-        margin-top: 16px;
+        margin-top: 8px;
         margin-right: -16px;
         padding-right: 16px;
     }
@@ -38,13 +37,32 @@
     }
 
     button {
-        padding: 8px 0;
+        width: 100%;
+        padding: 8px 12px;
         background: none;
+        border-radius: 4px;
         color: white;
         font-family: 'Encode Sans Semi Expanded';
         font-size: 14px;
         font-weight: 400;
         line-height: 160%;
         color: var(--grey-50);
+        text-align: left;
+
+        &:hover {
+            background: var(--grey-700) !important;
+        }
+
+        &:active {
+            background: var(--grey-800) !important;
+        }
+
+        aside {
+            font-family: 'Encode Sans Expanded';
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 160%;
+            color: var(--grey-300);
+        }
     }
 }

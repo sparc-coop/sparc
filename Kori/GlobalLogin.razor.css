@@ -168,10 +168,10 @@
   line-height: 160%;
 }
 .login-component .login-menu__actions .language-btn .side-icon {
-  transition: transform 300ms ease-in-out;
+  transition: transform 1000ms ease-in-out;
 }
 .login-component .login-menu__actions .language-btn .side-icon.rotate {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 .login-component .login-menu__input {
   display: flex;
