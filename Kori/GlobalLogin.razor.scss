@@ -1,4 +1,6 @@
 .login-component {
+    width: fit-content;
+    padding: 12px;
     display: flex;
     flex-direction: row-reverse;
     gap: 16px;
@@ -8,7 +10,8 @@
     font-family: 'Encode Sans Semi Expanded' !important;
     font-weight: 400;
     line-height: 160%;
-    color: white;
+    color: var(--grey-50) !important;
+    z-index: 1000;
 
     > * {
         width: 32px;
@@ -26,18 +29,30 @@
         }
     }
 
-    button {
+    &.show {
+        display: flex;
+        gap: 12px;
+    }
+
+    &__btn {
         padding: 8px 0 !important;
         background: none !important;
         border: none !important;
         font-family: 'Encode Sans Semi Expanded' !important;
+        color: var(--grey-50) !important;
+
+        &:hover {
+            background: none !important;
+            color: white !important;
+        }
     }
 
-    button.login-component__toggle {
+    .login-component__toggle {
         width: 24px;
         height: 24px;
         background: #1a1a1a !important;
         border-radius: 50%;
+        cursor: pointer;
 
         .login-user-icon {
             width: 36px !important;
@@ -61,185 +76,187 @@
     }
 
     &__menu {
-        background: #1a1a1a;
-        width: 200px;
-        height: fit-content;
-        border-radius: 8px;
-        position: absolute;
-        top: 30px;
-        right: 0;
         display: none;
+        width: 256px;
+        height: fit-content;
+        padding: 16px 16px 0px 16px;
+        position: absolute;
+        top: 40px;
+        right: 12px;
+        background: var(--grey-900);
+        border: 1px solid var(--grey-700);
+        border-radius: 4px;
         animation: login_fadeIn 500ms ease-in-out;
         z-index: 1000;
-        padding: 16px 16px 0px 16px;
 
         &.show {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+    }
 
-        li, button {
-            color: var(--grey-700) !important;
-        }
-
-        button {
-            padding: 8px 0 !important;
-            border: none !important;
-            border-radius: 0 !important;
-            border-image: none !important;
-            font-family: 'Encode Sans Semi Expanded' !important;
+    .login-menu {
+        &__header {
+            color: var(--grey-50);
+            font-size: 16px;
             font-weight: 400;
-            line-height: 140%;
-            color: white !important;
-            text-align: left !important;
-            transition: 300ms ease-in-out;
+            line-height: 160%;
 
-            &:hover {
-                background: var(--grey-50);
-            }
-
-            &:active {
-                background: var(--white);
+            p {
+                font-family: 'Encode Sans Expanded';
+                color: var(--grey-300);
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 160%;
             }
         }
 
-        .login-menu__user {
+        &__actions {
             width: 100%;
-        }
-
-        .login-menu__actions {
             display: flex;
             flex-direction: column;
+            gap: 8px;
+
+            .login-menu__divider {
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.80);
+            }
 
             button {
-                width: 100%;
-                padding: 8px 0;
-                text-align: left !important;
-            }
-        }
-    }
+                padding: 6px 8px !important;
+                border-radius: 4px !important;
 
-    &__btn {
-        display: flex;
-        gap: 16px;
-
-        img {
-            width: 10px;
-            height: auto;
-        }
-    }
-
-    &.show {
-        display: flex;
-        gap: 12px;
-    }
-
-    .kori-buddy {
-        width: 88px;
-    }
-
-    &__container {
-        padding: 12px;
-        background: var(--white);
-        border-radius: 0 0 16px 16px;
-    }
-
-    h5, input, label, button {
-        font-family: 'Love Ya Like A Sister' !important;
-        font-size: 14px;
-        color: var(--grey-900);
-        font-weight: 400;
-    }
-
-    &__header {
-        margin-bottom: 12px;
-    }
-
-    &__input {
-        display: flex;
-        gap: 8px;
-        padding: 0;
-        background: var(--white);
-        border: 10px solid transparent;
-        border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
-
-        input {
-            padding: 0;
-            border: none;
-
-            &::placeholder {
-                color: var(--grey-500);
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
             }
 
-            &:-ms-input-placeholder {
-                color: var(--grey-500);
-            }
-        }
-    }
-
-    &__keep {
-        display: flex;
-        gap: 8px;
-        font-size: 14px;
-
-        input {
-            margin-top: 6px;
-            width: 14px;
-            height: 14px;
-            border: 4px solid transparent;
-            border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
-            border-radius: 2px;
-
-            &::before {
-                background: var(--grey-700);
-                box-shadow: var(--grey-700);
-            }
-        }
-    }
-
-    .login-menu__actions {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 12px;
-        width: 100%;
-
-        button {
-            width: 100%;
-            padding: 0;
-            background: none;
-            border: 10px solid transparent;
-            border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
-            font-style: normal;
-
-            &.login-component__btn {
-                width: calc(100% - 4px);
-                height: calc(100% - 4px);
-                margin: 0 auto;
-                background: var(--orange-500);
-                border-radius: 8px;
-                border-image-outset: 2px;
+            .login-btn, .account-btn {
+                display: flex !important;
+                gap: 14px !important;
+                align-items: center !important;
+                background: var(--grey-800) !important;
+                transition: 300ms ease-in-out;
 
                 &:hover {
-                    background: var(--orange-200) !important;
-                    filter: opacity(1) !important;
+                    background: var(--grey-700) !important;
                 }
 
                 &:active {
-                    background: var(--orange-500) !important;
+                    background: var(--grey-800) !important;
+                }
+
+                &__content {
+                    text-align: left !important;
+
+                    figcaption {
+                        font-family: 'Encode Sans Semi Expanded';
+                        color: var(--grey-50);
+                        font-size: 16px;
+                        font-weight: 400;
+                        line-height: 160%;
+                    }
+
+                    aside {
+                        font-family: 'Encode Sans Expanded';
+                        color: var(--grey-300);
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 160%;
+                    }
                 }
             }
 
-            &.login-component__cancel {
+            .language-btn {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                transition: 300ms ease-in-out;
+
                 &:hover {
-                    filter: opacity(0.6) !important;
+                    background: var(--grey-700) !important;
                 }
 
                 &:active {
-                    filter: opacity(1) !important;
+                    background: var(--grey-900) !important;
+                }
+
+                &__wrapper {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 14px !important;
+                    font-family: 'Encode Sans Expanded';
+                    color: var(--grey-300);
+                    font-size: 14px;
+                    font-weight: 400;
+                    line-height: 160%;
+                }
+
+                .side-icon {
+                    transition: transform 300ms ease-in-out;
+
+                    &.rotate {
+                        transform: rotate(90deg);
+                    }
                 }
             }
+        }
+
+        &__input {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            input {
+                width: 100% !important;
+                height: fit-content !important;
+                padding: 8px 12px !important;
+                background: var(--grey-800) !important;
+                border-radius: 4px !important;
+                border: none !important;
+                color: var(--grey-50);
+                font-family: 'Encode Sans Expanded';
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 160%;
+
+                &:focus {
+                    border: var(--grey-50) !important;
+                    backdrop-filter: brightness(120%) !important;
+                }
+            }
+
+            .submit-btn {
+                width: 100% !important;
+                padding: 8px 12px !important;
+                background: var(--grey-800) !important;
+                font-family: 'Encode Sans Expanded';
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 160%;
+                transition: 300ms ease-in-out;
+
+                &:hover {
+                    background: var(--grey-700) !important;
+                }
+
+                &:active {
+                    background: var(--grey-800) !important;
+                }
+            }
+        }
+    }
+
+    &__overlay {
+        &.show {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
         }
     }
 }
