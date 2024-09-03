@@ -1329,6 +1329,19 @@ nav .nav-mobile {
   }
 }
 
+.blog-post {
+  grid-column: 2/14;
+}
+.blog-post .placeholder {
+  color: gray;
+  font-style: italic;
+  cursor: pointer;
+}
+.blog-post .content {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
 .community-cta {
   display: flex;
   justify-content: space-between;

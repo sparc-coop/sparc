@@ -2,23 +2,13 @@
 
 <article class="blog-post">
     <header>
-        @if (!string.IsNullOrEmpty(GetTag("title")))
-        {
-            <h1>@GetTag("title")</h1>
-        }
-        else
-        {
-            <h1 class="placeholder">Type your Title here</h1>
-        }
+        <h1 class="@(IsPlaceholder("title") ? "placeholder" : "")">
+            @GetTag("title")
+        </h1>
 
-        @if (!string.IsNullOrEmpty(GetTag("author")))
-        {
-            <aside>@GetTag("author")</aside>
-        }
-        else
-        {
-            <aside class="placeholder">Type your Name here</aside>
-        }
+        <aside class="@(IsPlaceholder("author") ? "placeholder" : "")">
+            @GetTag("author")
+        </aside>
 
         <time datetime="@(DateTime.Now.ToString("O"))">
             @DateTime.Now.ToString("MMMM d, yyyy")
@@ -26,43 +16,60 @@
     </header>
 
     <figure>
-        @if (!string.IsNullOrEmpty(GetTag("imageUrl")))
-        {
-            <img src="@GetTag("imageUrl")" alt="@GetTag("title")" />
-        }
-        else
-        {
-            <img src="https://example.com/default-image.jpg" alt="Default Image" class="placeholder" />
-        }
+        <img src="@GetTag("imageUrl")" alt="@GetTag("title")" class="@(IsPlaceholder("imageUrl") ? "placeholder" : "")" />
     </figure>
 
     <section class="content">
-        @if (!string.IsNullOrEmpty(GetTag("content")))
-        {
+        <p class="@(IsPlaceholder("content") ? "placeholder" : "")">
             @GetTag("content")
-        }
-        else
-        {
-            <p class="placeholder">Type the content of the blog post here.</p>
-        }
+        </p>
     </section>
 </article>
 
 @code {
-    [Parameter] public string? Slug { get; set; }    
+    [Parameter] public string? Slug { get; set; }
 
     private Kori.TagManager B { get; } = new Kori.TagManager();
 
+    private Dictionary<string, string> DefaultValues;
+
     protected override void OnInitialized()
     {
-        B["title"] = "Type your Title here";
-        B["author"] = "Type your Name here";
-        B["imageUrl"] = "https://example.com/image.jpg";
-        B["content"] = "Type the content of the blog post here.";
+        DefaultValues = new Dictionary<string, string>
+        {
+            { "title", "Type your Title here" },
+            { "author", "Type your Name here" },
+            { "imageUrl", $"data:image/svg+xml;base64,{ConvertToBase64Image()}" },
+            { "content", "Type the blog post content here." }
+        };
+
+        foreach (var key in DefaultValues.Keys)
+        {
+
+            B[key] = DefaultValues[key];
+        }
     }
 
     private string GetTag(string key)
     {
         return B[key];
+    }
+
+    private bool IsPlaceholder(string key)
+    {
+        return B[key] == DefaultValues[key];
+    }
+
+    private static string ConvertToBase64Image()
+    {
+        string svg = @"
+            <svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'>
+                <rect width='100%' height='100%' fill='#f2f2f2' />
+                <text x='50%' y='50%' alignment-baseline='middle' text-anchor='middle' fill='#888' font-family='Arial, sans-serif' font-size='24'>
+                    Upload your image here
+                </text>
+            </svg>";
+
+        return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(svg));
     }
 }

@@ -1,5 +1,14 @@
-﻿.placeholder {
-    color: gray;
-    font-style: italic;
-    cursor: pointer;
+﻿.blog-post {
+    grid-column: 2/14;
+
+    .placeholder {
+        color: gray;
+        font-style: italic;
+        cursor: pointer;
+    }    
+
+    .content {
+        font-size: 1em;
+        line-height: 1.6;
+    }
 }
