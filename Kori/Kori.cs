@@ -24,7 +24,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
 
     public record IbisContent(string Name, string Slug, string Language, ICollection<KoriTextContent> Content);
-    
+
     public async Task InitializeAsync(HttpContext context)
     {
         await GetContentAsync(context.Request.Path);
@@ -48,6 +48,69 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         }
     }
 
+    public class ContentField
+    {
+        public string Tag { get; set; }
+        public string Value { get; set; }
+        public string Type { get; set; }
+    }
+
+    public class ContentTemplate
+    {
+        public string TemplateName { get; set; }
+        public Dictionary<string, ContentField> Fields { get; set; } = new();
+    }
+
+    public Dictionary<string, ContentTemplate> Templates = new()
+    {
+        ["Blog"] = new ContentTemplate
+        {
+            TemplateName = "Blog",
+            Fields = new Dictionary<string, ContentField>
+        {
+            { "title", new ContentField { Tag = "title", Type = "text", Value = "" } },
+            { "author", new ContentField { Tag = "author", Type = "text", Value = "" } },
+            { "image", new ContentField { Tag = "image", Type = "image", Value = "" } },
+            { "content", new ContentField { Tag = "content", Type = "text", Value = "" } }
+        }
+        }
+    };
+
+    //public async Task EditFieldAsync(string templateName, string fieldTag, string newValue)
+    //{
+    //    if (Templates.TryGetValue(templateName, out var template) && template.Fields.ContainsKey(fieldTag))
+    //    {
+    //        var field = template.Fields[fieldTag];
+    //        field.Value = newValue;
+
+    //        await SaveAsync(field.Tag, newValue);
+    //    }
+    //}
+
+    public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
+    {
+        var path = new Uri(currentUrl).AbsolutePath;
+        await GetContentAsync(path);
+
+        if (Templates.TryGetValue(templateName, out var template))
+        {
+            foreach (var field in template.Fields)
+            {
+                if (_content.TryGetValue(field.Key, out var content))
+                {
+                    field.Value.Value = content.Text;
+                }
+                else
+                {
+                    field.Value.Value = "";
+                }
+            }
+        }
+
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
+    }
+
     public async Task<List<string>> TranslateAsync(List<string> nodes)
     {
         if (nodes.Count == 0)
@@ -66,7 +129,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             _content[item.Tag] = item with { Nodes = [] };
 
         // Replace nodes with their translation
-        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text): x).ToList();
+        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text) : x).ToList();
         return nodes;
     }
 
@@ -167,7 +230,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             Console.WriteLine("Error sending image: " + response.StatusCode);
         }
     }
-    
+
     public async Task PlayAsync(KoriTextContent content)
     {
         if (content?.Audio?.Url == null)
@@ -238,7 +301,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
             return default;
         }
     }
-   
+
     public void OpenTranslationMenu()
     {
         Mode = "Translate";

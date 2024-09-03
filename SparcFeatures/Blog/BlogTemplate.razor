@@ -2,18 +2,18 @@
 
 <article class="blog-post">
     <header>
-        @if (K["_title"] != null)
+        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["title"].Value))
         {
-            <h3>@K["_title"]?.Text</h3>
+            <h3>@K.Templates["Blog"].Fields["title"].Value</h3>
         }
         else
         {
-            <h3>Untitled Post</h3>
+            <h3 class="placeholder">title</h3>
         }
 
-        @if (K["_author"] != null)
+        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["author"].Value))
         {
-            <aside>by @K["_author"]?.Text</aside>
+            <aside>by @K.Templates["Blog"].Fields["author"].Value</aside>
         }
 
         <time datetime="@(DateTime.Now.ToString("O"))">
@@ -22,14 +22,14 @@
     </header>
 
     <figure>
-        @if (K["_image"] != null)
+        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["image"].Value))
         {
-            <img src="@K["_image"]?.Text" alt="@K["_title"]?.Text" />
+            <img src="@K.Templates["Blog"].Fields["image"].Value" alt="@K.Templates["Blog"].Fields["title"].Value" />
         }
     </figure>
 
     <section class="content">
-        @K["_content"]?.Html
+        @K.Templates["Blog"].Fields["content"].Value
     </section>
 </article>
 
