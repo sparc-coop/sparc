@@ -1,63 +1,68 @@
 ﻿@page "/blog/{slug}"
 
 <article class="blog-post">
-    <h1>Blog Template</h1>
-
-    <div>
-        <p>Tag Value: @K.TagManager["someKey"]</p>
-    </div>
-    @* <header>
-        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["title"].Value))
+    <header>
+        @if (!string.IsNullOrEmpty(GetTag("title")))
         {
-            <h3>@K.Templates["Blog"].Fields["title"].Value</h3>
+            <h1>@GetTag("title")</h1>
         }
         else
         {
-            <h3 class="placeholder">title</h3>
+            <h1 class="placeholder">Type your Title here</h1>
         }
 
-        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["author"].Value))
+        @if (!string.IsNullOrEmpty(GetTag("author")))
         {
-            <aside>by @K.Templates["Blog"].Fields["author"].Value</aside>
+            <aside>@GetTag("author")</aside>
+        }
+        else
+        {
+            <aside class="placeholder">Type your Name here</aside>
         }
 
         <time datetime="@(DateTime.Now.ToString("O"))">
-            @DateTime.Now.ToString("M")
+            @DateTime.Now.ToString("MMMM d, yyyy")
         </time>
     </header>
 
     <figure>
-        @if (!string.IsNullOrEmpty(K.Templates["Blog"].Fields["image"].Value))
+        @if (!string.IsNullOrEmpty(GetTag("imageUrl")))
         {
-            <img src="@K.Templates["Blog"].Fields["image"].Value" alt="@K.Templates["Blog"].Fields["title"].Value" />
+            <img src="@GetTag("imageUrl")" alt="@GetTag("title")" />
+        }
+        else
+        {
+            <img src="https://example.com/default-image.jpg" alt="Default Image" class="placeholder" />
         }
     </figure>
 
     <section class="content">
-        @K.Templates["Blog"].Fields["content"].Value
-    </section> *@
+        @if (!string.IsNullOrEmpty(GetTag("content")))
+        {
+            @GetTag("content")
+        }
+        else
+        {
+            <p class="placeholder">Type the content of the blog post here.</p>
+        }
+    </section>
 </article>
 
 @code {
-    [Parameter] public string? Slug { get; set; }
+    [Parameter] public string? Slug { get; set; }    
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     if (Slug != null)
-    //     {
-    //         await K.InitializeAsync(this, Nav.Uri, "elementId");
-    //     }
-    // }
+    private Kori.TagManager B { get; } = new Kori.TagManager();
 
     protected override void OnInitialized()
     {
-        string tagValue = K.TagManager["someKey"];
-
-        K.TagManager["someKey"] = "newValue";
+        B["title"] = "Type your Title here";
+        B["author"] = "Type your Name here";
+        B["imageUrl"] = "https://example.com/image.jpg";
+        B["content"] = "Type the content of the blog post here.";
     }
 
     private string GetTag(string key)
     {
-        return K.TagManager[key];
+        return B[key];
     }
 }
