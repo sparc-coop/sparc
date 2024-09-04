@@ -38,7 +38,7 @@
                                 <div class="language-btn__wrapper">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="side-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button>
                             <LanguageSelector ShowLanguages="ShowLanguageSettings" />
                         </div>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="login-menu__actions">
                             <div class="login-menu__input">
-                                <input class="login-component__input" @ref=LoginInput type="text" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
+                                <input class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
                                 <button class="login-component__btn submit-btn" @onclick=BeginLogin>
                                     Login
                                 </button>
@@ -60,7 +60,7 @@
                                     <div class="language-btn__wrapper">
                                         <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                     </div>
-                                    <img class="side-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                    <img class="expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                                 </button>
                                 <LanguageSelector ShowLanguages="ShowLanguageSettings" />
                             </div>
@@ -96,7 +96,33 @@
                         </div>
                         break;
                     case LoginStates.Error:
-                        <span class="login-component__message">Error: @Auth.Message</span>
+                        <div class="login-menu__header">
+                            <div class="login-header">Welcome!</div>
+                            <p class="login-subheader">Lorem ipsum dolor sit amet, consectetur</p>
+                        </div>
+                        <div class="login-menu__actions">
+                            <button class="login-component__btn login-btn" @onclick=BeginLogin>
+                                <img src="_content/Kori/icons/Key.svg" />
+                                <div class="login-btn__content">
+                                    <figcaption>Passkey Login</figcaption>
+                                    <aside>Set up your passkey</aside>
+                                    <div class="login-error">
+                                        <div>
+                                            <img src="_content/Kori/icons/Help.svg" /> Having trouble with your passkey?
+                                        </div>
+                                        <span class="login-component__message">Error: @Auth.Message</span>
+                                    </div>
+                                </div>
+                            </button>
+                            <div class="login-menu__divider"></div>
+                            <button class="login-component__btn language-btn" @onclick=ToggleLanguageSettings>
+                                <div class="language-btn__wrapper">
+                                    <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
+                                </div>
+                                <img class="expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                            </button>
+                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                        </div>
                         break;
                 }
             </div>
@@ -169,7 +195,11 @@
         StateHasChanged();
         await Task.Delay(1);
         if (LoginInput.HasValue)
+        {
+            Console.WriteLine("Email: " + Email);
             await LoginInput.Value.FocusAsync();
+            await LoginAsync();
+        }
     }
 
     async Task LoginAsync()

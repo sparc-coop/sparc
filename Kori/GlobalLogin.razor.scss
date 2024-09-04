@@ -7,10 +7,6 @@
     position: absolute;
     top: 0;
     right: 16px;
-    font-family: 'Encode Sans Semi Expanded' !important;
-    font-weight: 400;
-    line-height: 160%;
-    color: var(--grey-50) !important;
     z-index: 1000;
 
     > * {
@@ -38,13 +34,12 @@
         padding: 8px 0 !important;
         background: none !important;
         border: none !important;
-        font-family: 'Encode Sans Semi Expanded' !important;
-        color: var(--grey-50) !important;
-
-        &:hover {
-            background: none !important;
-            color: white !important;
-        }
+        font-family: 'Encode Sans Expanded' !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 140% !important;
+        color: white !important;
+        cursor: pointer;
     }
 
     .login-component__toggle {
@@ -98,17 +93,10 @@
 
     .login-menu {
         &__header {
-            color: var(--grey-50);
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 160%;
+            @extend .login-text__primary;
 
             p {
-                font-family: 'Encode Sans Expanded';
-                color: var(--grey-300);
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 160%;
+                @extend .login-text__secondary;
             }
         }
 
@@ -140,31 +128,15 @@
                 background: var(--grey-800) !important;
                 transition: 300ms ease-in-out;
 
-                &:hover {
-                    background: var(--grey-700) !important;
-                }
-
-                &:active {
-                    background: var(--grey-800) !important;
-                }
-
                 &__content {
                     text-align: left !important;
 
                     figcaption {
-                        font-family: 'Encode Sans Semi Expanded';
-                        color: var(--grey-50);
-                        font-size: 16px;
-                        font-weight: 400;
-                        line-height: 160%;
+                        @extend .login-text__primary;
                     }
 
                     aside {
-                        font-family: 'Encode Sans Expanded';
-                        color: var(--grey-300);
-                        font-size: 14px;
-                        font-weight: 400;
-                        line-height: 160%;
+                        @extend .login-text__secondary;
                     }
                 }
             }
@@ -173,32 +145,26 @@
                 display: flex !important;
                 justify-content: space-between !important;
                 align-items: center !important;
-                transition: 300ms ease-in-out;
-
-                &:hover {
-                    background: var(--grey-700) !important;
-                }
-
-                &:active {
-                    background: var(--grey-900) !important;
-                }
+                @extend .login-text__btn;
 
                 &__wrapper {
                     display: flex !important;
                     align-items: center !important;
                     gap: 14px !important;
-                    font-family: 'Encode Sans Expanded';
-                    color: var(--grey-300);
-                    font-size: 14px;
-                    font-weight: 400;
-                    line-height: 160%;
+                    font-family: 'Encode Sans Expanded' !important;
+                    font-size: 14px !important;
+                    font-weight: 400 !important;
+                    line-height: 140% !important;
+                    color: white !important;
+                    opacity: 0.7 !important;
                 }
 
-                .side-icon {
+                .expand-icon {
                     transition: transform 1000ms ease-in-out;
+                    opacity: 0.7;
 
                     &.rotate {
-                        transform: rotate(180deg);
+                        transform: rotate(-180deg);
                     }
                 }
             }
@@ -268,5 +234,40 @@
 
     100% {
         opacity: 1;
+    }
+}
+
+.login-text__primary {
+    font-family: 'Encode Sans Semi Expanded' !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 160% !important;
+    color: var(--grey-50) !important;
+}
+
+.login-text__secondary {
+    font-family: 'Encode Sans Expanded' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    color: var(--grey-300) !important;
+}
+
+.login-text__btn {
+    font-family: 'Encode Sans Expanded' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: 300ms ease-in-out !important;
+    opacity: 0.7 !important;
+
+    &:hover {
+        opacity: 1 !important;
+    }
+
+    &:active {
+        opacity: 0.7 !important;
     }
 }
