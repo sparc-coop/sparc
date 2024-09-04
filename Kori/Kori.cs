@@ -41,100 +41,6 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
     }    
 
-    //public KoriTextContent? this[string tag]
-    //{
-    //    get
-    //    {
-    //        _content.TryGetValue(tag, out var content);
-    //        return content;
-    //    }
-    //}
-
-    //public class ContentField
-    //{
-    //    public string Tag { get; set; }
-    //    public string Value { get; set; }
-    //    public string Type { get; set; }
-    //}
-
-    //public class ContentTemplate
-    //{
-    //    public string TemplateName { get; set; }
-    //    public Dictionary<string, ContentField> Fields { get; set; } = new();
-    //}
-
-    //public Dictionary<string, ContentTemplate> Templates = new()
-    //{
-    //    ["Blog"] = new ContentTemplate
-    //    {
-    //        TemplateName = "Blog",
-    //        Fields = new Dictionary<string, ContentField>
-    //    {
-    //        { "title", new ContentField { Tag = "title", Type = "text", Value = "" } },
-    //        { "author", new ContentField { Tag = "author", Type = "text", Value = "" } },
-    //        { "image", new ContentField { Tag = "image", Type = "image", Value = "" } },
-    //        { "content", new ContentField { Tag = "content", Type = "text", Value = "" } }
-    //    }
-    //    }
-    //};
-
-    //public async Task EditFieldAsync(string templateName, string fieldTag, string newValue)
-    //{
-    //    if (Templates.TryGetValue(templateName, out var template) && template.Fields.ContainsKey(fieldTag))
-    //    {
-    //        var field = template.Fields[fieldTag];
-    //        field.Value = newValue;
-
-    //        await SaveAsync(field.Tag, newValue);
-    //    }
-    //}
-
-    //public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
-    //{
-    //    var path = new Uri(currentUrl).AbsolutePath;
-    //    await GetContentAsync(path);
-
-    //    if (Templates.TryGetValue(templateName, out var template))
-    //    {
-    //        foreach (var field in template.Fields)
-    //        {
-    //            if (_content.TryGetValue(field.Key, out var content))
-    //            {
-    //                field.Value.Value = content.Text;
-    //            }
-    //            else
-    //            {
-    //                field.Value.Value = "";
-    //            }
-    //        }
-    //    }
-
-    //    var js = await KoriJs.Value;
-    //    await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
-    //}    //public async Task InitializeAsync(ComponentBase component, string currentUrl, string templateName, string elementId)
-    //{
-    //    var path = new Uri(currentUrl).AbsolutePath;
-    //    await GetContentAsync(path);
-
-    //    if (Templates.TryGetValue(templateName, out var template))
-    //    {
-    //        foreach (var field in template.Fields)
-    //        {
-    //            if (_content.TryGetValue(field.Key, out var content))
-    //            {
-    //                field.Value.Value = content.Text;
-    //            }
-    //            else
-    //            {
-    //                field.Value.Value = "";
-    //            }
-    //        }
-    //    }
-
-    //    var js = await KoriJs.Value;
-    //    await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
-    //}
-
     public async Task<List<string>> TranslateAsync(List<string> nodes)
     {
         if (nodes.Count == 0)
@@ -360,7 +266,13 @@ public class TagManager
             {
                 dict.Add(key, "");
             }
-            return dict[key];
+
+            if (key == "ImageUrl" && Uri.IsWellFormedUriString(dict[key], UriKind.Absolute))
+            {
+                return dict[key]; 
+            }
+
+            return $"<span data-tag=\"{key}\">{dict[key]}</span>";
         }
         set
         {

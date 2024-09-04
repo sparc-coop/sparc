@@ -28,7 +28,7 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     dotNet = dotNetObjectReference;
 
     buildTranslationCache(serverTranslationCache);
-    
+
     initKoriElement(targetElementId);
 
     window.addEventListener("click", e => {
@@ -93,15 +93,49 @@ function registerNodesUnder(el) {
         console.log('Registering node', n.nodeName);
         registerNode(n);
     }
-        
+
 }
 
+// Original code
+//function registerNode(node) {
+//    if (node.koriRegistered == language || node.koriTranslated == language)
+//        return;
+
+//    var content = node.nodeName == 'IMG' ? node.src.trim() : node.textContent.trim();
+//    var tag = node.koriContent ?? content.trim();
+//    if (!tag)
+//        return;
+
+//    node.koriRegistered = language;
+//    node.koriContent = tag;
+//    node.parentElement?.classList.add('kori-initializing');
+
+//    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
+//        translationCache[tag].Nodes.push(node);
+
+//        if (translationCache[tag].id !== undefined && node.nodeName == '#text') {
+//            node.parentElement.setAttribute('kori-id', translationCache[tag].id);
+//        }
+
+//    } else {
+//        translationCache[tag] = {
+//            Nodes: [node],
+//            Translation: null
+//        };
+//    }
+//}
+
+// Code I'm testing
 function registerNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
 
     var content = node.nodeName == 'IMG' ? node.src.trim() : node.textContent.trim();
-    var tag = node.koriContent ?? content.trim();
+    console.log("content in registerNode: ", content);
+
+    var tag = getTagContent(node) ?? (node.koriContent ?? content.trim());
+    console.log("tag in registerNode: ", tag);
+
     if (!tag)
         return;
 
@@ -111,7 +145,7 @@ function registerNode(node) {
 
     if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
         translationCache[tag].Nodes.push(node);
-        
+
         if (translationCache[tag].id !== undefined && node.nodeName == '#text') {
             node.parentElement.setAttribute('kori-id', translationCache[tag].id);
         }
@@ -124,9 +158,17 @@ function registerNode(node) {
     }
 }
 
+function getTagContent(node) {
+    var tagContent = node.parentElement?.getAttribute('data-tag');
+    if (tagContent) {
+        return tagContent.trim();
+    }
+    return null;
+}
+
 function observeCallback(mutations) {
     console.log("Observe callback");
-    
+
     mutations.forEach(function (mutation) {
         if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
@@ -186,8 +228,12 @@ function replaceWithTranslatedText() {
                 node.src = translation.Translation;
                 node.koriTranslated = language;
             } else if (node.textContent != translation.Translation) {
-                node.textContent = translation.text || "";
+                //node.textContent = translation.text || "";
                 //node.textContent = translation.Translation || "";
+
+                if (translation.text != undefined) {
+                    node.textContent = translation.text || "";
+                }
                 node.koriTranslated = language;
             }
 
@@ -261,7 +307,7 @@ function toggleSelected(t) {
         if (activeMessageId) {
             cancelEdit();
         }
-        
+
         activeNode = null;
         return;
     }
@@ -298,13 +344,13 @@ function toggleWidget(t) {
                 break;
             }
 
-            if (koriId != null && koriId == translationCache[key].id) {
-                activeNode = t;
-                activeMessageId = key;
-                break;
-            }
-            
-            
+        if (koriId != null && koriId == translationCache[key].id) {
+            activeNode = t;
+            activeMessageId = key;
+            break;
+        }
+
+
     }
 
     console.log('Set active node', activeNode);
@@ -320,7 +366,7 @@ function getActiveImageSrc() {
     }
 
     console.log('Active node is not an image', activeNode)
-    return null; 
+    return null;
 }
 
 function edit() {
@@ -340,7 +386,7 @@ function edit() {
         activateNodeEdition(activeNode.parentElement);
         activeNode.textContent = getTranslationRawMarkdownText(translation);
     }
-    
+
     document.getElementById("kori-widget").contentEditable = "false";
 }
 
@@ -358,7 +404,7 @@ function deactivateNodeEdition(node, translation) {
     node.contentEditable = "false";
     node.classList.remove('kori-ignore');
     node.classList.remove('selected');
-    
+
     resetWidget();
 
     node.innerHTML = translation.html;
@@ -396,7 +442,7 @@ function cancelEdit() {
     if (isTranslationAlreadySaved(translation)) {
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
         deactivateNodeEdition(activeNodeParent, translation);
-    }else {
+    } else {
         activeNode.textContent = translation.Translation;
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('selected');
@@ -422,13 +468,13 @@ function save() {
     var translation = translationCache[activeMessageId];
     console.log("translation: ", translation);
     var textContent = activeNode.textContent;
-    
+
     if (isTranslationAlreadySaved(translation)) {
         textContent = getActiveNodeTextContent(translation);
     }
 
     dotNet.invokeMethodAsync("BackToEditAsync").then(r => {
-        
+
         dotNet.invokeMethodAsync("SaveAsync", activeMessageId, textContent).then(content => {
             console.log('Saved new content to Ibis.', content);
 
@@ -448,11 +494,11 @@ function save() {
                 translationCache[activeMessageId].id = content.id;
                 activeNode.parentElement?.setAttribute('kori-id', content.id);
             }
-            
+
         });
     });
 
-    
+
 }
 
 // function to check if an element is a descendant of an element with a specific class
@@ -675,7 +721,7 @@ function applyMarkdown(symbol) {
 
 function updateImageSrc(currentSrc, newSrc) {
     var img = document.querySelector(`img[src="${currentSrc}"]`);
-    
+
     if (img) {
         img.src = newSrc;
         translationCache[activeMessageId].text = newSrc;

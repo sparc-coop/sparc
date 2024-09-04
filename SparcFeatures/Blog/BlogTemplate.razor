@@ -2,12 +2,12 @@
 
 <article class="blog-post">
     <header>
-        <h1 class="@(IsPlaceholder("title") ? "placeholder" : "")">
-            @GetTag("title")
+        <h1 class="@(IsPlaceholder("Title") ? "placeholder" : "")">
+            @((MarkupString)GetTag("Title"))  
         </h1>
 
-        <aside class="@(IsPlaceholder("author") ? "placeholder" : "")">
-            @GetTag("author")
+        <aside class="@(IsPlaceholder("Author") ? "placeholder" : "")">
+            @((MarkupString)GetTag("Author"))
         </aside>
 
         <time datetime="@(DateTime.Now.ToString("O"))">
@@ -16,12 +16,12 @@
     </header>
 
     <figure>
-        <img src="@GetTag("imageUrl")" alt="@GetTag("title")" class="@(IsPlaceholder("imageUrl") ? "placeholder" : "")" />
+        <img src="@GetTag("ImageUrl")" alt="@GetTag("Title")" class="@(IsPlaceholder("ImageUrl") ? "placeholder" : "")" />
     </figure>
 
     <section class="content">
-        <p class="@(IsPlaceholder("content") ? "placeholder" : "")">
-            @GetTag("content")
+        <p class="@(IsPlaceholder("Content") ? "placeholder" : "")">
+            @((MarkupString)GetTag("Content"))
         </p>
     </section>
 </article>
@@ -37,10 +37,10 @@
     {
         DefaultValues = new Dictionary<string, string>
         {
-            { "title", "Type your Title here" },
-            { "author", "Type your Name here" },
-            { "imageUrl", $"data:image/svg+xml;base64,{ConvertToBase64Image()}" },
-            { "content", "Type the blog post content here." }
+            { "Title", "Type your Title here" },
+            { "Author", "Type your Name here" },
+            { "ImageUrl", $"data:image/svg+xml;base64,{ConvertToBase64Image()}" },
+            { "Content", "Type the blog post content here." }
         };
 
         foreach (var key in DefaultValues.Keys)
