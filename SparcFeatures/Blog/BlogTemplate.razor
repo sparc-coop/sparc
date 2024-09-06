@@ -1,4 +1,6 @@
-﻿@page "/blog/{slug}"
+﻿@using System.Globalization
+
+@page "/blogs/{slug}"
 
 <article class="blog-post">
     <header>
@@ -11,7 +13,8 @@
         </aside>
 
         <time datetime="@(DateTime.Now.ToString("O"))">
-            @DateTime.Now.ToString("MMMM d, yyyy")
+            @* @DateTime.Now.ToString("MMMM d, yyyy") *@
+            @CultureInfo.CurrentCulture.TextInfo.ToTitleCase(DateTime.Now.ToString("MMMM d, yyyy"))
         </time>
     </header>
 
@@ -37,10 +40,10 @@
     {
         DefaultValues = new Dictionary<string, string>
         {
-            { "Title", "Type your Title here" },
-            { "Author", "Type your Name here" },
+            { "Title", "Type your title here" },
+            { "Author", "Author Name" },
             { "ImageUrl", $"data:image/svg+xml;base64,{ConvertToBase64Image()}" },
-            { "Content", "Type the blog post content here." }
+            { "Content", "Type blog post content here." }
         };
 
         foreach (var key in DefaultValues.Keys)
