@@ -182,6 +182,21 @@ function observeCallback(mutations) {
     });
 }
 
+var DefaultValues = {};
+
+function initializeDefaultValues(values) {
+    DefaultValues = values;
+}
+
+//function IsPlaceholder(key) {
+//    return ["Title", "Author", "ImageUrl", "Content"].includes(key) &&
+//        DefaultValues[key] === translationCache[key].Translation;
+//}
+
+//function IsPlaceholder(key) {    
+//    return translationCache[key] && DefaultValues[key] === translationCache[key].Translation;
+//}
+
 function translateNodes() {
     console.log('translateNodes');
 
@@ -190,7 +205,12 @@ function translateNodes() {
     for (let key in translationCache) {
         if (!translationCache[key].Submitted && !translationCache[key].Translation) {
             translationCache[key].Submitted = true;
-            contentToTranslate.push(key);
+            contentToTranslate.push(key);                 
+            //if (!IsPlaceholder(key)) {
+            //    contentToTranslate.push(key);
+            //} else {                
+            //    translationCache[key].Translation = "";
+            //}
         }
     }
 
@@ -731,4 +751,4 @@ function updateImageSrc(currentSrc, newSrc) {
 
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc, initializeDefaultValues };

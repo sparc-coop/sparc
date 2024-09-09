@@ -39,7 +39,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
-    }    
+    }
 
     public async Task<List<string>> TranslateAsync(List<string> nodes)
     {
@@ -266,13 +266,7 @@ public class TagManager
             {
                 dict.Add(key, "");
             }
-
-            if (key == "ImageUrl" && Uri.IsWellFormedUriString(dict[key], UriKind.Absolute))
-            {
-                return dict[key]; 
-            }
-
-            return $"<span data-tag=\"{key}\">{dict[key]}</span>";
+            return dict[key];
         }
         set
         {
