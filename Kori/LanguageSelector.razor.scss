@@ -1,32 +1,63 @@
 .login-component__language {
+    padding-bottom: 8px;
+
     .language-list {
-        margin-top: 16px;
-        display: flex;
-        flex-direction: column;
-        max-height: 0px;
-        opacity: 0;
-        transition: all 1s ease-in-out;
-
-        &.show {
-            padding-bottom: 16px;
-            max-height: 400px;
-            opacity: 1;
-        }
-    }
-
-    ul {
         display: flex;
         flex-direction: column;
         gap: 8px;
         overflow-y: auto;
         list-style: none;
-        width: 184px;
-        margin-top: 16px;
+        width: 100%;
         margin-right: -16px;
         padding-right: 16px;
+        max-height: 0px;
+        opacity: 0;
+        transition: all 1s ease-in-out;
+
+        &.show {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+
+        li {
+            list-style: none;
+        }
+
+        button {
+            padding: 4px 8px;
+            background: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+            text-align: left !important;
+            @extend .login-text__btn;
+
+            aside {
+                font-family: 'Encode Sans Expanded' !important;
+                font-size: 12px !important;
+                font-weight: 400 !important;
+                line-height: 140% !important;
+                color: var(--grey-300) !important;
+            }
+        }
+    }
+}
+
+.login-text__btn {
+    font-family: 'Encode Sans Expanded' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: 300ms ease-in-out !important;
+    opacity: 0.7 !important;
+
+    &:hover {
+        opacity: 1 !important;
     }
 
-    li {
-        list-style: none;
+    &:active {
+        opacity: 0.7 !important;
     }
 }

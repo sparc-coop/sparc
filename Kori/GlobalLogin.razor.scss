@@ -1,39 +1,67 @@
 .login-component {
+    width: fit-content;
+    padding: 12px;
     display: flex;
     flex-direction: row-reverse;
     gap: 16px;
     position: absolute;
     top: 0;
     right: 16px;
-    font-family: Lato;
-    font-weight: 400;
-    line-height: 160%;
+    z-index: 1000;
 
-    .login-component {
+    > * {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-        > * {
-            width: 32px;
-            height: 32px;
-            padding: 0;
-            border-radius: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        img {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+        }
+    }
 
-            img {
-                width: 20px;
-                height: 20px;
-                margin: 0;
-            }
+    &.show {
+        display: flex;
+        gap: 12px;
+    }
+
+    &__btn {
+        padding: 8px 0 !important;
+        background: none !important;
+        border: none !important;
+        font-family: 'Encode Sans Expanded' !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 140% !important;
+        color: white !important;
+        cursor: pointer;
+    }
+
+    .login-component__toggle {
+        width: 24px;
+        height: 24px;
+        background: #1a1a1a !important;
+        border-radius: 50%;
+        cursor: pointer;
+
+        .login-user-icon {
+            width: 36px !important;
+            height: auto !important;
         }
 
-        .login-component__logged-out {
-            background: var(--grey-900);
+        &.loggedout {
+            border: 1px solid var(--grey-50);
+            border-radius: 50%;
         }
 
-        .login-component__logged-in {
+        &.loggedin {
             display: none;
-            background: #36A42C;
+            border: 1px solid var(--green-500);
             border-radius: 50%;
 
             &.show {
@@ -43,195 +71,208 @@
     }
 
     &__menu {
-        width: 200px;
         display: none;
-        animation: login_fadeIn 1000ms linear;
-        z-index: 1000;
+        width: 256px;
+        height: fit-content;
         padding: 16px 16px 0px 16px;
-        background: white;
+        position: absolute;
+        top: 40px;
+        right: 12px;
+        background: var(--grey-900);
+        border: 1px solid var(--grey-700);
+        border-radius: 4px;
+        animation: login_fadeIn 500ms ease-in-out;
+        z-index: 1000;
 
         &.show {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+    }
 
-        li, button {
-            color: var(--grey-700) !important;
-        }
+    .login-menu {
+        &__header {
+            @extend .login-text__primary;
 
-        button {
-            padding: 16px 20px !important;
-            border: 1px solid var(--grey-200, #DBDBDB) !important;
-            border-radius: 0 !important;
-            border-image: none !important;
-            font-family: Lato;
-            font-weight: 700;
-            line-height: 160%;
-            transition: 300ms ease-in-out;
-
-            &:hover {
-                background: var(--grey-50);
-            }
-
-            &:active {
-                background: var(--white);
+            p {
+                @extend .login-text__secondary;
             }
         }
-    }
 
-    &__actions {
-        display: flex;
-        flex-direction: column;
-        gap: 16px !important;
-    }
-
-    &__user {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-
-        .login-component__logout-btn {
-            padding: 0 !important;
-            background: none !important;
-            border: none !important;
-            border-radius: 0 !important;
-
-            img {
-                width: 20px;
-                height: 20px;
-            }
-
-            &:hover {
-                opacity: 0.5;
-            }
-
-            &:active {
-                opacity: 1;
-            }
-        }
-    }
-
-    &__btn {
-        display: flex;
-        gap: 16px;
-
-        img {
-            width: 10px;
-            height: auto;
-        }
-    }
-
-    &.show {
-        display: flex;
-        gap: 12px;
-    }
-
-    .kori-buddy {
-        width: 88px;
-    }
-
-    &__container {
-        padding: 12px;
-        background: var(--white);
-        border-radius: 0 0 16px 16px;
-    }
-
-    h5, input, label, button {
-        font-family: 'Love Ya Like A Sister' !important;
-        font-size: 14px;
-        color: var(--grey-900);
-        font-weight: 400;
-    }
-
-    &__header {
-        margin-bottom: 12px;
-    }
-
-    &__input {
-        display: flex;
-        gap: 8px;
-        padding: 0;
-        background: var(--white);
-        border: 10px solid transparent;
-        border-image: url('/_content/Kori/borders/black-16.svg') 15 round;
-
-        input {
-            padding: 0;
-            border: none;
-
-            &::placeholder {
-                color: var(--grey-500);
-            }
-
-            &:-ms-input-placeholder {
-                color: var(--grey-500);
-            }
-        }
-    }
-
-    &__keep {
-        display: flex;
-        gap: 8px;
-        font-size: 14px;
-
-        input {
-            margin-top: 6px;
-            width: 14px;
-            height: 14px;
-            border: 4px solid transparent;
-            border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
-            border-radius: 2px;
-
-            &::before {
-                background: var(--grey-700);
-                box-shadow: var(--grey-700);
-            }
-        }
-    }
-
-    &__actions {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 12px;
-
-        button {
+        &__actions {
             width: 100%;
-            padding: 0;
-            background: none;
-            border: 10px solid transparent;
-            border-image: url('/_content/Kori/borders/black-8.svg') 15 round;
-            font-style: normal;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
 
-            &.login-component__btn {
-                width: calc(100% - 4px);
-                height: calc(100% - 4px);
-                margin: 0 auto;
-                background: var(--orange-500);
-                border-radius: 8px;
-                border-image-outset: 2px;
+            .login-menu__divider {
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.80);
+            }
 
-                &:hover {
-                    background: var(--orange-200) !important;
-                    filter: opacity(1) !important;
-                }
+            button {
+                padding: 6px 8px !important;
+                border-radius: 4px !important;
 
-                &:active {
-                    background: var(--orange-500) !important;
+                img {
+                    width: 16px;
+                    height: 16px;
                 }
             }
 
-            &.login-component__cancel {
+            .login-btn, .account-btn {
+                display: flex !important;
+                gap: 14px !important;
+                align-items: center !important;
+                background: var(--grey-800) !important;
+                transition: 300ms ease-in-out;
+
                 &:hover {
-                    filter: opacity(0.6) !important;
+                    background: var(--grey-700) !important;
                 }
 
                 &:active {
-                    filter: opacity(1) !important;
+                    background: var(--grey-800) !important;
+                }
+
+                &__content {
+                    text-align: left !important;
+
+                    figcaption {
+                        @extend .login-text__primary;
+                    }
+
+                    aside {
+                        @extend .login-text__secondary;
+                    }
                 }
             }
+
+            .language-btn {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                @extend .login-text__btn;
+
+                &__wrapper {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 14px !important;
+                    font-family: 'Encode Sans Expanded' !important;
+                    font-size: 14px !important;
+                    font-weight: 400 !important;
+                    line-height: 140% !important;
+                    color: white !important;
+                    opacity: 0.7 !important;
+                }
+
+                .expand-icon {
+                    transition: transform 1000ms ease-in-out;
+                    opacity: 0.7;
+
+                    &.rotate {
+                        transform: rotate(-180deg);
+                    }
+                }
+            }
+
+            .use-passkey {
+                width: 100%;
+
+                button {
+                    display: flex;
+                    align-content: center;
+                    gap: 12px;
+                    padding: 6px !important;
+                }
+            }
+
+            .different-email {
+                width: 100%;
+                margin: 12px 0;
+
+                span {
+                    display: flex;
+                    align-content: center;
+                    gap: 12px;
+                }
+
+                button {
+                    padding: 0 !important;
+                }
+            }
+
+            form {
+                .form-error {
+                    display: none;
+
+                    span {
+                        margin-top: 8px;
+                        color: white;
+                        opacity: 0.7;
+                    }
+
+                    &.show {
+                        display: block;
+                    }
+                }
+            }
+        }
+
+        &__input {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            input {
+                width: 100% !important;
+                height: fit-content !important;
+                padding: 8px 12px !important;
+                background: var(--grey-800) !important;
+                border-radius: 4px !important;
+                border: none !important;
+                color: var(--grey-50);
+                font-family: 'Encode Sans Expanded';
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 160%;
+
+                &:focus {
+                    border: var(--grey-50) !important;
+                    backdrop-filter: brightness(120%) !important;
+                }
+            }
+
+            .submit-btn {
+                width: 100% !important;
+                padding: 8px 12px !important;
+                background: var(--grey-800) !important;
+                font-family: 'Encode Sans Expanded';
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 160%;
+                transition: 300ms ease-in-out;
+
+                &:hover {
+                    background: var(--grey-700) !important;
+                }
+
+                &:active {
+                    background: var(--grey-800) !important;
+                }
+            }
+        }
+    }
+
+    &__overlay {
+        &.show {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
         }
     }
 }
@@ -239,11 +280,44 @@
 @keyframes login_fadeIn {
     0% {
         opacity: 0;
-        top: -211px;
     }
 
     100% {
         opacity: 1;
-        top: 0;
+    }
+}
+
+.login-text__primary {
+    font-family: 'Encode Sans Semi Expanded' !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 160% !important;
+    color: var(--grey-50) !important;
+}
+
+.login-text__secondary {
+    font-family: 'Encode Sans Expanded' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    color: var(--grey-300) !important;
+}
+
+.login-text__btn {
+    font-family: 'Encode Sans Expanded' !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 140% !important;
+    color: white !important;
+    cursor: pointer !important;
+    transition: 300ms ease-in-out !important;
+    opacity: 0.7 !important;
+
+    &:hover {
+        opacity: 1 !important;
+    }
+
+    &:active {
+        opacity: 0.7 !important;
     }
 }
