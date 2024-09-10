@@ -63,6 +63,52 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         return nodes;
     }
 
+    public async Task<Dictionary<string, string>> TranslateAsyncWithTags(Dictionary<string, string> nodeMappings)
+    {
+        if (nodeMappings.Count == 0)
+            return new Dictionary<string, string>();
+
+        var js = await KoriJs.Value;
+
+        // Filters only new values ​​to be translated
+        var nodesToTranslate = nodeMappings.Where(x => !_content.ContainsKey(x.Key)).Select(x => x.Key).Distinct().ToList();
+
+        var request = new
+        {
+            RoomSlug,
+            Language,
+            Messages = nodesToTranslate.Select(node => new
+            {
+                Tag = node,
+                Text = IsPlaceholder(nodeMappings[node]) ? "" : nodeMappings[node] // Saves the text as empty if it is a placeholder
+            }).ToList(),
+            AsHtml = false
+        };
+
+        var content = await PostAsync<IbisContent>("publicapi/PostContentWithTags", request);
+        if (content == null)
+            return nodeMappings;  // If the API fails, return the original dictionary
+
+        // Update _content with new translations received
+        foreach (var item in content.Content)
+        {
+            _content[item.Tag] = item with { Nodes = [] };
+        }
+
+        // Create a dictionary with translations
+        var translatedNodes = nodesToTranslate.ToDictionary(
+        node => node,
+        node => _content.TryGetValue(node, out KoriTextContent? value) ? value.Text : nodeMappings[node]
+        );
+
+        return translatedNodes;
+    }
+
+    private bool IsPlaceholder(string text)
+    {
+        return text == "Type your title here" || text == "Type blog post content here." || text == "data:image/svg+xml;base64,DQogICAgICAgICAgICA8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0MDAnPg0KICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmMmYyZjInIC8+DQogICAgICAgICAgICAgICAgPHRleHQgeD0nNTAlJyB5PSc1MCUnIGFsaWdubWVudC1iYXNlbGluZT0nbWlkZGxlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjODg4JyBmb250LWZhbWlseT0nQXJpYWwsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMjQnPg0KICAgICAgICAgICAgICAgICAgICBVcGxvYWQgeW91ciBpbWFnZSBoZXJlDQogICAgICAgICAgICAgICAgPC90ZXh0Pg0KICAgICAgICAgICAgPC9zdmc+" || text == "Type blog post content here.";
+    }
+
     public async Task EditAsync()
     {
         var js = await KoriJs.Value;
