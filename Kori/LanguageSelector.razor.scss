@@ -1,7 +1,7 @@
 .login-component__language {
     padding-bottom: 8px;
 
-    .language-list {
+    .login-component__language-list {
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -30,7 +30,7 @@
             border: none !important;
             border-radius: 0 !important;
             text-align: left !important;
-            @extend .login-text__btn;
+            @extend .login-component__text-btn;
 
             aside {
                 font-family: 'Encode Sans Expanded' !important;
@@ -43,7 +43,7 @@
     }
 }
 
-.login-text__btn {
+.login-component__text-btn {
     font-family: 'Encode Sans Expanded' !important;
     font-size: 14px !important;
     font-weight: 400 !important;

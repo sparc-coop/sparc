@@ -2,13 +2,13 @@
 @using System.Globalization
 
 <div class="login-component__language">
-    <ul class="language-list @(ShowLanguages? "show" : "")">
+    <ul class="login-component__language-list @(ShowLanguages? "show" : "")">
         @if (Languages != null)
         {
             @foreach (var language in Languages)
             {
                 <li>
-                    <button class="login-text__btn" @onclick=@(() => ChangeLanguage(language))>
+                    <button class="login-component__change-language-btn login-component__text-btn" @onclick=@(() => ChangeLanguage(language))>
                         @language.DisplayName
 
                         @if (language.DisplayName != language.NativeName)
