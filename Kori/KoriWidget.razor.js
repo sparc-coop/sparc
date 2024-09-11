@@ -79,14 +79,7 @@ function initElement(targetElementId) {
     app = document.getElementById(targetElementId);
 
     registerNodesUnder(app);
-    //translateNodes();
-
-    // Checks if the content has tags/placeholders
-    if (shouldUseTags(app)) {
-        translateNodesWithTags();
-    } else {
-        translateNodes();
-    }
+    translateNodes();
 
     observer = new MutationObserver(observeCallback);
     observer.observe(app, { childList: true, characterData: true, subtree: true });
@@ -185,14 +178,7 @@ function observeCallback(mutations) {
         else
             mutation.addedNodes.forEach(registerNodesUnder);
 
-        //translateNodes();
-
-        // Checks if the content has tags/placeholders
-        if (shouldUseTags(mutation.target)) {
-            translateNodesWithTags();
-        } else {
-            translateNodes();
-        }
+        translateNodes();
     });
 }
 
@@ -222,42 +208,6 @@ function translateNodes() {
         replaceWithTranslatedText();
     });
 }
-
-function translateNodesWithTags() {
-    console.log('translateNodesWithTags');
-
-    var contentToTranslate = {};
-
-    for (let key in translationCache) {
-        if (!translationCache[key].Submitted && !translationCache[key].Translation) {
-            translationCache[key].Submitted = true;
-
-            var content = translationCache[key].Content ?? key;
-            var tag = translationCache[key].Tag ?? null;
-
-            contentToTranslate[key] = content;
-        }
-    }
-
-    dotNet.invokeMethodAsync("TranslateAsyncWithTags", contentToTranslate).then(translations => {
-        console.log('Received new translations from Ibis in translateNodesWithTags.', translations);
-
-        Object.keys(translations).forEach((key, index) => {
-            translationCache[key].Translation = translations[key];
-        });
-
-        replaceWithTranslatedText();
-    });
-}
-
-function shouldUseTags(element) {
-    // Checks if content has known placeholders
-    const placeholders = ["Type your title here", "Author Name", "data:image/svg+xml;base64,DQogICAgICAgICAgICA8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0MDAnPg0KICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmMmYyZjInIC8+DQogICAgICAgICAgICAgICAgPHRleHQgeD0nNTAlJyB5PSc1MCUnIGFsaWdubWVudC1iYXNlbGluZT0nbWlkZGxlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjODg4JyBmb250LWZhbWlseT0nQXJpYWwsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMjQnPg0KICAgICAgICAgICAgICAgICAgICBVcGxvYWQgeW91ciBpbWFnZSBoZXJlDQogICAgICAgICAgICAgICAgPC90ZXh0Pg0KICAgICAgICAgICAgPC9zdmc+", "Type blog post content here"];
-
-    // Search for placeholders in the element's content
-    return placeholders.some(placeholder => element.innerHTML.includes(placeholder));
-}
-
 
 function replaceWithTranslatedText() {
     observer.disconnect();
@@ -781,4 +731,4 @@ function updateImageSrc(currentSrc, newSrc) {
 
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc, translateNodesWithTags };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc };

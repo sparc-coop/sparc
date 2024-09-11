@@ -61,48 +61,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         // Replace nodes with their translation
         nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text) : x).ToList();
         return nodes;
-    }
-
-    public async Task<Dictionary<string, string>> TranslateAsyncWithTags(Dictionary<string, string> nodeMappings)
-    {
-        if (nodeMappings.Count == 0)
-            return new Dictionary<string, string>();
-
-        var js = await KoriJs.Value;
-
-        // Filters only new values ​​to be translated
-        var nodesToTranslate = nodeMappings.Where(x => !_content.ContainsKey(x.Key)).Select(x => x.Key).Distinct().ToList();
-
-        var request = new
-        {
-            RoomSlug,
-            Language,
-            Messages = nodesToTranslate.Select(node => new
-            {
-                Tag = node,
-                Text = IsPlaceholder(nodeMappings[node]) ? "" : nodeMappings[node] // Saves the text as empty if it is a placeholder
-            }).ToList(),
-            AsHtml = false
-        };
-
-        var content = await PostAsync<IbisContent>("publicapi/PostContentWithTags", request);
-        if (content == null)
-            return nodeMappings;  // If the API fails, return the original dictionary
-
-        // Update _content with new translations received
-        foreach (var item in content.Content)
-        {
-            _content[item.Tag] = item with { Nodes = [] };
-        }
-
-        // Create a dictionary with translations
-        var translatedNodes = nodesToTranslate.ToDictionary(
-        node => node,
-        node => _content.TryGetValue(node, out KoriTextContent? value) ? value.Text : nodeMappings[node]
-        );
-
-        return translatedNodes;
-    }
+    }    
 
     private bool IsPlaceholder(string text)
     {

@@ -30,12 +30,6 @@
         return await Kori.TranslateAsync(content);
     }
 
-    [JSInvokable("TranslateAsyncWithTags")]
-    public async Task<Dictionary<string, string>> TranslateAsyncWithTags(Dictionary<string, string> content)
-    {
-        return await Kori.TranslateAsyncWithTags(content);
-    }
-
     [JSInvokable]
     public async Task<KoriTextContent> SaveAsync(string key, string text)
     {
