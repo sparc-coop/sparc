@@ -39,21 +39,45 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     initKoriWidget();
 }
 
-function buildTranslationCache(serverTranslationCache) {
-    if (serverTranslationCache) {
-        translationCache = serverTranslationCache;
-        for (let key in translationCache)
-            translationCache[key].Nodes = [];
-    }
-    else {
-        for (let key in translationCache) {
-            translationCache[key].Submitted = false;
-            translationCache[key].Translation = null;
-            translationCache[key].Nodes = [];
-        }
-    }
+//function buildTranslationCache(serverTranslationCache) {
+//    if (serverTranslationCache) {
+//        translationCache = serverTranslationCache;
+//        for (let key in translationCache)        
+//            translationCache[key].Nodes = [];
+//    }
+//    else {
+//        for (let key in translationCache) {
+//            translationCache[key].Submitted = false;
+//            translationCache[key].Translation = null;
+//            translationCache[key].Nodes = [];
+//        }
+//    }
 
-    console.log('Kori translation cache initialized from Ibis, ', translationCache);
+//    console.log('Kori translation cache initialized from Ibis, ', translationCache);
+//}
+
+function buildTranslationCache(serverTranslationCache) {
+    if (serverTranslationCache && typeof serverTranslationCache === 'object') {
+        translationCache = serverTranslationCache;
+
+        for (let key in translationCache) {
+            if (translationCache.hasOwnProperty(key)) {
+                let item = translationCache[key];
+
+                if (item && typeof item === 'object') {
+                    item.Nodes = item.Nodes || [];
+                    item.Submitted = item.Submitted !== undefined ? item.Submitted : false;
+                    item.Translation = item.Translation !== undefined ? item.Translation : null;
+                } else {
+                    console.warn(`TranslationCache value for key "${key}" is not a valid object.`);
+                }
+            }
+        }
+
+        console.log('Kori translation cache initialized from Ibis:', translationCache);
+    } else {
+        console.warn('Server translation cache is invalid or not an object.');
+    }
 }
 
 function initKoriElement(targetElementId) {
@@ -182,30 +206,71 @@ function observeCallback(mutations) {
     });
 }
 
+//function translateNodes() {
+//    console.log('translateNodes');
+
+//    var contentToTranslate = [];
+
+//    for (let key in translationCache) {
+//        if (!translationCache[key].Submitted && !translationCache[key].Translation) {
+//            translationCache[key].Submitted = true;
+//            contentToTranslate.push(key);
+//        }
+//    }
+
+//    dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
+//        console.log('Received new translations from Ibis.', translations);
+
+//        for (var i = 0; i < translations.length; i++) {
+//            console.log(translations[i]);
+//            if (translations[i] === "") {
+//                translations[i] = " ";
+//            }
+//            translationCache[contentToTranslate[i]].Translation = translations[i];
+//        }
+
+//        replaceWithTranslatedText();
+//    });
+//}
+
 function translateNodes() {
     console.log('translateNodes');
 
-    var contentToTranslate = [];
+    var keysToTranslate = [];
+    var keysWithContentToTranslate = [];
 
     for (let key in translationCache) {
-        if (!translationCache[key].Submitted && !translationCache[key].Translation) {
-            translationCache[key].Submitted = true;
-            contentToTranslate.push(key);             
+        if (translationCache.hasOwnProperty(key)) {
+            let item = translationCache[key];
+
+            if (!item.Submitted && !item.Translation) {
+                item.Submitted = true;
+                keysToTranslate.push(key);
+                keysWithContentToTranslate.push(item);
+            }
         }
     }
 
-    dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
+    if (keysToTranslate.length === 0) {
+        console.log('No content to translate.');
+        return;
+    }
+
+    dotNet.invokeMethodAsync("TranslateAsync", keysToTranslate).then(translations => {
         console.log('Received new translations from Ibis.', translations);
 
         for (var i = 0; i < translations.length; i++) {
-            console.log(translations[i]);
-            if (translations[i] === "") {
-                translations[i] = " ";
+            let key = keysToTranslate[i];
+            let translation = translations[i] || " ";
+
+            if (translationCache.hasOwnProperty(key)) {
+                translationCache[key].Translation = translation;
             }
-            translationCache[contentToTranslate[i]].Translation = translations[i];
         }
 
         replaceWithTranslatedText();
+    }).catch(error => {
+        console.error('Error in translation:', error);
     });
 }
 

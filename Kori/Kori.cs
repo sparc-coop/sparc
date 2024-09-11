@@ -41,31 +41,57 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
     }
 
-    public async Task<List<string>> TranslateAsync(List<string> nodes)
+    //public async Task<List<string>> TranslateAsync(List<string> nodes)
+    //{
+    //    if (nodes.Count == 0)
+    //        return nodes;
+
+    //    var js = await KoriJs.Value;
+
+    //    var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
+
+    //    var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
+    //    var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
+    //    if (content == null)
+    //        return nodes;
+
+    //    foreach (var item in content.Content)
+    //        _content[item.Tag] = item with { Nodes = [] };
+
+    //    // Replace nodes with their translation
+    //    nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text) : x).ToList();
+    //    return nodes;
+    //}
+    //
+    public async Task<Dictionary<string, string>> TranslateAsync(Dictionary<string, string> tagsToTranslate)
     {
-        if (nodes.Count == 0)
-            return nodes;
+        if (tagsToTranslate.Count == 0)
+            return tagsToTranslate;
 
         var js = await KoriJs.Value;
 
-        var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
-
-        var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
+        var request = new
+        {
+            RoomSlug,
+            Language,
+            Messages = tagsToTranslate.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+            AsHtml = false
+        };        
         var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
+
         if (content == null)
-            return nodes;
+            return tagsToTranslate;
 
         foreach (var item in content.Content)
-            _content[item.Tag] = item with { Nodes = [] };
+            _content[item.Tag] = item with { Nodes = new List<object>() };
 
-        // Replace nodes with their translation
-        nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text) : x).ToList();
-        return nodes;
-    }    
+        // Replace tags with their translations
+        var translations = tagsToTranslate.ToDictionary(
+            kvp => kvp.Key,
+            kvp => _content.TryGetValue(kvp.Key, out KoriTextContent? value) ? value.Text : kvp.Value
+        );
 
-    private bool IsPlaceholder(string text)
-    {
-        return text == "Type your title here" || text == "Type blog post content here." || text == "data:image/svg+xml;base64,DQogICAgICAgICAgICA8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0MDAnPg0KICAgICAgICAgICAgICAgIDxyZWN0IHdpZHRoPScxMDAlJyBoZWlnaHQ9JzEwMCUnIGZpbGw9JyNmMmYyZjInIC8+DQogICAgICAgICAgICAgICAgPHRleHQgeD0nNTAlJyB5PSc1MCUnIGFsaWdubWVudC1iYXNlbGluZT0nbWlkZGxlJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBmaWxsPScjODg4JyBmb250LWZhbWlseT0nQXJpYWwsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMjQnPg0KICAgICAgICAgICAgICAgICAgICBVcGxvYWQgeW91ciBpbWFnZSBoZXJlDQogICAgICAgICAgICAgICAgPC90ZXh0Pg0KICAgICAgICAgICAgPC9zdmc+" || text == "Type blog post content here.";
+        return translations;
     }
 
     public async Task EditAsync()

@@ -24,8 +24,14 @@
         }
     }
 
+    // [JSInvokable]
+    // public async Task<List<string>> TranslateAsync(List<string> content)
+    // {
+    //     return await Kori.TranslateAsync(content);
+    // }
+
     [JSInvokable]
-    public async Task<List<string>> TranslateAsync(List<string> content)
+    public async Task<Dictionary<string, string>> TranslateAsync(Dictionary<string, string> content)
     {
         return await Kori.TranslateAsync(content);
     }

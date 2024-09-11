@@ -73,5 +73,20 @@
             </svg>";
 
         return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(svg));
-    }    
+    }  
+
+    private Dictionary<string, string> GetValidValues()
+    {
+        return DefaultValues
+            .Where(kvp => B[kvp.Key] != kvp.Value)
+            .ToDictionary(kvp => kvp.Key, kvp => B[kvp.Key]);
+    }
+
+    private void UpdateTagManager()
+    {
+        foreach (var kvp in GetValidValues())
+        {
+            B[kvp.Key] = kvp.Value;
+        }
+    }
 }
