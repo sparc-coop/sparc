@@ -26,7 +26,7 @@
                             <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
                         <div class="login-component__actions">
-                            <button class="login-component__btn-primary login-component__text-btn" @onclick=LoginWithPasskey>
+                            <button class="login-component__login-btn login-component__btn login-component__text-btn" @onclick=LoginWithPasskey>
                                 <img src="_content/Kori/icons/Key.svg" />
                                 <div class="login-component__login-btn-wrapper">
                                     <figcaption class="login-component__text-primary">Passkey Login</figcaption>
@@ -82,7 +82,7 @@
                         <div class="login-component__menu-actions">
                             <form class="login-componenent__form" @onsubmit=LoginWithEmail>
                                 <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                <button type="submit" id="submit-btn" class="login-component__btn submit-btn login-component__text-btn" disabled>
+                                <button type="submit" id="submit-btn" class="login-component__submit-btn login-component__text-btn" disabled>
                                     Login
                                 </button>
                                 <div class="login-component__form-error @(ShowFormError ? "show" : "")">
