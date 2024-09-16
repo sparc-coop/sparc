@@ -39,45 +39,21 @@ function init(targetElementId, selectedLanguage, dotNetObjectReference, serverTr
     initKoriWidget();
 }
 
-//function buildTranslationCache(serverTranslationCache) {
-//    if (serverTranslationCache) {
-//        translationCache = serverTranslationCache;
-//        for (let key in translationCache)        
-//            translationCache[key].Nodes = [];
-//    }
-//    else {
-//        for (let key in translationCache) {
-//            translationCache[key].Submitted = false;
-//            translationCache[key].Translation = null;
-//            translationCache[key].Nodes = [];
-//        }
-//    }
-
-//    console.log('Kori translation cache initialized from Ibis, ', translationCache);
-//}
-
 function buildTranslationCache(serverTranslationCache) {
-    if (serverTranslationCache && typeof serverTranslationCache === 'object') {
+    if (serverTranslationCache) {
         translationCache = serverTranslationCache;
-
-        for (let key in translationCache) {
-            if (translationCache.hasOwnProperty(key)) {
-                let item = translationCache[key];
-
-                if (item && typeof item === 'object') {
-                    item.Nodes = item.Nodes || [];
-                    item.Submitted = item.Submitted !== undefined ? item.Submitted : false;
-                    item.Translation = item.Translation !== undefined ? item.Translation : null;
-                } else {
-                    console.warn(`TranslationCache value for key "${key}" is not a valid object.`);
-                }
-            }
-        }
-
-        console.log('Kori translation cache initialized from Ibis:', translationCache);
-    } else {
-        console.warn('Server translation cache is invalid or not an object.');
+        for (let key in translationCache)        
+            translationCache[key].Nodes = [];
     }
+    else {
+        for (let key in translationCache) {
+            translationCache[key].Submitted = false;
+            translationCache[key].Translation = null;
+            translationCache[key].Nodes = [];
+        }
+    }
+
+    console.log('Kori translation cache initialized from Ibis, ', translationCache);
 }
 
 function initKoriElement(targetElementId) {
@@ -120,36 +96,6 @@ function registerNodesUnder(el) {
 
 }
 
-// Original code
-//function registerNode(node) {
-//    if (node.koriRegistered == language || node.koriTranslated == language)
-//        return;
-
-//    var content = node.nodeName == 'IMG' ? node.src.trim() : node.textContent.trim();
-//    var tag = node.koriContent ?? content.trim();
-//    if (!tag)
-//        return;
-
-//    node.koriRegistered = language;
-//    node.koriContent = tag;
-//    node.parentElement?.classList.add('kori-initializing');
-
-//    if (tag in translationCache && translationCache[tag].Nodes.indexOf(node) < 0) {
-//        translationCache[tag].Nodes.push(node);
-
-//        if (translationCache[tag].id !== undefined && node.nodeName == '#text') {
-//            node.parentElement.setAttribute('kori-id', translationCache[tag].id);
-//        }
-
-//    } else {
-//        translationCache[tag] = {
-//            Nodes: [node],
-//            Translation: null
-//        };
-//    }
-//}
-
-// Code I'm testing
 function registerNode(node) {
     if (node.koriRegistered == language || node.koriTranslated == language)
         return;
@@ -206,72 +152,55 @@ function observeCallback(mutations) {
     });
 }
 
-//function translateNodes() {
-//    console.log('translateNodes');
-
-//    var contentToTranslate = [];
-
-//    for (let key in translationCache) {
-//        if (!translationCache[key].Submitted && !translationCache[key].Translation) {
-//            translationCache[key].Submitted = true;
-//            contentToTranslate.push(key);
-//        }
-//    }
-
-//    dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
-//        console.log('Received new translations from Ibis.', translations);
-
-//        for (var i = 0; i < translations.length; i++) {
-//            console.log(translations[i]);
-//            if (translations[i] === "") {
-//                translations[i] = " ";
-//            }
-//            translationCache[contentToTranslate[i]].Translation = translations[i];
-//        }
-
-//        replaceWithTranslatedText();
-//    });
-//}
 
 function translateNodes() {
     console.log('translateNodes');
 
-    var keysToTranslate = [];
-    var keysWithContentToTranslate = [];
+    var contentToTranslate = {};
 
     for (let key in translationCache) {
-        if (translationCache.hasOwnProperty(key)) {
-            let item = translationCache[key];
+        if (!translationCache[key].Submitted && !translationCache[key].Translation) {
+            translationCache[key].Submitted = true;
 
-            if (!item.Submitted && !item.Translation) {
-                item.Submitted = true;
-                keysToTranslate.push(key);
-                keysWithContentToTranslate.push(item);
-            }
+            let tag = key;
+
+            translationCache[key].Nodes.forEach(node => {
+                let text = node.textContent || "";                 
+
+                if (isPlaceholder(text)) {
+                    contentToTranslate[tag] = "";                    
+                } else {
+                    if (text.length > 0) {
+                        contentToTranslate[tag] = text; 
+                    }
+                }
+            });
         }
-    }
+    }    
 
-    if (keysToTranslate.length === 0) {
-        console.log('No content to translate.');
-        return;
-    }
-
-    dotNet.invokeMethodAsync("TranslateAsync", keysToTranslate).then(translations => {
+    dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
         console.log('Received new translations from Ibis.', translations);
 
-        for (var i = 0; i < translations.length; i++) {
-            let key = keysToTranslate[i];
-            let translation = translations[i] || " ";
-
-            if (translationCache.hasOwnProperty(key)) {
-                translationCache[key].Translation = translation;
+        for (var key in translations) {
+            if (translations[key] === "") {
+                translations[key] = " ";
             }
+            translationCache[key].Translation = translations[key];
         }
 
         replaceWithTranslatedText();
-    }).catch(error => {
-        console.error('Error in translation:', error);
     });
+}
+
+//Function to check if text is a placeholder
+function isPlaceholder(text) {
+    const placeholders = [
+        "Type your title here",
+        "Author Name",
+        "Type blog post content here." 
+    ];
+
+    return placeholders.includes(text);
 }
 
 function replaceWithTranslatedText() {

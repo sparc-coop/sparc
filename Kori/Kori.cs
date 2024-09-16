@@ -41,59 +41,39 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
     }
 
-    //public async Task<List<string>> TranslateAsync(List<string> nodes)
-    //{
-    //    if (nodes.Count == 0)
-    //        return nodes;
-
-    //    var js = await KoriJs.Value;
-
-    //    var nodesToTranslate = nodes.Where(x => !_content.ContainsKey(x)).Distinct().ToList();
-
-    //    var request = new { RoomSlug, Language, Messages = nodesToTranslate, AsHtml = false };
-    //    var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
-    //    if (content == null)
-    //        return nodes;
-
-    //    foreach (var item in content.Content)
-    //        _content[item.Tag] = item with { Nodes = [] };
-
-    //    // Replace nodes with their translation
-    //    nodes = nodes.Select(x => _content.TryGetValue(x, out KoriTextContent? value) ? (value.Text) : x).ToList();
-    //    return nodes;
-    //}
-    //
-    public async Task<Dictionary<string, string>> TranslateAsync(Dictionary<string, string> tagsToTranslate)
-    {
-        if (tagsToTranslate.Count == 0)
-            return tagsToTranslate;
+    public async Task<Dictionary<string, string>> TranslateAsync(Dictionary<string, string> nodes)
+    {        
+        if (nodes.Count == 0)
+            return nodes;
 
         var js = await KoriJs.Value;
-
-        var request = new
-        {
-            RoomSlug,
-            Language,
-            Messages = tagsToTranslate.ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
-            AsHtml = false
-        };        
+        
+        var keysToTranslate = nodes.Where(x => !_content.ContainsKey(x.Key)).Select(x => x.Key).Distinct().ToList();
+                
+        var messagesDictionary = keysToTranslate.ToDictionary(key => key, key => nodes[key]);
+               
+        var request = new { RoomSlug, Language, Messages = messagesDictionary, AsHtml = false };
+                
         var content = await PostAsync<IbisContent>("publicapi/PostContent", request);
-
+                
         if (content == null)
-            return tagsToTranslate;
-
+            return nodes;
+                
         foreach (var item in content.Content)
+        {            
             _content[item.Tag] = item with { Nodes = new List<object>() };
+        }
+               
+        foreach (var key in nodes.Keys.ToList())
+        {
+            if (_content.TryGetValue(key, out KoriTextContent? value))
+            {
+                nodes[key] = value.Text;  
+            }
+        }
 
-        // Replace tags with their translations
-        var translations = tagsToTranslate.ToDictionary(
-            kvp => kvp.Key,
-            kvp => _content.TryGetValue(kvp.Key, out KoriTextContent? value) ? value.Text : kvp.Value
-        );
-
-        return translations;
+        return nodes; 
     }
-
     public async Task EditAsync()
     {
         var js = await KoriJs.Value;
