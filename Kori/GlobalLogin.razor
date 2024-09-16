@@ -13,7 +13,7 @@
 <div class="login-component kori-ignore">
     <AuthorizeView>
         <Authorized>
-            <button class="login-component__toggle login-component__btn @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" @onclick=ToggleLoginMenu>
+            <button class="login-component__toggle @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" @onclick=ToggleLoginMenu>
                 <UserIcon LoggedIn="!context.User.IsAnonymous()" />
             </button>
 
@@ -25,7 +25,7 @@
                             <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
                             <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
-                        <div class="login-component__actions">
+                        <div class="login-component__menu-actions">
                             <button class="login-component__login-btn login-component__btn login-component__text-btn" @onclick=LoginWithPasskey>
                                 <img src="_content/Kori/icons/Key.svg" />
                                 <div class="login-component__login-btn-wrapper">
@@ -49,16 +49,16 @@
                             <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
                         <div class="login-component__menu-actions">
-                            <form class="login-componenent__form" @onsubmit=LoginWithEmail>
+                            <form class="login-component__form" @onsubmit=LoginWithEmail>
                                 <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
-                                <button type="submit" class="login-component__submit-btn login-component__btn login-component__text-btn">
+                                <button type="submit" class="login-component__submit-btn">
                                     Login
                                 </button>
                                 <div class="login-component__form-error @(ShowFormError ? "show" : "")">
                                     <span class="login-component__form-error-message">Email cannot be blank</span>
                                 </div>
                             </form>
-                            <div class="login-component__passkey">
+                            <div class="login-component__use-passkey">
                                 <button class="login-component__passkey-btn login-component__btn login-component__text-btn" @onclick="LoginWithPasskey">
                                     <img src="_content/Kori/icons/Key.svg" /> Use passkey
                                 </button>
@@ -80,9 +80,9 @@
                             <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
                         <div class="login-component__menu-actions">
-                            <form class="login-componenent__form" @onsubmit=LoginWithEmail>
+                            <form class="login-component__form" @onsubmit=LoginWithEmail>
                                 <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                <button type="submit" id="submit-btn" class="login-component__submit-btn login-component__text-btn" disabled>
+                                <button type="submit" id="submit-btn" class="login-component__submit-btn" disabled>
                                     Login
                                 </button>
                                 <div class="login-component__form-error @(ShowFormError ? "show" : "")">
@@ -108,13 +108,13 @@
                             <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
                         <div class="login-component__menu-actions">
-                            <form class="login-componenent__form" @onsubmit=LoginWithEmail>
+                            <form class="login-component__form" @onsubmit=LoginWithEmail>
                                 <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                <button type="submit" id="submit-btn" class="login-component__btn submit-btn" disabled>
+                                <button type="submit" id="submit-btn" class="login-component__submit-btn" disabled>
                                     Login
                                 </button>
                                 <div class="login-component__form-error @(ShowFormError ? "show" : "")">
-                                    <span>Email cannot be blank</span>
+                                    <span class="login-component__form-error-message">Email cannot be blank</span>
                                 </div>
                             </form>
                             <div class="login-component__message-wrapper">
@@ -130,37 +130,43 @@
                                 </button>
                             </div>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__btn language-btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content">
+                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                                <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button>
                             <LanguageSelector ShowLanguages="ShowLanguageSettings" />
                         </div>
                         break;
                     case LoginStates.LoggedIn:
                         <button class="login-component__account-btn login-component__btn" @onclick=ToggleAccountSettings>
-                            <img src="_content/Kori/icons/Key.svg" />
+                            <img src="_content/Kori/icons/User-green.svg" />
                             <div class="login-component__login-btn-content">
                                 <figcaption class="login-component__text-primary">@Auth.User?.Username</figcaption>
                                 <aside class="login-component__text-secondary">Set up your passkey</aside>
                             </div>
                         </button>
-                        <button class="login-component__language-btn login-component__btn login-component__text-btn">
-                            <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
-                        </button>
                         <div class="login-component__menu-actions">
-                            <button class="login-component__profile-btn login-component__btn login-component__text-btn">Profile</button>
-                            <button class="login-component__logout-btn login-component__btn login-component__text-btn" @onclick=LogoutAsync>Logout</button>
-                            <button class="login-component__language-btn login-component__btn login-component__text-btn" @onclick=ToggleLanguageSettings>
+                            <button class="login-component__profile-btn login-component__btn login-component__text-btn">
+                                <img src="_content/Kori/icons/user-profile-circle.svg" /> Profile
+                                </button>
+                            <button class="login-component__setup-btn login-component__btn login-component__text-btn">
+                                <img src="_content/Kori/icons/Shield.svg" /> Setup backup Email & Phone
+                            </button>
+                            <button class="login-component__logout-btn login-component__btn login-component__text-btn" @onclick=LogoutAsync>
+                                <img src="_content/Kori/icons/Logout.svg" /> Logout
+                            </button>
+                            <div class="login-component__menu-divider"></div>
+                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img src="_content/Kori/icons/Expand.svg" />
+                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button>
                             <LanguageSelector ShowLanguages="ShowLanguageSettings" />
                         </div>
+
                         break;
                     case LoginStates.Error:
                         <div class="login-component__menu-header">

@@ -12,7 +12,9 @@
     .login-component__toggle {
         width: 24px;
         height: 24px;
+        padding: 0 !important;
         background: #1a1a1a !important;
+        border: none !important;
         border-radius: 50%;
         cursor: pointer;
 
@@ -45,6 +47,7 @@
         font-size: 14px !important;
         font-weight: 400 !important;
         line-height: 140% !important;
+        text-align: left !important;
         color: white !important;
         cursor: pointer;
     }
@@ -80,7 +83,7 @@
         }
     }
 
-    &__actions {
+    &__menu-actions {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -101,7 +104,7 @@
             }
         }
 
-        .login-btn, .account-btn {
+        .login-component__login-btn, login-component__account-btn {
             display: flex !important;
             gap: 14px !important;
             align-items: center !important;
@@ -163,8 +166,12 @@
             button {
                 display: flex;
                 align-content: center;
+                align-items: center;
                 gap: 12px;
-                padding: 6px !important;
+
+                img {
+                    margin: 0 !important;
+                }
             }
         }
 
@@ -175,6 +182,7 @@
             span {
                 display: flex;
                 align-content: center;
+                align-items: center;
                 gap: 12px;
             }
 
@@ -182,30 +190,17 @@
                 padding: 0 !important;
             }
         }
-
-        form {
-            .login-component__form-error {
-                display: none;
-
-                &-message {
-                    margin-top: 8px;
-                    color: white;
-                    opacity: 0.7;
-                }
-
-                &.show {
-                    display: block;
-                }
-            }
-        }
     }
 
-    &__input {
+    &__form {
         display: flex;
         flex-direction: column;
         gap: 4px;
 
-        input {
+        .login-component__input {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
             width: 100% !important;
             height: fit-content !important;
             padding: 8px 12px !important;
@@ -240,6 +235,20 @@
 
             &:active {
                 background: var(--grey-800) !important;
+            }
+        }
+
+        .login-component__form-error {
+            display: none;
+
+            span {
+                margin-top: 8px;
+                color: white;
+                opacity: 0.7;
+            }
+
+            &.show {
+                display: block;
             }
         }
     }
