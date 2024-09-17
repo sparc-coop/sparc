@@ -371,14 +371,23 @@ function edit() {
 
     var translation = translationCache[activeMessageId];
 
-    if (isTranslationAlreadySaved(translation)) {
+    if (isTranslationAlreadySaved(translation)) {     
         var activeNodeParent = getActiveNodeParentByKoriId(translation);
         activateNodeEdition(activeNodeParent);
         replaceInnerHtmlBeforeWidget(activeNodeParent, getTranslationRawMarkdownText(translation));
     }
     else {
-        activateNodeEdition(activeNode.parentElement);
-        activeNode.textContent = getTranslationRawMarkdownText(translation);
+        var parentElement = activeNode.parentElement;
+        activateNodeEdition(parentElement);
+
+        // If the Translation is empty or contains only whitespace
+        if (!translation || !translation.Translation || translation.Translation.trim() === "") {
+
+            // Insert a temporary space to ensure the cursor appears
+            activeNode.textContent = "\u200B"; // Zero-width space character
+        } else {
+            activeNode.textContent = getTranslationRawMarkdownText(translation);
+        }
     }
 
     document.getElementById("kori-widget").contentEditable = "false";
@@ -409,6 +418,7 @@ function getActiveNodeParentByKoriId(translation) {
 }
 
 function isTranslationAlreadySaved(translation) {
+    console.log("------------------translation", translation);
     return translation.id;
 }
 
