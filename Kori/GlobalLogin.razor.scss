@@ -89,13 +89,13 @@
         flex-direction: column;
         gap: 8px;
 
-        .login-menu__divider {
+        .login-component__menu-divider {
             width: 100%;
             border-bottom: 1px solid rgba(255, 255, 255, 0.80);
         }
 
         button {
-            padding: 6px 8px !important;
+            padding: 8px 0 !important;
             border-radius: 4px !important;
 
             img {
@@ -108,7 +108,9 @@
             display: flex !important;
             gap: 14px !important;
             align-items: center !important;
+            padding: 6px 8px !important;
             background: var(--grey-800) !important;
+            text-align: left !important;
             transition: 300ms ease-in-out;
 
             &:hover {

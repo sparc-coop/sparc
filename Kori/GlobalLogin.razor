@@ -155,7 +155,7 @@
                                 <img src="_content/Kori/icons/Shield.svg" /> Setup backup Email & Phone
                             </button>
                             <button class="login-component__logout-btn login-component__btn login-component__text-btn" @onclick=LogoutAsync>
-                                <img src="_content/Kori/icons/Logout.svg" /> Logout
+                                <img src="_content/Kori/icons/Login.svg" /> Logout
                             </button>
                             <div class="login-component__menu-divider"></div>
                             <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
@@ -178,11 +178,11 @@
                                 <img src="_content/Kori/icons/Key.svg" />
                                 <div class="login-btn__content">
                                     <figcaption class="login-component__text-primary">Passkey Login</figcaption>
-                                    <aside class="login-text__secondary">Set up your passkey</aside>
+                                    <aside class="login-component__text-secondary">Set up your passkey</aside>
                                 </div>
                             </button>
                             <div class="login-component__message-wrapper">
-                                <span class="login-component__message login-component__text-secondary">Error Message</span>
+                                <span class="login-component__message login-component__text-secondary">@Auth.Message</span>
                             </div>
                             <div class="login-component__menu-divider"></div>
                             <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
@@ -241,7 +241,6 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("initHyperScript");
-
     }
 
     async Task LoginWithPasskey()
@@ -283,8 +282,8 @@
             Email = "";
             await foreach (var state in Auth.LoginAsync(User))
                 StateHasChanged();
-            Auth.LoginState = LoginStates.ReadyForLogin;
-            StateHasChanged();
+                Auth.LoginState = LoginStates.ReadyForLogin;
+                StateHasChanged();
         }
 
         if (Auth.LoginState == LoginStates.LoggedIn)
