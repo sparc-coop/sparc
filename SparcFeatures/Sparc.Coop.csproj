@@ -30,6 +30,7 @@
 	  <ProjectReference Include="..\..\blossom\Sparc.Blossom.Server.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" />
 	  <ProjectReference Include="..\..\blossom\Sparc.Blossom.Server\Sparc.Blossom.csproj" />
 	  <ProjectReference Include="..\Kori\Kori.csproj" />
+	  <PackageReference Include="Sparc.Blossom.Data.Cosmos" Version="8.0.0" />
 	</ItemGroup>
 
 </Project>
