@@ -65,6 +65,14 @@
   flex-direction: column;
   gap: 16px;
 }
+.login-component .login-component__account-btn, .login-component .login-component__profile-btn, .login-component .login-component__setup-btn, .login-component .login-component__logout-btn {
+  display: flex;
+  gap: 14px !important;
+  align-items: center !important;
+}
+.login-component .login-component__account-btn img, .login-component .login-component__profile-btn img, .login-component .login-component__setup-btn img, .login-component .login-component__logout-btn img {
+  margin: 0 !important;
+}
 .login-component__menu-actions {
   width: 100%;
   display: flex;

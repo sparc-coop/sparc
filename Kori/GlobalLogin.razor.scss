@@ -83,6 +83,16 @@
         }
     }
 
+    .login-component__account-btn, .login-component__profile-btn, .login-component__setup-btn, .login-component__logout-btn {
+        display: flex;
+        gap: 14px !important;
+        align-items: center !important;
+
+        img {
+            margin: 0 !important;
+        }
+    }
+
     &__menu-actions {
         width: 100%;
         display: flex;
