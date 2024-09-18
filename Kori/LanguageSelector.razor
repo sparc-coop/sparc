@@ -2,7 +2,13 @@
 @using System.Globalization
 
 <div class="login-component__language">
-    <ul class="login-component__language-list @(ShowLanguages? "show" : "")">
+    <button class="login-component__language-btn" @onclick=ToggleLanguageSettings>
+        <div class="login-component__language-btn-content login-component__text-btn">
+            <img src="_content/Kori/icons/Language.svg" /> @SelectedLanguage?.DisplayName
+        </div>
+        <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+    </button>
+    <ul class="login-component__language-list @(ShowLanguageSettings? "show" : "")">
         @if (Languages != null)
         {
             @foreach (var language in Languages)
@@ -31,19 +37,19 @@
 </div> 
 
 @code {
+    [Parameter] public Language? SelectedLanguage { get; set; }
     [Parameter] public EventCallback<Language> LanguageChanged { get; set; }
-    [Parameter] public bool ShowLanguages { get; set; }
-    string? SelectedLanguageId { get; set; }
-    Language? selectedLanguage;
+    [Parameter] public bool ShowLanguageSettings { get; set;  } = false;
+    //string? SelectedLanguageId { get; set; }
+    // Language? selectedLanguage;
     List<Language>? Languages { get; set; }
-    
 
     protected override async Task OnInitializedAsync()
     {
-        SelectedLanguageId = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        //SelectedLanguageId = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
         Languages = await GetLanguagesAsync();
         Languages = Languages.OrderBy(x => x.DisplayName).ToList();
-        selectedLanguage = Languages.First(x => x.Id == SelectedLanguageId);
+        //SelectedLanguage = Languages.First(x => x.Id == SelectedLanguageId);
     }
 
     async Task<List<Language>> GetLanguagesAsync()
@@ -53,11 +59,17 @@
                ?? new List<Language>();
     }
 
+    void ToggleLanguageSettings()
+    {
+        ShowLanguageSettings = !ShowLanguageSettings;
+    }
+
     async Task ChangeLanguage(Language language)
     {
-        selectedLanguage = language;
-        SelectedLanguageId = language.Id;
-        if (LanguageChanged.HasDelegate)
-            await LanguageChanged.InvokeAsync(language);
+        SelectedLanguage = language;
+        //SelectedLanguageId = language.Id;
+        StateHasChanged();
+        await LanguageChanged.InvokeAsync(language);
+        ToggleLanguageSettings();
     }
 }

@@ -109,29 +109,6 @@
 .login-component__menu-actions .login-component__login-btn__content, .login-component__menu-actions login-component__account-btn__content {
   text-align: left !important;
 }
-.login-component__menu-actions .login-component__language-btn {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-}
-.login-component__menu-actions .login-component__language-btn-content {
-  display: flex !important;
-  align-items: center !important;
-  gap: 14px !important;
-  font-family: "Encode Sans Expanded" !important;
-  font-size: 14px !important;
-  font-weight: 400 !important;
-  line-height: 140% !important;
-  color: white !important;
-  opacity: 0.7 !important;
-}
-.login-component__menu-actions .login-component__language-btn .login-component__expand-icon {
-  transition: transform 1000ms ease-in-out;
-  opacity: 0.7;
-}
-.login-component__menu-actions .login-component__language-btn .login-component__expand-icon.rotate {
-  transform: rotate(-180deg);
-}
 .login-component__menu-actions .login-component__use-passkey {
   width: 100%;
 }
@@ -242,7 +219,7 @@
   color: var(--grey-300) !important;
 }
 
-.login-component__text-btn, .login-component__menu-actions .login-component__language-btn {
+.login-component__text-btn {
   font-family: "Encode Sans Expanded" !important;
   font-size: 14px !important;
   font-weight: 400 !important;
@@ -252,9 +229,9 @@
   transition: 300ms ease-in-out !important;
   opacity: 0.7 !important;
 }
-.login-component__text-btn:hover, .login-component__menu-actions .login-component__language-btn:hover {
+.login-component__text-btn:hover {
   opacity: 1 !important;
 }
-.login-component__text-btn:active, .login-component__menu-actions .login-component__language-btn:active {
+.login-component__text-btn:active {
   opacity: 0.7 !important;
 }

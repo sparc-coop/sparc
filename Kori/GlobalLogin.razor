@@ -34,13 +34,7 @@
                                 </div>
                             </button>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-componnt__text-btn">
-                                    <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
-                                </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
                         break;
                     case LoginStates.ReadyForLogin:
@@ -64,13 +58,13 @@
                                 </button>
                             </div>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-secondary">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            </button> *@
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
                         break;
                     case LoginStates.VerifyingToken:
@@ -93,13 +87,13 @@
                                 <span class="login-component__message login-component__text-secondary">Signing you in...</span>
                             </div>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            </button> *@
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
                         break;
                     case LoginStates.AwaitingMagicLink:
@@ -130,13 +124,13 @@
                                 </button>
                             </div>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            </button> *@
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
                         break;
                     case LoginStates.LoggedIn:
@@ -158,13 +152,13 @@
                                 <img src="_content/Kori/icons/Login.svg" /> Logout
                             </button>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            </button> *@
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
 
                         break;
@@ -185,13 +179,13 @@
                                 <span class="login-component__message login-component__text-secondary">@Auth.Message</span>
                             </div>
                             <div class="login-component__menu-divider"></div>
-                            <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
+                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
                                 <div class="login-component__language-btn-content login-component__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button>
-                            <LanguageSelector ShowLanguages="ShowLanguageSettings" />
+                            </button> *@
+                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
                         </div>
                         break;
                 }
@@ -282,8 +276,8 @@
             Email = "";
             await foreach (var state in Auth.LoginAsync(User))
                 StateHasChanged();
-                Auth.LoginState = LoginStates.ReadyForLogin;
-                StateHasChanged();
+            Auth.LoginState = LoginStates.ReadyForLogin;
+            StateHasChanged();
         }
 
         if (Auth.LoginState == LoginStates.LoggedIn)
@@ -327,10 +321,6 @@
         }
     }
 
-    void ToggleLanguageSettings()
-    {
-        ShowLanguageSettings = !ShowLanguageSettings;
-    }
 
     void ToggleAccountSettings()
     {
@@ -344,5 +334,11 @@
         StateHasChanged();
         LoginInput = null;
         Email = "";
+    }
+
+    void UpdateLanguage(Language language)
+    {
+        Language = language;
+        Console.WriteLine($"Language: {Language.DisplayName}");
     }
 }
