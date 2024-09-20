@@ -39,10 +39,11 @@
 @code {
     [Parameter] public Language? SelectedLanguage { get; set; }
     [Parameter] public EventCallback<Language> LanguageChanged { get; set; }
-    [Parameter] public bool ShowLanguageSettings { get; set;  } = false;
     //string? SelectedLanguageId { get; set; }
     // Language? selectedLanguage;
     List<Language>? Languages { get; set; }
+
+    bool ShowLanguageSettings = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -66,9 +67,6 @@
 
     async Task ChangeLanguage(Language language)
     {
-        SelectedLanguage = language;
-        //SelectedLanguageId = language.Id;
-        StateHasChanged();
         await LanguageChanged.InvokeAsync(language);
         ToggleLanguageSettings();
     }

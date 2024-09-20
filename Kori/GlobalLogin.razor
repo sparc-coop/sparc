@@ -34,7 +34,7 @@
                                 </div>
                             </button>
                             <div class="login-component__menu-divider"></div>
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.ReadyForLogin:
@@ -64,7 +64,7 @@
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.VerifyingToken:
@@ -93,7 +93,7 @@
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.AwaitingMagicLink:
@@ -130,7 +130,7 @@
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.LoggedIn:
@@ -158,7 +158,7 @@
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
 
                         break;
@@ -185,7 +185,7 @@
                                 </div>
                                 <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
-                            <LanguageSelector SelectedLanguage="Language" LanguageChanged="UpdateLanguage" ShowLanguageSettings="ShowLanguageSettings" />
+                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                 }
@@ -215,6 +215,7 @@
 
     public string? Email;
     ElementReference? LoginInput;
+    // string? SelectedLanguageId;
     Language? Language;
 
     bool ShowMenu = false;
@@ -338,7 +339,8 @@
 
     void UpdateLanguage(Language language)
     {
-        Language = language;
-        Console.WriteLine($"Language: {Language.DisplayName}");
+        Language = language;     
+        StateHasChanged();
+        Console.WriteLine($"Language updated to: {Language.DisplayName}");
     }
 }
