@@ -271,13 +271,14 @@ function mouseClickHandler(e) {
         koriAuthorized = true;
         if (koriAuthorized) {
             document.getElementById("kori-login").classList.remove("show");
-            document.body.classList.add("kori-loggedin"); // add the class to <body>
+            document.body.classList.add("kori-loggedin"); // add the class to <body>            
         }
     }
 
     if (koriAuthorized) {
         // click kori enabled elements
         toggleSelected(t);
+        toggleTopBar(t);
     } else {
         console.log("please login to use kori services");
         return;
@@ -287,12 +288,21 @@ function mouseClickHandler(e) {
 // selecting and unselecting kori-enabled elements
 function toggleSelected(t) {
     document.getElementsByClassName("selected")[0]?.classList.remove("selected");
-    document.getElementsByClassName("show")[0]?.classList.remove("show");
+    //document.getElementsByClassName("show")[0]?.classList.remove("show");
+
+    var topBar = document.getElementById("kori-top-bar");
 
     var koriElem = t.closest('.kori-enabled');
     if (!koriElem) {
         // clicked outside of all kori elements
-        document.getElementsByClassName("show")[0]?.classList.remove("show");
+        //document.getElementsByClassName("show")[0]?.classList.remove("show");
+
+        
+        if (topBar && topBar.classList.contains("show")) {
+            topBar.classList.remove("show");
+            document.body.style.marginTop = '0';
+        }
+
         // reset right margin if widget is docked
         if (widget.classList.contains("docked")) {
             document.body.style.marginRight = '0';
@@ -308,7 +318,7 @@ function toggleSelected(t) {
 
     if (!koriElem.classList.contains("selected")) {
         koriElem.classList.add("selected");
-        document.getElementsByClassName("show")[0]?.classList.remove("show");
+        //document.getElementsByClassName("show")[0]?.classList.remove("show");
         toggleWidget(koriElem);
     }
 }
@@ -351,6 +361,45 @@ function toggleWidget(t) {
 
     // after the widget is shown, make it draggable
     makeWidgetDraggable();
+}
+
+function toggleTopBar(t) {
+    console.log('toggleTopBar', t);
+
+    var topBar = document.getElementById("kori-top-bar");
+
+    console.log('topBar', topBar);
+
+    t.appendChild(topBar);
+
+    topBar.classList.add("show");
+
+    console.log('toggleTopBar', t);
+
+    if (!topBar.classList.contains("show")) {
+        // adjusts the top margin to match the top-bar height
+        document.body.style.marginTop = '100px';
+    }
+
+    const koriId = t.getAttribute('kori-id');
+    // search for matching node in translation cache
+    for (let key in translationCache) {
+        for (var i = 0; i < translationCache[key].Nodes.length; i++)
+
+            if (t.contains(translationCache[key].Nodes[i])) {
+                activeNode = translationCache[key].Nodes[i];
+                activeMessageId = key;
+                break;
+            }
+
+        if (koriId != null && koriId == translationCache[key].id) {
+            activeNode = t;
+            activeMessageId = key;
+            break;
+        }
+    }
+
+    console.log('Set active node', activeNode);
 }
 
 function getActiveImageSrc() {
@@ -438,6 +487,14 @@ function editImage() {
     console.log("Entered the edit image function");
 }
 
+function showSidebar() {
+    document.body.style.marginRight = "317px"; 
+}
+
+function hideSidebar() {
+    document.body.style.marginRight = "0px"; 
+}
+
 function cancelEdit() {
     console.log("cancelling edit");
 
@@ -451,7 +508,7 @@ function cancelEdit() {
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('selected');
     }
-
+    hideSidebar();
 }
 
 function getActiveNodeTextContent(translation) {
@@ -735,4 +792,4 @@ function updateImageSrc(currentSrc, newSrc) {
 
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc, showSidebar };
