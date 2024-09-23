@@ -30,5 +30,9 @@
   {
     "outputFile": "Modes/ABTestingMode.razor.css",
     "inputFile": "Modes/ABTestingMode.razor.scss"
+  },
+  {
+    "outputFile": "Modes/DefaultMode.razor.css",
+    "inputFile": "Modes/DefaultMode.razor.scss"
   }
 ]

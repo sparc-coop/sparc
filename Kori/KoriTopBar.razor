@@ -43,7 +43,9 @@
             }
             else
             {
-                <div>Please select an option</div>
+                <div>
+                    <Kori.Modes.DefaultMode />
+                </div>
             }
         </div>
     </div>
@@ -70,17 +72,17 @@
 
     private TopBarButton SelectedButton;
 
-    private void OnButtonClick(TopBarButton button)
+    private async Task OnButtonClick(TopBarButton button)
     {
-
         SelectedButton = button;
+
         switch (button.Mode)
         {
             case "Search":
-                Kori.OpenSearchMenuAsync();                
+                await Kori.OpenSearchMenuAsync();
                 break;
             case "Translate":
-                Kori.OpenTranslationMenu();               
+                Kori.OpenTranslationMenu();
                 break;
             case "Blog":
                 Kori.OpenBlogMenu();
@@ -89,14 +91,15 @@
                 Kori.OpenABTestingMenu();
                 break;
             case "Edit":
-                Kori.EditAsync();
+                await Kori.EditAsync();
                 break;
             case "EditImage":
-                Kori.EditAsync();
+                await Kori.EditAsync();
                 break;
             default:
                 break;
         }
+
         StateHasChanged();
     }
 }
