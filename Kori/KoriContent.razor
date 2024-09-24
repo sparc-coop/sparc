@@ -1,16 +1,19 @@
 @using Microsoft.JSInterop
-<section id="@_id" class="kori-content">
+<section id="@_id" class="kori-content @ModeClass">
     @ChildContent
 </section>
 
 <Kori.KoriLogin />
-<Kori.KoriTopBar />
+<Kori.KoriTopBar OnModeChanged="HandleModeChanged" />
 <Kori.KoriWidget />
 
 @inject Kori Kori
 @inject NavigationManager Nav
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private string ModeClass => !string.IsNullOrEmpty(CurrentMode) ? $"mode-{CurrentMode.ToLower()}" : "";
+    private string CurrentMode { get; set; } = string.Empty;
 
     string _id = $"kori-{Guid.NewGuid()}";
 
@@ -46,5 +49,11 @@
         StateHasChanged();
 
         return await Task.FromResult(true);
+    }
+
+    private void HandleModeChanged(string newMode)
+    {
+        CurrentMode = newMode;
+        StateHasChanged();
     }
 }

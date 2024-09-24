@@ -31,6 +31,10 @@
   font-size: 14px;
   color: #1F232B;
 }
+.kori-search__header .kori-search__title .close-icon {
+  background: transparent;
+  padding: 0;
+}
 .kori-search__header .kori-search__searchbar {
   display: flex;
   flex-direction: row;

@@ -563,7 +563,7 @@ function showSidebar() {
 
 function hideSidebar() {
     console.log("hiding sidebar");
-    document.body.style.marginRight = "0px"; 
+    document.body.style.marginRight = "0px";
 }
 
 function cancelEdit() {

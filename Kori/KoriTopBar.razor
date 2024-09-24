@@ -54,6 +54,10 @@
 @inject Kori Kori
 
 @code {
+    [Parameter] public EventCallback<string> OnModeChanged { get; set; }
+
+    private TopBarButton SelectedButton;
+
     public class TopBarButton
     {
         public string Text { get; set; }
@@ -68,13 +72,14 @@
         new TopBarButton { Text = "Translate", IconPath = "/_content/Kori/icons/Lang.svg", IconHoverPath = "/_content/Kori/icons/Lang-blue.svg", Mode = "Translate" },
         new TopBarButton { Text = "Blog", IconPath = "/_content/Kori/icons/Blog.svg", IconHoverPath = "/_content/Kori/icons/Blog-blue.svg", Mode = "Blog" },
         new TopBarButton { Text = "A/B Testing", IconPath = "/_content/Kori/icons/AB.svg", IconHoverPath = "/_content/Kori/icons/AB-blue.svg", Mode = "ABTesting" }
-    };
-
-    private TopBarButton SelectedButton;
+    };    
 
     private async Task OnButtonClick(TopBarButton button)
     {
         SelectedButton = button;
+        Kori.Mode = button.Mode;
+
+        await OnModeChanged.InvokeAsync(button.Mode);
 
         switch (button.Mode)
         {

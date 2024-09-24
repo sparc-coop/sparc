@@ -21,3 +21,19 @@
 ::deep .kori-enabled.empty-content {
   min-height: 1em;
 }
+
+.mode-search {
+  border: 5px solid blue;
+}
+
+.mode-translate {
+  border: 5px solid green;
+}
+
+.mode-blog {
+  border: 5px solid red;
+}
+
+.mode-abtesting {
+  border: 5px solid purple;
+}
