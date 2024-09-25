@@ -1,8 +1,8 @@
-﻿<div id="kori-search" class="kori-search">
+﻿<div id="kori-search" class="kori-search @(Kori.Mode == "Search" ? "show" : "")">
     <div class="kori-search__header">
         <div class="kori-search__title">
             <h5>Navigation</h5>
-            <button class="close-icon" @onclick="Kori.CancelAsync">
+            <button class="close-icon" @onclick="Kori.CloseAsync">
                 <img src="/_content/Kori/icons/Close.svg" alt="Close" />
             </button>
             

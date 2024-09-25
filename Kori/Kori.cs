@@ -95,10 +95,16 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
     public async Task CancelAsync()
     {
-        Console.WriteLine("Canceling edit");
-        Mode = "Default";
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("cancelEdit");
+    }
+
+    public async Task CloseAsync()
+    {
+        Console.WriteLine("Closing search side bar in Kori.cs");
+        Mode = "Default";
+        var js = await KoriJs.Value;
+        await js.InvokeVoidAsync("closeSearch");
     }
 
     public async Task BeginSaveAsync()

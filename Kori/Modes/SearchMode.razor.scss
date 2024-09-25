@@ -9,11 +9,15 @@
     bottom: 0;
     height: 100vh;
     gap: 20px;
-    display: flex;
+    /*display: flex;*/
     flex-direction: column;
     font-family: 'ArticulatCF';
     font-weight: 500;
+    display: none;
 
+    &.show {
+        display: flex;
+    }
 
     &__header {
         display: flex;

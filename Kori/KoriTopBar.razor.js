@@ -50,7 +50,7 @@ function buildTranslationCache(serverTranslationCache) {
         }
     }
 
-    console.log('Kori translation cache initialized from Ibis, ', translationCache);
+    //console.log('Kori translation cache initialized from Ibis, ', translationCache);
 }
 
 function initKoriElement(targetElementId) {
@@ -72,11 +72,11 @@ function initKoriElement(targetElementId) {
 function initKoriTopBar() {
     topBar = document.getElementById("kori-top-bar");   
 
-    console.log('Kori top bar initialized.');
+    //console.log('Kori top bar initialized.');
 }
 
 function initElement(targetElementId) {
-    console.log("Initializing element");
+    //console.log("Initializing element");
 
     app = document.getElementById(targetElementId);
 
@@ -86,13 +86,13 @@ function initElement(targetElementId) {
     observer = new MutationObserver(observeCallback);
     observer.observe(app, { childList: true, characterData: true, subtree: true });
 
-    console.log('Observer registered for ' + targetElementId + '.');
+    //console.log('Observer registered for ' + targetElementId + '.');
 }
 
 function registerNodesUnder(el) {
     var n, walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, koriIgnoreFilter);
     while (n = walk.nextNode()){
-        console.log('Registering node', n.nodeName);
+        //console.log('Registering node', n.nodeName);
         registerNode(n);
     }
 }
@@ -102,10 +102,10 @@ function registerNode(node) {
         return;
 
     var content = node.nodeName == 'IMG' ? node.src.trim() : node.textContent.trim();
-    console.log("content in registerNode: ", content);
+    //console.log("content in registerNode: ", content);
 
     var tag = getTagContent(node) ?? (node.koriContent ?? content.trim());
-    console.log("tag in registerNode: ", tag);
+    //console.log("tag in registerNode: ", tag);
 
     if (!tag)
         return;
@@ -144,6 +144,9 @@ function observeCallback(mutations) {
         if (mutation.target.classList?.contains('kori-ignore') || mutation.target.parentElement?.classList.contains('kori-ignore'))
             return;
 
+        //console.log("-----mutation.target", mutation.target);
+        //console.log("-----mutation.target.parentElement", mutation.target.parentElement);
+
         if (mutation.type == 'characterData')
             registerNode(mutation.target, NodeType.TEXT);
         else
@@ -154,7 +157,7 @@ function observeCallback(mutations) {
 }
 
 function translateNodes() {
-    console.log('translateNodes');
+    //console.log('translateNodes');
 
     var contentToTranslate = {};
 
@@ -179,7 +182,7 @@ function translateNodes() {
     }    
 
     dotNet.invokeMethodAsync("TranslateAsync", contentToTranslate).then(translations => {
-        console.log('Received new translations from Ibis.', translations);
+        //console.log('Received new translations from Ibis.', translations);
 
         for (var key in translations) {
             if (translations[key] === "") {
@@ -242,7 +245,7 @@ function replaceWithTranslatedText() {
         }
     }
 
-    console.log('Translated page from Ibis and enabled Kori widget.');
+    //console.log('Translated page from Ibis and enabled Kori widget.');
 
     observer.observe(app, { childList: true, characterData: true, subtree: true });
 }
@@ -324,15 +327,11 @@ function toggleSelected(t) {
     document.getElementsByClassName("selected")[0]?.classList.remove("selected");
     document.getElementsByClassName("show")[0]?.classList.remove("show");
 
-    //var topBar = document.getElementById("kori-top-bar");
-
     var koriElem = t.closest('.kori-enabled');
     console.log('koriElem', koriElem);
     if (!koriElem) {
         // clicked outside of all kori elements
-        console.log("clicou fora de elementos kori");
         document.getElementsByClassName("show")[0]?.classList.remove("show");
-        console.log("removendo show");
 
         if (!topBar.classList.contains("show")) {
             document.body.style.marginTop = '0';
@@ -400,7 +399,7 @@ function toggleTopBar(t) {
 
     topBar.classList.add("show");
 
-    console.log('toggleTopBar', t);
+    //console.log('toggleTopBar: ', t);
 
     if (topBar.classList.contains("show")) {
         // adjusts the top margin to match the top-bar height
@@ -427,16 +426,16 @@ function toggleTopBar(t) {
         }
     }
 
-    console.log('Set active node', activeNode);
+    //console.log('Set active node', activeNode);
 }
 
 function getActiveImageSrc() {
     if (activeNode && activeNode.tagName === 'IMG') {
         return activeNode.src;
-        console.log('Active node is an image', activeNode.src);
+        //console.log('Active node is an image', activeNode.src);
     }
 
-    console.log('Active node is not an image', activeNode)
+    //console.log('Active node is not an image', activeNode)
     return null;
 }
 
@@ -472,7 +471,7 @@ function getActiveImageSrc() {
 
 function edit() {
     if (!activeNode) {
-        console.log('Unable to edit element', activeNode);
+        //console.log('Unable to edit element', activeNode);
         return;
     }
 
@@ -542,7 +541,7 @@ function isTranslationAlreadySaved(translation) {
 
 function replaceInnerHtmlBeforeTopBar(node, markdownTxt) {
     while (node.firstChild) {
-        console.log("-------------node.firstChild", node.firstChild)
+        //console.log("-------------node.firstChild", node.firstChild)
         if (node.firstChild.id !== "kori-top-bar") {
             node.removeChild(node.firstChild);
         } else {
@@ -562,25 +561,67 @@ function showSidebar() {
 }
 
 function hideSidebar() {
-    console.log("hiding sidebar");
+    console.log("hiding sidebar in hideSideBar funcion in JS code");
     document.body.style.marginRight = "0px";
 }
 
 function cancelEdit() {
-    console.log("cancelling edit");
+    console.log("cancelling edit in JS");
 
     var translation = translationCache[activeMessageId];
 
     if (isTranslationAlreadySaved(translation)) {
+        console.log("entrou na condição de isTranslationAlreadySaved");
         var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
         deactivateNodeEdition(activeNodeParent, translation);
     } else {
+        console.log("entrou na condição de else");
         activeNode.textContent = translation.Translation;
         activeNode.parentElement.contentEditable = "false";
         activeNode.parentElement.classList.remove('selected');
     }
     hideSidebar();
 }
+
+function closeSearch() {
+    console.log("closing edit in JS");
+
+    // Manter o elemento selecionado e editável
+    activeNode.parentElement.contentEditable = "true";
+    activeNode.parentElement.classList.add('selected'); // Mantenha a seleção ativa no elemento
+
+    // Fechar a sidebar
+    hideSidebar();
+
+    // Deselecionar o modo na top bar e exibir o normal-icon
+    var topBar = document.getElementById('kori-top-bar');
+    if (topBar) {
+        // Remover a seleção de todos os botões da top bar
+        var selectedButton = topBar.querySelector('.top-bar-button.selected');
+        if (selectedButton) {
+            // Remover a classe 'selected'
+            selectedButton.classList.remove('selected');
+
+            // Exibir o normal-icon e ocultar o hover-icon
+            var normalIcon = selectedButton.querySelector('.normal-icon');
+            var hoverIcon = selectedButton.querySelector('.hover-icon');
+
+            if (normalIcon && hoverIcon) {
+                normalIcon.classList.remove('hidden');  // Mostrar o normal-icon
+                hoverIcon.classList.add('hidden');     // Ocultar o hover-icon
+            }
+        }
+    }
+
+    // Avisar o KoriContent.razor para remover o modo ativo
+    DotNet.invokeMethodAsync('Kori', 'OnModeChanged', '').then(() => {
+        console.log("Modo removido com sucesso.");
+    });
+
+    console.log("sidebar closed, element kept editable, top bar deselected, mode removed");
+}
+
+
 
 //function getActiveNodeTextContent(translation) {
 //    var activeNodeParent = document.querySelector(`[kori-id="${translation.id}"]`);
@@ -617,7 +658,7 @@ function save() {
     dotNet.invokeMethodAsync("BackToEditAsync").then(r => {
 
         dotNet.invokeMethodAsync("SaveAsync", activeMessageId, textContent).then(content => {
-            console.log('Saved new content to Ibis.', content);
+            //console.log('Saved new content to Ibis.', content);
 
             translationCache[activeMessageId].Translation = content.text;
             translationCache[activeMessageId].text = content.text;
@@ -626,7 +667,7 @@ function save() {
             activeNode.parentElement.contentEditable = "false";
             activeNode.parentElement.classList.remove('kori-ignore');
 
-            console.log("-------------activeNode.parentElement" ,activeNode.parentElement);
+            //console.log("-------------activeNode.parentElement" ,activeNode.parentElement);
 
             if (translation.id) {
 
@@ -880,10 +921,10 @@ function updateImageSrc(currentSrc, newSrc) {
     if (img) {
         img.src = newSrc;
         translationCache[activeMessageId].text = newSrc;
-        console.log("Image src updated", img);
+        //console.log("Image src updated", img);
     }
 }
 
 
 
-export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc, showSidebar };
+export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio, edit, cancelEdit, save, checkSelectedContentType, editImage, applyMarkdown, getActiveImageSrc, updateImageSrc, showSidebar, closeSearch };

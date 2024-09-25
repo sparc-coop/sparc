@@ -9,10 +9,14 @@
   bottom: 0;
   height: 100vh;
   gap: 20px;
-  display: flex;
+  /*display: flex;*/
   flex-direction: column;
   font-family: "ArticulatCF";
   font-weight: 500;
+  display: none;
+}
+.kori-search.show {
+  display: flex;
 }
 .kori-search__header {
   display: flex;
