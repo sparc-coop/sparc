@@ -20,8 +20,4 @@
 		<Content Include="App.Variables.scss" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Kori\Kori.csproj" />
-	</ItemGroup>
-
 </Project>
