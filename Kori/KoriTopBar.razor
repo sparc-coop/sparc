@@ -15,7 +15,7 @@
                         <img src="@button.IconPath" alt="@button.Text icon" class="icon normal-icon @(SelectedButton == button ? "hidden" : "")" />
                         <img src="@button.IconHoverPath" alt="@button.Text icon hover" class="icon hover-icon @(SelectedButton == button ? "" : "hidden")" />
                         <img src="@button.IconSelectedPath" alt="@button.Text icon selected" class="icon selected-icon @(SelectedButton == button ? "" : "hidden")" />
-                        <span class="btn-text">@button.Text</span> 
+                        <span class="btn-text">@button.Text</span>
                     </button>
                 }
             }
@@ -44,9 +44,9 @@
                 {
                     <Kori.Modes.SearchMode />
                 }
-                else if (Kori.Mode == "Translate")
+                else if (Kori.Mode == "Language")
                 {
-                    <Kori.Modes.TranslateMode />
+                    <Kori.Modes.LanguageMode />
                 }
                 else if (Kori.Mode == "Blog")
                 {
@@ -95,52 +95,60 @@
     private List<TopBarButton> LeftButtons = new List<TopBarButton>
     {
         new TopBarButton { IconPath = "/_content/Kori/icons/Off.svg", IconSelectedPath = "/_content/Kori/icons/On.svg" },
-        new TopBarButton { IconPath = "/_content/Kori/icons/Lang.svg", IconHoverPath = "/_content/Kori/icons/Lang-hover.svg", IconSelectedPath = "/_content/Kori/icons/Lang-selected.svg", Text = "Language" },
-        new TopBarButton { IconPath = "/_content/Kori/icons/Blog.svg", IconHoverPath = "/_content/Kori/icons/Blog-hover.svg", IconSelectedPath = "/_content/Kori/icons/Blog-selected.svg", Text = "Blog" },
-        new TopBarButton { IconPath = "/_content/Kori/icons/AB.svg", IconHoverPath = "/_content/Kori/icons/AB-hover.svg", IconSelectedPath = "/_content/Kori/icons/AB-selected.svg", Text = "A/B Testing" }
+        new TopBarButton { IconPath = "/_content/Kori/icons/Lang.svg", IconHoverPath = "/_content/Kori/icons/Lang-hover.svg", IconSelectedPath = "/_content/Kori/icons/Lang-selected.svg", Text = "Language", Mode = "Language" },
+        new TopBarButton { IconPath = "/_content/Kori/icons/Blog.svg", IconHoverPath = "/_content/Kori/icons/Blog-hover.svg", IconSelectedPath = "/_content/Kori/icons/Blog-selected.svg", Text = "Blog", Mode = "Blog" },
+        new TopBarButton { IconPath = "/_content/Kori/icons/AB.svg", IconHoverPath = "/_content/Kori/icons/AB-hover.svg", IconSelectedPath = "/_content/Kori/icons/AB-selected.svg", Text = "A/B Testing", Mode = "ABTesting" }
     };
 
     private List<TopBarButton> RightButtons = new List<TopBarButton>
     {
-        new TopBarButton { IconPath = "/_content/Kori/icons/Search2.svg", IconHoverPath = "/_content/Kori/icons/Search2-hover.svg", IconSelectedPath = "/_content/Kori/icons/Search2-selected.svg", Text = "Search" },
-        new TopBarButton { IconPath = "/_content/Kori/icons/History.svg", IconHoverPath = "/_content/Kori/icons/History-hover.svg", IconSelectedPath = "/_content/Kori/icons/History-selected.svg", Text = "History" },
-        new TopBarButton { IconPath = "/_content/Kori/icons/Tutorial.svg", IconHoverPath = "/_content/Kori/icons/Tutorial-hover.svg", IconSelectedPath = "/_content/Kori/icons/Tutorial-selected.svg", Text = "Tutorial" }
+        new TopBarButton { IconPath = "/_content/Kori/icons/Search2.svg", IconHoverPath = "/_content/Kori/icons/Search2-hover.svg", IconSelectedPath = "/_content/Kori/icons/Search2-selected.svg", Text = "Search", Mode = "Search" },
+        new TopBarButton { IconPath = "/_content/Kori/icons/History.svg", IconHoverPath = "/_content/Kori/icons/History-hover.svg", IconSelectedPath = "/_content/Kori/icons/History-selected.svg", Text = "History", Mode = "History" },
+        new TopBarButton { IconPath = "/_content/Kori/icons/Tutorial.svg", IconHoverPath = "/_content/Kori/icons/Tutorial-hover.svg", IconSelectedPath = "/_content/Kori/icons/Tutorial-selected.svg", Text = "Tutorial", Mode = "Tutorial" }
     };
 
     private void ToggleButton()
     {
-        isToggledOn = !isToggledOn; 
+        isToggledOn = !isToggledOn;
     }
 
     private async Task OnButtonClick(TopBarButton button)
     {
-        SelectedButton = button;
-        Kori.Mode = button.Mode;
-
-        await OnModeChanged.InvokeAsync(button.Mode);
-
-        switch (button.Mode)
+        if (SelectedButton == button)
         {
-            case "Search":
-                await Kori.OpenSearchMenuAsync();
-                break;
-            case "Translate":
-                Kori.OpenTranslationMenu();
-                break;
-            case "Blog":
-                Kori.OpenBlogMenu();
-                break;
-            case "ABTesting":
-                Kori.OpenABTestingMenu();
-                break;
-            case "Edit":
-                await Kori.EditAsync();
-                break;
-            case "EditImage":
-                await Kori.EditAsync();
-                break;
-            default:
-                break;
+            SelectedButton = null; 
+            Kori.Mode = ""; 
+        }
+        else
+        {
+            SelectedButton = button;
+            Kori.Mode = button.Mode;
+
+            await OnModeChanged.InvokeAsync(button.Mode);
+
+            switch (button.Mode)
+            {
+                case "Search":
+                    await Kori.OpenSearchMenuAsync();
+                    break;
+                case "Language":
+                    Kori.OpenTranslationMenu();
+                    break;
+                case "Blog":
+                    Kori.OpenBlogMenu();
+                    break;
+                case "ABTesting":
+                    Kori.OpenABTestingMenu();
+                    break;
+                case "Edit":
+                    await Kori.EditAsync();
+                    break;
+                case "EditImage":
+                    await Kori.EditAsync();
+                    break;
+                default:
+                    break;
+            }
         }
 
         StateHasChanged();

@@ -70,15 +70,18 @@
   width: 28px;
   height: 28px;
 }
+.kori-top-bar .top-bar-buttons .top-bar-button .normal-icon, .kori-top-bar .top-bar-buttons .top-bar-button .hover-icon, .kori-top-bar .top-bar-buttons .top-bar-button .selected-icon {
+  display: none;
+}
+.kori-top-bar .top-bar-buttons .top-bar-button .normal-icon {
+  display: inline;
+}
 .kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) {
   background: #EEF2FA;
   box-shadow: inset 0 0 0 4px #FFFFFF;
   padding: 8px;
 }
-.kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) .normal-icon {
-  display: none;
-}
-.kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) .selected-icon {
+.kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) .normal-icon, .kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) .selected-icon {
   display: none;
 }
 .kori-top-bar .top-bar-buttons .top-bar-button:hover:not(.toggle-button) .hover-icon {
@@ -97,10 +100,7 @@
   box-shadow: inset 0 0 0 4px #FFFFFF;
   padding: 8px;
 }
-.kori-top-bar .top-bar-buttons .top-bar-button.selected:not(.toggle-button) .normal-icon {
-  display: none;
-}
-.kori-top-bar .top-bar-buttons .top-bar-button.selected:not(.toggle-button) .hover-icon {
+.kori-top-bar .top-bar-buttons .top-bar-button.selected:not(.toggle-button) .normal-icon, .kori-top-bar .top-bar-buttons .top-bar-button.selected:not(.toggle-button) .hover-icon {
   display: none;
 }
 .kori-top-bar .top-bar-buttons .top-bar-button.selected:not(.toggle-button) .selected-icon {

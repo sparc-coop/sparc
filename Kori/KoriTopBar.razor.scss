@@ -75,16 +75,20 @@
                 height: 28px;
             }
 
+            .normal-icon, .hover-icon, .selected-icon {
+                display: none;
+            }
+
+            .normal-icon {
+                display: inline;
+            }
+
             &:hover:not(.toggle-button) {
                 background: #EEF2FA;
                 box-shadow: inset 0 0 0 4px #FFFFFF;
                 padding: 8px;
 
-                .normal-icon {
-                    display: none;
-                }
-
-                .selected-icon {
+                .normal-icon, .selected-icon {
                     display: none;
                 }
 
@@ -108,17 +112,14 @@
                 box-shadow: inset 0 0 0 4px #FFFFFF;
                 padding: 8px;
 
-                .normal-icon {
-                    display: none;
-                }
-
-                .hover-icon {
-                    display: none;
+                .normal-icon, .hover-icon {
+                    display: none; 
                 }
 
                 .selected-icon {
-                    display: inline;
+                    display: inline; 
                 }
+
 
                 .btn-text {
                     color: #4162DC;
