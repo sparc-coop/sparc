@@ -1,4 +1,4 @@
-using Kori;
+using Sparc.Kori;
 using Sparc.Coop;
 
 var builder = WebApplication.CreateBuilder(args);
