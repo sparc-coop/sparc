@@ -120,9 +120,8 @@ nav {
             align-items: center;
             background: $yellow-100;
             z-index: 50;
-            overflow: hidden;
+            overflow: visible;
             position: fixed;
-            z-index: 1;
 
             .logo {
                 width: 93px;
