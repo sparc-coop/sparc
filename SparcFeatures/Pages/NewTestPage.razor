@@ -1,0 +1,54 @@
+﻿@page "/explorer-kori-test-page"
+@layout MarketingLayout
+
+<PageTitle>Explorer</PageTitle>
+
+<div class="kori homepage" id="homepage">
+    <section class="hero-section">
+        <header class="text-center">
+            <h1 class="kori-enabled">
+                Imagine a world where
+                <span class="invert">projects</span>
+                thrive with the support of
+                <span class="invert">collaborators</span> who bring them to life.
+            </h1>
+            <p class="subtitle-1 kori-enabled">Explorer is a movement of creatives & innovators reimagining how ventures are built, shared, and celebrated.</p>
+        </header>
+        <div class="info-box">
+            <div class="box-heading">
+                <p class="subtitle-small">Become part of Explorer and access a wealth of insights & inspiration.</p>
+            </div>
+        </div>
+        <div class="discover-more">
+            <p class="subtitle-small">explore more about our journey</p>
+            <img src="images/icons/Arrow.svg" @onclick=Scroll />
+        </div>
+    </section>
+</div>
+
+
+<script src="kori/js/kori.js" />
+
+@inject IJSRuntime JSRuntime
+
+    @code {
+        public string? EmailAddress;
+        public string KodekitText = $"With this tool designers will be able to set up a \"UI Kit\" with basic fonts, colors, typography rules, button styles, input styles, etc. -- everything in a basic UI kit -- and a dynamic base CSS will be automatically generated.";
+        public string IbisText = $"Ibis uses Machine Learning to automatically transcribe your audio and video files.";
+        public string LawofText = $"Law of 100 is a day tracking system that will help to keep you on the right path while motivating you to reach your goals.";
+        public string Scrollable = "";
+
+        public async Task SendEmail()
+        {
+            if (EmailAddress != null)
+            {
+                //await RegisterForCommunity.ExecuteAsync(new(EmailAddress));
+            }
+        }
+
+        public async void Scroll()
+        {
+            Scrollable = "scrollable";
+            await JSRuntime.InvokeAsync<Task>("scrollFunction");
+        }
+}
