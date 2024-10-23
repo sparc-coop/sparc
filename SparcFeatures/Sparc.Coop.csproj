@@ -24,4 +24,10 @@
 	  <ProjectReference Include="..\..\kori\Sparc.Kori\Sparc.Kori.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="Pages\NewSearchTestPage.razor">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	  </Content>
+	</ItemGroup>
+
 </Project>
