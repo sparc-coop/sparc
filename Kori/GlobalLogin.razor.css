@@ -9,6 +9,9 @@
   right: 16px;
   z-index: 2000;
 }
+.kori-login .kori-mobile {
+  display: none;
+}
 .kori-login .kori-login__toggle {
   width: 24px;
   height: 24px;
