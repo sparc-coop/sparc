@@ -1,5 +1,6 @@
 @rendermode @(new InteractiveServerRenderMode(prerender: false))
 @using System.Net.Http.Json
+@using Microsoft.EntityFrameworkCore
 @using Sparc.Blossom.Authentication
 @using Microsoft.AspNetCore.Components.Authorization
 @using System.Security.Claims
@@ -10,180 +11,217 @@
     @@import url(https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap);
 </style>
 
-<div class="login-component kori-ignore">
+<div class="kori-login kori-ignore" @onclick:stopPropagation="true">
     <AuthorizeView>
         <Authorized>
-            <button class="login-component__toggle @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="user" @onclick=ToggleLoginMenu>
+            <button class="kori-login__toggle  @(ShowMenu ? "" : "show") @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="Login" @onclick=ToggleLoginMenu>
                 <UserIcon LoggedIn="!context.User.IsAnonymous()" />
             </button>
+            <button class="kori-login__close @(ShowMenu ? "show" : "")" @onclick=ToggleMobileMenu aria-label="Close">
+                <img src="_content/Kori/icons/Close.svg" />
+            </button>
 
-            <div class="login-component__menu @(ShowMenu ? "show" : "")">
+            <div class="kori-login__menu @(ShowMenu ? "show" : "")">
                 @switch (Auth.LoginState)
                 {
                     case LoginStates.LoggedOut:
-                        <div class="login-component__menu-header-wrapper">
-                            <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
-                            <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
-                        </div>
-                        <div class="login-component__menu-actions">
-                            <button class="login-component__login-btn login-component__btn login-component__text-btn" @onclick=LoginWithPasskey>
-                                <img src="_content/Kori/icons/Key.svg" />
-                                <div class="login-component__login-btn-wrapper">
-                                    <figcaption class="login-component__text-primary">Passkey Login</figcaption>
-                                    <aside class="login-component__text-secondary">Set up your passkey</aside>
+                        <header>
+                            <h3 class="kori-login__text-primary">Welcome!</h3>
+                            <p class="kori-login__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
+                        </header>
+                        <div class="kori-login__menu-actions">
+                            <div class="kori-desktop">
+                                <button class="kori-login__login-btn kori-login__btn kori-login__text-btn" @onclick=LoginWithPasskey>
+                                    <img src="_content/Kori/icons/Key.svg" />
+                                    <div class="kori-login__login-btn-wrapper">
+                                        <figcaption class="kori-login__text-primary">Passkey Login</figcaption>
+                                        <aside class="kori-login__text-secondary">Set up your passkey</aside>
+                                    </div>
+                                </button>
+                                <div class="kori-login__menu-divider"></div>
+                                <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
+                            </div>
+                            <div class="kori-mobile">
+                                <div class="tabs">
+                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
+                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
                                 </div>
-                            </button>
-                            <div class="login-component__menu-divider"></div>
-                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
+                                <div id="kori-login-menu-mobile" class="kori-login__tab @(ShowLoginTab ? "show" : "")">
+                                    <button class="kori-login__login-btn kori-login__btn kori-login__text-btn" @onclick=LoginWithPasskey>
+                                        <img src="_content/Kori/icons/Key.svg" />
+                                        <div class="kori-login__login-btn-wrapper">
+                                            <figcaption class="kori-login__text-primary">Passkey Login</figcaption>
+                                            <aside class="kori-login__text-secondary">Set up your passkey</aside>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="kori-login__language @(ShowLanguageTab ? "show" : "")">
+                                    <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
+                                </div>
+                            </div>
                         </div>
                         break;
                     case LoginStates.ReadyForLogin:
-                        <div class="login-component__menu-header-wrapper">
-                            <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
-                            <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
-                        </div>
-                        <div class="login-component__menu-actions">
-                            <form class="login-component__form" @onsubmit=LoginWithEmail>
-                                <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
-                                <button type="submit" class="login-component__submit-btn">
-                                    Login
+                        <header>
+                            <h3 class="kori-login__text-primary">Welcome!</h3>
+                            <p class="kori-login__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
+                        </header>
+                        <div class="kori-login__menu-actions">
+                            <div class="kori-desktop">
+                                <button class="kori-login__login-btn kori-login__btn kori-login__text-btn" @onclick=LoginWithPasskey>
+                                    <img src="_content/Kori/icons/Key.svg" />
+                                    <div class="kori-login__login-btn-wrapper">
+                                        <figcaption class="kori-login__text-primary">Passkey Login</figcaption>
+                                        <aside class="kori-login__text-secondary">Set up your passkey</aside>
+                                    </div>
                                 </button>
-                                <div class="login-component__form-error @(ShowFormError ? "show" : "")">
-                                    <span class="login-component__form-error-message">Email cannot be blank</span>
-                                </div>
-                            </form>
-                            <div class="login-component__use-passkey">
-                                <button class="login-component__passkey-btn login-component__btn login-component__text-btn" @onclick="LoginWithPasskey">
-                                    <img src="_content/Kori/icons/Key.svg" /> Use passkey
-                                </button>
+                                <div class="kori-login__menu-divider"></div>
+                                <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                             </div>
-                            <div class="login-component__menu-divider"></div>
-                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-component__text-secondary">
-                                    <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
+                            <div class="kori-mobile">
+                                <div class="tabs">
+                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
+                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
                                 </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
-                            </button> *@
-                            <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
+                                <div id="kori-login-menu-mobile" class="kori-login__tab @(ShowLoginTab ? "show" : "")">
+                                    <form class="kori-login__form" @onsubmit=LoginWithEmail>
+                                        <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
+                                        <button type="submit" class="kori-login__submit-btn">
+                                            Login
+                                        </button>
+                                        <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
+                                            <span class="kori-login__form-error-message">Email cannot be blank</span>
+                                        </div>
+                                    </form>
+                                    <div class="kori-login__use-passkey">
+                                        <button class="kori-login__passkey-btn kori-login__btn kori-login__text-btn" @onclick="LoginWithPasskey">
+                                            <img src="_content/Kori/icons/Key.svg" /> Use passkey
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="kori-login__language @(ShowLanguageTab ? "show" : "")">
+                                    <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
+                                </div>
+                            </div>
                         </div>
                         break;
                     case LoginStates.VerifyingToken:
                     case LoginStates.VerifyingEmail:
-                        <div class="login-component__menu-header-wrapper">
-                            <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
-                            <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
+                        <div class="kori-login__menu-header-wrapper">
+                            <div class="kori-login__menu-header kori-login__text-primary">Welcome!</div>
+                            <p class="kori-login__menu-subheader kori-login__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
-                        <div class="login-component__menu-actions">
-                            <form class="login-component__form" @onsubmit=LoginWithEmail>
-                                <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                <button type="submit" id="submit-btn" class="login-component__submit-btn" disabled>
+                        <div class="kori-login__menu-actions">
+                            <form class="kori-login__form" @onsubmit=LoginWithEmail>
+                                <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
+                                <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
                                     Login
                                 </button>
-                                <div class="login-component__form-error @(ShowFormError ? "show" : "")">
-                                    <span class="login-component__form-error-message">Email cannot be blank</span>
+                                <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
+                                    <span class="kori-login__form-error-message">Email cannot be blank</span>
                                 </div>
                             </form>
-                            <div class="login-component__message-wrapper">
-                                <span class="login-component__message login-component__text-secondary">Signing you in...</span>
+                            <div class="kori-login__message-wrapper">
+                                <span class="kori-login__message kori-login__text-secondary">Signing you in...</span>
                             </div>
-                            <div class="login-component__menu-divider"></div>
-                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-component__text-btn">
+                            <div class="kori-login__menu-divider"></div>
+                            @* <button class="kori-login__language-btn kori-login__btn" @onclick=ToggleLanguageSettings>
+                                <div class="kori-login__language-btn-content kori-login__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="kori-login__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
                             <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.AwaitingMagicLink:
-                        <div class="login-component__menu-header-wrapper">
-                            <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
-                            <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
+                        <div class="kori-login__menu-header-wrapper">
+                            <div class="kori-login__menu-header kori-login__text-primary">Welcome!</div>
+                            <p class="kori-login__menu-subheader kori-login__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
-                        <div class="login-component__menu-actions">
-                            <form class="login-component__form" @onsubmit=LoginWithEmail>
-                                <input id="login-component__input-email" class="login-component__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                <button type="submit" id="submit-btn" class="login-component__submit-btn" disabled>
+                        <div class="kori-login__menu-actions">
+                            <form class="kori-login__form" @onsubmit=LoginWithEmail>
+                                <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
+                                <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
                                     Login
                                 </button>
-                                <div class="login-component__form-error @(ShowFormError ? "show" : "")">
-                                    <span class="login-component__form-error-message">Email cannot be blank</span>
+                                <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
+                                    <span class="kori-login__form-error-message">Email cannot be blank</span>
                                 </div>
                             </form>
-                            <div class="login-component__message-wrapper">
-                                <span class="login-component__message awaiting-link login-component__text-secondary">Click the link in your email!</span>
-                                <div class="login-component__different-email">
-                                    <span class="login-component__text-secondary"><img src="_content/Kori/icons/Help.svg" /> Didn't get an email?</span>
-                                    <button class="login-component__btn login-component__text-btn" @onclick=ClearInput>Try a different email</button>
+                            <div class="kori-login__message-wrapper">
+                                <span class="kori-login__message awaiting-link kori-login__text-secondary">Click the link in your email!</span>
+                                <div class="kori-login__different-email">
+                                    <span class="kori-login__text-secondary"><img src="_content/Kori/icons/Help.svg" /> Didn't get an email?</span>
+                                    <button class="kori-login__btn kori-login__text-btn" @onclick=ClearInput>Try a different email</button>
                                 </div>
                             </div>
-                            <div class="login-component__use-passkey">
-                                <button class="login-component__passkey-btn login-component__btn login-component__text-btn" @onclick="LoginWithPasskey">
+                            <div class="kori-login__use-passkey">
+                                <button class="kori-login__passkey-btn kori-login__btn kori-login__text-btn" @onclick="LoginWithPasskey">
                                     <img src="_content/Kori/icons/Key.svg" /> Use passkey
                                 </button>
                             </div>
-                            <div class="login-component__menu-divider"></div>
-                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-component__text-btn">
+                            <div class="kori-login__menu-divider"></div>
+                            @* <button class="kori-login__language-btn kori-login__btn" @onclick=ToggleLanguageSettings>
+                                <div class="kori-login__language-btn-content kori-login__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="kori-login__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
                             <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
                         break;
                     case LoginStates.LoggedIn:
-                        <button class="login-component__account-btn login-component__btn" @onclick=ToggleAccountSettings>
+                        <button class="kori-login__account-btn kori-login__btn" @onclick=ToggleAccountSettings>
                             <img src="_content/Kori/icons/User-green.svg" />
-                            <div class="login-component__login-btn-content">
-                                <figcaption class="login-component__text-primary">@Auth.User?.Username</figcaption>
-                                <aside class="login-component__text-secondary">Set up your passkey</aside>
+                            <div class="kori-login__login-btn-content">
+                                <figcaption class="kori-login__text-primary">@Auth.User?.Username</figcaption>
+                                <aside class="kori-login__text-secondary">Set up your passkey</aside>
                             </div>
                         </button>
-                        <div class="login-component__menu-actions">
-                            <button class="login-component__profile-btn login-component__btn login-component__text-btn">
+                        <div class="kori-login__menu-actions">
+                            <button class="kori-login__profile-btn kori-login__btn kori-login__text-btn">
                                 <img src="_content/Kori/icons/user-profile-circle.svg" /> Profile
-                                </button>
-                            <button class="login-component__setup-btn login-component__btn login-component__text-btn">
+                            </button>
+                            <button class="kori-login__setup-btn kori-login__btn kori-login__text-btn">
                                 <img src="_content/Kori/icons/Shield.svg" /> Setup Backup Email
                             </button>
-                            <button class="login-component__logout-btn login-component__btn login-component__text-btn" @onclick=LogoutAsync>
+                            <button class="kori-login__logout-btn kori-login__btn kori-login__text-btn" @onclick=LogoutAsync>
                                 <img src="_content/Kori/icons/Login.svg" /> Logout
                             </button>
-                            <div class="login-component__menu-divider"></div>
-                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-component__text-btn">
+                            <div class="kori-login__menu-divider"></div>
+                            @* <button class="kori-login__language-btn kori-login__btn" @onclick=ToggleLanguageSettings>
+                                <div class="kori-login__language-btn-content kori-login__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="kori-login__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
                             <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
 
                         break;
                     case LoginStates.Error:
-                        <div class="login-component__menu-header">
-                            <div class="login-component__menu-header login-component__text-primary">Welcome!</div>
-                            <p class="login-component__menu-subheader login-component__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
+                        <div class="kori-login__menu-header">
+                            <div class="kori-login__menu-header kori-login__text-primary">Welcome!</div>
+                            <p class="kori-login__menu-subheader kori-login__text-secondary">Lorem ipsum dolor sit amet, consectetur</p>
                         </div>
-                        <div class="login-component__menu-actions">
-                            <button class="login-component__login-btn" @onclick=LoginWithPasskey>
+                        <div class="kori-login__menu-actions">
+                            <button class="kori-login__login-btn" @onclick=LoginWithPasskey>
                                 <img src="_content/Kori/icons/Key.svg" />
                                 <div class="login-btn__content">
-                                    <figcaption class="login-component__text-primary">Passkey Login</figcaption>
-                                    <aside class="login-component__text-secondary">Set up your passkey</aside>
+                                    <figcaption class="kori-login__text-primary">Passkey Login</figcaption>
+                                    <aside class="kori-login__text-secondary">Set up your passkey</aside>
                                 </div>
                             </button>
-                            <div class="login-component__message-wrapper">
-                                <span class="login-component__message login-component__text-secondary">@Auth.Message</span>
+                            <div class="kori-login__message-wrapper">
+                                <span class="kori-login__message kori-login__text-secondary">@Auth.Message</span>
                             </div>
-                            <div class="login-component__menu-divider"></div>
-                            @* <button class="login-component__language-btn login-component__btn" @onclick=ToggleLanguageSettings>
-                                <div class="login-component__language-btn-content login-component__text-btn">
+                            <div class="kori-login__menu-divider"></div>
+                            @* <button class="kori-login__language-btn kori-login__btn" @onclick=ToggleLanguageSettings>
+                                <div class="kori-login__language-btn-content kori-login__text-btn">
                                     <img src="_content/Kori/icons/Language.svg" /> @Language?.DisplayName.ToString()
                                 </div>
-                                <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+                                <img class="kori-login__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
                             </button> *@
                             <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                         </div>
@@ -193,10 +231,10 @@
         </Authorized>
     </AuthorizeView>
 </div>
-<div class="login-component__overlay @(ShowMenu ? "show" : "")" @onclick=ToggleLoginMenu></div>
+<div class="kori-login__overlay @(ShowMenu ? "show" : "")" @onclick=ToggleLoginMenu></div>
 
 @* <script>
-    var input = document.getElementById('login-component__input-email');
+    var input = document.getElementById('kori-login__input-email');
     input.addEventListener('keypress', function(event) {
         if (event.keyCode == 13) {
             event.preventDefault();
@@ -223,6 +261,8 @@
     bool ShowOverlay = false;
     bool UsePasskey = false;
     bool ShowFormError = false;
+    bool ShowLoginTab = false;
+    bool ShowLanguageTab = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -236,6 +276,7 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("initHyperScript");
+        // await Js.InvokeVoidAsync("screenSize");
     }
 
     async Task LoginWithPasskey()
@@ -322,6 +363,12 @@
         }
     }
 
+    void ToggleMobileMenu()
+    {
+        ShowMenu = !ShowMenu;
+        ShowLoginTab = true;
+        ShowLanguageTab = false;
+    }
 
     void ToggleAccountSettings()
     {
@@ -342,5 +389,15 @@
         Language = language;     
         StateHasChanged();
         Console.WriteLine($"Language updated to: {Language.DisplayName}");
+    }
+
+    void ShowLoginMobile() {
+        ShowLoginTab = true;
+        ShowLanguageTab = false;
+    }
+
+    void ShowLanguageMobile() {
+        ShowLanguageTab = true;
+        ShowLoginTab = false;
     }
 }

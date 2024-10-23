@@ -1,4 +1,5 @@
-.login-component {
+
+.kori-login {
     width: fit-content;
     padding: 12px;
     display: flex;
@@ -7,9 +8,9 @@
     position: absolute;
     top: 0;
     right: 16px;
-    z-index: 1000;
+    z-index: 2000;
 
-    .login-component__toggle {
+    .kori-login__toggle {
         width: 24px;
         height: 24px;
         padding: 0 !important;
@@ -39,6 +40,21 @@
         }
     }
 
+    .kori-login__close {
+        display: none;
+        width: 24px;
+        height: 24px;
+        padding: 0 !important;
+        background: none;
+        border: none;
+        border-radius: 0;
+        cursor: pointer;
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        z-index: 1001;
+    }
+
     &__btn {
         padding: 8px 0 !important;
         background: none !important;
@@ -63,7 +79,7 @@
         background: var(--grey-900);
         border: 1px solid var(--grey-700);
         border-radius: 4px;
-        animation: login-component__fadeIn 500ms ease-in-out;
+        animation: kori-login__fadeIn 500ms ease-in-out;
         z-index: 1000;
 
         &.show {
@@ -73,17 +89,17 @@
         }
     }
 
-    .login-component__menu {
-        &-header-wrapper {
-            @extend .login-component__text-primary;
+    .kori-login__menu {
+        header {
+            @extend .kori-login__text-primary;
 
             p {
-                @extend .login-component__text-secondary;
+                @extend .kori-login__text-secondary;
             }
         }
     }
 
-    .login-component__account-btn, .login-component__profile-btn, .login-component__setup-btn, .login-component__logout-btn {
+    .kori-login__account-btn, .kori-login__profile-btn, .kori-login__setup-btn, .kori-login__logout-btn {
         display: flex;
         gap: 14px !important;
         align-items: center !important;
@@ -99,7 +115,13 @@
         flex-direction: column;
         gap: 8px;
 
-        .login-component__menu-divider {
+        .kori-desktop {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .kori-login__menu-divider {
             width: 100%;
             border-bottom: 1px solid rgba(255, 255, 255, 0.80);
         }
@@ -114,7 +136,7 @@
             }
         }
 
-        .login-component__login-btn, login-component__account-btn {
+        .kori-login__login-btn, kori-login__account-btn {
             display: flex !important;
             gap: 14px !important;
             align-items: center !important;
@@ -135,16 +157,16 @@
                 text-align: left !important;
 
                 figcaption {
-                    @extend .login-component__text-primary;
+                    @extend .kori-login__text-primary;
                 }
 
                 aside {
-                    @extend .login-component__text-secondary;
+                    @extend .kori-login__text-secondary;
                 }
             }
         }
 
-        .login-component__use-passkey {
+        .kori-login__use-passkey {
             width: 100%;
 
             button {
@@ -159,7 +181,7 @@
             }
         }
 
-        .login-component__different-email {
+        .kori-login__different-email {
             width: 100%;
             margin: 12px 0;
 
@@ -181,7 +203,7 @@
         flex-direction: column;
         gap: 4px;
 
-        .login-component__input {
+        .kori-login__input {
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -203,7 +225,7 @@
             }
         }
 
-        .login-component__submit-btn {
+        .kori-login__submit-btn {
             width: 100% !important;
             padding: 8px 12px !important;
             background: var(--grey-800) !important;
@@ -222,7 +244,7 @@
             }
         }
 
-        .login-component__form-error {
+        .kori-login__form-error {
             display: none;
 
             span {
@@ -244,33 +266,45 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 10;
+            z-index: 100;
         }
     }
 
     @media only screen and (max-width: 850px) {
-        position: static; 
+        position: static;
         padding: 0;
         z-index: auto;
 
-        .login-component__toggle {
+        .kori-login__toggle {
+            display: none;
             position: fixed;
             top: 16px;
             right: calc(16px + 50px);
-            z-index: 1001;
+            z-index: 1002;
+
+            &.show {
+                display: block;
+            }
         }
 
-        .login-component__menu {
+        .kori-login__close {
+            z-index: 1003;
+
+            &.show {
+                display: block;
+            }
+        }
+
+        .kori-login__menu {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 70%;
-            max-width: 400px;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             padding: 16px;
-            background: var(--grey-900);
-            border: 1px solid var(--grey-700);
-            border-radius: 8px;
-            transform: translate(-50%, -50%);
+            background: var(--grey-900, #0E0E0E);
+            border: 1px solid var(--grey-900, #0E0E0E);
+            border-radius: 0;
             display: none;
             z-index: 1002;
 
@@ -279,6 +313,55 @@
                 flex-direction: column;
                 gap: 16px;
             }
+        }
+
+        .kori-desktop {
+            display: none;
+        }
+
+        .kori-mobile {
+            display: block;
+
+            .tabs {
+                margin: 0 -16px;
+                margin-bottom: 24px;
+                display: flex;
+                justify-content: space-around;
+                border-bottom: 2px solid var(--Gray-800, #1E1E1E);
+                color: #FFF;
+
+                div {
+                    width: 100%;
+                    padding-bottom: 10px;
+                    text-align: center;
+                }
+
+                .show {
+                    border-bottom: 2px solid #FFF;
+                }
+            }
+
+            .kori-login__tab {
+                display: none;
+                animation: kori-login__fadeIn 500ms ease-in-out;
+
+                &.show {
+                    display: block !important;
+                }
+            }
+
+            .kori-login__language {
+                display: none;
+                animation: kori-login__fadeIn 500ms ease-in-out;
+
+                &.show {
+                    display: block !important;
+                }
+            }
+        }
+
+        header {
+            margin-top: 56px;
         }
 
         &__overlay {
@@ -296,69 +379,73 @@
             }
         }
 
-        .login-component__form,
-        .login-component__menu-actions,
-        .login-component__btn {
+        .kori-login__form,
+        .kori-login__menu-actions,
+        .kori-login__btn {
             width: 100%;
             padding: 8px 0;
             font-size: 16px;
         }
 
-        .login-component__input {
+        .kori-login__input {
             width: 100%;
             font-size: 16px;
         }
 
-        .login-component__text-primary,
-        .login-component__text-secondary,
-        .login-component__text-btn {
+        .kori-login__text-primary,
+        .kori-login__text-secondary,
+        .kori-login__text-btn {
             font-size: 16px;
             text-align: center;
         }
     }
-}
 
-@keyframes login-component__fadeIn {
-    0% {
-        opacity: 0;
+    &__language {
+        padding-bottom: 8px;
     }
 
-    100% {
-        opacity: 1;
-    }
-}
+    @keyframes kori-login__fadeIn {
+        0% {
+            opacity: 0;
+        }
 
-.login-component__text-primary {
-    font-family: 'Encode Sans Semi Expanded' !important;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    line-height: 160% !important;
-    color: var(--grey-50) !important;
-}
-
-.login-component__text-secondary {
-    font-family: 'Encode Sans Expanded' !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    line-height: 140% !important;
-    color: var(--grey-300) !important;
-}
-
-.login-component__text-btn {
-    font-family: 'Encode Sans Expanded' !important;
-    font-size: 14px !important;
-    font-weight: 400 !important;
-    line-height: 140% !important;
-    color: white !important;
-    cursor: pointer !important;
-    transition: 300ms ease-in-out !important;
-    opacity: 0.7 !important;
-
-    &:hover {
-        opacity: 1 !important;
+        100% {
+            opacity: 1;
+        }
     }
 
-    &:active {
+    .kori-login__text-primary {
+        font-family: 'Encode Sans Semi Expanded' !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        line-height: 160% !important;
+        color: var(--grey-50) !important;
+    }
+
+    .kori-login__text-secondary {
+        font-family: 'Encode Sans Expanded' !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 140% !important;
+        color: var(--grey-300) !important;
+    }
+
+    .kori-login__text-btn {
+        font-family: 'Encode Sans Expanded' !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        line-height: 140% !important;
+        color: white !important;
+        cursor: pointer !important;
+        transition: 300ms ease-in-out !important;
         opacity: 0.7 !important;
+
+        &:hover {
+            opacity: 1 !important;
+        }
+
+        &:active {
+            opacity: 0.7 !important;
+        }
     }
 }

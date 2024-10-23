@@ -1,20 +1,20 @@
 @using System.Net.Http.Json
 @using System.Globalization
 
-<div class="login-component__language">
-    <button class="login-component__language-btn" @onclick=ToggleLanguageSettings>
-        <div class="login-component__language-btn-content login-component__text-btn">
+<div class="kori-login__language kori-desktop">
+    <button class="kori-login__language-btn" @onclick=ToggleLanguageSettings>
+        <div class="kori-login__language-btn-content kori-login__text-btn">
             <img src="_content/Kori/icons/Language.svg" /> @SelectedLanguage?.DisplayName
         </div>
-        <img class="login-component__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
+        <img class="kori-login__expand-icon @(ShowLanguageSettings ? "rotate": "")" src="_content/Kori/icons/Expand.svg" />
     </button>
-    <ul class="login-component__language-list @(ShowLanguageSettings? "show" : "")">
+    <ul class="kori-login__language-list @(ShowLanguageSettings? "show" : "")">
         @if (Languages != null)
         {
             @foreach (var language in Languages)
             {
                 <li>
-                    <button class="login-component__change-language-btn login-component__text-btn" @onclick=@(() => ChangeLanguage(language))>
+                    <button class="kori-login__change-language-btn kori-login__text-btn" @onclick=@(() => ChangeLanguage(language))>
                         @language.DisplayName
 
                         @if (language.DisplayName != language.NativeName)
@@ -23,18 +23,51 @@
                         }
 
                         @* @if (User.Language == language.Id)
-                {
-                <div class="right">
-                <img src="icons/Check.svg" />
-                </div>
-                }
-                *@
+            {
+            <div class="right">
+            <img src="icons/Check.svg" />
+            </div>
+            }
+            *@
                     </button>
                 </li>
             }
         }
     </ul>
-</div> 
+</div>
+
+<div class="kori-login__language kori-mobile">
+    <div class="kori-language__selected">
+        @SelectedLanguage?.DisplayName
+        <aside>@SelectedLanguage?.NativeName</aside>
+    </div>
+    <ul class="kori-login__language-list show">
+        @if (Languages != null)
+        {
+            @foreach (var language in Languages)
+            {
+                <li>
+                    <button class="kori-login__change-language-btn kori-login__text-btn" @onclick=@(() => ChangeLanguage(language))>
+                        @language.DisplayName
+
+                        @if (language.DisplayName != language.NativeName)
+                        {
+                            <aside>@language.NativeName</aside>
+                        }
+
+                        @* @if (User.Language == language.Id)
+            {
+            <div class="right">
+            <img src="icons/Check.svg" />
+            </div>
+            }
+            *@
+                    </button>
+                </li>
+            }
+        }
+    </ul>
+</div>
 
 @code {
     [Parameter] public Language? SelectedLanguage { get; set; }
