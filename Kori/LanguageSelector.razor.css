@@ -68,10 +68,10 @@
   line-height: 140% !important;
   color: var(--grey-300) !important;
 }
-.kori-login__language .kori-mobile {
+.kori-login__language .kori-login__language-mobile {
   display: none;
 }
-.kori-login__language .kori-mobile .kori-language__selected {
+.kori-login__language .kori-login__language-mobile .kori-login__language-selected {
   width: 100%;
   padding: 16px;
   margin-bottom: 32px;
@@ -81,7 +81,7 @@
   border-radius: 8px;
   color: white;
 }
-.kori-login__language .kori-mobile .kori-login__language-list {
+.kori-login__language .kori-login__language-mobile .kori-login__language-list {
   height: 100%;
   max-height: none;
   display: flex;
@@ -89,7 +89,7 @@
   gap: 8px;
   overflow-y: auto;
 }
-.kori-login__language .kori-mobile .kori-login__language-list button {
+.kori-login__language .kori-login__language-mobile .kori-login__language-list button {
   width: 100%;
   padding: 16px;
   display: flex;
@@ -100,27 +100,30 @@
   font-style: normal;
   transition: 0.3s ease-in-out;
 }
-.kori-login__language .kori-mobile .kori-login__language-list button aside {
+.kori-login__language .kori-login__language-mobile .kori-login__language-list button aside {
   font-style: normal;
 }
-.kori-login__language .kori-mobile .kori-login__language-list button:hover {
+.kori-login__language .kori-login__language-mobile .kori-login__language-list button:hover {
   filter: brightness(105%);
   border: 1px solid white;
 }
-.kori-login__language .kori-mobile .kori-login__language-list button:active {
+.kori-login__language .kori-login__language-mobile .kori-login__language-list button:active {
   filter: brightness(100%);
   border: 1px solid white;
 }
 @media only screen and (max-width: 850px) {
-  .kori-login__language .kori-desktop {
+  .kori-login__language .kori-login__language-desktop {
     display: none;
   }
-  .kori-login__language .kori-mobile {
+  .kori-login__language .kori-login__language-mobile {
     display: block;
+  }
+  .kori-login__language .kori-login__language-mobile .kori-login__language-selected {
+    display: flex;
   }
 }
 
-.kori-login__text-primary, .kori-login__language .kori-mobile .kori-language__selected {
+.kori-login__text-primary, .kori-login__language .kori-login__language-mobile .kori-login__language-selected {
   font-family: "Encode Sans Semi Expanded" !important;
   font-size: 16px !important;
   font-weight: 400 !important;
@@ -128,7 +131,7 @@
   color: var(--grey-50) !important;
 }
 
-.kori-login__text-secondary, .kori-login__language .kori-mobile aside {
+.kori-login__text-secondary, .kori-login__language .kori-login__language-mobile aside {
   font-family: "Encode Sans Expanded" !important;
   font-size: 14px !important;
   font-weight: 400 !important;

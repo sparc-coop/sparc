@@ -82,10 +82,10 @@
         }
     }
 
-    .kori-mobile {
+    .kori-login__language-mobile {
         display: none;
 
-        .kori-language__selected {
+        .kori-login__language-selected {
             width: 100%;
             padding: 16px;
             margin-bottom: 32px;
@@ -138,12 +138,16 @@
     }
 
     @media only screen and (max-width: 850px) {
-        .kori-desktop {
+        .kori-login__language-desktop {
             display: none;
         }
 
-        .kori-mobile {
+        .kori-login__language-mobile {
             display: block;
+
+            .kori-login__language-selected {
+                display: flex;
+            }
         }
     }
 }

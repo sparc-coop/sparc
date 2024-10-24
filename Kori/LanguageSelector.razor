@@ -1,7 +1,7 @@
 @using System.Net.Http.Json
 @using System.Globalization
 
-<div class="kori-login__language kori-desktop">
+<div class="kori-login__language-desktop">
     <button class="kori-login__language-btn" @onclick=ToggleLanguageSettings>
         <div class="kori-login__language-btn-content kori-login__text-btn">
             <img src="_content/Kori/icons/Language.svg" /> @SelectedLanguage?.DisplayName
@@ -36,8 +36,8 @@
     </ul>
 </div>
 
-<div class="kori-login__language kori-mobile">
-    <div class="kori-language__selected">
+<div class="kori-login__language-mobile">
+    <div class="kori-login__language-selected">
         @SelectedLanguage?.DisplayName
         <aside>@SelectedLanguage?.NativeName</aside>
     </div>
