@@ -25,6 +25,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Update="Pages\SearchTestPage.razor">
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	  </Content>
 	  <Content Update="Pages\NewSearchTestPage.razor">
 	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 	  </Content>
