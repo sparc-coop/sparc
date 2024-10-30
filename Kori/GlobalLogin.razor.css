@@ -21,6 +21,9 @@
   border-radius: 50%;
   cursor: pointer;
 }
+.kori-login .kori-login__toggle.toggle-mobile {
+  display: none;
+}
 .kori-login .kori-login__toggle .login-user-icon {
   width: 36px !important;
   height: auto !important;
@@ -31,7 +34,7 @@
 }
 .kori-login .kori-login__toggle.loggedin {
   display: none;
-  border: 1px solid var(--green-500);
+  border: 1px solid var(--green-500, #34CE97);
   border-radius: 50%;
 }
 .kori-login .kori-login__toggle.loggedin.show {
@@ -81,6 +84,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+.kori-login .kori-login__menu {
+  z-index: 2000;
+}
+.kori-login .kori-login__menu header {
+  text-align: left;
 }
 .kori-login .kori-login__account-btn, .kori-login .kori-login__profile-btn, .kori-login .kori-login__setup-btn, .kori-login .kori-login__logout-btn {
   display: flex;
@@ -143,18 +152,42 @@
 .kori-login__menu-actions .kori-login__use-passkey button img {
   margin: 0 !important;
 }
-.kori-login__menu-actions .kori-login__different-email {
-  width: 100%;
-  margin: 12px 0;
-}
-.kori-login__menu-actions .kori-login__different-email span {
+.kori-login__menu-actions .kori-login__message-wrapper {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email button.resend-link {
+  width: 100% !important;
+  padding: 8px 12px !important;
+  background: var(--grey-800) !important;
+  font-family: "Encode Sans Expanded";
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 160%;
+  transition: 300ms ease-in-out;
+}
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email button.resend-link:hover {
+  background: var(--grey-700) !important;
+}
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email button.resend-link:active {
+  background: var(--grey-800) !important;
+}
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email button.different-email {
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
   align-content: center;
-  align-items: center;
   gap: 12px;
 }
-.kori-login__menu-actions .kori-login__different-email button {
-  padding: 0 !important;
+.kori-login__menu-actions .kori-login__message-wrapper .kori-login__different-email button.different-email img {
+  margin: auto 0 !important;
 }
 .kori-login__form {
   display: flex;
@@ -180,6 +213,10 @@
 .kori-login__form .kori-login__input:focus {
   border: var(--grey-50) !important;
   backdrop-filter: brightness(120%) !important;
+}
+.kori-login__form .kori-login__input:disabled {
+  background: var(--grey-700) !important;
+  border: 1px solid var(--green-500, #34CE97) !important;
 }
 .kori-login__form .kori-login__submit-btn {
   width: 100% !important;
@@ -208,6 +245,12 @@
 .kori-login__form .kori-login__form-error.show {
   display: block;
 }
+.kori-login .kori-login__message.awaiting-link {
+  color: var(--green-500, #34CE97) !important;
+}
+.kori-login__language {
+  padding-bottom: 8px;
+}
 .kori-login__overlay.show {
   width: 100vw;
   height: 100vh;
@@ -222,14 +265,19 @@
     padding: 0;
     z-index: auto;
   }
+  .kori-login .kori-login__menu header {
+    text-align: center;
+  }
   .kori-login .kori-login__toggle {
-    display: none;
     position: fixed;
     top: 16px;
     right: 66px;
     z-index: 1002;
   }
-  .kori-login .kori-login__toggle.show {
+  .kori-login .kori-login__toggle.toggle-desktop {
+    display: none;
+  }
+  .kori-login .kori-login__toggle.toggle-mobile {
     display: block;
   }
   .kori-login .kori-login__close {
@@ -274,39 +322,27 @@
     width: 100%;
     padding-bottom: 10px;
     text-align: center;
+    cursor: pointer;
   }
   .kori-login .kori-mobile .tabs .show {
     border-bottom: 2px solid #FFF;
   }
   .kori-login .kori-mobile .kori-login__tab {
     display: none;
-    animation: kori-login__fadeIn 500ms ease-in-out;
+    animation: kori-login__fadeIn 300ms ease-in-out;
   }
   .kori-login .kori-mobile .kori-login__tab.show {
     display: block !important;
   }
   .kori-login .kori-mobile .kori-login__language {
     display: none;
-    animation: kori-login__fadeIn 500ms ease-in-out;
+    animation: kori-login__fadeIn 300ms ease-in-out;
   }
   .kori-login .kori-mobile .kori-login__language.show {
     display: block !important;
   }
   .kori-login header {
     margin-top: 56px;
-  }
-  .kori-login__overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-  }
-  .kori-login__overlay.show {
-    display: block;
-    background: rgba(0, 0, 0, 0.5);
   }
   .kori-login .kori-login__form,
   .kori-login .kori-login__menu-actions,
@@ -315,11 +351,14 @@
     padding: 8px 0;
     font-size: 16px;
   }
-  .kori-login .kori-login__input {
+  .kori-login .kori-login__login-btn, .kori-login .kori-login__input, .kori-login .kori-login__submit-btn, .kori-login .kori-login__message-wrapper .kori-login__different-email button.resend-link {
     width: 100%;
-    font-size: 16px;
+    padding: 16px !important;
   }
-  .kori-login .kori-login__text-primary, .kori-login .kori-login__menu header, .kori-login .kori-login__menu-actions .kori-login__login-btn__content figcaption, .kori-login__menu-actions .kori-login__login-btn__content .kori-login figcaption, .kori-login .kori-login__menu-actions kori-login__account-btn__content figcaption, .kori-login__menu-actions kori-login__account-btn__content .kori-login figcaption,
+  .kori-login .kori-login__overlay {
+    display: none;
+  }
+  .kori-login .kori-login__text-primary, .kori-login .kori-login__menu header h3, .kori-login .kori-login__menu-actions .kori-login__login-btn__content figcaption, .kori-login__menu-actions .kori-login__login-btn__content .kori-login figcaption, .kori-login .kori-login__menu-actions kori-login__account-btn__content figcaption, .kori-login__menu-actions kori-login__account-btn__content .kori-login figcaption,
   .kori-login .kori-login__text-secondary,
   .kori-login .kori-login__menu header p,
   .kori-login .kori-login__menu-actions .kori-login__login-btn__content aside,
@@ -330,9 +369,6 @@
     font-size: 16px;
   }
 }
-.kori-login__language {
-  padding-bottom: 8px;
-}
 @keyframes kori-login__fadeIn {
   0% {
     opacity: 0;
@@ -341,7 +377,7 @@
     opacity: 1;
   }
 }
-.kori-login .kori-login__text-primary, .kori-login .kori-login__menu header, .kori-login .kori-login__menu-actions .kori-login__login-btn__content figcaption, .kori-login__menu-actions .kori-login__login-btn__content .kori-login figcaption, .kori-login .kori-login__menu-actions kori-login__account-btn__content figcaption, .kori-login__menu-actions kori-login__account-btn__content .kori-login figcaption {
+.kori-login .kori-login__text-primary, .kori-login .kori-login__menu header h3, .kori-login .kori-login__menu-actions .kori-login__login-btn__content figcaption, .kori-login__menu-actions .kori-login__login-btn__content .kori-login figcaption, .kori-login .kori-login__menu-actions kori-login__account-btn__content figcaption, .kori-login__menu-actions kori-login__account-btn__content .kori-login figcaption {
   font-family: "Encode Sans Semi Expanded" !important;
   font-size: 16px !important;
   font-weight: 400 !important;
@@ -370,4 +406,7 @@
 }
 .kori-login .kori-login__text-btn:active {
   opacity: 0.7 !important;
+}
+.kori-login ::deep button {
+  font-style: normal;
 }

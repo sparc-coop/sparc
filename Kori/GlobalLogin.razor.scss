@@ -23,6 +23,10 @@
         border-radius: 50%;
         cursor: pointer;
 
+        &.toggle-mobile {
+            display: none;
+        }
+
         .login-user-icon {
             width: 36px !important;
             height: auto !important;
@@ -35,7 +39,7 @@
 
         &.loggedin {
             display: none;
-            border: 1px solid var(--green-500);
+            border: 1px solid var(--green-500, #34CE97);
             border-radius: 50%;
 
             &.show {
@@ -94,8 +98,14 @@
     }
 
     .kori-login__menu {
+        z-index: 2000;
+
         header {
-            @extend .kori-login__text-primary;
+            text-align: left;
+
+            h3 {
+                @extend .kori-login__text-primary;
+            }
 
             p {
                 @extend .kori-login__text-secondary;
@@ -185,19 +195,49 @@
             }
         }
 
-        .kori-login__different-email {
-            width: 100%;
-            margin: 12px 0;
+        .kori-login__message-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
 
-            span {
+            .kori-login__different-email {
+                width: 100%;
                 display: flex;
-                align-content: center;
-                align-items: center;
-                gap: 12px;
-            }
+                flex-direction: column;
+                gap: 8px;
 
-            button {
-                padding: 0 !important;
+                button {
+                    &.resend-link {
+                        width: 100% !important;
+                        padding: 8px 12px !important;
+                        background: var(--grey-800) !important;
+                        font-family: 'Encode Sans Expanded';
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 160%;
+                        transition: 300ms ease-in-out;
+
+                        &:hover {
+                            background: var(--grey-700) !important;
+                        }
+
+                        &:active {
+                            background: var(--grey-800) !important;
+                        }
+                    }
+
+                    &.different-email {
+                        width: fit-content;
+                        display: flex;
+                        justify-content: space-between;
+                        align-content: center;
+                        gap: 12px;
+
+                        img {
+                            margin: auto 0 !important;
+                        }
+                    }
+                }
             }
         }
     }
@@ -226,6 +266,11 @@
             &:focus {
                 border: var(--grey-50) !important;
                 backdrop-filter: brightness(120%) !important;
+            }
+
+            &:disabled {
+                background: var(--grey-700) !important;
+                border: 1px solid var(--green-500, #34CE97) !important;
             }
         }
 
@@ -263,6 +308,16 @@
         }
     }
 
+    .kori-login__message {
+        &.awaiting-link {
+            color: var(--green-500, #34CE97) !important;
+        }
+    }
+
+    &__language {
+        padding-bottom: 8px;
+    }
+
     &__overlay {
         &.show {
             width: 100vw;
@@ -279,14 +334,23 @@
         padding: 0;
         z-index: auto;
 
+        .kori-login__menu {
+            header {
+                text-align: center;
+            }
+        }
+
         .kori-login__toggle {
-            display: none;
             position: fixed;
             top: 16px;
             right: calc(16px + 50px);
             z-index: 1002;
 
-            &.show {
+            &.toggle-desktop {
+                display: none;
+            }
+
+            &.toggle-mobile {
                 display: block;
             }
         }
@@ -338,6 +402,7 @@
                     width: 100%;
                     padding-bottom: 10px;
                     text-align: center;
+                    cursor: pointer;
                 }
 
                 .show {
@@ -347,7 +412,7 @@
 
             .kori-login__tab {
                 display: none;
-                animation: kori-login__fadeIn 500ms ease-in-out;
+                animation: kori-login__fadeIn 300ms ease-in-out;
 
                 &.show {
                     display: block !important;
@@ -356,7 +421,7 @@
 
             .kori-login__language {
                 display: none;
-                animation: kori-login__fadeIn 500ms ease-in-out;
+                animation: kori-login__fadeIn 300ms ease-in-out;
 
                 &.show {
                     display: block !important;
@@ -368,21 +433,6 @@
             margin-top: 56px;
         }
 
-        &__overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1000;
-
-            &.show {
-                display: block;
-                background: rgba(0, 0, 0, 0.5);
-            }
-        }
-
         .kori-login__form,
         .kori-login__menu-actions,
         .kori-login__btn {
@@ -391,21 +441,20 @@
             font-size: 16px;
         }
 
-        .kori-login__input {
+        .kori-login__login-btn, .kori-login__input, .kori-login__submit-btn, .kori-login__message-wrapper .kori-login__different-email button.resend-link {
             width: 100%;
-            font-size: 16px;
+            padding: 16px !important;
+        }
+
+        .kori-login__overlay {
+            display: none;
         }
 
         .kori-login__text-primary,
         .kori-login__text-secondary,
         .kori-login__text-btn {
             font-size: 16px;
-            //text-align: center;
         }
-    }
-
-    &__language {
-        padding-bottom: 8px;
     }
 
     @keyframes kori-login__fadeIn {
@@ -451,5 +500,9 @@
         &:active {
             opacity: 0.7 !important;
         }
+    }
+
+    ::deep button {
+        font-style: normal;
     }
 }
