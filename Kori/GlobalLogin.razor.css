@@ -108,10 +108,10 @@
 .kori-login__menu-actions .kori-desktop {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 .kori-login__menu-actions .kori-login__menu-divider {
   width: 100%;
+  margin: 16px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.8);
 }
 .kori-login__menu-actions button {
