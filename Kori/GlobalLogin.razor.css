@@ -310,39 +310,44 @@
   .kori-login .kori-mobile {
     display: block;
   }
-  .kori-login .kori-mobile .tabs {
+  .kori-login .kori-mobile #kori-login__tabs {
+    --indicator-offset: 0px;
+    --indicator-width: 50%;
+    position: relative;
     margin: 0 -16px;
     margin-bottom: 24px;
     display: flex;
     justify-content: space-around;
-    border-bottom: 2px solid var(--Gray-800, #1E1E1E);
+    border-bottom: 2px solid var(--gray-800, #1E1E1E);
     color: #FFF;
+    /*.active {
+        border-bottom: 2px solid #FFF;
+    }*/
   }
-  .kori-login .kori-mobile .tabs div {
+  .kori-login .kori-mobile #kori-login__tabs .kori-login__tab {
     width: 100%;
     padding-bottom: 10px;
     text-align: center;
     cursor: pointer;
+    transition: 300ms;
   }
-  .kori-login .kori-mobile .tabs .show {
-    border-bottom: 2px solid #FFF;
+  .kori-login .kori-mobile #kori-login__tabs::after {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: var(--indicator-width);
+    left: var(--indicator-offset);
+    bottom: -1px;
+    background: #FFF;
+    transition: left 300ms, width 300ms;
   }
-  .kori-login .kori-mobile .kori-login__tab {
-    display: none;
-    animation: kori-login__fadeIn 300ms ease-in-out;
-  }
-  .kori-login .kori-mobile .kori-login__tab.show {
-    display: block !important;
-  }
-  .kori-login .kori-mobile .kori-login__language {
-    display: none;
-    animation: kori-login__fadeIn 300ms ease-in-out;
-  }
-  .kori-login .kori-mobile .kori-login__language.show {
-    display: block !important;
-  }
-  .kori-login .kori-mobile #kori-login-menu-mobile {
+  .kori-login .kori-mobile .kori-login__menu-mobile, .kori-login .kori-mobile .kori-login__language {
     padding: 64px;
+    display: none;
+    animation: kori-login__fadeIn 300ms ease-in-out;
+  }
+  .kori-login .kori-mobile .kori-login__menu-mobile.show, .kori-login .kori-mobile .kori-login__language.show {
+    display: block !important;
   }
   .kori-login header {
     margin-top: 56px;
@@ -373,12 +378,12 @@
   }
 }
 @media only screen and (max-width: 839px) {
-  .kori-login .kori-mobile #kori-login-menu-mobile {
+  .kori-login .kori-mobile .kori-login__menu-mobile, .kori-login .kori-mobile .kori-login__language {
     padding: 44px;
   }
 }
 @media only screen and (max-width: 550px) {
-  .kori-login .kori-mobile #kori-login-menu-mobile {
+  .kori-login .kori-mobile .kori-login__menu-mobile, .kori-login .kori-mobile .kori-login__language {
     padding: 0;
   }
 }

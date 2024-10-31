@@ -11,7 +11,7 @@
     @@import url(https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap);
 </style>
 
-<div class="kori-login kori-ignore" @onclick:stopPropagation="true">
+<div id="kori-login" class="kori-login kori-ignore" @onclick:stopPropagation="true">
     <AuthorizeView>
         <Authorized>
             <button class="kori-login__toggle toggle-desktop @(ShowMenu ? "" : "show") @(context.User.IsAnonymous() ? "loggedout" : "loggedin")" aria-label="Login" @onclick=ToggleLoginMenu>
@@ -47,11 +47,11 @@
                                 </div>
                             </div>
                             <div class="kori-mobile">
-                                <div class="tabs">
-                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
-                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
+                                <div id="kori-login__tabs" class="tabs">
+                                    <div class="kori-login__tab @(ShowLoginTab ? "active" : "")" @onclick="ShowLoginMobile" @onclick:preventDefault="true">Login</div>
+                                    <div class="kori-login__tab @(ShowLanguageTab ? "active" : "")" @onclick="ShowLanguageMobile" @onclick:preventDefault="true">Language</div>
                                 </div>
-                                <div id="kori-login-menu-mobile" class="kori-login__tab @(ShowLoginTab ? "show" : "")">
+                                <div class="kori-login__menu-mobile @(ShowLoginTab ? "show" : "")">
                                     <button class="kori-login__login-btn kori-login__btn kori-login__text-btn" @onclick=LoginWithPasskey>
                                         <img src="_content/Kori/icons/Key.svg" />
                                         <div class="kori-login__login-btn-wrapper">
@@ -93,11 +93,11 @@
                                 </div>
                             </div>
                             <div class="kori-mobile">
-                                <div class="tabs">
-                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
-                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
+                                <div id="kori-login__tabs" class="tabs">
+                                    <div class="kori-login__tab @(ShowLoginTab ? "active" : "")" @onclick="ShowLoginMobile" @onclick:preventDefault="true">Login</div>
+                                    <div class="kori-login__tab @(ShowLanguageTab ? "active" : "")" @onclick="ShowLanguageMobile" @onclick:preventDefault="true">Language</div>
                                 </div>
-                                <div id="kori-login-menu-mobile" class="kori-login__tab @(ShowLoginTab ? "show" : "")">
+                                <div class="kori-login__menu-mobile @(ShowLoginTab ? "show" : "")">
                                     <form class="kori-login__form" @onsubmit=LoginWithEmail>
                                         <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" />
                                         <button type="submit" class="kori-login__submit-btn">
@@ -147,21 +147,23 @@
                                 </div>
                             </div>
                             <div class="kori-mobile">
-                                <div class="tabs">
-                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
-                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
+                                <div id="kori-login__tabs" class="tabs">
+                                    <div class="kori-login__tab @(ShowLoginTab ? "active" : "")" @onclick="ShowLoginMobile" @onclick:preventDefault="true">Login</div>
+                                    <div class="kori-login__tab @(ShowLanguageTab ? "active" : "")" @onclick="ShowLanguageMobile" @onclick:preventDefault="true">Language</div>
                                 </div>
-                                <form class="kori-login__form" @onsubmit=LoginWithEmail>
-                                    <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                    <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
-                                        Login
-                                    </button>
-                                    <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
-                                        <span class="kori-login__form-error-message">Email cannot be blank</span>
+                                <div class="kori-login__menu-mobile @(ShowLoginTab ? "show" : "")">
+                                    <form class="kori-login__form" @onsubmit=LoginWithEmail>
+                                        <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
+                                        <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
+                                            Login
+                                        </button>
+                                        <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
+                                            <span class="kori-login__form-error-message">Email cannot be blank</span>
+                                        </div>
+                                    </form>
+                                    <div class="kori-login__message-wrapper">
+                                        <span class="kori-login__message kori-login__text-secondary">Signing you in...</span>
                                     </div>
-                                </form>
-                                <div class="kori-login__message-wrapper">
-                                    <span class="kori-login__message kori-login__text-secondary">Signing you in...</span>
                                 </div>
                                 <div class="kori-login__language @(ShowLanguageTab ? "show" : "")">
                                     <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
@@ -205,30 +207,35 @@
                                 </div>
                             </div>
                             <div class="kori-mobile">
-                                <div class="tabs">
-                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
-                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
+                                <div id="kori-login__tabs" class="tabs">
+                                    <div class="kori-login__tab @(ShowLoginTab ? "active" : "")" @onclick="ShowLoginMobile" @onclick:preventDefault="true">Login</div>
+                                    <div class="kori-login__tab @(ShowLanguageTab ? "active" : "")" @onclick="ShowLanguageMobile" @onclick:preventDefault="true">Language</div>
                                 </div>
-                                <form class="kori-login__form" @onsubmit=LoginWithEmail>
-                                    <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
-                                    @* <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
-                                        Login
-                                    </button> *@
-                                    <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
-                                        <span class="kori-login__form-error-message">Email cannot be blank</span>
+                                <div class="kori-login__menu-mobile @(ShowLoginTab ? "show" : "")">
+                                    <form class="kori-login__form" @onsubmit=LoginWithEmail>
+                                        <input id="kori-login__input-email" class="kori-login__input" @ref=LoginInput type="email" @bind="Email" name="username" placeholder="Enter your email" autocomplete="username webauthn" @onclick:stopPropagation="true" disabled />
+                                        @* <button type="submit" id="submit-btn" class="kori-login__submit-btn" disabled>
+                                            Login
+                                        </button> *@
+                                        <div class="kori-login__form-error @(ShowFormError ? "show" : "")">
+                                            <span class="kori-login__form-error-message">Email cannot be blank</span>
+                                        </div>
+                                    </form>
+                                    <div class="kori-login__message-wrapper">
+                                        <span class="kori-login__message awaiting-link kori-login__text-secondary">Magic link sent!</span>
+                                        <div class="kori-login__different-email">
+                                            <button class="kori-login__text-secondary resend-link">Resend</button>
+                                            <button class="kori-login__btn kori-login__text-btn different-email" @onclick=ClearInput><img src="_content/Kori/icons/Login.svg" /> Try different email</button>
+                                        </div>
                                     </div>
-                                </form>
-                                <div class="kori-login__message-wrapper">
-                                    <span class="kori-login__message awaiting-link kori-login__text-secondary">Magic link sent!</span>
-                                    <div class="kori-login__different-email">
-                                        <button class="kori-login__text-secondary resend-link">Resend</button>
-                                        <button class="kori-login__btn kori-login__text-btn different-email" @onclick=ClearInput><img src="_content/Kori/icons/Login.svg" /> Try different email</button>
+                                    <div class="kori-login__use-passkey">
+                                        <button class="kori-login__passkey-btn kori-login__btn kori-login__text-btn" @onclick="LoginWithPasskey">
+                                            <img src="_content/Kori/icons/Key.svg" /> Use passkey
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="kori-login__use-passkey">
-                                    <button class="kori-login__passkey-btn kori-login__btn kori-login__text-btn" @onclick="LoginWithPasskey">
-                                        <img src="_content/Kori/icons/Key.svg" /> Use passkey
-                                    </button>
+                                <div class="kori-login__language @(ShowLanguageTab ? "show" : "")">
+                                    <LanguageSelector @key="Language?.Id" SelectedLanguage="Language" LanguageChanged="UpdateLanguage" />
                                 </div>
                             </div>
                         </div>
@@ -258,9 +265,9 @@
                                 </div>
                             </div>
                             <div class="kori-mobile">
-                                <div class="tabs">
-                                    <div class="@(ShowLoginTab ? "show" : "")" @onclick="ShowLoginMobile">Login</div>
-                                    <div class="@(ShowLanguageTab ? "show" : "")" @onclick="ShowLanguageMobile">Language</div>
+                                <div id="kori-login__tabs" class="tabs">
+                                    <div class="kori-login__tab @(ShowLoginTab ? "active" : "")" @onclick="ShowLoginMobile" @onclick:preventDefault="true">Login</div>
+                                    <div class="kori-login__tab @(ShowLanguageTab ? "active" : "")" @onclick="ShowLanguageMobile" @onclick:preventDefault="true">Language</div>
                                 </div>
                                 <button class="kori-login__profile-btn kori-login__btn kori-login__text-btn">
                                     <img src="_content/Kori/icons/user-profile-circle.svg" /> Profile
@@ -317,6 +324,82 @@
         }
     });
 </script> *@
+
+<script>
+    // var tabsParent = document.getElementById("kori-login__tabs");
+    // var tabs = document.querySelectorAll(".kori-login__tab");
+    
+    // function setTabs() {
+    //     tabsParent = document.getElementById("kori-login__tabs");
+    //     tabs = document.querySelectorAll(".kori-login__tab");
+    //     // console.log(tabsParent);
+    //     // console.log(tabs);
+    //     if (tabs) 
+    //     {
+    //         if (tabs.length > 0) 
+    //         {
+    //             updateActiveIndicator(tabs[2]);
+
+    //             tabs.forEach((tab) => {
+    //                 tab.addEventListener("click", function() {
+    //                     // Remove active class
+    //                     tabs.forEach((t, i) => {
+    //                         t.classList.remove("active");
+    //                     });
+
+    //                     // Add active class to clicked tab
+    //                     tab.classList.add("active");
+    //                     console.log(tab.classList);
+
+    //                     updateActiveIndicator(tab);
+    //                 })
+    //             })
+    //         }
+    //     }
+    // }
+
+    // function updateActiveIndicator(activeElement) {
+    //     console.log(tabsParent);
+    //     if (tabsParent)
+    //     {
+    //         const tabsParentLeftDistance = tabsParent.getBoundingClientRect().left;
+    //         console.log("tabsParentLeftDistance: " + tabsParentLeftDistance);
+    //     }
+
+    //     const { 
+    //         width: elementSize,
+    //         left: elementLeftDistance, 
+    //     } = activeElement.getBoundingClientRect();
+
+    //     const distanceFromParent = elementLeftDistance - tabsParentLeftDistance;
+    //     console.log("distancefromParent: " + distanceFromParent);
+    //     console.log("elementSize: " + elementSize);
+
+    //     tabsParent.style.setProperty("--indicator-offset", distanceFromParent);
+    //     tabsParent.style.setProperty("--indicator-width", elementSize);
+    // }
+
+    // if (tabs) {
+    //     if (tabs.length > 0) {
+    //         updateActiveIndicator(tabs[2]);
+        
+    //         tabs.forEach((tab) => {
+    //             tab.addEventListener("click", function() {
+    //                 // Remove active class
+    //                 tabs.forEach((t, i) => {
+    //                     t.classList.remove("active");
+    //                 });
+
+    //                 // Add active class to clicked tab
+    //                 tab.classList.add("active");
+    //                 console.log(tab.classList);
+
+    //                 updateActiveIndicator(tab);
+    //             })
+    //         })
+    //     }
+    // }
+</script>
 
 @inject IJSRuntime Js
 @inject IBlossomAuthenticator Auth

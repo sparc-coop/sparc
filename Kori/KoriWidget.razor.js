@@ -177,58 +177,79 @@ function mouseClickHandler(e) {
     var t = e.target;
 
     // click login menu
-    if (t.closest(".kori-login__toggle")) {
-        document.getElementsByClassName("kori-login__menu")[0].classList.add("show");
-    }
+    //if (t.closest(".kori-login__toggle")) {
+    //    document.getElementsByClassName("kori-login__menu")[0].classList.add("show");
+    //}
 
     // login
-    if (t.closest(".kori-login__btn")) {
-        koriAuthorized = true;
-        if (koriAuthorized) {
-            document.body.classList.add("kori-loggedin"); // add the class to <body>
-            document.getElementsByClassName("kori-login__logged-out")[0].remove("show");
-            document.getElementsByClassName("kori-login__logged-in")[0].add("show");
-            document.getElementsByClassName("kori-login__menu")[0].remove("show");
-        }
-    }
+    //if (t.closest(".kori-login__btn")) {
+    //    koriAuthorized = true;
+    //    if (koriAuthorized) {
+    //        document.body.classList.add("kori-loggedin"); // add the class to <body>
+    //        document.getElementsByClassName("kori-login__logged-out")[0].remove("show");
+    //        document.getElementsByClassName("kori-login__logged-in")[0].add("show");
+    //        document.getElementsByClassName("kori-login__menu")[0].remove("show");
+    //    }
+    //}
 
     // logout
-    if (t.closest(".kori-login__logout-btn")) {
-        koriAuthorized = false;
-        if (koriAuthorized) {
-            document.getElementById("kori-login__menu").classList.remove("show");
-            document.body.classList.remove("kori-loggedin"); // remove the class to <body>
-            document.getElementsByClassName("kori-login__logged-out")[0].add("show");
-            document.getElementsByClassName("kori-login__logged-in")[0].remove("show");
-            document.getElementsByClassName("kori-login__menu")[0].remove("show");
+    //if (t.closest(".kori-login__logout-btn")) {
+    //    koriAuthorized = false;
+    //    if (koriAuthorized) {
+    //        document.getElementById("kori-login__menu").classList.remove("show");
+    //        document.body.classList.remove("kori-loggedin"); // remove the class to <body>
+    //        document.getElementsByClassName("kori-login__logged-out")[0].add("show");
+    //        document.getElementsByClassName("kori-login__logged-in")[0].remove("show");
+    //        document.getElementsByClassName("kori-login__menu")[0].remove("show");
+    //    }
+    //}
+
+    if (t.closest(".kori-login__tab")) {
+        if (tabsParent && tabs) {
+            if (tabs.length > 0) {
+                tabs.forEach((tab) => {
+                    // Remove active class
+                    tabs.forEach((t, i) => {
+                        t.classList.remove("active");
+                    });
+                })
+
+                // Add active class to clicked tab
+                t.classList.add("active");
+                updateActiveIndicator(t);
+            }
         }
     }
 
     if (koriAuthorized) {
         // click kori widget
-        if (t.closest(".kori-widget")) {
-            if (t.closest('.options__edit')) {
-                toggleEdit(true);
-                return;
-            } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
-                toggleEdit(false);
-            } else if (t.closest('.options__translation')) {
-                toggleTranslation(true);
-                return;
-            } else if (t.closest('.kori-translation__back')) {
-                toggleTranslation(false);
-            } else if (t.closest('.options__search')) {
-                toggleSearch(true);
-                return;
-            } else if (t.closest('.kori-search__back')) {
-                toggleSearch(false);
-            } else {
-                return;
-            }
-        }
+        //if (t.closest(".kori-widget")) {
+        //    if (t.closest('.options__edit')) {
+        //        toggleEdit(true);
+        //        return;
+        //    } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
+        //        toggleEdit(false);
+        //    } else if (t.closest('.options__translation')) {
+        //        toggleTranslation(true);
+        //        return;
+        //    } else if (t.closest('.kori-translation__back')) {
+        //        toggleTranslation(false);
+        //    } else if (t.closest('.options__search')) {
+        //        toggleSearch(true);
+        //        return;
+        //    } else if (t.closest('.kori-search__back')) {
+        //        toggleSearch(false);
+        //    } else {
+        //        return;
+        //    }
+        //}
 
         // click kori enabled elements
-        toggleSelected(t);
+        //toggleSelected(t);
+
+        if (t.closest(".kori-enabled")) {
+            toggleSelected(t);
+        }
     } else {
         console.log("please login to use kori services");
         return;
@@ -451,6 +472,28 @@ function toggleDock() {
         // remove dynamic page size adjustment
         document.body.style.marginRight = '0';
     }
+}
+
+// global login - mobile UI, tabs sliding active indicator
+
+var tabsParent = document.getElementById("kori-login__tabs");
+var tabs = document.querySelectorAll(".kori-login__tab");
+
+function updateActiveIndicator(activeElement) {
+    const tabsParentLeftDistance = tabsParent.getBoundingClientRect().left;
+    console.log("tabsParentLeftDistance: " + tabsParentLeftDistance);
+
+    const {
+        width: elementSize,
+        left: elementLeftDistance,
+    } = activeElement.getBoundingClientRect();
+
+    const distanceFromParent = elementLeftDistance - tabsParentLeftDistance;
+    console.log("distancefromParent: " + distanceFromParent);
+    console.log("elementSize: " + elementSize);
+
+    tabsParent.style.setProperty("--indicator-offset", distanceFromParent);
+    tabsParent.style.setProperty("--indicator-width", elementSize);
 }
 
 export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio };
