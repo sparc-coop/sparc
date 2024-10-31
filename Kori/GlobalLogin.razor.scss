@@ -329,7 +329,7 @@
         }
     }
 
-    @media only screen and (max-width: 850px) {
+    @media only screen and (max-width: 1024px) {
         position: static;
         padding: 0;
         z-index: auto;
@@ -427,6 +427,10 @@
                     display: block !important;
                 }
             }
+
+            #kori-login-menu-mobile {
+                padding: 64px;
+            }
         }
 
         header {
@@ -454,6 +458,22 @@
         .kori-login__text-secondary,
         .kori-login__text-btn {
             font-size: 16px;
+        }
+    }
+
+    @media only screen and (max-width: 839px) {
+        .kori-mobile {
+            #kori-login-menu-mobile {
+                padding: 44px;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 550px) {
+        .kori-mobile {
+            #kori-login-menu-mobile {
+                padding: 0;
+            }
         }
     }
 

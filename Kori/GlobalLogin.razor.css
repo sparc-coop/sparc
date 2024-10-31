@@ -259,7 +259,7 @@
   left: 0;
   z-index: 100;
 }
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 1024px) {
   .kori-login {
     position: static;
     padding: 0;
@@ -341,6 +341,9 @@
   .kori-login .kori-mobile .kori-login__language.show {
     display: block !important;
   }
+  .kori-login .kori-mobile #kori-login-menu-mobile {
+    padding: 64px;
+  }
   .kori-login header {
     margin-top: 56px;
   }
@@ -367,6 +370,16 @@
   .kori-login__menu-actions kori-login__account-btn__content .kori-login aside,
   .kori-login .kori-login__text-btn {
     font-size: 16px;
+  }
+}
+@media only screen and (max-width: 839px) {
+  .kori-login .kori-mobile #kori-login-menu-mobile {
+    padding: 44px;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .kori-login .kori-mobile #kori-login-menu-mobile {
+    padding: 0;
   }
 }
 @keyframes kori-login__fadeIn {
