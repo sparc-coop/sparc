@@ -263,7 +263,8 @@
   .kori-login {
     position: static;
     padding: 0;
-    z-index: auto;
+    z-index: 2000;
+    overflow: hidden;
   }
   .kori-login .kori-login__menu header {
     text-align: center;
@@ -315,7 +316,7 @@
     --indicator-width: 50%;
     position: relative;
     margin: 0 -16px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: flex;
     justify-content: space-around;
     border-bottom: 2px solid var(--gray-800, #1E1E1E);
@@ -337,7 +338,7 @@
     height: 2px;
     width: var(--indicator-width);
     left: var(--indicator-offset);
-    bottom: -1px;
+    bottom: -2px;
     background: #FFF;
     transition: left 300ms, width 300ms;
   }
@@ -366,6 +367,9 @@
   .kori-login .kori-login__overlay {
     display: none;
   }
+  .kori-login .kori-login__overlay.show {
+    display: none;
+  }
   .kori-login .kori-login__text-primary, .kori-login .kori-login__menu header h3, .kori-login .kori-login__menu-actions .kori-login__login-btn__content figcaption, .kori-login__menu-actions .kori-login__login-btn__content .kori-login figcaption, .kori-login .kori-login__menu-actions kori-login__account-btn__content figcaption, .kori-login__menu-actions kori-login__account-btn__content .kori-login figcaption,
   .kori-login .kori-login__text-secondary,
   .kori-login .kori-login__menu header p,
@@ -378,13 +382,16 @@
   }
 }
 @media only screen and (max-width: 839px) {
+  .kori-login .kori-mobile #kori-login__tabs {
+    margin-bottom: 16px;
+  }
   .kori-login .kori-mobile .kori-login__menu-mobile, .kori-login .kori-mobile .kori-login__language {
     padding: 44px;
   }
 }
 @media only screen and (max-width: 550px) {
   .kori-login .kori-mobile .kori-login__menu-mobile, .kori-login .kori-mobile .kori-login__language {
-    padding: 0;
+    padding: 8px;
   }
 }
 @keyframes kori-login__fadeIn {

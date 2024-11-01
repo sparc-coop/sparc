@@ -325,82 +325,6 @@
     });
 </script> *@
 
-<script>
-    // var tabsParent = document.getElementById("kori-login__tabs");
-    // var tabs = document.querySelectorAll(".kori-login__tab");
-    
-    // function setTabs() {
-    //     tabsParent = document.getElementById("kori-login__tabs");
-    //     tabs = document.querySelectorAll(".kori-login__tab");
-    //     // console.log(tabsParent);
-    //     // console.log(tabs);
-    //     if (tabs) 
-    //     {
-    //         if (tabs.length > 0) 
-    //         {
-    //             updateActiveIndicator(tabs[2]);
-
-    //             tabs.forEach((tab) => {
-    //                 tab.addEventListener("click", function() {
-    //                     // Remove active class
-    //                     tabs.forEach((t, i) => {
-    //                         t.classList.remove("active");
-    //                     });
-
-    //                     // Add active class to clicked tab
-    //                     tab.classList.add("active");
-    //                     console.log(tab.classList);
-
-    //                     updateActiveIndicator(tab);
-    //                 })
-    //             })
-    //         }
-    //     }
-    // }
-
-    // function updateActiveIndicator(activeElement) {
-    //     console.log(tabsParent);
-    //     if (tabsParent)
-    //     {
-    //         const tabsParentLeftDistance = tabsParent.getBoundingClientRect().left;
-    //         console.log("tabsParentLeftDistance: " + tabsParentLeftDistance);
-    //     }
-
-    //     const { 
-    //         width: elementSize,
-    //         left: elementLeftDistance, 
-    //     } = activeElement.getBoundingClientRect();
-
-    //     const distanceFromParent = elementLeftDistance - tabsParentLeftDistance;
-    //     console.log("distancefromParent: " + distanceFromParent);
-    //     console.log("elementSize: " + elementSize);
-
-    //     tabsParent.style.setProperty("--indicator-offset", distanceFromParent);
-    //     tabsParent.style.setProperty("--indicator-width", elementSize);
-    // }
-
-    // if (tabs) {
-    //     if (tabs.length > 0) {
-    //         updateActiveIndicator(tabs[2]);
-        
-    //         tabs.forEach((tab) => {
-    //             tab.addEventListener("click", function() {
-    //                 // Remove active class
-    //                 tabs.forEach((t, i) => {
-    //                     t.classList.remove("active");
-    //                 });
-
-    //                 // Add active class to clicked tab
-    //                 tab.classList.add("active");
-    //                 console.log(tab.classList);
-
-    //                 updateActiveIndicator(tab);
-    //             })
-    //         })
-    //     }
-    // }
-</script>
-
 @inject IJSRuntime Js
 @inject IBlossomAuthenticator Auth
 @inject Kori Kori
@@ -431,10 +355,10 @@
         StateHasChanged();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await Js.InvokeVoidAsync("initHyperScript");
-    }
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     await Js.InvokeVoidAsync("initHyperScript");
+    // }
 
     async Task LoginWithPasskey()
     {

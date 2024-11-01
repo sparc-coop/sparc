@@ -204,6 +204,28 @@ function mouseClickHandler(e) {
     //    }
     //}
 
+    // click kori widget
+    //if (t.closest(".kori-widget")) {
+    //    if (t.closest('.options__edit')) {
+    //        toggleEdit(true);
+    //        return;
+    //    } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
+    //        toggleEdit(false);
+    //    } else if (t.closest('.options__translation')) {
+    //        toggleTranslation(true);
+    //        return;
+    //    } else if (t.closest('.kori-translation__back')) {
+    //        toggleTranslation(false);
+    //    } else if (t.closest('.options__search')) {
+    //        toggleSearch(true);
+    //        return;
+    //    } else if (t.closest('.kori-search__back')) {
+    //        toggleSearch(false);
+    //    } else {
+    //        return;
+    //    }
+    //}
+
     if (t.closest(".kori-login__tab")) {
         if (tabsParent && tabs) {
             if (tabs.length > 0) {
@@ -221,38 +243,15 @@ function mouseClickHandler(e) {
         }
     }
 
-    if (koriAuthorized) {
-        // click kori widget
-        //if (t.closest(".kori-widget")) {
-        //    if (t.closest('.options__edit')) {
-        //        toggleEdit(true);
-        //        return;
-        //    } else if (t.closest('.kori-edit__back') || t.closest('.kori-edit__cancel')) {
-        //        toggleEdit(false);
-        //    } else if (t.closest('.options__translation')) {
-        //        toggleTranslation(true);
-        //        return;
-        //    } else if (t.closest('.kori-translation__back')) {
-        //        toggleTranslation(false);
-        //    } else if (t.closest('.options__search')) {
-        //        toggleSearch(true);
-        //        return;
-        //    } else if (t.closest('.kori-search__back')) {
-        //        toggleSearch(false);
-        //    } else {
-        //        return;
-        //    }
-        //}
+    if (t.closest(".kori-enabled")) {
+        if (koriAuthorized) {
 
-        // click kori enabled elements
-        //toggleSelected(t);
-
-        if (t.closest(".kori-enabled")) {
+            // click kori enabled elements
             toggleSelected(t);
+        } else {
+            console.log("please login to use kori services");
+            return;
         }
-    } else {
-        console.log("please login to use kori services");
-        return;
     }
 }
 
@@ -492,8 +491,8 @@ function updateActiveIndicator(activeElement) {
     console.log("distancefromParent: " + distanceFromParent);
     console.log("elementSize: " + elementSize);
 
-    tabsParent.style.setProperty("--indicator-offset", distanceFromParent);
-    tabsParent.style.setProperty("--indicator-width", elementSize);
+    tabsParent.style.setProperty("--indicator-offset", distanceFromParent + "px");
+    tabsParent.style.setProperty("--indicator-width", elementSize + "px");
 }
 
 export { init, replaceWithTranslatedText, getBrowserLanguage, playAudio };
