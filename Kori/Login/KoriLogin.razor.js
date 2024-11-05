@@ -1,12 +1,14 @@
-function init() {
-    // mouse click event listener
-    window.addEventListener("click", e => {
+function initLogin() {
+    if (!/complete|interactive|loaded/.test(document.readyState)) {
+        window.addEventListener('DOMContentLoaded');
+    }
+
+    document.getElementById("kori-login__tabs").addEventListener("click", e => {
         e.stopImmediatePropagation();
         mouseClickHandler(e);
     });
 }
 
-// mouse click handler for kori widget and elements
 function mouseClickHandler(e) {
     var t = e.target;
 
@@ -50,4 +52,4 @@ function updateActiveIndicator(activeElement) {
     tabsParent.style.setProperty("--indicator-width", elementSize + "px");
 }
 
-export { init };
+export { initLogin };

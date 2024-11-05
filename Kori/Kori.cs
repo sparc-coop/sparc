@@ -36,7 +36,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
 
         var loginJs = await KoriLoginJs.Value;
-        await loginJs.InvokeVoidAsync("init");
+        await loginJs.InvokeVoidAsync("initLogin");
     }
 
     public async Task<List<Language>> GetLanguagesAsync()
