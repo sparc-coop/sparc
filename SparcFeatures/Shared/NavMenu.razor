@@ -25,7 +25,7 @@
             @if(ToggleContact != "toggle-show")
             {
                 <button @onclick="@Toggle" class="join btn-red">Join Community</button>
-                <Kori.GlobalLogin />
+                <Kori.Login.KoriLogin />
             }
         </div>
     </div>
@@ -42,8 +42,8 @@
         <a href="/" class="logo">
             <img src="/images/icons/Logo.png" />
         </a>
-        <div class="global-login-mobile">
-            <Kori.GlobalLogin />
+        <div class="kori-login-mobile">
+            <Kori.Login.KoriLogin />
         </div>
         <div class="menu-container @ToggleMenuClass">
             <ul class="menu">

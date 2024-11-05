@@ -19,6 +19,7 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
     private HttpClient Client { get; set; } = new() { BaseAddress = new Uri("https://ibis-web-kori.azurewebsites.net/") };
 
     readonly Lazy<Task<IJSObjectReference>> KoriJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/KoriWidget.razor.js").AsTask());
+    readonly Lazy<Task<IJSObjectReference>> KoriLoginJs = new(() => js.InvokeAsync<IJSObjectReference>("import", "./_content/Kori/Login/KoriLogin.razor.js").AsTask());
 
     public record IbisContent(string Name, string Slug, string Language, ICollection<KoriTextContent> Content);
     public async Task InitializeAsync(HttpContext context)
@@ -33,6 +34,9 @@ public class Kori(IJSRuntime js) : IAsyncDisposable
 
         var js = await KoriJs.Value;
         await js.InvokeVoidAsync("init", elementId, Language, DotNetObjectReference.Create(component), _content);
+
+        var loginJs = await KoriLoginJs.Value;
+        await loginJs.InvokeVoidAsync("init");
     }
 
     public async Task<List<Language>> GetLanguagesAsync()

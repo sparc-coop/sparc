@@ -1,7 +1,7 @@
 ﻿[
   {
-    "outputFile": "KoriLogin.razor.css",
-    "inputFile": "KoriLogin.razor.scss"
+    "outputFile": "Login/KoriLogin.razor.css",
+    "inputFile": "Login/KoriLogin.razor.scss"
   },
   {
     "outputFile": "KoriWidget.razor.css",
@@ -12,15 +12,7 @@
     "inputFile": "KoriContent.razor.scss"
   },
   {
-    "outputFile": "KoriLogin2.razor.css",
-    "inputFile": "KoriLogin2.razor.scss"
-  },
-  {
-    "outputFile": "LanguageSelector.razor.css",
-    "inputFile": "LanguageSelector.razor.scss"
-  },
-  {
-    "outputFile": "GlobalLogin.razor.css",
-    "inputFile": "GlobalLogin.razor.scss"
+    "outputFile": "Login/LanguageSelector.razor.css",
+    "inputFile": "Login/LanguageSelector.razor.scss"
   }
 ]
