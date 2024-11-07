@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\blossom\Sparc.Blossom.Authentication.Passwordless\Sparc.Blossom.Authentication.Passwordless.csproj" />
 	  <ProjectReference Include="..\..\kori\Sparc.Kori\Sparc.Kori.csproj" />
 	</ItemGroup>
 
