@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.ApiGenerator"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureStorage", "..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj", "{1F42A040-2DC4-49CD-8439-727384660C19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Authentication.Passwordless", "..\blossom\Sparc.Blossom.Authentication.Passwordless\Sparc.Blossom.Authentication.Passwordless.csproj", "{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,14 @@ Global
 		{1F42A040-2DC4-49CD-8439-727384660C19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F42A040-2DC4-49CD-8439-727384660C19}.Release|x64.ActiveCfg = Release|Any CPU
 		{1F42A040-2DC4-49CD-8439-727384660C19}.Release|x64.Build.0 = Release|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +103,7 @@ Global
 		{FD001A8A-7F12-4BBE-A6D2-1C12483F866B} = {30FE1327-2997-4C76-B5D6-493E20F2305C}
 		{0EBCA7B1-9A10-41B6-A630-B869CFB2866D} = {30FE1327-2997-4C76-B5D6-493E20F2305C}
 		{1F42A040-2DC4-49CD-8439-727384660C19} = {30FE1327-2997-4C76-B5D6-493E20F2305C}
+		{E4891FB4-BBC6-478E-9C69-6DE283BED7C9} = {30FE1327-2997-4C76-B5D6-493E20F2305C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C0950AC9-0217-498C-A7AF-099C8065AD3A}
