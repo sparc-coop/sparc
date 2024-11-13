@@ -31,36 +31,10 @@ internal class BlossomApiGenerator() : IIncrementalGenerator
     private void Generate(SourceProductionContext context, ImmutableArray<BlossomApiInfo> sources)
     {
         var baseTypes = sources.GroupBy(x => x.EntityName);
-
-        context.AddSource($"BlossomApi.g.cs", Surface(baseTypes));
         foreach (var baseType in baseTypes)
         {
-            context.AddSource($"{baseType.Key}.g.cs", Code(baseType));
+            context.AddSource($"{baseType.Key}EndpointMapper.g.cs", Code(baseType));
         }
-    }
-
-    private string Surface(IEnumerable<IGrouping<string?, BlossomApiInfo>> sources)
-    {
-        var apis = new StringBuilder();
-        List<string> injectors = [];
-
-        foreach (var source in sources)
-        {
-            var api = source.OrderBy(x => x.IsEntity ? 0 : 1).First();
-            apis.AppendLine($@"public {api.PluralName} {api.PluralName} {{ get; }} = {api.PluralName.ToLower()};");
-            injectors.Add($"{api.PluralName} {api.PluralName.ToLower()}");
-        }
-
-        var constructor = string.Join(", ", injectors);
-
-        return $$"""
-using Sparc.Blossom.Data;
-namespace Sparc.Blossom.Api;
-public class BlossomApi({{constructor}}) : IBlossomApi
-{
-    {{apis}}
-}
-""";
     }
 
     static string Code(IGrouping<string?, BlossomApiInfo> sources)
@@ -68,41 +42,58 @@ public class BlossomApi({{constructor}}) : IBlossomApi
         var commands = new StringBuilder();
         var constructors = new StringBuilder();
         var queries = new StringBuilder();
+        var usings = new StringBuilder();
         var api = sources.OrderBy(x => x.IsEntity ? 0 : 1).First();
 
         foreach (var source in sources)
         {
-            //foreach (var method in source.Methods)
-            //{
-            //    var parameterPrefix = method.Arguments.Length > 0 ? ", " : "";
-            //    commands.AppendLine($@"public async Task {method.Name}({method.Arguments}) => await Runner.ExecuteAsync(Id, ""{method.Name}""{parameterPrefix}{method.Parameters});");
-            //}
+            foreach (var method in source.Methods)
+            {
+                var parameterPrefix = method.Arguments.Length > 0 ? ", " : "";
+                commands.AppendLine($@"group.MapPut(""{{id}}/{method.Name}"", async (Sparc.Blossom.Api.IRunner<{source.Name}> runner, string id{parameterPrefix}{method.Arguments}) => await runner.ExecuteAsync(id, ""{method.Name}""{parameterPrefix}{method.Parameters}));");
+            }
 
             foreach (var constructor in source.Constructors)
             {
+                var parameterPrefix = constructor.Arguments.Length > 0 ? ", " : "";
                 if (source.IsEntity)
                 {
-                    constructors.AppendLine($@"public async Task<{source.Name}> Create({constructor.Arguments}) => await Runner.CreateAsync({constructor.Parameters});");
+                    constructors.AppendLine($@"group.MapPost("""", async (Sparc.Blossom.Api.IRunner<{source.Name}> runner{parameterPrefix}{constructor.Arguments}) => await runner.CreateAsync({constructor.Parameters}));");
+
                 }
                 else
                 {
-                    var parameterPrefix = constructor.Arguments.Length > 0 ? ", " : "";
                     //var returnType = properties.Length > 0 ? source.Name : source.BaseName;
-                    queries.AppendLine($@"public async Task<IEnumerable<{source.BaseOfName}>> {source.Name}({constructor.Arguments}) => await Runner.QueryAsync(""{source.Name}""{parameterPrefix}{constructor.Parameters});");
+                    queries.AppendLine($@"group.MapGet(""{source.Name}"", async (Sparc.Blossom.Api.IRunner<{source.BaseOfName}> runner{parameterPrefix}{constructor.Arguments}) => await runner.QueryAsync(""{source.Name}""{parameterPrefix}{constructor.Parameters}));");
                 }
             }
         }
 
-        return $$"""
-namespace Sparc.Blossom.Api;
-#nullable enable
-public partial class {{api.PluralName}} : BlossomApiContext<{{api.EntityName}}>
-{
-    public {{api.PluralName}}(IRunner<{{api.EntityName}}> runner) : base(runner) { }
+        foreach (var u in sources.SelectMany(x => x.Usings).Distinct())
+        {
+            usings.AppendLine(u);
+        }
 
-    {{constructors}}
-    {{commands}}
-    {{queries}}
+        return $$"""
+{{usings}}
+#nullable enable
+
+namespace {{api.Namespace}}
+{
+    public partial class {{api.Name}}EndpointMapper : Sparc.Blossom.Api.IBlossomEndpointMapper
+    {
+        public void MapEndpoints(IEndpointRouteBuilder endpoints)
+        {
+            var group = endpoints.MapGroup("{{api.PluralName.ToLower()}}");
+
+            group.MapGet("{id}", async (Sparc.Blossom.Api.IRunner<{{api.Name}}> runner, string id) => await runner.GetAsync(id));
+            group.MapDelete("{id}", async (Sparc.Blossom.Api.IRunner<{{api.Name}}> runner, string id) => await runner.DeleteAsync(id));
+    
+            {{constructors}}
+            {{commands}}
+            {{queries}}
+        }
+    }
 }
 """;
     }

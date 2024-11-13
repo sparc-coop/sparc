@@ -16,7 +16,6 @@ internal class BlossomApiInfo
             ?? type.FirstAncestorOrSelf<NamespaceDeclarationSyntax>()?.Name.ToString()
             ?? "";
 
-
         Name = type.Identifier.Text;
 
         if (type.TypeParameterList?.Parameters.Any() == true)
