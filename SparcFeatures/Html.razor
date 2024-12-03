@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Sparc.Blossom
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,7 +19,8 @@
 </head>
 
 <body>
-    <App @rendermode="new InteractiveServerRenderMode(false)" />
+    @* <App @rendermode="new InteractiveServerRenderMode(false)" /> *@
+    <BlossomApp Program="Program" DefaultLayout="MainLayout" @rendermode="new InteractiveServerRenderMode(false)" />
     <script src="_framework/blazor.web.js"></script>
     <script>
         function scrollFunction() {
