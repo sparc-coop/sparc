@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sparc.Coop", "SparcFeatures\Sparc.Coop.csproj", "{40431EDB-80E4-4D29-8A82-E96C3C626C4E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Kori", "..\kori\Sparc.Kori\Sparc.Kori.csproj", "{92A352E7-B2A4-4C82-9C9D-918606E4EEC2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blossom", "Blossom", "{30FE1327-2997-4C76-B5D6-493E20F2305C}"
@@ -27,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kori", "..\kori\Kori\Kori.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Api.OpenApi", "..\blossom\Sparc.Blossom.Api.OpenApi\Sparc.Blossom.Api.OpenApi.csproj", "{3A6547E9-38BA-4F0F-A9AA-E816F09E5D90}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc", "Sparc\Sparc.csproj", "{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Client", "Sparc.Client\Sparc.Client.csproj", "{53A71193-9E2A-4387-85A8-636B19F33BB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,14 +37,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Debug|x64.Build.0 = Debug|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Release|x64.ActiveCfg = Release|Any CPU
-		{40431EDB-80E4-4D29-8A82-E96C3C626C4E}.Release|x64.Build.0 = Release|Any CPU
 		{92A352E7-B2A4-4C82-9C9D-918606E4EEC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92A352E7-B2A4-4C82-9C9D-918606E4EEC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92A352E7-B2A4-4C82-9C9D-918606E4EEC2}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -115,6 +109,22 @@ Global
 		{3A6547E9-38BA-4F0F-A9AA-E816F09E5D90}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A6547E9-38BA-4F0F-A9AA-E816F09E5D90}.Release|x64.ActiveCfg = Release|Any CPU
 		{3A6547E9-38BA-4F0F-A9AA-E816F09E5D90}.Release|x64.Build.0 = Release|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Debug|x64.Build.0 = Debug|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Release|x64.ActiveCfg = Release|Any CPU
+		{94D6074B-D615-4BDC-9FAC-BDEE6ECDC522}.Release|x64.Build.0 = Release|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Debug|x64.Build.0 = Debug|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Release|x64.ActiveCfg = Release|Any CPU
+		{53A71193-9E2A-4387-85A8-636B19F33BB9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
