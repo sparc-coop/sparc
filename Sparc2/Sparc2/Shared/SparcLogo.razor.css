@@ -1,0 +1,8 @@
+﻿.logo {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 6px;
+  cursor: pointer;
+  margin: 0;
+}

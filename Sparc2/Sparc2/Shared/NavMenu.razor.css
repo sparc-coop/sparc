@@ -1,0 +1,50 @@
+﻿nav {
+  padding: 8px 16px;
+  /*position: fixed;*/
+  z-index: 1000;
+  margin: 2rem 6.3rem;
+}
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .center {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+nav .center .input-text {
+  background: transparent;
+  width: 80%;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  margin-left: 10px;
+}
+nav .right {
+  display: flex;
+  gap: 4px;
+}
+nav .right button, nav .left button {
+  background-color: transparent;
+  color: #2B1C45;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+.other-nav {
+  border-radius: 12px;
+  background: rgba(26, 12, 50, 0.26);
+  box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+}
+.other-nav .left button,
+.other-nav .right button {
+  color: #FFFCF6;
+}

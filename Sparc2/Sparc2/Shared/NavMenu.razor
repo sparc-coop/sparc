@@ -1,0 +1,33 @@
+﻿<nav class="@(IsHomePage ? "home-nav" : "other-nav")">
+    <div class="container">
+        @if (IsHomePage)
+        {
+            <div class="left">
+                <SparcLogo />
+            </div>
+            <div class="right">
+                <button>Button</button>
+                <button>Button</button>
+            </div>
+        }
+        else
+        {
+            <div class="left">
+                <button>Exit</button>
+            </div>
+            <div class="center">
+                <input type="text" placeholder="Search..." class="input-text" />
+            </div>
+            <div class="right">
+                <button>Explore</button>
+                <button>Filter</button>
+                <button>Add</button>
+            </div>
+        }
+    </div>
+</nav>
+
+@code {
+    private bool IsHomePage => Nav.Uri.EndsWith("/");
+}
+

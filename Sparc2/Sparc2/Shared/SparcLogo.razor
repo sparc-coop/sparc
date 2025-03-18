@@ -1,0 +1,13 @@
+﻿<figure class="logo" @onclick="GoHome">
+    <Logo />    
+    <figcaption>
+        <LogoText />
+    </figcaption>
+</figure>
+
+@code {
+    void GoHome()
+    {
+        Nav.NavigateTo("/");
+    }
+}

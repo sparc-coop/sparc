@@ -1,0 +1,28 @@
+﻿section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 9rem 6.3rem 0 6.3rem;
+}
+section div {
+  width: 46%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+section div h1 {
+  font-size: 89px;
+  margin: 0;
+}
+section div h1 button {
+  background: none;
+  cursor: pointer;
+  border: none;
+}
+section svg {
+  width: 49%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

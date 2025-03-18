@@ -1,0 +1,18 @@
+﻿[
+  {
+    "outputFile": "Shared/MainLayout.razor.css",
+    "inputFile": "Shared/MainLayout.razor.scss"
+  },
+  {
+    "outputFile": "Shared/NavMenu.razor.css",
+    "inputFile": "Shared/NavMenu.razor.scss"
+  },
+  {
+    "outputFile": "Shared/SparcLogo.razor.css",
+    "inputFile": "Shared/SparcLogo.razor.scss"
+  },
+  {
+    "outputFile": "Index.razor.css",
+    "inputFile": "Index.razor.scss"
+  }
+]

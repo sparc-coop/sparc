@@ -1,0 +1,32 @@
+﻿section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 9rem 6.3rem 0 6.3rem;
+
+    div {
+        width: 46%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+
+        h1 {
+            font-size: 89px;
+            margin: 0;
+
+            button {
+                background: none;
+                cursor: pointer;
+                border: none;
+            }
+        }
+    }
+
+    svg {
+        width: 49%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
