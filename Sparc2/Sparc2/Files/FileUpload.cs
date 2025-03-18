@@ -8,7 +8,7 @@ public class FileUpload : BlossomEntity<string>
     public string FilePath { get; private set; }
     public DateTime UploadedDate { get; set; }
     public string IdeaId { get; set; } 
-    public Idea Idea { get; set; } = null!;
+    public ProjectIdea Idea { get; set; } = null!;
 
     public FileUpload(string fileName, string filePath, string ideaId) : base(Guid.NewGuid().ToString())
     {

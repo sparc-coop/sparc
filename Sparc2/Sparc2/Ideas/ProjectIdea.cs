@@ -2,7 +2,7 @@
 
 namespace Sparc2.Ideas;
 
-public class Idea : BlossomEntity<string>
+public class ProjectIdea : BlossomEntity<string>
 {
     public string Title { get; set; }
     public string Author { get; set; }
@@ -10,11 +10,22 @@ public class Idea : BlossomEntity<string>
     public DateTime DateCreated { get; set; }
     public List<FileUpload> Files { get; set; }
 
-    public Idea(string title, string author, string description) : base(Guid.NewGuid().ToString())
+    public ProjectIdea(string title, string author, string description) : base(Guid.NewGuid().ToString())
     {
         Title = title;
         Author = author;
         Description = description;
         DateCreated = DateTime.UtcNow;
+    }
+
+    public void Update(string title, string description)
+    {
+        Title = title;
+        Description = description;
+    }
+
+    public void AddFile(FileUpload file)
+    {
+        Files.Add(file);
     }
 }

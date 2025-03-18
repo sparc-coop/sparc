@@ -9,7 +9,7 @@ public class PaymentInfo
     public string EmailAdress { get; set; }
     public string BillingAddress { get; set; }
     public string DonationId { get; set; }
-    public Donation Donation { get; set; }
+    public UserDonation Donation { get; set; }
 
     public PaymentInfo(string donorNameOnTheCard, string cardNumber, DateTime expiryDate, string cvv, string emailAdress, string billingAddress, string donationId)
     {
