@@ -4,6 +4,10 @@
     "inputFile": "_variables.scss"
   },
   {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "Html.razor.scss"
+  },
+  {
     "outputFile": "Shared/MainLayout.razor.css",
     "inputFile": "Shared/MainLayout.razor.scss"
   },
@@ -24,7 +28,7 @@
     "inputFile": "Ideas/IdeaCard.razor.scss"
   },
   {
-    "outputFile": "Ideas/IdeaCard.razor.css",
-    "inputFile": "Ideas/IdeaCard.razor.scss"
+    "outputFile": "Ideas/IdeasPage.razor.css",
+    "inputFile": "Ideas/IdeasPage.razor.scss"
   }
 ]

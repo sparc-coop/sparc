@@ -1,0 +1,18 @@
+﻿@page "/ideas"
+@layout MainLayout
+
+<article>
+    @foreach (var idea in ideas)
+    {
+        <IdeaCard Idea=@idea />
+    }
+</article>
+
+@code {
+    List<ProjectIdea> ideas = new();
+
+    protected override void OnInitialized()
+    {
+        ideas.Add(new ProjectIdea("Name of the idea", "John Doe", "Mollis nisi vel varius litora rutrum urna. Suscipit velit fermentum  sollicitudin pulvinar netus ultrices efficitur nulla. Varius fermentum  habitasse ultricies nulla curabitur tempus quis accumsan. Vivamus auctor lacus massa magna bibendum donec. Quisque elementum habitasse; interdum volutpat senectus lobortis lacus torquent. Rutrum aliquam enim  ultricies diam lectus consequat finibus. Diam vulputate lacinia, blandit quisque quam ante pharetra. Enim iaculis conubia vitae rutrum facilisi  est, blandit himenaeos dolor"));
+    }
+}

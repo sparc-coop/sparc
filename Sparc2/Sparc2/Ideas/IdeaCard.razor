@@ -1,0 +1,51 @@
+﻿@using Sparc2.Shared.Icons
+
+<div class="card">
+    <header>
+        <img src="images/user-stock.png" />
+        <div>
+            <h3>@Idea.Author</h3>
+            <p>@Idea.DateCreated</p>
+        </div>
+    </header>
+    <section>
+        <h2>@Idea.Title</h2>
+        <div>
+            <div>
+                <img src="images/Rectangle 13.png" />
+                @* @foreach(var image in images)
+                {
+                    <img src="PATH" />
+                } *@
+            </div>
+            @if (images.Count > 1)
+            {
+                <div class="indicators">
+                    @foreach (var image in images)
+                    {
+                        <div class="indicator"></div>
+                    }
+                </div>
+            }
+        </div>
+        <div>
+            <p>@Idea.Description</p>
+        </div>
+    </section>
+    <footer>
+        <div>
+            <button><ChatBubbleIcon /> <span>@comments.Count</span></button>
+            <button><ThumbsUpIcon /> <span>@likes.Count</span></button>
+        </div>
+        <button><FileIcon /> <span>@files.Count</span></button>
+    </footer>
+</div>
+
+@code {
+    [Parameter] public ProjectIdea Idea { get; set; }
+
+    List<string> images = new List<string>();
+    List<string> comments = new List<string>();
+    List<string> likes = new List<string>();
+    List<string> files = new List<string>();
+}
