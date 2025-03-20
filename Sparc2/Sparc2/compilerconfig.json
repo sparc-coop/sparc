@@ -12,6 +12,10 @@
     "inputFile": "Shared/MainLayout.razor.scss"
   },
   {
+    "outputFile": "Shared/PageLayout.razor.css",
+    "inputFile": "Shared/PageLayout.razor.scss"
+  },
+  {
     "outputFile": "Shared/NavMenu.razor.css",
     "inputFile": "Shared/NavMenu.razor.scss"
   },
