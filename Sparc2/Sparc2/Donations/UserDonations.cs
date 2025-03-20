@@ -11,6 +11,6 @@ public class UserDonations(BlossomAggregateOptions<UserDonation> options) : Blos
     public BlossomQuery<UserDonation> GetDonationsByAmount(decimal minAmount, decimal maxAmount)
         => Query().Where(x => x.Amount >= minAmount && x.Amount <= maxAmount);
 
-    public BlossomQuery<UserDonation> GetDonationsByFrequency(DonationFrequency frequency)
+    public BlossomQuery<UserDonation> GetDonationsByFrequency(string frequency)
         => Query().Where(x => x.Frequency == frequency.ToString());
 }

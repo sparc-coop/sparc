@@ -1,5 +1,9 @@
 ﻿[
   {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "_variables.scss"
+  },
+  {
     "outputFile": "Shared/MainLayout.razor.css",
     "inputFile": "Shared/MainLayout.razor.scss"
   },
@@ -14,5 +18,13 @@
   {
     "outputFile": "Index.razor.css",
     "inputFile": "Index.razor.scss"
+  },
+  {
+    "outputFile": "Ideas/IdeaCard.razor.css",
+    "inputFile": "Ideas/IdeaCard.razor.scss"
+  },
+  {
+    "outputFile": "Ideas/IdeaCard.razor.css",
+    "inputFile": "Ideas/IdeaCard.razor.scss"
   }
 ]
