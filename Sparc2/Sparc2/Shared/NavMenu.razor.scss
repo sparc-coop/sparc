@@ -2,7 +2,7 @@
     padding: 8px 16px;
     position: relative;
     z-index: 1000;
-    margin: 2rem 6.3rem;
+    margin: 32px 60px;
 
     .container {
         display: flex;
@@ -15,14 +15,20 @@
         justify-content: center;
         flex-grow: 1;
 
-        .input-text {
-            background: transparent;
+        input {
             width: 80%;
+            margin-left: 10px;
             padding: 10px;
+            background: transparent;
             border-radius: 4px;
             border: none;
+            color: var(--yellow-50);
             font-size: 14px;
-            margin-left: 10px;
+
+            &::placeholder {
+                color: var(--yellow-50);
+                opacity: .6;
+            }
         }
     }
 
@@ -36,7 +42,7 @@
         background: transparent;
         border: 1px solid transparent;
         border-radius: 20px;
-        color: #2B1C45;
+        color: var(--yellow-50);
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
@@ -45,6 +51,8 @@
 }
 
 .other-nav {
+    position: fixed;
+    width: calc(100vw - 158px);
     border-radius: 12px;
     background: rgba(26, 12, 50, 0.26);
     box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
