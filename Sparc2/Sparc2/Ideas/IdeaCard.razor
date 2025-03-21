@@ -10,20 +10,30 @@
     </header>
     <section>
         <h2>@Idea.Title</h2>
-        <div>
-            <div>
-                <img src="images/Rectangle 13.png" />
-                @* @foreach(var image in images)
+        <div class="files">
+            <div class="images">
+                @if (Idea.Files.Count < 1)
                 {
-                    <img src="PATH" />
-                } *@
-            </div>
-            @if (images.Count > 1)
-            {
-                <div class="indicators">
-                    @foreach (var image in images)
+                    <img src="images/Rectangle 13.png" />
+                }
+                else
+                {
+                    @foreach (var file in Idea.Files)
                     {
-                        <div class="indicator"></div>
+                        <img src="@file.FilePath" class="@(currentFile == file ? "active" : "")" />
+                    }
+                }
+            </div>
+            @if(Idea.Files.Count > 1)
+            {
+                <div class="arrows">
+                    <button class="arrow-left" @onclick=previousFile><ArrowLeftIcon /></button>
+                    <button class="arrow-right" @onclick=nextFile><ArrowLeftIcon /></button>
+                </div>
+                <div class="indicators">
+                    @foreach (var file in Idea.Files)
+                    {
+                        <div class="indicator @(currentFile == file ? "active" : "")"></div>
                     }
                 </div>
             }
@@ -37,15 +47,43 @@
             <button><ChatBubbleIcon /> <span>@comments.Count</span></button>
             <button><ThumbsUpIcon /> <span>@likes.Count</span></button>
         </div>
-        <button><FileIcon /> <span>@files.Count</span></button>
+        <button><FileIcon /> <span>@Idea.Files.Count</span></button>
     </footer>
 </div>
 
 @code {
     [Parameter] public ProjectIdea Idea { get; set; }
 
-    List<string> images = new List<string>();
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
-    List<string> files = new List<string>();
+
+    FileUpload currentFile;
+
+    protected override void OnInitialized()
+    { 
+        currentFile = Idea.Files.First(x => x != null);
+    }
+
+    void nextFile()
+    {
+        if (Idea.Files.IndexOf(currentFile) == Idea.Files.Count - 1)
+        {
+            return;
+        } else
+        {
+            currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) + 1];
+        }
+    }
+
+    void previousFile()
+    {
+        if (Idea.Files.IndexOf(currentFile) == 0)
+        {
+            return;
+        } else
+        {
+            currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) - 1];
+
+        }
+    }
 }

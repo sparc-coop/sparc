@@ -16,6 +16,7 @@ public class ProjectIdea : BlossomEntity<string>
         Author = author;
         Description = description;
         DateCreated = DateTime.UtcNow;
+        Files = new List<FileUpload>();
     }
 
     public void Update(string title, string description)
