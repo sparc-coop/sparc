@@ -2,18 +2,18 @@
     <div class="container">
         @if (IsHomePage)
         {
-            <div class="left">
+            <div class="left" @onclick='() => Navigate("/")'>
                 <SparcLogo />
             </div>
             <div class="right">
-                <button>Button</button>
+                <button @onclick='() => Navigate("/ideas")'>Ideas</button>
                 <button>Button</button>
             </div>
         }
         else
         {
             <div class="left">
-                <button>Exit</button>
+                <button @onclick='() => Navigate("/")'>Exit</button>
             </div>
             <div class="center">
                 <input type="text" placeholder="Search..." class="input-text" />
@@ -29,5 +29,10 @@
 
 @code {
     private bool IsHomePage => Nav.Uri.EndsWith("/");
+
+    private void Navigate(string path)
+    {
+        Nav.NavigateTo(path);
+    }
 }
 
