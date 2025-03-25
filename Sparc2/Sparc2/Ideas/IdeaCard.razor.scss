@@ -73,7 +73,7 @@
 
                     &.active {
                         display: block;
-                    } 
+                    }
                 }
             }
 
@@ -192,7 +192,11 @@
             transition: .2s all ease-in-out;
 
             &:hover {
-                border: 1px solid var(--gray-800);
+                border: 1px solid var(--purple-800);
+            }
+
+            &:active {
+                border: 1px solid var(--gray-100);
             }
         }
     }

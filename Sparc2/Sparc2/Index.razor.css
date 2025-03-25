@@ -18,7 +18,7 @@ section div h1 {
 section div h1 button {
   background: none;
   cursor: pointer;
-  border: none;
+  border: 1px solid transparent;
 }
 section svg {
   width: 49%;
