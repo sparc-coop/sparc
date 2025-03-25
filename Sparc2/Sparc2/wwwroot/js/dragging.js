@@ -1,4 +1,5 @@
-﻿const draggableContent = document.getElementById('draggable-content');
+﻿//const draggableContent = document.getElementById('background');
+//const draggableContent = document.getElementsByTagName('article')[0];
 let isDragging = false;
 let initialX, initialY;
 const scrollSpeed = 1;
@@ -6,9 +7,10 @@ const scrollSpeed = 1;
 console.log("start: " + window.scrollX, window.scrollY);
 
 document.addEventListener('mousedown', (e) => {
+    var draggableContent = document.getElementsByTagName('article')[0];
+    if (e.target !== draggableContent) return;
+
     isDragging = true;
-    //initialX = e.clientX - window.scrollX;
-    //initialY = e.clientY - window.scrollY;
 
     if (window.scrollX == 0) {
         initialX = e.clientX - window.scrollX;

@@ -13,22 +13,31 @@ main {
 }
 
 .background {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
+    width: 200vw;
+    height: 200vh;
+    position: absolute;
     top: 0;
     left: 0;
-    background: url('/images/background.png');
-    background-size: cover;
     z-index: 1;
-}
 
-.background-noise {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: url('/images/background-noise.png') repeat;
-    z-index: 2;
+    &-image {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url('/images/background.png');
+        background-size: cover;
+        z-index: 1;
+    }
+
+    &-noise {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: url('/images/background-noise.png') repeat;
+        z-index: 2;
+    }
 }
