@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="stylesheet" href="/css/app.css" />
-    <link rel="stylesheet" href="/Sparc2.styles.css" />
+    <link rel="stylesheet" href="@Assets["css/app.css"]" />
+    <link rel="stylesheet" href="@Assets["Sparc2.styles.css"]" />
     <link rel="icon" href="images/Logo.svg" sizes="any" type="image/svg+xml" />
     <ImportMap />
     
-    <HeadOutlet @rendermode="new InteractiveServerRenderMode(false)" />
+    <HeadOutlet @rendermode="InteractiveServer" />
 </head>
 <body>
-    <Sparc.Blossom.BlossomApp DefaultLayout="MainLayout" Program="Program" @rendermode="new InteractiveServerRenderMode(false)" />
+    <Sparc.Blossom.BlossomApp Program="Program" DefaultLayout="MainLayout" @rendermode="new InteractiveServerRenderMode(false)" />
 
     <script src="_framework/blazor.web.js"></script>
     <script src="js/dragging.js"></script>

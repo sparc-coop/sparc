@@ -1,7 +1,7 @@
-﻿using Sparc.Blossom.Platforms.Server;
+﻿using Sparc2;
 
-var builder = new BlossomServerApplicationBuilder(args);
+var builder  = BlossomApplication.CreateBuilder(args);
 
-var app = (BlossomServerApplication)builder.Build();
+var app = builder.Build();
 
-await app.RunAsync<Sparc2.Html>();
+await app.RunAsync<Html>(); 

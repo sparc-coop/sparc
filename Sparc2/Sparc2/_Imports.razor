@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 
@@ -12,5 +13,8 @@
 @using Sparc2.Donations
 @using Sparc2.Files
 @using Sparc2.Ideas
+@using Sparc.Blossom.Api
+@using Idea = Sparc.Blossom.Api.ProjectIdea
 
 @inject NavigationManager Nav
+@inject BlossomApi Api

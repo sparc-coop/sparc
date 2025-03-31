@@ -1,6 +1,4 @@
-﻿@using Sparc2.Shared.Icons
-
-<div class="card">
+﻿<div class="card">
     <header>
         <img src="images/user-stock.png" />
         <div>
@@ -52,12 +50,12 @@
 </div>
 
 @code {
-    [Parameter] public ProjectIdea Idea { get; set; }
+    [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
 
-    FileUpload currentFile;
+    Sparc2.Files.FileUpload currentFile;
 
     protected override void OnInitialized()
     { 

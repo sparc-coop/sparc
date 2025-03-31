@@ -16,10 +16,10 @@
     protected override void OnInitialized()
     {
         var newIdea = new ProjectIdea("Name of the idea", "John Doe", "Mollis nisi vel varius litora rutrum urna. Suscipit velit fermentum  sollicitudin pulvinar netus ultrices efficitur nulla. Varius fermentum  habitasse ultricies nulla curabitur tempus quis accumsan. Vivamus auctor lacus massa magna bibendum donec. Quisque elementum habitasse; interdum volutpat senectus lobortis lacus torquent. Rutrum aliquam enim  ultricies diam lectus consequat finibus. Diam vulputate lacinia, blandit quisque quam ante pharetra. Enim iaculis conubia vitae rutrum facilisi  est, blandit himenaeos dolor");
-        newIdea.AddFile(new FileUpload("File 1", "images/Rectangle 13.png", newIdea.Id));
-        newIdea.AddFile(new FileUpload("File 1", "images/idea-1.jpg", newIdea.Id));
-        newIdea.AddFile(new FileUpload("File 1", "images/idea-2.jpg", newIdea.Id));
-        newIdea.AddFile(new FileUpload("File 1", "images/idea-3.jpg", newIdea.Id));
+        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/Rectangle 13.png", newIdea.Id));
+        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-1.jpg", newIdea.Id));
+        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-2.jpg", newIdea.Id));
+        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-3.jpg", newIdea.Id));
 
         ideas.Add(newIdea);
     }

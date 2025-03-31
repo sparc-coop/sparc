@@ -1,0 +1,45 @@
+﻿@layout PageLayout
+
+<div class="card">
+    <header>
+        <button><LightbulbIcon /> <span>Share</span></button>
+        <button><DolarIcon /> <span>Donate</span></button>
+    </header>
+    <section>
+        <div>
+            <h2>Be Part of  Sparc</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+        </div>
+        <EditForm Model="@Idea" OnSubmit="HandleValidSubmit">
+            <label>
+                <span>Title</span>
+                <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />
+            </label>
+            <label>
+                <span>Name</span>
+                <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />
+            </label>
+            <label>
+                <span>Description</span>
+                <InputTextArea placeholder="Text" @bind-Value="Idea.Description" />
+            </label>
+        </EditForm>
+    </section>
+    <footer>
+        <button><span>Cancel</span></button>
+        <button><span>Next</span></button>
+    </footer>
+</div>
+
+@code {
+    // [Parameter] public ProjectIdea Idea { get; set; }
+
+    private ProjectIdea Idea = new ProjectIdea(string.Empty, string.Empty, string.Empty);
+
+    private async Task HandleValidSubmit()
+    {
+        await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description);
+    }
+
+    // TODO: Add file upload as the next step in the "Add Idea" form, fix the active header button, center it on the screen, and display it after the user clicks the "Add" button
+}

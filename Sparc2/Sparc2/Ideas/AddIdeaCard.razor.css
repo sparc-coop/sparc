@@ -1,0 +1,134 @@
+﻿.card {
+  width: 332px;
+  height: fit-content;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--yellow-50);
+  box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+}
+.card header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 24px;
+}
+.card header button {
+  background: transparent;
+  cursor: pointer;
+  height: 32px;
+  padding: 3px 12px 3px 10px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 15px;
+  color: var(--gray-700);
+}
+.card header button:active {
+  box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
+  color: var(--purple-800);
+}
+.card section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+.card section div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 24px;
+}
+.card section div:first-child h2 {
+  color: var(--gray-900);
+  font-size: 2.133rem;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.427px;
+}
+.card section div:first-child p {
+  color: var(--gray-600);
+  font-size: 1.4rem;
+  font-weight: 450;
+  line-height: 120%;
+}
+.card section ::deep form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card section ::deep form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.card section ::deep form label span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.12px;
+}
+.card section ::deep form label input, .card section ::deep form label textarea {
+  border-radius: 16px;
+  border: 1px solid var(--gray-100);
+}
+.card section ::deep form label input {
+  padding: 8px 16px;
+  height: 22px;
+}
+.card section ::deep form label textarea {
+  padding: 16px;
+  height: 166px;
+  resize: none;
+}
+.card footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+.card footer button {
+  display: flex;
+  height: 40px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.16px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+.card footer button:active {
+  border: 1px solid var(--gray-100);
+}
+.card footer button:first-of-type {
+  color: var(--purple-800);
+}
+.card footer button:first-of-type:hover {
+  border: 1px solid var(--purple-800);
+}
+.card footer button:last-of-type {
+  color: var(--yellow-50);
+  background: var(--purple-800);
+}
+.card footer button:last-of-type:hover {
+  opacity: 0.5;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
