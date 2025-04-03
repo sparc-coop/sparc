@@ -24,7 +24,10 @@ else if (CurrentStep == 1)
     <EditForm Model="@Idea" OnValidSubmit="HandleValidSubmit">
         <section>
             <h5>Share files</h5>
-            <div @ondragover="HandleDragOver" @ondrop="HandleDrop" @onclick="TriggerFileInput">
+            <div @ref="fileDropContainer"
+                 class="@HoverClass"
+                 @ondragenter="HandleDragEnter"
+                 @ondragleave="HandleDragLeave">
                 <UploadIcon />
                 <div>
                     <h3>Drag files here to upload</h3>
@@ -32,7 +35,7 @@ else if (CurrentStep == 1)
                 </div>
                 <label>
                     <span>Upload</span>
-                    <input type="file" multiple hidden @ref="fileInput" @onchange="HandleFileSelection" />
+                    <InputFile OnChange="HandleFileSelection" multiple />
                 </label>
             </div>
         </section>
@@ -62,7 +65,7 @@ else if (CurrentStep == 1)
                                 <h4>@file.Name.@file.Format</h4>
                                 <p>@(file.Size / (1024 * 1024)) MB</p>
                             </div>
-                            <button>x</button>
+                            <button @onclick="() => UploadedFiles.Remove(file)">x</button>
                         </article>
                         <div class="progress-bar">
                             <div class="progress" style="width: @GetUploadProgress(file)%"></div>
@@ -78,8 +81,14 @@ else if (CurrentStep == 1)
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
+    ElementReference fileDropContainer;
 
+    private List<Sparc2.Files.FileUpload> UploadedFiles = new();
     private ProjectIdea Idea = new ProjectIdea(string.Empty, string.Empty, string.Empty);
+
+    private string HoverClass = "";
+    void HandleDragEnter(DragEventArgs e) => HoverClass = "dragover";
+    void HandleDragLeave(DragEventArgs e) => HoverClass = "";    
 
     private async Task HandleValidSubmit()
     {
@@ -93,38 +102,20 @@ else if (CurrentStep == 1)
         }
     }
 
-    private ElementReference fileInput;
-    private List<FileInfo> UploadedFiles = new();
-
-    private void TriggerFileInput()
+    private async Task HandleFileSelection(InputFileChangeEventArgs e)
     {
-        fileInput.FocusAsync();
-    }
+        UploadedFiles.Clear();
 
-    private void HandleDragOver(DragEventArgs e)
-    {
-        // e.PreventDefault();
-    }
-
-    private async Task HandleDrop(DragEventArgs e)
-    {
-        // e.PreventDefault();
-        foreach (var file in e.DataTransfer.Files)
+        foreach (var file in e.GetMultipleFiles())
         {
-            UploadedFiles.Add(new FileInfo { Name = file/*.Name */ });
+            UploadedFiles.Add(new(file.Name, "path", Idea.Id));            
         }
+
+        await Task.CompletedTask; 
     }
 
-    private async Task HandleFileSelection(ChangeEventArgs e)
+    private void Remove(Sparc2.Files.FileUpload file)
     {
-        foreach (var file in ((IEnumerable<IBrowserFile>)e.Value))
-        {
-            UploadedFiles.Add(new FileInfo { Name = file.Name });
-        }
-    }
-
-    private class FileInfo
-    {
-        public string Name { get; set; } = string.Empty;
+        UploadedFiles.Remove(file);
     }
 }

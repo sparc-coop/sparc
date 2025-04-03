@@ -47,6 +47,9 @@ form label ::deep input {
   padding: 8px 16px;
   height: 22px;
 }
+form label ::deep input[type=file] {
+  display: none;
+}
 form label ::deep textarea {
   padding: 16px;
   height: 166px;

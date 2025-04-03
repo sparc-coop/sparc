@@ -50,6 +50,10 @@ form {
         ::deep input {
             padding: 8px 16px;
             height: 22px;
+
+            &[type=file] {
+                display: none;
+            }
         }
 
         ::deep textarea {
@@ -85,7 +89,7 @@ form {
         letter-spacing: -0.12px;
         margin-bottom: 8px;
     }
-
+    
     section:first-of-type {
         div {
             display: flex;
