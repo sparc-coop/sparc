@@ -1,0 +1,114 @@
+﻿div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+div h2 {
+  color: var(--gray-900);
+  font-size: 2.133rem;
+  font-weight: 600;
+  line-height: 110%;
+  letter-spacing: -0.427px;
+}
+
+p {
+  color: var(--gray-600);
+  font-size: 1.4rem;
+  font-weight: 450;
+  line-height: 120%;
+}
+
+.field-group:first-of-type {
+  margin-bottom: 24px;
+}
+
+label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.12px;
+  margin-bottom: 8px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 4px;
+  flex-direction: row;
+}
+.btn-group button {
+  flex: 1;
+  width: 100%;
+}
+
+button {
+  padding: 8px 16px 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-100);
+  background: var(--yellow-50);
+  cursor: pointer;
+  color: var(--gray-600);
+  font-weight: 500;
+  font-size: 16px;
+}
+button:hover {
+  border-color: var(--purple-800);
+}
+button.selected {
+  box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
+  border-color: var(--purple-900);
+  color: var(--purple-900);
+}
+
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.amount-grid button {
+  width: 100%;
+}
+.amount-grid input {
+  grid-column: span 3;
+  border-radius: 16px;
+  border: 1px solid var(--gray-100);
+  background: var(--yellow-50);
+  padding: 8px 16px 8px 14px;
+}
+
+.payment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px !important;
+}
+.payment-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.payment-form label span {
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.12px;
+}
+.payment-form label .required {
+  color: var(--red);
+}
+.payment-form label ::deep input {
+  border-radius: 16px;
+  border: 1px solid var(--gray-100);
+  background: var(--yellow-50);
+}
+.payment-form label ::deep input {
+  padding: 8px 16px;
+  height: 22px;
+}
+.payment-form label:last-of-type {
+  margin-bottom: 0;
+}
+.payment-form div {
+  display: flex;
+  gap: 12px;
+  flex-direction: row;
+}

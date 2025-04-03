@@ -38,5 +38,17 @@
   {
     "outputFile": "Ideas/AddIdeaCard.razor.css",
     "inputFile": "Ideas/AddIdeaCard.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/AddCard.razor.css",
+    "inputFile": "Shared/Components/AddCard.razor.scss"
+  },
+  {
+    "outputFile": "Ideas/AddIdea.razor.css",
+    "inputFile": "Ideas/AddIdea.razor.scss"
+  },
+  {
+    "outputFile": "Donations/AddDonation.razor.css",
+    "inputFile": "Donations/AddDonation.razor.scss"
   }
 ]

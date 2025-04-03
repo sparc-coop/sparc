@@ -1,0 +1,112 @@
+﻿@if (CurrentStep == 0)
+{
+    <div>
+        <h2>Be Part of Sparc</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    </div>
+    <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
+        <div class="field-group">
+            <label>Donation frequency</label>
+            <div class="btn-group">
+                <button type="button" class="@GetButtonClass(Donation.Frequency == "One time")" @onclick="@(() => SetFrequency("One time"))">One time</button>
+                <button type="button" class="@GetButtonClass(Donation.Frequency == "Monthly")" @onclick="@(() => SetFrequency("Monthly"))">Monthly</button>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Amount</label>
+            <div class="amount-grid">
+                @foreach (var amount in PredefinedAmounts)
+                {
+                    <button type="button" class="@GetButtonClass(SelectedAmount == amount)" @onclick="() => SetAmount(amount)">$@amount</button>
+                }
+                <input type="number" placeholder="0" @bind="@CustomAmount">
+            </div>
+        </div>
+    </EditForm>
+}
+else if (CurrentStep == 1)
+{
+    <h2>Payment Method</h2>
+    <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit" class="payment-form">
+        <label>
+            <span>Name <span class="required">*</span></span>
+            <InputText placeholder="Name on the card" @bind-Value="Donation.Payment.DonorNameOnTheCard" />
+        </label>
+        <label>
+            <span>Card Number <span class="required">*</span></span>
+            <InputText placeholder="Card number" @bind-Value="Donation.Payment.CardNumber" />
+        </label>
+        <div>
+            <label>
+                <span>Expiry Date <span class="required">*</span></span>
+                <InputDate placeholder="MM/YY" @bind-Value="Donation.Payment.ExpiryDate" />
+            </label>
+            <label>
+                <span>CVV <span class="required">*</span></span>
+                <InputText placeholder="***" @bind-Value="Donation.Payment.CVV" />
+            </label>
+        </div>
+        <label>
+            <span>Email Address <span class="required">*</span></span>
+            <InputText placeholder="Email" @bind-Value="Donation.Payment.EmailAdress" />
+        </label>
+        <label>
+            <span>Billing Address Line 1 <span class="required">*</span></span>
+            <InputText placeholder="Billing Address" @bind-Value="Donation.Payment.BillingAddress" />
+        </label>
+        <label>
+            <span>Billing Address Line 2 <span class="required">*</span></span>
+            <InputText placeholder="Billing Address" @bind-Value="Donation.Payment.BillingAddress" />
+        </label>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public int CurrentStep { get; set; }
+    [Parameter] public EventCallback OnNext { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private readonly int[] PredefinedAmounts = { 5, 25, 50, 60, 75, 100 };
+
+    private UserDonation Donation = new UserDonation(0, string.Empty, new PaymentInfo(string.Empty, string.Empty, DateTime.Now, string.Empty, string.Empty, string.Empty, string.Empty));
+
+    private decimal? SelectedAmount { get; set; } = null;
+    private decimal? CustomAmount
+    {
+        get => SelectedAmount == null ? Donation.Amount : null;
+        set
+        {
+            SelectedAmount = null;
+            Donation.Amount = value ?? 0;
+        }
+    }
+
+    private void SetFrequency(string frequency)
+    {
+        Donation.Frequency = frequency;
+    }
+
+    private void SetAmount(decimal amount)
+    {
+        SelectedAmount = amount;
+        Donation.Amount = amount;
+    }
+
+    private string GetButtonClass(bool isSelected)
+    {
+        return isSelected ? "btn selected" : "btn";
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (CurrentStep == 0)
+        {
+            await OnNext.InvokeAsync();
+        }
+        else
+        {
+            // await Api.UserDonations.Create(Donation.Amount, Donation.Frequency, Donation.Payment);
+        }
+    }
+}

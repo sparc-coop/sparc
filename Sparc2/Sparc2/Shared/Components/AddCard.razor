@@ -1,0 +1,86 @@
+﻿<div class="add-card">
+    <header>
+        <button class="@GetHeaderButtonClass(0)" @onclick="() => OnHeaderButtonClick(0)">
+            <LightbulbIcon /> <span>Share</span>
+        </button>
+
+        <button class="@GetHeaderButtonClass(1)" @onclick="() => OnHeaderButtonClick(1)">
+            <DollarIcon /> <span>Donate</span>
+        </button>
+    </header>
+
+    <div class="progress-bar">
+        <div class="progress" style="width: @(StepProgress + "%")"></div>
+    </div>
+
+    <section>
+        @if (SelectedHeaderButton == 0)
+        {
+            <AddIdea CurrentStep="@CurrentStep" OnNext="OnNextOrSubmit" OnBack="OnBackOrCancel" />
+        }
+        else
+        {
+            <AddDonation CurrentStep="@CurrentStep" OnNext="OnNextOrSubmit" OnBack="OnBackOrCancel" />
+        }
+    </section>
+
+    <footer>
+        <button @onclick="OnBackOrCancel"><span>@BackOrCancelLabel</span></button>
+        <button @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
+    </footer>
+</div>
+
+
+@code {
+    private int CurrentStep = 0;
+    private int SelectedHeaderButton = 0; // 0 = Share, 1 = Donate
+    private int StepProgress => CurrentStep == 0 ? 50 : 100;
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+
+
+    private string BackOrCancelLabel => CurrentStep == 0 ? "Cancel" : "Back";
+    private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : (SelectedHeaderButton == 0 ? "Upload" : "Donate");
+
+    private void OnHeaderButtonClick(int buttonIndex)
+    {
+        SelectedHeaderButton = buttonIndex;
+        CurrentStep = 0; 
+    }
+
+    private async Task OnNextOrSubmit()
+    {
+        if (CurrentStep == 0)
+            CurrentStep = 1;
+        else
+        {
+            if (SelectedHeaderButton == 0)
+                await SubmitIdea();
+            else
+                await SubmitDonation();
+        }
+    }
+
+    private Task SubmitIdea()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task SubmitDonation()
+    {
+        return Task.CompletedTask;
+    }
+
+    private async Task OnBackOrCancel()
+    {
+        if (CurrentStep == 0)
+        {
+            await OnClose.InvokeAsync(true); 
+        }
+        else
+        {
+            CurrentStep = 0;
+        }
+    }
+
+    private string GetHeaderButtonClass(int buttonIndex) => buttonIndex == SelectedHeaderButton ? "active" : "";
+}

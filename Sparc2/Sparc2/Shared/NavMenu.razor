@@ -21,18 +21,37 @@
             <div class="right">
                 <button><ExploreIcon /> <span>Explore</span></button>
                 <button><FilterIcon /> <span>Filter</span></button>
-                <button class="add-btn"><AddIcon /> <span>Add</span></button>
+                <button class="add-btn" @onclick="ToggleAddCard"><AddIcon /> <span>Add</span></button>
             </div>
         }
     </div>
 </nav>
 
+@if (ShowAddCard)
+{
+    <div class="addCard-overlay" @onclick:stopPropagation>
+        <AddCard OnClose="CloseAddCard" />
+    </div>
+}
+
 @code {
+    private bool ShowAddCard = false;
     private bool IsHomePage => Nav.Uri.EndsWith("/");
 
     private void Navigate(string path)
     {
         Nav.NavigateTo(path);
+    }
+
+    private void ToggleAddCard()
+    {
+        ShowAddCard = !ShowAddCard;
+    }
+
+    private void CloseAddCard(bool shouldClose)
+    {
+        if (shouldClose)
+            ShowAddCard = false;
     }
 }
 
