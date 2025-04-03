@@ -1,34 +1,28 @@
 ﻿.add-card {
     width: 332px;
-    height: fit-content;
     padding: 24px;
     border-radius: 16px;
     background: var(--yellow-50);
-    box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+    box-shadow: 4px 4px 16px rgba(63, 24, 5, 0.25);
 
     .progress-bar {
         height: 2px;
         background: var(--purple-100);
 
         .progress {
-            height: 2px;
+            height: 100%;
             background: var(--purple-800);
         }
     }
 
     header {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
         gap: 5px;
         margin-bottom: 24px;
 
         button {
-            background: transparent;
-            cursor: pointer;
             height: 32px;
-            padding: 3px 12px 3px 10px;
+            padding: 3px 12px;
             display: flex;
             gap: 4px;
             align-items: center;
@@ -36,11 +30,13 @@
             border-radius: 15px;
             color: var(--gray-700);
             font-weight: 600;
-        }
+            background: transparent;
+            cursor: pointer;
 
-        .active {
-            box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
-            color: var(--purple-800);
+            &.active {
+                box-shadow: 0 0 8px rgba(178, 116, 250, 0.25);
+                color: var(--purple-800);
+            }
         }
     }
 
@@ -48,41 +44,37 @@
         display: flex;
         flex-direction: column;
         gap: 24px;
-        margin-top: 24px;        
+        margin-top: 24px;
     }
 
     footer {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
         margin-top: 24px;
 
         button {
-            display: flex;
             height: 40px;
             padding: 10px 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
-            background: none;
             border-radius: 20px;
-            border: 1px solid transparent;
             font-size: 16px;
-            font-style: normal;
             font-weight: 600;
-            line-height: 120%;
-            letter-spacing: -0.16px;
             cursor: pointer;
             transition: .2s all ease-in-out;
+            border: 1px solid transparent;
+            background: none;
 
             &:active {
-                border: 1px solid var(--gray-100);
+                border-color: var(--gray-100);
             }
 
             &:first-of-type {
                 color: var(--purple-800);
 
                 &:hover {
-                    border: 1px solid var(--purple-800);
+                    border-color: var(--purple-800);
                 }
             }
 
