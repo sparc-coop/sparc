@@ -7,7 +7,6 @@ div h2 {
   color: var(--gray-900);
   font-size: 2.133rem;
   font-weight: 600;
-  line-height: 110%;
   letter-spacing: -0.427px;
 }
 
@@ -15,7 +14,7 @@ p {
   color: var(--gray-600);
   font-size: 1.4rem;
   font-weight: 450;
-  line-height: 120%;
+  margin-bottom: 24px;
 }
 
 form {
@@ -32,7 +31,6 @@ form label {
 form label span {
   font-size: 1.2rem;
   font-weight: 600;
-  line-height: 120%;
   letter-spacing: -0.12px;
 }
 form label .required {
@@ -52,7 +50,7 @@ form label ::deep input[type=file] {
 }
 form label ::deep textarea {
   padding: 16px;
-  height: 166px;
+  height: 149px;
   resize: none;
 }
 form label:last-of-type {
@@ -61,20 +59,17 @@ form label:last-of-type {
 form h3 {
   font-size: 1.6rem;
   font-weight: 600;
-  line-height: 120%;
   letter-spacing: -0.16px;
   margin-bottom: 8px;
 }
 form h4 {
   font-size: 1.4rem;
   font-weight: 600;
-  line-height: 120%;
   letter-spacing: -0.14px;
 }
 form h5 {
   font-size: 1.2rem;
   font-weight: 600;
-  line-height: 120%;
   letter-spacing: -0.12px;
   margin-bottom: 8px;
 }
@@ -118,6 +113,7 @@ form section:first-of-type div label span {
 }
 form section:last-of-type {
   margin-top: 20px;
+  overflow-y: auto;
 }
 form section:last-of-type ul {
   list-style: none;
