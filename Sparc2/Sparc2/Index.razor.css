@@ -1,28 +1,58 @@
 ﻿section {
+  height: 150vh;
+  overflow: hidden;
+}
+section .hero {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 9rem 6.3rem 0 6.3rem;
 }
-section div {
+section .hero div {
   width: 46%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
 }
-section div h1 {
+section .hero #hero-text {
+  padding: 20px;
+  animation: fadeIn 3s ease-in-out;
+}
+section .hero #hero-text h1 {
   font-size: 89px;
   margin: 0;
 }
-section div h1 button {
+section .hero #hero-text h1 button {
   background: none;
   cursor: pointer;
   border: 1px solid transparent;
 }
-section svg {
-  width: 49%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+section .hero #mosaic-container {
+  animation: fadeInScaleUp 2s ease-in-out;
+}
+section .hero #mosaic-container img {
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeInScaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

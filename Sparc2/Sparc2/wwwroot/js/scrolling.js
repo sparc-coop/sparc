@@ -1,37 +1,45 @@
 ﻿//gsap.registerPLugin(ScrollTrigger);
-
 window.addEventListener('scroll', () => {
-    var home = document.getElementsByClassName("home")[0];
+    var home = document.getElementById("home");
+    var heroText = document.getElementById("hero-text");
+    var textWidth = heroText.offsetWidth;
+    var mosaic = document.getElementById("mosaic-container");
+    var mosaicWidth = mosaic.offsetWidth;
+    var mosaicHeight = mosaic.offsetHeight;
+    const scrolledTo = window.scrollY + window.innerHeight;
+    const isReachBottom = document.body.scrollHeight === scrolledTo;
 
     if (home) {
-        gsap
-        .timeline({
-            scrollTrigger: {
-                trigger: ".home",
-                start: "top top",
-                end: "+=100%",
-                pin: true,
-                scrub: true,
-                //markers: true,
-            },
-        })
-        .to(".mosaic-container img", {
-            scale: 2,
-            z: 250,
-            transformOrigin: "center center",
-        })
-        //.to(".home", {
-        //    scale: 1.4,
-        //    boxShadow: '10000px 0 0 0 rgba(0,0,0,0.5) inset',
+        //gsap.to("#home", {
+        //    scrollTrigger: {
+        //        scrub: 1
+        //    },
+        //    scale: 2,
         //    transformOrigin: "center center",
-        //},
-        //    "<"
-        //)
-        .to(".mosaic-container", {
-            autoAlpha: 0,
-        })
-        .to([".home, main"], {
-            height: 400,
+        //});
+
+        gsap.to("#hero-text", {
+            scrollTrigger: {
+                scrub: 1,
+            },
+            scale: 0,
+            x: textWidth / 2,
+            opacity: 0,
         });
+
+        gsap.to("#mosaic-container", {
+            scrollTrigger: {
+                scrub: 1,
+            },
+            scale: 7,
+            x: -(mosaicWidth / 2),
+            opacity: 0.75,
+            y: mosaicHeight/2,
+            //end: "+=100%",
+        });
+
+        if (isReachBottom) {
+            window.location.href = "/ideas";
+        }
     }
 });

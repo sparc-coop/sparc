@@ -1,32 +1,69 @@
 ﻿section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 9rem 6.3rem 0 6.3rem;
+    height: 150vh;
+    overflow: hidden;
 
-    div {
-        width: 46%;
+    .hero {
         display: flex;
-        justify-content: center;
         align-items: center;
-        padding: 20px;
+        justify-content: space-between;
+        margin: 9rem 6.3rem 0 6.3rem;
 
-        h1 {
-            font-size: 89px;
-            margin: 0;
+        div {
+            width: 46%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-            button {
-                background: none;
-                cursor: pointer;
-                border: 1px solid transparent;
+        #hero-text {
+            padding: 20px;
+            animation: fadeIn 3s ease-in-out;
+
+            h1 {
+                font-size: 89px;
+                margin: 0;
+
+                button {
+                    background: none;
+                    cursor: pointer;
+                    border: 1px solid transparent;
+                }
+            }
+        }
+
+        #mosaic-container {
+            //height: 100vh;
+            animation: fadeInScaleUp 2s ease-in-out;
+
+            img {
+                width: 100%;
             }
         }
     }
+}
 
-    svg {
-        width: 49%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+::-webkit-scrollbar {
+    display: none;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInScaleUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }
