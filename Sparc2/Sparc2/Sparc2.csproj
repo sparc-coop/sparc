@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c576e8a5-e4ef-4f92-942f-8b57f7dbf294</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,6 +17,10 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Payment.Stripe\Sparc.Blossom.Payment.Stripe.csproj" />
   </ItemGroup>
 
 </Project>
