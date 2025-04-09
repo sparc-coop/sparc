@@ -81,7 +81,7 @@
         justify-content: space-between;
         margin-top: 34px;
 
-        button {
+        /*button {
             height: 40px;
             padding: 10px 20px;
             display: flex;
@@ -110,11 +110,7 @@
             &:last-of-type {
                 color: var(--yellow-50);
                 background: var(--purple-800);
-
-                &:hover {
-                    opacity: 0.5;
-                }
             }
-        }
+        }*/
     }
 }

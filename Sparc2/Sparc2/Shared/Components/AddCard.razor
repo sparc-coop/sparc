@@ -1,10 +1,10 @@
 ﻿<div class="add-card">
     <header>
-        <button class="@GetButtonClass(0)" @onclick="() => SelectHeaderButton(0)">
+        <button class="secondary-btn @GetButtonClass(0)" @onclick="() => SelectHeaderButton(0)">
             <LightbulbIcon /> <span>Share</span>
         </button>
 
-        <button class="@GetButtonClass(1)" @onclick="() => SelectHeaderButton(1)">
+        <button class="secondary-btn @GetButtonClass(1)" @onclick="() => SelectHeaderButton(1)">
             <DollarIcon /> <span>Donate</span>
         </button>
     </header>
@@ -25,8 +25,8 @@
     </section>
 
     <footer>
-        <button @onclick="OnBackOrCancel"><span>@BackOrCancelLabel</span></button>
-        <button @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
+        <button class="secondary-btn" @onclick="OnBackOrCancel"><span>@BackOrCancelLabel</span></button>
+        <button class="primary-btn" @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
     </footer>
 </div>
 

@@ -2,7 +2,7 @@
 
 html, body {
     font-size: 62.5%;
-    font-family: Helvetica, sans-serif;
+    font-family: 'neue-haas-grotesk-display', Helvetica, sans-serif;
     margin: 0;
 
     ::-webkit-scrollbar {
@@ -20,8 +20,8 @@ p {
     padding: 0;
 }
 
-input, select, textarea {
-    font-family: Helvetica, sans-serif;
+button, input, select, textarea {
+    font-family: 'neue-haas-grotesk-display', Helvetica, sans-serif;
 }
 
 a {
@@ -35,6 +35,175 @@ a {
 button {
     padding: 0;
     border: 1px solid transparent;
+    font-family: 'neue-haas-grotesk-display', Helvetica, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 120%; /* 16.8px */
+    letter-spacing: -0.14px;
+    cursor: pointer;
+
+    &.primary-btn {
+        display: flex;
+        height: 40px;
+        padding: 10px 20px;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        border-radius: 20px;
+        background: var(--purple-800);
+        color: var(--yellow-50);
+        transition: .2s all ease-in-out;
+
+        > svg path {
+            stroke: var(--yellow-50);
+        }
+
+        &:hover {
+            background: var(--purple-700);
+        }
+
+        &:active {
+            background: var(--purple-800);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+
+    &.secondary-btn {
+        padding: 8px 16px;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 20px;
+        color: var(--purple-800);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 120%;
+        letter-spacing: -0.14px;
+        cursor: pointer;
+        transition: .2s all ease-in-out;
+
+        > svg path {
+            stroke: var(--purple-800);
+        }
+
+        &:hover {
+            border: 1px solid var(--purple-800);
+            color: var(--purple-800);
+
+            > svg path {
+                stroke: var(--purple-800);
+            }
+        }
+
+        &:active {
+            border: 1px solid var(--purple-900);
+            color: var(--purple-900);
+
+            > svg path {
+                stroke: var(--purple-900);
+            }
+        }
+
+        &:disabled {
+            border: 1px solid transparent;
+            opacity: 0.5;
+        }
+    }
+
+    &.tertiary-btn {
+        display: flex;
+        height: 40px;
+        padding: 10px 20px 10px 16px;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        background: none;
+        border-radius: 20px;
+        border: 1px solid var(--gray-100);
+        color: var(--gray-600);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%;
+        letter-spacing: -0.16px;
+        cursor: pointer;
+        transition: .2s all ease-in-out;
+
+        > svg path {
+            stroke: var(--gray-600);
+        }
+
+        &:hover {
+            border: 1px solid var(--purple-500);
+            color: var(--purple-500);
+
+            > svg path {
+                stroke: var(--purple-500);
+            }
+        }
+
+        &:active {
+            border: 1px solid var(--purple-800);
+            color: var(--purple-800);
+
+            > svg path {
+                stroke: var(--purple-800);
+            }
+        }
+
+        &:disabled {
+            border: 1px solid transparent;
+            opacity: 0.5;
+        }
+    }
+
+    &.icon-btn {
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+
+        > svg {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+
+    &.medium-btn {
+        height: 32px;
+        padding: 8px 16px;
+        border-radius: 20px;
+
+        &.icon-btn {
+            width: 32px;
+            height: 32px;
+            padding: 8px;
+
+            > svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+
+    &.small-btn {
+        height: 24px;
+        padding: 4px 8px;
+        border-radius: 50px;
+
+        &.icon-btn {
+            width: 24px;
+            height: 24px;
+            padding: 4px;
+
+            > svg {
+                width: 12px;
+                height: 12px;
+            }
+        }
+    }
 }
 
 ul {
@@ -47,3 +216,28 @@ ul {
         margin: 0;
     }
 }
+
+/*
+Fonts Added:
+
+Neue Haas Grotesk Display Pro 45 Light
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 400;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 55 Roman
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 500;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 65 Medium
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 600;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 75 Bold
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 700;
+font-style: normal;
+
+*/

@@ -38,6 +38,11 @@ function initScroll() {
                 y: 100,
             });
 
+            gsap.to("#nav", {
+                opacity: 0,
+                y: -100,
+            });
+
             document.getElementById("hero-text").classList.add("faded");
 
             if (document.body.scrollTop == (document.body.scrollHeight - document.body.offsetHeight)) {
@@ -56,7 +61,7 @@ function navigateToIdeas() {
 
 function mouseClickHandler() {
     addEventListener("click", function (e) {
-        if (e.target.id === "scroll-text") {
+        if (e.target.id === "scroll-text" || e.target.id === "ideas-btn") {
             window.scrollTo(0, 10);
         }
     });

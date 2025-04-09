@@ -1,4 +1,4 @@
-﻿<nav class="@(IsHomePage ? "home-nav" : "other-nav")">
+﻿<nav id="nav" class="@(IsHomePage ? "home-nav" : "other-nav")">
     <div class="container">
         @if (IsHomePage)
         {
@@ -6,8 +6,8 @@
                 <SparcLogo />
             </div>
             <div class="right">
-                <button @onclick='() => Navigate("/ideas")'>Ideas</button>
-                <button>Button</button>
+                <button id="ideas-btn" class="secondary-btn" @* @onclick='() => Navigate("/ideas")' *@>Ideas</button>
+                @* <button class="secondary-btn">Button</button> *@
             </div>
         }
         else

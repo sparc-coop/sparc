@@ -62,34 +62,35 @@
   display: flex;
   justify-content: space-between;
   margin-top: 34px;
-}
-.add-card footer button {
-  height: 40px;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s all ease-in-out;
-  border: 1px solid transparent;
-  background: none;
-}
-.add-card footer button:active {
-  border-color: var(--gray-100);
-}
-.add-card footer button:first-of-type {
-  color: var(--purple-800);
-}
-.add-card footer button:first-of-type:hover {
-  border-color: var(--purple-800);
-}
-.add-card footer button:last-of-type {
-  color: var(--yellow-50);
-  background: var(--purple-800);
-}
-.add-card footer button:last-of-type:hover {
-  opacity: 0.5;
+  /*button {
+      height: 40px;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: .2s all ease-in-out;
+      border: 1px solid transparent;
+      background: none;
+
+      &:active {
+          border-color: var(--gray-100);
+      }
+
+      &:first-of-type {
+          color: var(--purple-800);
+
+          &:hover {
+              border-color: var(--purple-800);
+          }
+      }
+
+      &:last-of-type {
+          color: var(--yellow-50);
+          background: var(--purple-800);
+      }
+  }*/
 }
