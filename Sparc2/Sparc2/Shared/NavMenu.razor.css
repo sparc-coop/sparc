@@ -1,6 +1,9 @@
 ﻿nav {
+  width: calc(100vw - 158px);
   padding: 8px 16px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 1000;
   margin: 32px 60px;
 }
