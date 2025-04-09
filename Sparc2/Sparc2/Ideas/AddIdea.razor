@@ -58,24 +58,26 @@ else if (CurrentStep == 1)
                 </li>
                 @foreach (var file in UploadedFiles)
                 {
-                    @* <li>
+                    <li>
                         <article>
                             <img src="images/image-03.png" alt="File Icon" />
                             <div>
-                                <h4>@file.Name.@file.Format</h4>
-                                <p>@(file.Size / (1024 * 1024)) MB</p>
+                                <h4>@file.FileName.@file.FileFormat</h4>
+                                <p>@(file.FileSize / (1024 * 1024)) MB</p>
                             </div>
                             <button @onclick="() => UploadedFiles.Remove(file)">x</button>
                         </article>
                         <div class="progress-bar">
-                            <div class="progress" style="width: @GetUploadProgress(file)%"></div>
+                            <div class="progress" style="width: 60%" @* style="width: @GetUploadProgress(file)%" *@></div>
                         </div>
-                    </li> *@
+                    </li>
                 }
             </ul>
         </section>
     </EditForm>
 }
+
+@inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
 
 @code {
     [Parameter] public int CurrentStep { get; set; }
@@ -84,11 +86,12 @@ else if (CurrentStep == 1)
     ElementReference fileDropContainer;
 
     private List<Sparc2.Files.FileUpload> UploadedFiles = new();
-    private ProjectIdea Idea = new ProjectIdea(string.Empty, string.Empty, string.Empty);
+
+    private ProjectIdea Idea = new ProjectIdea(string.Empty, string.Empty, string.Empty, new List<string>());
 
     private string HoverClass = "";
     void HandleDragEnter(DragEventArgs e) => HoverClass = "dragover";
-    void HandleDragLeave(DragEventArgs e) => HoverClass = "";    
+    void HandleDragLeave(DragEventArgs e) => HoverClass = "";
 
     private async Task HandleValidSubmit()
     {
@@ -98,24 +101,35 @@ else if (CurrentStep == 1)
         }
         else
         {
-            await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description);
+            await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
         }
     }
 
-    private async Task HandleFileSelection(InputFileChangeEventArgs e)
+    public async Task HandleFileSelection(InputFileChangeEventArgs e)
     {
         UploadedFiles.Clear();
 
         foreach (var file in e.GetMultipleFiles())
         {
-            UploadedFiles.Add(new(file.Name, "path", Idea.Id));            
-        }
+            var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+            var url = await AzureBlob.UploadFileAsync(
+                containerName: "ideas",
+                fileName: file.Name,
+                fileStream: stream,
+                contentType: file.ContentType
+            );
+        
+            var fileFormat = Path.GetExtension(file.Name)?.TrimStart('.') ?? "unknown";
+            var fileSize = (int)file.Size;
 
-        await Task.CompletedTask; 
+            UploadedFiles.Add(new Sparc2.Files.FileUpload(file.Name, url, fileFormat, fileSize));
+            Idea.FileUrls.Add(url);
+        }
     }
 
     private void Remove(Sparc2.Files.FileUpload file)
     {
         UploadedFiles.Remove(file);
+        Idea.FileUrls.Remove(file.Url);
     }
 }
