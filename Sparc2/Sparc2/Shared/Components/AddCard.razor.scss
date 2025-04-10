@@ -8,18 +8,7 @@
     background: var(--yellow-50);
     box-shadow: 4px 4px 16px rgba(63, 24, 5, 0.25);
 
-    .progress-bar {
-        height: 2px;
-        background: var(--purple-100);
-        margin: 24px 0;
-
-        .progress {
-            height: 2px;
-            background: var(--purple-800);
-        }
-    }
-
-    header {
+    .card-nav {
         display: flex;
         gap: 5px;
 
@@ -69,48 +58,49 @@
         }
     }
 
+    .progress-bar {
+        height: 2px;
+        background: var(--purple-100);
+        margin: 24px 0;
+
+        .progress {
+            height: 2px;
+            background: var(--purple-800);
+        }
+    }
+
+    ::deep header {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        h2 {
+            color: var(--gray-900);
+            font-size: 2.133rem;
+            font-weight: 600;
+            letter-spacing: -0.427px;
+        }
+
+        p {
+            color: var(--gray-600);
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 120%;
+            letter-spacing: normal;
+        }
+    }
+
     section {
         display: flex;
-        flex-direction: column;        
+        flex-direction: column;
         flex: 1;
         max-height: 448px;
+        gap: 24px;
     }
 
     footer {
         display: flex;
         justify-content: space-between;
         margin-top: 34px;
-
-        /*button {
-            height: 40px;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: .2s all ease-in-out;
-            border: 1px solid transparent;
-            background: none;
-
-            &:active {
-                border-color: var(--gray-100);
-            }
-
-            &:first-of-type {
-                color: var(--purple-800);
-
-                &:hover {
-                    border-color: var(--purple-800);
-                }
-            }
-
-            &:last-of-type {
-                color: var(--yellow-50);
-                background: var(--purple-800);
-            }
-        }*/
     }
 }

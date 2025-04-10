@@ -1,9 +1,9 @@
 ﻿@if (CurrentStep == 0)
 {
-    <div>
+    <header>
         <h2>Be Part of Sparc</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
-    </div>
+    </header>
     <EditForm Model="@Idea" OnValidSubmit="HandleValidSubmit">
         <label>
             <span>Title <span class="required">*</span></span>
@@ -23,14 +23,14 @@ else if (CurrentStep == 1)
 {
     <EditForm Model="@Idea" OnValidSubmit="HandleValidSubmit">
         <section>
-            <h5>Share files</h5>
+            <h3>Share files (Optional)</h3>
             <div @ref="fileDropContainer"
                  class="@HoverClass"
                  @ondragenter="HandleDragEnter"
                  @ondragleave="HandleDragLeave">
                 <UploadIcon />
                 <div>
-                    <h3>Drag files here to upload</h3>
+                    <h4>Drag files here to upload</h4>
                     <p>Or, click to browse</p>
                 </div>
                 <label>
@@ -41,13 +41,13 @@ else if (CurrentStep == 1)
         </section>
 
         <section>
-            <h5>Uploaded list (@UploadedFiles.Count)</h5>
+            <h3>Uploaded list (@UploadedFiles.Count)</h3>
             <ul>
                 <li>
                     <article>
                         <img src="images/image-03.png" alt="File Icon" />
                         <div>
-                            <h4>File name.format</h4>
+                            <h5>File name.format</h5>
                             <p>14MB</p>
                         </div>
                         <button>x</button>

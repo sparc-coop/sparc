@@ -1,5 +1,5 @@
-﻿<div class="add-card">
-    <header>
+﻿<div class="modal add-card">
+    <div class="card-nav">
         <button class="secondary-btn @GetButtonClass(0)" @onclick="() => SelectHeaderButton(0)">
             <LightbulbIcon /> <span>Share</span>
         </button>
@@ -7,7 +7,7 @@
         <button class="secondary-btn @GetButtonClass(1)" @onclick="() => SelectHeaderButton(1)">
             <DollarIcon /> <span>Donate</span>
         </button>
-    </header>
+    </div>
 
     <div class="progress-bar">
         <div class="progress" style="width: @(StepProgress + "%");"></div>

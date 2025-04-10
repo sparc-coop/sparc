@@ -29,7 +29,7 @@
 
 @if (ShowAddCard)
 {
-    <div class="addCard-overlay" @onclick:stopPropagation>
+    <div class="modal-overlay" @onclick:stopPropagation>
         <AddCard OnClose="CloseAddCard" />
     </div>
 }
@@ -53,5 +53,10 @@
         if (shouldClose)
             ShowAddCard = false;
     }
+
+    // private void CancellAddCard()
+    // {
+    //     If
+    // }
 }
 
