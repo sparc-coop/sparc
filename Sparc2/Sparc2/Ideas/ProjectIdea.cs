@@ -1,6 +1,4 @@
-﻿using Sparc2.Files;
-
-namespace Sparc2.Ideas;
+﻿namespace Sparc2.Ideas;
 
 public class ProjectIdea : BlossomEntity<string>
 {

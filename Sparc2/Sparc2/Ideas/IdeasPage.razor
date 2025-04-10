@@ -4,14 +4,31 @@
 <PageTitle>Ideas | Sparc</PageTitle>
 
 <article>
-    @foreach (var idea in ideas)
+    @foreach (var idea in IdeaService.Ideas)
     {
         <IdeaCard Idea=@idea />
     }
 </article>
 
+@inject Sparc2.Ideas.IdeaService IdeaService
+
 @code {
-    List<ProjectIdea> ideas = new();
+    protected override void OnInitialized()
+    {
+        IdeaService.OnIdeasChanged += UpdateIdeas;
+    }
+
+    private void UpdateIdeas()
+    {
+        InvokeAsync(StateHasChanged); 
+    }
+
+    public void Dispose()
+    {
+        IdeaService.OnIdeasChanged -= UpdateIdeas;
+    }
+
+    // List<ProjectIdea> ideas = new();
 
     // protected override void OnInitialized()
     // {

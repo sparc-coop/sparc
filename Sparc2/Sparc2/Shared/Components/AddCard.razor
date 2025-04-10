@@ -16,11 +16,15 @@
     <section>
         @if (SelectedHeaderButton == 0)
         {
-            <AddIdea CurrentStep="@CurrentStep" OnNext="OnNextOrSubmit" OnBack="OnBackOrCancel" />
+                <AddIdea CurrentStep="@CurrentStep"
+                         EditContext="@editContext"
+                         Idea="@Idea"
+                         UploadedFiles="@UploadedFiles"
+                         OnFilesChanged="@OnFilesChanged" />
         }
         else
         {
-            <AddDonation CurrentStep="@CurrentStep" OnNext="OnNextOrSubmit" OnBack="OnBackOrCancel" />
+                <AddDonation CurrentStep="@CurrentStep" EditContext="@editContext" />
         }
     </section>
 
@@ -30,18 +34,29 @@
     </footer>
 </div>
 
+@inject Sparc2.Ideas.IdeaService IdeaService
 
 @code {
     private int CurrentStep;
     private int SelectedHeaderButton; // 0 = Share, 1 = Donate
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
 
+    private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
+    private EditContext editContext;
+
+    private List<Sparc2.Files.FileUpload> UploadedFiles = new();
+
     [Parameter] public EventCallback<bool> OnClose { get; set; }
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(Idea);
+    }
 
     private string GetButtonClass(int index) => index == SelectedHeaderButton ? "active" : "";
 
     private string BackOrCancelLabel => CurrentStep == 0 ? "Cancel" : "Back";
-    private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : (SelectedHeaderButton == 0 ? "Upload" : "Donate");
+    private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : (SelectedHeaderButton == 0 ? "Post" : "Donate");
 
     private void SelectHeaderButton(int index)
     {
@@ -51,8 +66,16 @@
 
     private async Task OnNextOrSubmit()
     {
+        if (!editContext.Validate())
+        {
+            editContext.NotifyValidationStateChanged();
+            return;
+        }
+
         if (CurrentStep == 0)
+        {
             CurrentStep = 1;
+        }
         else
         {
             if (SelectedHeaderButton == 0)
@@ -74,13 +97,20 @@
         }
     }
 
-    private Task SubmitIdea()
+    private async Task SubmitIdea()
     {
-        return Task.CompletedTask;
+        await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
+        IdeaService.AddIdea(Idea);
+        await OnClose.InvokeAsync(true);
     }
 
     private Task SubmitDonation()
     {
         return Task.CompletedTask;
-    }    
+    }
+
+    private void OnFilesChanged(List<Sparc2.Files.FileUpload> files)
+    {
+        UploadedFiles = files;
+    }
 }
