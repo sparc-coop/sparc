@@ -87,46 +87,43 @@ form {
 
     section:first-of-type {
         div {
+            width: 100%;
+            max-width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 32px 16px;
-            border: 2px dashed var(--gray-100);
-            border-radius: 16px;
-            cursor: pointer;
-
-            &:hover {
-                background: var(--gray-200);
-            }
-
-            &.dragover {
-                border-color: #007bff;
-                background: var(--gray-300);
-            }
 
             div {
+                flex: 1;
+                position: relative;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                gap: 4px;
-                padding: 0;
-                border: none;
-
-                h3 {
-                    margin-bottom: 0;
-                }
-            }
-
-            label span {
-                padding: 4px 10px;
-                color: var(--purple-800);
-                border: none;
-                border-radius: 50px;
-                font-size: 12px;
-                font-weight: 500;
+                justify-content: center;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: 600;
+                border: 1px solid var(--purple-800);
+                border-radius: 20px;
                 cursor: pointer;
+                background: transparent;
+                overflow: hidden;
+                box-sizing: border-box;
+                max-width: 100%;
+
+                &:hover {
+                    background-color: var(--purple-50);
+                }
+
+                &:active {
+                    background-color: var(--purple-100);
+                }
+
+                ::deep input[type="file"] {
+                    opacity: 0;
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+                }
             }
         }
     }

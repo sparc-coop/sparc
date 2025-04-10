@@ -23,22 +23,13 @@ else if (CurrentStep == 1)
 {
     <EditForm EditContext="@EditContext">
         <section>
-            <h5>Share files</h5>
-            <div @ref="fileDropContainer"
-                 class="@HoverClass"
-                 @ondragenter="HandleDragEnter"
-                 @ondragleave="HandleDragLeave"
-                 ondragover="event.preventDefault()">
-                <UploadIcon />
+            <h5>Share files (Optional)</h5>
+            <div>
                 <div>
-                    <h3>Drag files here to upload</h3>
-                    <p>Or, click to browse</p>
-                </div>
-                <label>
-                    <span>Upload</span>
+                    Upload Files
                     <InputFile OnChange="HandleFileSelection" multiple />
-                </label>
-            </div>
+                </div>
+            </div>            
         </section>
 
         <section>
@@ -65,7 +56,6 @@ else if (CurrentStep == 1)
     </EditForm>
 }
 
-@inject IJSRuntime JS
 @inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
 
 @code {
@@ -73,17 +63,10 @@ else if (CurrentStep == 1)
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
     [Parameter] public EditContext EditContext { get; set; }
     [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
-    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
-
-    ElementReference fileDropContainer;
-    
-    private string HoverClass = "";
-
-    void HandleDragEnter(DragEventArgs e) => HoverClass = "dragover";
-    void HandleDragLeave(DragEventArgs e) => HoverClass = "";  
+    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }  
 
     public async Task HandleFileSelection(InputFileChangeEventArgs e)
-    {
+    {  
         foreach (var file in e.GetMultipleFiles())
         {
             var uploaded = new Sparc2.Files.FileUpload(
