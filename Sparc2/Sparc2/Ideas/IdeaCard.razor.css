@@ -5,6 +5,7 @@
   border-radius: 16px;
   background: var(--yellow-50);
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+  cursor: pointer;
 }
 .card header {
   display: flex;
@@ -138,36 +139,39 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 24px;
+  /*
+          button {
+              display: flex;
+              height: 40px;
+              padding: 10px 20px 10px 16px;
+              justify-content: center;
+              align-items: center;
+              gap: 4px;
+              background: none;
+              border-radius: 20px;
+              border: 1px solid var(--gray-100);
+              color: var(--gray-600);
+              font-size: 16px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: 120%;
+              letter-spacing: -0.16px;
+              cursor: pointer;
+              transition: .2s all ease-in-out;
+
+              &:hover {
+                  border: 1px solid var(--purple-800);
+              }
+
+              &:active {
+                  border: 1px solid var(--gray-100);
+              }
+          }*/
 }
 .card footer div:first-of-type {
   display: flex;
   flex-direction: row;
   gap: 4px;
-}
-.card footer button {
-  display: flex;
-  height: 40px;
-  padding: 10px 20px 10px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  border-radius: 20px;
-  border: 1px solid var(--gray-100);
-  color: var(--gray-600);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 120%;
-  letter-spacing: -0.16px;
-  cursor: pointer;
-  transition: 0.2s all ease-in-out;
-}
-.card footer button:hover {
-  border: 1px solid var(--purple-800);
-}
-.card footer button:active {
-  border: 1px solid var(--gray-100);
 }
 
 @keyframes fadeIn {

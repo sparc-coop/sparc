@@ -1,4 +1,4 @@
-﻿<div class="card" @onclick=OpenFullView @onclick:stopPropagation=true>
+﻿<div class="modal idea-card-full">
     <header>
         <img src="images/user-stock.png" />
         <div>
@@ -10,26 +10,26 @@
         <h2>@Idea.Title</h2>
         <div class="files">
             <div class="images">
-                @if (Idea.FileUrls.Count < 1)
+                @if (Idea.Files.Count < 1)
                 {
                     <img src="images/Rectangle 13.png" />
                 }
                 else
                 {
-                    @foreach (var fileUrl in Idea.FileUrls)
+                    @foreach (var file in Idea.Files)
                     {
-                        <img src="@fileUrl" class="@(currentFile == fileUrl ? "active" : "")" />
+                        <img src="@file.FilePath" class="@(currentFile == file ? "active" : "")" />
                     }
                 }
             </div>
-            @if(Idea.FileUrls.Count > 1)
+            @if (Idea.Files.Count > 1)
             {
                 <div class="arrows">
                     <button class="arrow-left" @onclick=previousFile><ArrowLeftIcon /></button>
                     <button class="arrow-right" @onclick=nextFile><ArrowLeftIcon /></button>
                 </div>
                 <div class="indicators">
-                    @foreach (var file in Idea.FileUrls)
+                    @foreach (var file in Idea.Files)
                     {
                         <div class="indicator @(currentFile == file ? "active" : "")"></div>
                     }
@@ -45,45 +45,47 @@
             <button class="tertiary-btn"><ChatBubbleIcon /> <span>@comments.Count</span></button>
             <button class="tertiary-btn"><ThumbsUpIcon /> <span>@likes.Count</span></button>
         </div>
-        <button class="tertiary-btn"><FileIcon /> <span>@(Idea.FileUrls?.Count ?? 0)</span></button>
+        <button class="tertiary-btn"><FileIcon /> <span>@Idea.Files.Count</span></button>
     </footer>
 </div>
 
+<div class="modal-overlay"></div>
+
 @code {
-    [Parameter] public EventCallback<ProjectIdea> OnOpenFullView { get; set; }
     [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
 
-    string currentFile;
+    Sparc2.Files.FileUpload currentFile;
 
     protected override void OnInitialized()
     {
-        currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+        currentFile = Idea.Files.First(x => x != null);
     }
 
     void nextFile()
     {
-        var index = Idea.FileUrls.IndexOf(currentFile);
-        if (index < Idea.FileUrls.Count - 1)
+        if (Idea.Files.IndexOf(currentFile) == Idea.Files.Count - 1)
         {
-            currentFile = Idea.FileUrls[index + 1];
+            return;
+        }
+        else
+        {
+            currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) + 1];
         }
     }
 
     void previousFile()
     {
-        var index = Idea.FileUrls.IndexOf(currentFile);
-        if (index > 0)
+        if (Idea.Files.IndexOf(currentFile) == 0)
         {
-            currentFile = Idea.FileUrls[index - 1];
+            return;
         }
-    }
+        else
+        {
+            currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) - 1];
 
-    void OpenFullView()
-    {
-        Console.WriteLine("opening full view");
-        OnOpenFullView.InvokeAsync();
+        }
     }
 }

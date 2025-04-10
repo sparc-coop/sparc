@@ -6,13 +6,21 @@
 <article>
     @foreach (var idea in IdeaService.Ideas)
     {
-        <IdeaCard Idea=@idea />
+        <IdeaCard Idea=@idea OnOpenFullView="OpenFullIdeaCard" />
+    }
+    @if (ShowFullIdeaCard)
+    {
+        <IdeaCardFull Idea=@CurrentIdea />
     }
 </article>
 
+@* <div class="modal-overlay"></div> *@
+
 @inject Sparc2.Ideas.IdeaService IdeaService
 
-@code {
+    bool ShowFullIdeaCard;
+    ProjectIdea? CurrentIdea;
+
     protected override void OnInitialized()
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
@@ -28,6 +36,12 @@
         IdeaService.OnIdeasChanged -= UpdateIdeas;
     }
 
+    void OpenFullIdeaCard(ProjectIdea idea)
+{
+    ShowFullIdeaCard = true;
+    CurrentIdea = idea;
+}
+
     // List<ProjectIdea> ideas = new();
 
     // protected override void OnInitialized()
@@ -40,4 +54,6 @@
 
     //     ideas.Add(newIdea);
     // }
+
+    
 }

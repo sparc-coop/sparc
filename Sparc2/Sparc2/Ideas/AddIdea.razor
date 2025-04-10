@@ -1,9 +1,9 @@
 ﻿@if (CurrentStep == 0)
 {
-    <div>
+    <header>
         <h2>Be Part of Sparc</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
-    </div>
+    </header>
     <EditForm EditContext="@EditContext">
         <label>
             <span>Title <span class="required">*</span></span>
@@ -33,7 +33,7 @@ else if (CurrentStep == 1)
         </section>
 
         <section>
-            <h5>Uploaded list (@UploadedFiles.Count)</h5>
+            <h3>Uploaded list (@UploadedFiles.Count)</h3>
             <ul>
                 @foreach (var file in UploadedFiles)
                 {

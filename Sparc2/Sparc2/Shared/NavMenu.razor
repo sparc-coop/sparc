@@ -1,4 +1,4 @@
-﻿<nav class="@(IsHomePage ? "home-nav" : "other-nav")">
+﻿<nav id="nav" class="@(IsHomePage ? "home-nav" : "other-nav")">
     <div class="container">
         @if (IsHomePage)
         {
@@ -6,17 +6,17 @@
                 <SparcLogo />
             </div>
             <div class="right">
-                <button @onclick='() => Navigate("/ideas")'>Ideas</button>
-                <button>Button</button>
+                <button id="ideas-btn" class="secondary-btn" @* @onclick='() => Navigate("/ideas")' *@>Ideas</button>
+                @* <button class="secondary-btn">Button</button> *@
             </div>
         }
         else
         {
             <div class="left">
-                <button @onclick='() => Navigate("/")'>Exit</button>
+                <button @onclick='() => Navigate("/")'><ArrowLeftIcon /> <span>Exit</span></button>
             </div>
             <div class="center">
-                <input type="text" placeholder="Search..." class="input-text" />
+                <input type="text" placeholder="Search" class="input-text" />
             </div>
             <div class="right">
                 <button><ExploreIcon /> <span>Explore</span></button>
@@ -29,7 +29,7 @@
 
 @if (ShowAddCard)
 {
-    <div class="addCard-overlay" @onclick:stopPropagation>
+    <div class="modal-overlay" @onclick:stopPropagation>
         <AddCard OnClose="CloseAddCard" />
     </div>
 }
@@ -53,5 +53,10 @@
         if (shouldClose)
             ShowAddCard = false;
     }
+
+    // private void CancelAddCard()
+    // {
+    //     
+    // }
 }
 

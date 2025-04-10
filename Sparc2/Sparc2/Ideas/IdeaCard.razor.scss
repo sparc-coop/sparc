@@ -5,6 +5,7 @@
     border-radius: 16px;
     background: var(--yellow-50);
     box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+    cursor: pointer;
 
     header {
         display: flex;
@@ -171,7 +172,7 @@
             flex-direction: row;
             gap: 4px;
         }
-
+/*
         button {
             display: flex;
             height: 40px;
@@ -198,7 +199,7 @@
             &:active {
                 border: 1px solid var(--gray-100);
             }
-        }
+        }*/
     }
 }
 
