@@ -49,10 +49,11 @@
     </footer>
 </div>
 
-<div class="modal-overlay"></div>
+<div class="modal-overlay" @onclick="CloseModal"></div>
 
 @code {
     [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
@@ -61,7 +62,11 @@
 
     protected override void OnInitialized()
     {
-        currentFile = Idea.FileUrls?.First(x => x != null);
+        if (Idea.FileUrls.Count > 0)
+        {
+            currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+            StateHasChanged();
+        }
     }
 
     void nextFile()
@@ -85,7 +90,11 @@
         else
         {
             currentFile = Idea.FileUrls[Idea.FileUrls.IndexOf(currentFile) - 1];
-
         }
+    }
+
+    void CloseModal()
+    {
+        OnClose.InvokeAsync(true);
     }
 }

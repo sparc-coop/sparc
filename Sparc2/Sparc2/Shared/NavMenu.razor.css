@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   margin: 32px 60px;
 }
 nav .container {
@@ -92,15 +92,26 @@ nav button {
 .other-nav button.add-btn {
   background: var(--yellow-50);
   border-radius: 20px;
-  transition: 0.2s all ease-in-out;
+  transition: 0.1s all ease-in-out;
 }
 .other-nav button.add-btn span {
   color: var(--purple-800);
 }
 .other-nav button.add-btn:hover {
-  border: 1px solid transparent;
-  background: rgba(255, 252, 246, 0.8);
+  color: var(--purple-800);
+  transform: scale(103%);
+}
+.other-nav button.add-btn:hover > svg path {
+  stroke: var(--purple-800);
 }
 .other-nav button.add-btn:active {
-  transform: translatey(1px) scale(99%);
+  color: var(--purple-900);
+  transform: scale(1);
+}
+.other-nav button.add-btn:active > svg path {
+  stroke: var(--purple-900);
+}
+.other-nav button.add-btn:disabled {
+  border: 1px solid transparent;
+  opacity: 0.5;
 }

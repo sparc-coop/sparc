@@ -12,7 +12,7 @@
             <div class="images">
                 @if (Idea.FileUrls.Count < 1)
                 {
-                    <img src="images/Rectangle 13.png" />
+                    <img class="active" src="images/Rectangle 13.png" />
                 }
                 else
                 {
@@ -60,7 +60,11 @@
 
     protected override void OnInitialized()
     {
-        currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+        if (Idea.FileUrls.Count > 0)
+        {
+            currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+            StateHasChanged();
+        }
     }
 
     void nextFile()
@@ -84,6 +88,6 @@
     void OpenFullView()
     {
         Console.WriteLine("opening full view");
-        OnOpenFullView.InvokeAsync();
+        OnOpenFullView.InvokeAsync(Idea);
     }
 }

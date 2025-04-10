@@ -6,11 +6,11 @@
 <article>
     @foreach (var idea in IdeaService.Ideas)
     {
-        <IdeaCard Idea=@idea OnOpenFullView="OpenFullIdeaCard" />
+        <IdeaCard Idea=@idea OnOpenFullView="OpenFullIdea" />
     }
     @if (ShowFullIdeaCard)
     {
-        <IdeaCardFull Idea=@CurrentIdea />
+        <IdeaCardFull Idea=@CurrentIdea OnClose="CloseFullIdea" />
     }
 </article>
 
@@ -37,10 +37,16 @@
         IdeaService.OnIdeasChanged -= UpdateIdeas;
     }
 
-    void OpenFullIdeaCard(ProjectIdea idea)
+    void OpenFullIdea(ProjectIdea idea)
     {
         ShowFullIdeaCard = true;
         CurrentIdea = idea;
+    }
+
+    void CloseFullIdea()
+    {
+        ShowFullIdeaCard = false;
+        CurrentIdea = null;
     }
 
     // List<ProjectIdea> ideas = new();
