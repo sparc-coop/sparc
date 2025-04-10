@@ -5,6 +5,7 @@
   border-radius: 16px;
   background: var(--yellow-50);
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+  cursor: pointer;
 }
 .card header {
   display: flex;

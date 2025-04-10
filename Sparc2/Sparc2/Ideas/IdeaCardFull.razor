@@ -1,4 +1,4 @@
-﻿<div class="card" @onclick=OpenFullView @onclick:stopPropagation=true>
+﻿<div class="modal idea-card-full">
     <header>
         <img src="images/user-stock.png" />
         <div>
@@ -22,7 +22,7 @@
                     }
                 }
             </div>
-            @if(Idea.Files.Count > 1)
+            @if (Idea.Files.Count > 1)
             {
                 <div class="arrows">
                     <button class="arrow-left" @onclick=previousFile><ArrowLeftIcon /></button>
@@ -49,8 +49,9 @@
     </footer>
 </div>
 
+<div class="modal-overlay"></div>
+
 @code {
-    [Parameter] public EventCallback<ProjectIdea> OnOpenFullView { get; set; }
     [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
 
     List<string> comments = new List<string>();
@@ -59,7 +60,7 @@
     Sparc2.Files.FileUpload currentFile;
 
     protected override void OnInitialized()
-    { 
+    {
         currentFile = Idea.Files.First(x => x != null);
     }
 
@@ -68,7 +69,8 @@
         if (Idea.Files.IndexOf(currentFile) == Idea.Files.Count - 1)
         {
             return;
-        } else
+        }
+        else
         {
             currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) + 1];
         }
@@ -79,16 +81,11 @@
         if (Idea.Files.IndexOf(currentFile) == 0)
         {
             return;
-        } else
+        }
+        else
         {
             currentFile = Idea.Files[Idea.Files.IndexOf(currentFile) - 1];
 
         }
-    }
-
-    void OpenFullView()
-    {
-        Console.WriteLine("opening full view");
-        OnOpenFullView.InvokeAsync();
     }
 }

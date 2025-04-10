@@ -6,12 +6,20 @@
 <article>
     @foreach (var idea in ideas)
     {
-        <IdeaCard Idea=@idea />
+        <IdeaCard Idea=@idea OnOpenFullView="OpenFullIdeaCard" />
+    }
+    @if (ShowFullIdeaCard)
+    {
+        <IdeaCardFull Idea=@CurrentIdea />
     }
 </article>
 
+@* <div class="modal-overlay"></div> *@
+
 @code {
     List<ProjectIdea> ideas = new();
+    bool ShowFullIdeaCard;
+    ProjectIdea? CurrentIdea;
 
     protected override void OnInitialized()
     {
@@ -22,5 +30,11 @@
         newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-3.jpg", newIdea.Id));
 
         ideas.Add(newIdea);
+    }
+
+    void OpenFullIdeaCard(ProjectIdea idea)
+    {
+        ShowFullIdeaCard = true;
+        CurrentIdea = idea;
     }
 }
