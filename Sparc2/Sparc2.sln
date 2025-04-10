@@ -5,6 +5,18 @@ VisualStudioVersion = 17.14.35906.104
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc2", "Sparc2\Sparc2.csproj", "{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blossom", "Blossom", "{F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Pouch", "..\..\blossom\Sparc.Blossom.Data.Pouch\Sparc.Blossom.Data.Pouch.csproj", "{9162969D-A82F-4230-97EC-11FA62D4C092}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom", "..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj", "{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Core", "..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj", "{AA5E56B3-B270-48EE-8963-C5E5E41A417A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Pouch.Server", "..\..\blossom\Sparc.Blossom.Data.Pouch.Server\Sparc.Blossom.Data.Pouch.Server.csproj", "{446FB4DF-99AC-4883-A291-85C5AADEADF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.ApiGenerator", "..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj", "{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +27,36 @@ Global
 		{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9162969D-A82F-4230-97EC-11FA62D4C092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9162969D-A82F-4230-97EC-11FA62D4C092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9162969D-A82F-4230-97EC-11FA62D4C092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9162969D-A82F-4230-97EC-11FA62D4C092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA5E56B3-B270-48EE-8963-C5E5E41A417A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA5E56B3-B270-48EE-8963-C5E5E41A417A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA5E56B3-B270-48EE-8963-C5E5E41A417A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA5E56B3-B270-48EE-8963-C5E5E41A417A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{446FB4DF-99AC-4883-A291-85C5AADEADF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{446FB4DF-99AC-4883-A291-85C5AADEADF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{446FB4DF-99AC-4883-A291-85C5AADEADF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{446FB4DF-99AC-4883-A291-85C5AADEADF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9162969D-A82F-4230-97EC-11FA62D4C092} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
+		{675CE70B-9C4B-41D2-8DA3-2A2CF703EEF8} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
+		{AA5E56B3-B270-48EE-8963-C5E5E41A417A} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
+		{446FB4DF-99AC-4883-A291-85C5AADEADF7} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
+		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE37A5-99D0-4C05-A3CD-36A058394C96}

@@ -11,11 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Sparc.Blossom" Version="9.0.0" />
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="compilerconfig.json" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Data.Pouch\Sparc.Blossom.Data.Pouch.csproj" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
   </ItemGroup>
 
 </Project>

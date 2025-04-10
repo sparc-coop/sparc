@@ -88,7 +88,12 @@ else if (CurrentStep == 1)
 
     private string HoverClass = "";
     void HandleDragEnter(DragEventArgs e) => HoverClass = "dragover";
-    void HandleDragLeave(DragEventArgs e) => HoverClass = "";    
+    void HandleDragLeave(DragEventArgs e) => HoverClass = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Api.ProjectIdeas.Create("Idea.Title", "Idea.Author", "Idea.Description");
+    }
 
     private async Task HandleValidSubmit()
     {
