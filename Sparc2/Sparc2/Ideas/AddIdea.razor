@@ -41,7 +41,7 @@ else if (CurrentStep == 1)
                         <article>
                             <img src="images/image-03.png" alt="File Icon" />
                             <div>
-                                <h4>@file.FileName</h4>
+                                <h2>@file.FileName</h2>
                                 <p>@(file.FileSize / (1024 * 1024)) MB</p>
                             </div>
                             <button @onclick="() => Remove(file)">x</button>

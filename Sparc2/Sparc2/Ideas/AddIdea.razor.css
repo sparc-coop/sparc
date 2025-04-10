@@ -37,6 +37,9 @@ form label ::deep textarea {
 form label:last-of-type {
   margin-bottom: 0;
 }
+form h2 {
+  font-size: 1.3rem;
+}
 form h3 {
   font-size: 1.2rem;
   font-weight: 600;
@@ -130,6 +133,9 @@ form section:last-of-type ul li article div {
   flex-direction: column;
   flex-grow: 1;
   gap: 2px;
+}
+form section:last-of-type ul li article div p {
+  font-size: 1.2rem;
 }
 form section:last-of-type ul li article div .file-name {
   font-weight: 600;

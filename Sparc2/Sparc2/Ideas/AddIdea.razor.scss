@@ -45,6 +45,10 @@ form {
         }
     }
 
+    h2 {
+        font-size: 1.3rem;
+    }
+
     h3 {
         font-size: 1.2rem;
         font-weight: 600;
@@ -149,6 +153,10 @@ form {
                         flex-direction: column;
                         flex-grow: 1;
                         gap: 2px;
+
+                        p {
+                            font-size: 1.2rem;
+                        }
 
                         .file-name {
                             font-weight: 600;
