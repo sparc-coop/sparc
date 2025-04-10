@@ -3,22 +3,23 @@
 function initScroll() {
     window.addEventListener('scroll', () => {
         var home = document.getElementById("home");
-        var heroText = document.getElementById("hero-text");
-        var textWidth = heroText.offsetWidth;
-        var mosaic = document.getElementById("mosaic-container");
-        var mosaicWidth = mosaic.offsetWidth;
-        var mosaicHeight = mosaic.offsetHeight;
-        const scrolledTo = window.scrollY + window.innerHeight;
-        const isReachBottom = document.body.scrollHeight === scrolledTo;
 
         if (home) {
+            var heroText = document.getElementById("hero-text");
+            var textWidth = heroText.offsetWidth;
+            var mosaic = document.getElementById("mosaic-container");
+            var mosaicWidth = mosaic.offsetWidth;
+            var mosaicHeight = mosaic.offsetHeight;
+            const scrolledTo = window.scrollY + window.innerHeight;
+            const isReachBottom = document.body.scrollHeight === scrolledTo;
             gsap.to("#hero-text", {
                 //scrollTrigger: {
                 //    scrub: 1,
                 //},
-                scale: 0,
-                x: textWidth / 2,
+                scale: 0.2,
+                x: -textWidth,
                 opacity: 0,
+                duration: 1.5,
             });
 
             gsap.to("#mosaic-container", {
@@ -26,11 +27,12 @@ function initScroll() {
                 //    scrub: 1,
                 //},
                 scale: 10,
-                x: -(mosaicWidth/2),
+                x: -(mosaicWidth / 2),
+                y: mosaicHeight / 2,
                 //y: mosaicHeight,
                 opacity: 0,
                 duration: 2,
-                ease: "power1.in"
+                ease: "power1.in",
             });
 
             gsap.to("#scroll-text", {
