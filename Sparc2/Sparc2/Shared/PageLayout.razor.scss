@@ -10,6 +10,7 @@ main {
     position: relative;
     margin: auto 0;
     z-index: 100;
+    animation: fadeIn 2s ease-in-out;
 }
 
 .background {
@@ -19,6 +20,7 @@ main {
     top: 0;
     left: 0;
     z-index: 1;
+    animation: fadeIn 2s ease-in-out;
 
     &-image {
         width: 100%;
@@ -39,5 +41,15 @@ main {
         left: 0;
         background: url('/images/background-noise.png') repeat;
         z-index: 2;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }
