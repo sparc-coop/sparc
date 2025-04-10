@@ -18,6 +18,7 @@
 
 @inject Sparc2.Ideas.IdeaService IdeaService
 
+@code {
     bool ShowFullIdeaCard;
     ProjectIdea? CurrentIdea;
 
@@ -28,7 +29,7 @@
 
     private void UpdateIdeas()
     {
-        InvokeAsync(StateHasChanged); 
+        InvokeAsync(StateHasChanged);
     }
 
     public void Dispose()
@@ -37,10 +38,10 @@
     }
 
     void OpenFullIdeaCard(ProjectIdea idea)
-{
-    ShowFullIdeaCard = true;
-    CurrentIdea = idea;
-}
+    {
+        ShowFullIdeaCard = true;
+        CurrentIdea = idea;
+    }
 
     // List<ProjectIdea> ideas = new();
 
@@ -54,6 +55,4 @@
 
     //     ideas.Add(newIdea);
     // }
-
-    
 }
