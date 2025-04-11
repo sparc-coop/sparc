@@ -64,9 +64,12 @@ else if (CurrentStep == 1)
     [Parameter] public EditContext EditContext { get; set; }
     [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
     [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }  
+    [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 
     public async Task HandleFileSelection(InputFileChangeEventArgs e)
     {  
+        await OnUploadStatusChanged.InvokeAsync(true);
+
         foreach (var file in e.GetMultipleFiles())
         {
             var uploaded = new Sparc2.Files.FileUpload(
@@ -91,6 +94,7 @@ else if (CurrentStep == 1)
         }
 
         await OnFilesChanged.InvokeAsync(UploadedFiles);
+        await OnUploadStatusChanged.InvokeAsync(false);
     }
 
     private void Remove(Sparc2.Files.FileUpload file)

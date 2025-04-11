@@ -102,6 +102,7 @@ button.primary-btn:active {
 }
 button.primary-btn:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 button.secondary-btn {
   padding: 8px 16px;

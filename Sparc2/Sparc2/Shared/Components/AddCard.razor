@@ -16,21 +16,22 @@
     <section>
         @if (SelectedHeaderButton == 0)
         {
-                <AddIdea CurrentStep="@CurrentStep"
-                         EditContext="@editContext"
-                         Idea="@Idea"
-                         UploadedFiles="@UploadedFiles"
-                         OnFilesChanged="@OnFilesChanged" />
+            <AddIdea CurrentStep="@CurrentStep"
+                     EditContext="@editContext"
+                     Idea="@Idea"
+                     UploadedFiles="@UploadedFiles"
+                     OnFilesChanged="@OnFilesChanged"
+                     OnUploadStatusChanged="@OnUploadStatusChanged" />
         }
         else
         {
-                <AddDonation CurrentStep="@CurrentStep"  />
+            <AddDonation CurrentStep="@CurrentStep" />
         }
     </section>
 
     <footer>
         <button class="secondary-btn" @onclick="OnBackOrCancel"><span>@BackOrCancelLabel</span></button>
-        <button class="primary-btn" @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
+        <button class="primary-btn" @onclick="OnNextOrSubmit" disabled="@IsUploading"><span>@NextOrSubmitLabel</span></button>
     </footer>
 </div>
 
@@ -40,6 +41,7 @@
     private int CurrentStep;
     private int SelectedHeaderButton; // 0 = Share, 1 = Donate
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
+    private bool IsUploading;
 
     private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
     private EditContext editContext;
@@ -95,6 +97,11 @@
         {
             CurrentStep = 0;
         }
+    }
+
+    private void OnUploadStatusChanged(bool uploading)
+    {
+        IsUploading = uploading;
     }
 
     private async Task SubmitIdea()
