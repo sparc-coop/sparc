@@ -13,10 +13,18 @@ form {
             font-size: 1.2rem;
             font-weight: 600;
             letter-spacing: -0.12px;
+            display: flex;
+
+            ::deep .validation-message {
+                color: var(--red);
+                font-weight: 500;
+                margin-left: 15px;
+            }
         }
 
         .required {
             color: var(--red);
+            margin-left: 2px;
         }
 
         ::deep input, ::deep textarea {
@@ -38,6 +46,10 @@ form {
             padding: 16px;
             height: 149px;
             resize: none;
+        }
+
+        ::deep input.invalid {
+            border-color: var(--red);
         }
 
         &:last-of-type {

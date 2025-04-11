@@ -5,13 +5,15 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
     </header>
     <EditForm EditContext="@EditContext">
+        <DataAnnotationsValidator />
+
         <label>
-            <span>Title <span class="required">*</span></span>
-            <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />
+            <span>Title <span class="required">*</span> <ValidationMessage For="@(() => Idea.Title)" /> </span>
+            <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />            
         </label>
         <label>
-            <span>Name <span class="required">*</span></span>
-            <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />
+            <span>Name <span class="required">*</span> <ValidationMessage For="@(() => Idea.Author)" /> </span>
+            <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />            
         </label>
         <label>
             <span>Description</span>
