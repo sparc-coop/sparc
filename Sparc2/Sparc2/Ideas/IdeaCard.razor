@@ -12,29 +12,13 @@
             <div class="images">
                 @if (Idea.FileUrls.Count < 1)
                 {
-                    <img class="active" src="images/Rectangle 13.png" />
+                    <img src="images/Rectangle 13.png" />
                 }
                 else
                 {
-                    @foreach (var fileUrl in Idea.FileUrls)
-                    {
-                        <img src="@fileUrl" class="@(currentFile == fileUrl ? "active" : "")" />
-                    }
+                    <img src="@currentFile" />                    
                 }
-            </div>
-            @if(Idea.FileUrls.Count > 1)
-            {
-                <div class="arrows">
-                    <button class="arrow-left" @onclick=previousFile><ArrowLeftIcon /></button>
-                    <button class="arrow-right" @onclick=nextFile><ArrowLeftIcon /></button>
-                </div>
-                <div class="indicators">
-                    @foreach (var file in Idea.FileUrls)
-                    {
-                        <div class="indicator @(currentFile == file ? "active" : "")"></div>
-                    }
-                </div>
-            }
+            </div>            
         </div>
         <div>
             <p>@Idea.Description</p>
@@ -65,25 +49,7 @@
             currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
             StateHasChanged();
         }
-    }
-
-    void nextFile()
-    {
-        var index = Idea.FileUrls.IndexOf(currentFile);
-        if (index < Idea.FileUrls.Count - 1)
-        {
-            currentFile = Idea.FileUrls[index + 1];
-        }
-    }
-
-    void previousFile()
-    {
-        var index = Idea.FileUrls.IndexOf(currentFile);
-        if (index > 0)
-        {
-            currentFile = Idea.FileUrls[index - 1];
-        }
-    }
+    }    
 
     void OpenFullView()
     {

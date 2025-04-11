@@ -63,11 +63,8 @@
   height: fit-content;
 }
 .card section .files .images img {
-  display: none;
-  width: 100%;
-}
-.card section .files .images img.active {
   display: block;
+  width: 100%;
 }
 .card section .files:hover .arrows {
   width: 100%;

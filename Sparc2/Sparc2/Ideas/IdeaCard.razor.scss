@@ -69,12 +69,8 @@
                 height: fit-content;
 
                 img {
-                    display: none;
-                    width: 100%;
-
-                    &.active {
-                        display: block;
-                    }
+                    display: block;
+                    width: 100%;                    
                 }
             }
 
