@@ -1,0 +1,14 @@
+﻿@page "/payment-success"
+@inject NavigationManager NavManager
+
+<h1>Payment Successful</h1>
+<p>Your payment has been processed successfully.</p>
+
+<button @onclick="GoHome">Return to Home</button>
+
+@code {
+    private void GoHome()
+    {
+        NavManager.NavigateTo("/");
+    }
+}

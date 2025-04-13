@@ -13,7 +13,7 @@
         <div class="progress" style="width: @(StepProgress + "%");"></div>
     </div>
 
-    <section>
+    <section style="overflow: scroll">
         @if (SelectedHeaderButton == 0)
         {
             <AddIdea CurrentStep="@CurrentStep" OnNext="OnNextOrSubmit" OnBack="OnBackOrCancel" />
@@ -25,8 +25,15 @@
     </section>
 
     <footer>
+        @* Always show Back/Cancel button *@
         <button @onclick="OnBackOrCancel"><span>@BackOrCancelLabel</span></button>
-        <button @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
+
+        @* --- Conditionally hide Next/Submit/Donate button --- *@
+        @* Hide if Donate(1) is selected AND we are on the Payment Step(1) *@
+        @if (!(SelectedHeaderButton == 1 && CurrentStep == 1))
+        {
+            <button @onclick="OnNextOrSubmit"><span>@NextOrSubmitLabel</span></button>
+        }
     </footer>
 </div>
 

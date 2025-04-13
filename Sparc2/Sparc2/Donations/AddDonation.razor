@@ -1,127 +1,279 @@
-﻿@if (CurrentStep == 0)
+﻿@inject IConfiguration Configuration
+@inject Sparc.Blossom.Payment.Stripe.StripePaymentService PaymentService
+@inject IJSRuntime JS
+@inject NavigationManager NavManager
+@using System.ComponentModel.DataAnnotations
+
+
+@implements IDisposable
+
+@if (_paymentSuccessful)
+{
+    <div class="payment-success">
+        <h2>Thank You!</h2>
+        <p>Your @(Donation.Frequency == "Monthly" ? "monthly donation setup" : "donation") was successful.</p>
+        <button class="btn btn-primary" @onclick="CloseComponent">Done</button>
+    </div>
+}
+else if (CurrentStep == 0)
 {
     <div>
         <h2>Be Part of Sparc</h2>
-        <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta  lacus. Libero purus sapien nulla commodo fringilla, sed efficitur. At  rutrum facilisis elementum per neque magna quis tincidunt. Faucibus  dignissim scelerisque penatibus lacinia, lacus luctus.</p>
+        <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta lacus.</p>
     </div>
-    <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
+    <EditForm Model="@Donation" OnValidSubmit="ProceedToPaymentStep">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
         <div class="field-group">
             <label>Donation frequency</label>
             <div class="btn-group">
-                <button type="button" class="@GetButtonClass(Donation.Frequency == "One time")" @onclick="@(() => SetFrequency("One time"))">
+                <button type="button" class="@GetFrequencyButtonClass("One time")" @onclick="@(() => SetFrequency("One time"))">
                     <CoinIcon /> <span>One time</span>
                 </button>
-
-                <button type="button" class="@GetButtonClass(Donation.Frequency == "Monthly")" @onclick="@(() => SetFrequency("Monthly"))">
+                <button type="button" class="@GetFrequencyButtonClass("Monthly")" @onclick="@(() => SetFrequency("Monthly"))">
                     <RefreshIcon /> <span>Monthly</span>
                 </button>
             </div>
         </div>
 
         <div class="field-group">
-            <label>Amount</label>
+            <label>Amount (USD)</label>
             <div class="amount-grid">
                 @foreach (var amount in PredefinedAmounts)
                 {
-                    <button type="button" class="@GetButtonClass(SelectedAmount == amount)" @onclick="() => SetAmount(amount)">$@amount</button>
+                    <button type="button" class="@GetAmountButtonClass(amount)" @onclick="() => SetAmount(amount)">$@amount</button>
                 }
                 <div class="currency-input">
                     <CurrencyIcon />
-                    <InputNumber @bind-Value="CustomAmount" placeholder="0" @onfocus="() => SetAmount(null)" @oninput="() => SetAmount(null)" />
+                    <InputNumber @bind-Value="Donation.Amount" placeholder="Custom" TValue="decimal" @bind-Value:after="HandleCustomAmountInput" min="1" step="0.01" />
                 </div>
+                <ValidationMessage For="@(() => Donation.Amount)" />
             </div>
         </div>
+
+        <button type="submit" class="btn btn-primary" disabled="@(Donation.Amount <= 0)">Proceed to Payment</button>
     </EditForm>
 }
-else if (CurrentStep == 1)
+else if (CurrentStep == 1 && !string.IsNullOrEmpty(_clientSecret))
 {
     <h2>Payment Method</h2>
-    <div class="payment-form">
-        <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
-            <label>
-                <span>Name <span class="required">*</span></span>
-                <InputText placeholder="Name on the card" @bind-Value="Donation.Payment.CardHolderName" />
-            </label>
-            <label>
-                <span>Card Number <span class="required">*</span></span>
-                <InputText placeholder="Card number" @bind-Value="Donation.Payment.CardNumber" />
-            </label>
-            <div>
-                <label>
-                    <span>Expiry Date <span class="required">*</span></span>
-                    <InputText placeholder="MM/YY" @bind-Value:format="MM/yy" @bind-Value="Donation.Payment.ExpiryDate" />
-                </label>
-                <label>
-                    <span>CVV <span class="required">*</span></span>
-                    <InputText placeholder="***" @bind-Value="Donation.Payment.CVV" />
-                </label>
-            </div>
-            <label>
-                <span>Email Address <span class="required">*</span></span>
-                <InputText placeholder="Email" @bind-Value="Donation.Payment.EmailAdress" />
-            </label>
-            <label>
-                <span>Billing Address Line 1 <span class="required">*</span></span>
-                <InputText placeholder="Billing Address" @bind-Value="Donation.Payment.BillingAddress" />
-            </label>
-            <label>
-                <span>Billing Address Line 2 <span class="required">*</span></span>
-                <InputText placeholder="Billing Address" @bind-Value="Donation.Payment.BillingAddress" />
-            </label>
-        </EditForm>
-    </div>
+    <p>Please enter your payment details below.</p>
+    <p>Amount: @Donation.Amount.ToString("C", System.Globalization.CultureInfo.GetCultureInfo("en-US")) (@Donation.Frequency)</p>
+
+    <form id="payment-form">
+        <div id="payment-element">
+            <p>Loading payment form...</p>
+        </div>
+        <button id="submit-button" type="submit" class="btn btn-success">
+            @(Donation.Frequency == "Monthly" ? "Setup Monthly Donation" : $"Pay {Donation.Amount:C}")
+        </button>
+        <div id="error-message" style="color:red; margin-top: 10px;"></div>
+    </form>
+    <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button>
 }
+else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
+{
+    <h2>Processing...</h2>
+    <p>Preparing secure payment form...</p>
+    <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button>
+}
+
 
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
+    [Parameter] public EventCallback OnComplete { get; set; }
 
-    private readonly int[] PredefinedAmounts = { 5, 25, 50, 60, 75, 100 };
-
-    private UserDonation Donation = new UserDonation(0, string.Empty, new PaymentInfo(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
-
-    private decimal? SelectedAmount { get; set; } = null;
-    private decimal? CustomAmount
+    public class UserDonation
     {
-        get => SelectedAmount == null ? Donation.Amount : null;
-        set
+        [Required]
+        [Range(1.00, double.MaxValue, ErrorMessage = "Donation amount must be at least $1.00")]
+        public decimal Amount { get; set; }
+
+        [Required]
+        public string Frequency { get; set; } = "One time";
+    }
+
+    private readonly decimal[] PredefinedAmounts = { 5, 25, 50, 100, 250, 500 };
+    private UserDonation Donation = new UserDonation();
+    private decimal? _selectedPredefinedAmount = null;
+
+    private string? _clientSecret;
+    private string? _publishableKey;
+    private bool _stripeInitialized = false;
+    private int _previousStep = -1;
+    private string? _baseUrl;
+
+    private bool _paymentSuccessful = false;
+    private DotNetObjectReference<AddDonation>? dotNetHelper;
+
+    protected override void OnInitialized()
+    {
+        _publishableKey = Configuration["Stripe:PublishableKey"];
+        if (string.IsNullOrEmpty(_publishableKey))
         {
-            if (value != null)
-            {
-                SetAmount(null);
-            }
-            Donation.Amount = value ?? 0;
-            StateHasChanged();
+            Console.Error.WriteLine("Stripe Publishable Key not configured!");
         }
+        _previousStep = CurrentStep;
+        _baseUrl = NavManager.BaseUri;
+        dotNetHelper = DotNetObjectReference.Create(this);
     }
 
     private void SetFrequency(string frequency)
     {
         Donation.Frequency = frequency;
-    }
-
-    private void SetAmount(decimal? amount)
-    {
-        SelectedAmount = amount;
-        Donation.Amount = amount ?? 0;
         StateHasChanged();
     }
 
-    private string GetButtonClass(bool isSelected)
+    private void SetAmount(decimal predefinedAmount)
     {
-        return isSelected ? "selected" : "";
+        Donation.Amount = predefinedAmount;
+        _selectedPredefinedAmount = predefinedAmount;
+        StateHasChanged();
     }
 
-    private async Task HandleValidSubmit()
+    private void HandleCustomAmountInput()
     {
-        if (CurrentStep == 0)
+        _selectedPredefinedAmount = null;
+    }
+
+    private string GetFrequencyButtonClass(string frequency)
+    {
+        return Donation.Frequency == frequency ? "btn selected" : "btn";
+    }
+
+    private string GetAmountButtonClass(decimal amount)
+    {
+        return _selectedPredefinedAmount == amount && Donation.Amount == amount ? "btn selected" : "btn";
+    }
+
+    private async Task ProceedToPaymentStep()
+    {
+        Console.WriteLine($"Proceeding to payment: Amount={Donation.Amount}, Frequency={Donation.Frequency}");
+        await OnNext.InvokeAsync();
+    }
+
+    public void Dispose()
+    {
+        dotNetHelper?.Dispose();
+    }
+
+    private async Task CloseComponent()
+    {
+        Console.WriteLine("CloseComponent called after success.");
+    }
+
+    [JSInvokable]
+    public Task HandlePaymentSuccess()
+    {
+        _paymentSuccessful = true;
+        _clientSecret = null;
+        _stripeInitialized = false;
+        Console.WriteLine("Payment successful signal received from JavaScript.");
+        OnComplete.InvokeAsync();
+        return InvokeAsync(StateHasChanged);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (_previousStep == 1 && CurrentStep == 0)
         {
-            await OnNext.InvokeAsync();
+            _paymentSuccessful = false;
+            _clientSecret = null;
         }
-        else
+
+        if (CurrentStep == 1 && _previousStep == 0 && !_paymentSuccessful)
         {
-            // await Api.UserDonations.Create(Donation.Amount, Donation.Frequency, Donation.Payment);
+            Console.WriteLine("Transitioned to Step 1. Initiating PaymentIntent creation.");
+            _stripeInitialized = false;
+            _clientSecret = null;
+            await InitiateStripePayment();
         }
+        _previousStep = CurrentStep;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (CurrentStep == 1 && !_paymentSuccessful && !string.IsNullOrEmpty(_clientSecret) && !string.IsNullOrEmpty(_publishableKey) && !_stripeInitialized)
+        {
+            Console.WriteLine("ClientSecret received, initializing Stripe Payment Element via JS interop.");
+            _stripeInitialized = true;
+            try
+            {
+                await JS.InvokeVoidAsync(
+                    "stripeIntegration.initPaymentForm",
+                    _clientSecret,
+                    _publishableKey,
+                    dotNetHelper,
+                    _baseUrl
+                );
+                Console.WriteLine("Stripe JS initialization invoked.");
+            }
+            catch (JSException jsEx)
+            {
+                Console.Error.WriteLine($"Error invoking JS function: {jsEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"General error during Stripe init: {ex.Message}");
+            }
+        }
+    }
+
+    private async Task InitiateStripePayment()
+    {
+        if (Donation.Amount <= 0)
+        {
+            Console.Error.WriteLine("Invalid amount for payment intent.");
+            await GoBack();
+            return;
+        }
+
+        try
+        {
+            long amountInCents = (long)(Donation.Amount * 100);
+            string? setupFutureUsage = null;
+
+            var metadata = new Dictionary<string, string> {
+                { "DonationFrequency", Donation.Frequency },
+                { "DonationAmount", Donation.Amount.ToString() }
+            };
+
+            if (Donation.Frequency == "Monthly")
+            {
+                setupFutureUsage = "off_session";
+                Console.WriteLine("Creating PaymentIntent with SetupFutureUsage for monthly donation.");
+            }
+            else
+            {
+                Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
+            }
+
+            var intent = await PaymentService.CreatePaymentIntentAsync(
+                amount: amountInCents,
+                currency: "usd", 
+                setupFutureUsage: setupFutureUsage,
+                metadata: metadata
+            );
+
+            _clientSecret = intent.ClientSecret;
+            Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error creating PaymentIntent: {ex.Message}");
+            _clientSecret = null;
+            StateHasChanged();
+        }
+    }
+
+    private async Task GoBack()
+    {
+        _clientSecret = null;
+        _stripeInitialized = false;
+        await OnBack.InvokeAsync();
     }
 }
