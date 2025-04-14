@@ -3,10 +3,12 @@
 
 <PageTitle>Ideas | Sparc</PageTitle>
 
-<article>
+<article class="explore draggable">
     @foreach (var idea in ProjectIdeas)
     {
-        <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
+        <div class="card-container draggable">
+            <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
+        </div>
     }
     @if (ShowFullIdeaCard)
     {
@@ -17,6 +19,7 @@
 @* <div class="modal-overlay"></div> *@
 
 @inject Sparc2.Ideas.IdeaService IdeaService
+@inject IJSRuntime Js
 
 @code {
     bool ShowFullIdeaCard;
@@ -27,6 +30,11 @@
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
         ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Js.InvokeVoidAsync("findCenter");
     }
 
     private void UpdateIdeas()
