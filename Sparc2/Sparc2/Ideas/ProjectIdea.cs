@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bogus;
+using System.ComponentModel.DataAnnotations;
 
 namespace Sparc2.Ideas;
 
@@ -26,5 +27,18 @@ public class ProjectIdea : BlossomEntity<string>
     {
         Title = title;
         Description = description;
+    }
+
+    internal static IEnumerable<ProjectIdea> Generate(int qty)
+    {
+        var faker = new Faker<ProjectIdea>()
+            .CustomInstantiator(f => new ProjectIdea(
+                f.Lorem.Sentence(3),
+                f.Person.FullName,
+                f.Lorem.Paragraph(),
+                f.Make(3, () => f.Image.PicsumUrl()).ToList() 
+            ));
+
+        return faker.Generate(qty);
     }
 }
