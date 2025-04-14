@@ -24,8 +24,8 @@ builder.Services.AddSingleton<IdeaService>();
 
 var app = builder.Build();
 
-using var scope = app.Services.CreateScope();
-var ideaRepository = scope.ServiceProvider.GetRequiredService<IRepository<ProjectIdea>>();
-await ideaRepository.AddAsync(ProjectIdea.Generate(20));
+//using var scope = app.Services.CreateScope();
+//var ideaRepository = scope.ServiceProvider.GetRequiredService<IRepository<ProjectIdea>>();
+//await ideaRepository.AddAsync(ProjectIdea.Generate(20));
 
 await app.RunAsync<Html>(); 

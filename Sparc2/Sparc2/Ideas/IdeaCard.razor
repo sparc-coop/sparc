@@ -10,7 +10,7 @@
         <h2>@Idea.Title</h2>
         <div class="files">
             <div class="images">
-                @if (Idea.FileUrls.Count < 1)
+                @if (Idea.FileUrls?.Count < 1)
                 {
                     <img src="images/Rectangle 13.png" />
                 }
@@ -44,7 +44,7 @@
 
     protected override void OnInitialized()
     {
-        if (Idea.FileUrls.Count > 0)
+        if (Idea.FileUrls?.Count > 0)
         {
             currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
             StateHasChanged();
