@@ -11,14 +11,14 @@ nav .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 32px;
 }
 nav .right {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 nav button {
-  padding: 8px 16px;
+  padding: 8px 16px 8px 14px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 20px;
@@ -73,7 +73,7 @@ nav button {
   opacity: 0.6;
 }
 .other-nav button {
-  height: 34px;
+  height: 32px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -90,7 +90,7 @@ nav button {
   background: rgba(255, 252, 246, 0.1);
 }
 .other-nav button.add-btn {
-  background: var(--yellow-50);
+  background: var(--white);
   border-radius: 20px;
   transition: 0.1s all ease-in-out;
 }

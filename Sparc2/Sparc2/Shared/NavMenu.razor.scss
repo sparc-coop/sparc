@@ -11,16 +11,16 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        gap: 32px;
     }
 
     .right {
         display: flex;
-        gap: 8px;
+        gap: 4px;
     }
 
     button {
-        padding: 8px 16px;
+        padding: 8px 16px 8px 14px;
         background: transparent;
         border: 1px solid transparent;
         border-radius: 20px;
@@ -86,7 +86,7 @@
     }
 
     button {
-        height: 34px;
+        height: 32px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -106,7 +106,7 @@
         }
 
         &.add-btn {
-            background: var(--yellow-50);
+            background: var(--white);
             border-radius: 20px;
             transition: 0.1s all ease-in-out;
 
