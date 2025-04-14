@@ -102,7 +102,7 @@ function findCenter() {
         if (width > 0 && height > 0) {       
             width = background.offsetWidth;
             height = background.offsetHeight;
-            centerX = width / 4;
+            centerX = width / 8;
             centerY = height / 4;
 
             ScrollToCenter(centerX, centerY);
@@ -111,7 +111,7 @@ function findCenter() {
             background = findBackground();
             width = background.offsetWidth;
             height = background.offsetHeight;
-            centerX = width / 4;
+            centerX = width / 8;
             centerY = height / 4;
 
             console.log("Width: " + width);
