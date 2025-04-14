@@ -1,14 +1,4 @@
 ﻿<div class="modal add-card">
-    <div class="card-nav">
-        <button class="secondary-btn @GetButtonClass(0)" @onclick="() => SelectHeaderButton(0)">
-            <LightbulbIcon /> <span>Share</span>
-        </button>
-
-        <button class="secondary-btn @GetButtonClass(1)" @onclick="() => SelectHeaderButton(1)">
-            <DollarIcon /> <span>Donate</span>
-        </button>
-    </div>
-
     <div class="progress-bar">
         <div class="progress" style="width: @(StepProgress + "%");"></div>
     </div>
@@ -38,33 +28,24 @@
 @inject Sparc2.Ideas.IdeaService IdeaService
 
 @code {
-    private int CurrentStep;
-    private int SelectedHeaderButton; // 0 = Share, 1 = Donate
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public int SelectedHeaderButton { get; set; }
+
+    private int CurrentStep;    
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
     private bool IsUploading;
 
     private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
     private EditContext editContext;
-
-    private List<Sparc2.Files.FileUpload> UploadedFiles = new();
-
-    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    private List<Sparc2.Files.FileUpload> UploadedFiles = new();    
 
     protected override void OnInitialized()
     {
         editContext = new EditContext(Idea);
-    }
-
-    private string GetButtonClass(int index) => index == SelectedHeaderButton ? "active" : "";
+    }    
 
     private string BackOrCancelLabel => CurrentStep == 0 ? "Cancel" : "Back";
     private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : (SelectedHeaderButton == 0 ? "Post" : "Donate");
-
-    private void SelectHeaderButton(int index)
-    {
-        SelectedHeaderButton = index;
-        CurrentStep = 0;
-    }
 
     private async Task OnNextOrSubmit()
     {

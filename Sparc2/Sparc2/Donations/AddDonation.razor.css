@@ -1,9 +1,42 @@
-﻿form label {
+﻿.form ::deep form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  height: 100%;
+}
+.form ::deep form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   font-size: 1.2rem;
   font-weight: 600;
   letter-spacing: -0.12px;
+  flex-grow: 1;
 }
-form button {
+.form ::deep form label span {
+  display: flex;
+}
+.form ::deep form label span.required {
+  color: var(--red);
+}
+.form ::deep form label textarea,
+.form ::deep form label input {
+  border-radius: 16px;
+  border: 1px solid var(--gray-100);
+  background: var(--yellow-50);
+}
+.form ::deep form label textarea {
+  padding: 16px;
+  resize: none;
+  height: 100%;
+  flex-grow: 1;
+}
+.form ::deep form label input {
+  padding: 8px 16px;
+  height: 22px;
+}
+.form ::deep form button {
   height: 40px;
   padding: 8px 16px 8px 14px;
   border-radius: 20px;
@@ -11,12 +44,12 @@ form button {
   font-weight: 600;
   font-size: 1.6rem;
 }
-form button.selected {
-  box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
+.form ::deep form button.selected {
+  box-shadow: 0px 0px 8px rgba(178, 116, 250, 0.25);
   border-color: var(--purple-900);
   color: var(--purple-900);
 }
-form button.selected ::deep svg path {
+.form ::deep form button.selected ::deep svg path {
   stroke: var(--purple-900);
 }
 
@@ -26,15 +59,27 @@ form button.selected ::deep svg path {
   justify-content: center;
 }
 .donation-form ::deep form {
-  width: 100%;
-  height: fit-content;
-  margin: auto 0;
-  display: flex;
-  flex-direction: column;
   gap: 24px;
 }
-.donation-form ::deep form input {
-  width: calc(100% - 24px);
+
+.payment-form {
+  overflow-y: auto;
+}
+.payment-form ::deep form {
+  gap: 12px;
+}
+.payment-form ::deep form .two-slots {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+}
+.payment-form ::deep form .two-slots label {
+  flex: 1;
+  min-width: 0;
+}
+.payment-form ::deep form .two-slots:first-of-type {
+  margin: 12px 0;
 }
 
 .field-group {
@@ -45,15 +90,15 @@ form button.selected ::deep svg path {
 
 .btn-group {
   display: flex;
-  gap: 4px;
   flex-direction: row;
+  gap: 4px;
 }
 .btn-group button {
   flex: 1;
   justify-content: center;
   display: flex;
-  gap: 4px;
   align-items: center;
+  gap: 4px;
 }
 
 .amount-grid {
@@ -83,69 +128,41 @@ form button.selected ::deep svg path {
 .amount-grid .currency-input ::deep input {
   height: 22px;
   padding: 8px 12px;
-  -moz-appearance: textfield;
   border-radius: 16px;
   border: 1px solid var(--gray-100);
   background: var(--yellow-50);
   text-align: right;
+  -moz-appearance: textfield;
+  width: calc(100% - 24px);
+}
+.amount-grid .currency-input ::deep input::placeholder {
+  color: var(--gray-600);
+  font-weight: 450;
 }
 .amount-grid .currency-input ::deep input::-webkit-inner-spin-button, .amount-grid .currency-input ::deep input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.amount-grid .currency-input ::deep input :deep(input::placeholder) {
-  color: var(--gray-600);
-  font-weight: 450;
-}
-
-.currency-input:focus-within ::deep input {
+.amount-grid .currency-input:focus-within ::deep input {
   outline: none;
-  border: 1px solid var(--purple-900);
+  border-color: var(--purple-900);
 }
-.currency-input:focus-within ::deep input :deep(input::placeholder) {
+.amount-grid .currency-input:focus-within ::deep input::placeholder {
   color: var(--purple-900);
 }
-.currency-input:focus-within ::deep svg path {
+.amount-grid .currency-input:focus-within ::deep svg path {
   stroke: var(--purple-900);
 }
-.currency-input:focus-within :deep(input::placeholder) {
-  color: var(--purple-900);
-}
 
-.payment-form {
-  overflow-y: auto;
-}
-.payment-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.payment-form label span {
-  font-size: 1.2rem;
-  font-weight: 600;
-  letter-spacing: -0.12px;
-}
-.payment-form label .required {
-  color: var(--red);
-}
-.payment-form label ::deep input {
-  border-radius: 16px;
-  border: 1px solid var(--gray-100);
-  background: var(--yellow-50);
-  padding: 8px 16px;
-  height: 22px;
-}
-.payment-form label:last-of-type {
+::deep form > *:last-child {
   margin-bottom: 0;
 }
-.payment-form .expiration {
-  display: flex;
-  gap: 12px;
-  flex-direction: row;
-  width: 100%;
-}
-.payment-form .expiration label {
-  flex: 1;
-  min-width: 0;
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

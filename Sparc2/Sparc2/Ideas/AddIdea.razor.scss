@@ -1,60 +1,72 @@
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px !important;
+.form {
+    &.first-step-idea {
+        ::deep form {
+            gap: 16px;
+        }
+    }
 
-    label {
+    ::deep form {
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        margin-bottom: 16px;
+        gap: 24px;
 
-        span {
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: -0.12px;
+        label {
             display: flex;
+            flex-direction: column;
+            gap: 8px;
 
-            ::deep .validation-message {
+            span {
+                font-size: 1.2rem;
+                font-weight: 600;
+                letter-spacing: -0.12px;
+                display: flex;
+
+                .validation-message {
+                    color: var(--red);
+                    font-weight: 500;
+                    margin-left: 15px;
+                }
+            }
+
+            .required {
                 color: var(--red);
-                font-weight: 500;
-                margin-left: 15px;
+                margin-left: 2px;
+            }
+
+            input, textarea {
+                border-radius: 16px;
+                border: 1px solid var(--gray-100);
+                background: var(--yellow-50);
+            }
+
+            input {
+                padding: 8px 16px;
+                height: 22px;
+
+                &[type=file] {
+                    display: none;
+                }
+
+                &.invalid {
+                    border-color: var(--red);
+                }
+            }
+
+            textarea {
+                padding: 16px;
+                height: 149px;
+                resize: none;
+            }
+
+            &:last-of-type {
+                margin-bottom: 0;
             }
         }
+    }
 
-        .required {
-            color: var(--red);
-            margin-left: 2px;
-        }
-
-        ::deep input, ::deep textarea {
-            border-radius: 16px;
-            border: 1px solid var(--gray-100);
-            background: var(--yellow-50);
-        }
-
-        ::deep input {
-            padding: 8px 16px;
-            height: 22px;
-
-            &[type=file] {
-                display: none;
-            }
-        }
-
-        ::deep textarea {
-            padding: 16px;
-            height: 149px;
-            resize: none;
-        }
-
-        ::deep input.invalid {
-            border-color: var(--red);
-        }
-
-        &:last-of-type {
-            margin-bottom: 0;
-        }
+    h2, h3, h4, h5 {
+        letter-spacing: -0.12px;
+        margin-bottom: 8px;
     }
 
     h2 {
@@ -64,21 +76,16 @@ form {
     h3 {
         font-size: 1.2rem;
         font-weight: 600;
-        letter-spacing: -0.12px;
-        margin-bottom: 8px;
     }
 
     h4 {
         font-size: 1.6rem;
         font-weight: 600;
-        letter-spacing: -0.12px;
-        margin-bottom: 8px;
     }
 
     h5 {
         font-size: 1.4rem;
         font-weight: 600;
-        letter-spacing: -0.12px;
     }
 
     section:first-of-type {
@@ -125,7 +132,6 @@ form {
     }
 
     section:last-of-type {
-        margin-top: 20px;
         overflow-y: auto;
 
         ul {
@@ -156,7 +162,7 @@ form {
                     img {
                         border-radius: 10px;
                         background: var(--yellow-50);
-                        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+                        box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
                         padding: 4px;
                     }
 
@@ -166,17 +172,13 @@ form {
                         flex-grow: 1;
                         gap: 2px;
 
-                        p {
-                            font-size: 1.2rem;
-                        }
-
                         .file-name {
                             font-weight: 600;
                             font-size: 14px;
                             color: var(--gray-900);
                         }
 
-                        .file-size {
+                        .file-size, p {
                             font-size: 12px;
                             color: var(--gray-900);
                         }
@@ -184,12 +186,11 @@ form {
 
                     button {
                         border: 1px solid transparent;
-                        background: transparent;
+                        background: var(--yellow-50);
                         width: 24px;
                         height: 24px;
                         padding: 4px 10px;
                         border-radius: 50px;
-                        background: var(--yellow-50);
                         cursor: pointer;
                     }
                 }
