@@ -8,12 +8,10 @@ public class PaymentInfo
     public string CVV { get; set; } 
     public string EmailAdress { get; set; }
     public string BillingAddress { get; set; }
-    public string City { get; set; }
-    public string ZipCode { get; set; }
     public string DonationId { get; set; }
     public UserDonation Donation { get; set; }
 
-    public PaymentInfo(string cardHolderName, string cardNumber, string expiryDate, string cvv, string emailAdress, string billingAddress, string city, string zipCode, string donationId)
+    public PaymentInfo(string cardHolderName, string cardNumber, string expiryDate, string cvv, string emailAdress, string billingAddress, string donationId)
     {
         CardHolderName = cardHolderName;
         CardNumber = cardNumber;
@@ -21,8 +19,6 @@ public class PaymentInfo
         CVV = cvv;
         EmailAdress = emailAdress;
         BillingAddress = billingAddress;
-        City = city;
-        ZipCode = zipCode;
         DonationId = donationId;
     }   
 }

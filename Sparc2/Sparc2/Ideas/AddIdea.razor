@@ -4,62 +4,58 @@
         <h2>Be Part of Sparc</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
     </header>
-    <div class="form first-step-idea">
-        <EditForm EditContext="@EditContext">
-            <DataAnnotationsValidator />
+    <EditForm EditContext="@EditContext">
+        <DataAnnotationsValidator />
 
-            <label>
-                <span>Title <span class="required">*</span> <ValidationMessage For="@(() => Idea.Title)" /> </span>
-                <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />
-            </label>
-            <label>
-                <span>Name <span class="required">*</span> <ValidationMessage For="@(() => Idea.Author)" /> </span>
-                <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />
-            </label>
-            <label>
-                <span>Description</span>
-                <InputTextArea placeholder="Text" @bind-Value="Idea.Description" />
-            </label>
-        </EditForm>
-    </div>
+        <label>
+            <span>Title <span class="required">*</span> <ValidationMessage For="@(() => Idea.Title)" /> </span>
+            <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />            
+        </label>
+        <label>
+            <span>Name <span class="required">*</span> <ValidationMessage For="@(() => Idea.Author)" /> </span>
+            <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />            
+        </label>
+        <label>
+            <span>Description</span>
+            <InputTextArea placeholder="Text" @bind-Value="Idea.Description" />
+        </label>
+    </EditForm>
 }
 else if (CurrentStep == 1)
 {
-    <div class="form">
-        <EditForm EditContext="@EditContext">
-            <section>
-                <h3>Share files (Optional)</h3>
+    <EditForm EditContext="@EditContext">
+        <section>
+            <h3>Share files (Optional)</h3>
+            <div>
                 <div>
-                    <div>
-                        Upload Files
-                        <InputFile OnChange="HandleFileSelection" multiple />
-                    </div>
+                    Upload Files
+                    <InputFile OnChange="HandleFileSelection" multiple />
                 </div>
-            </section>
+            </div>            
+        </section>
 
-            <section>
-                <h3>Uploaded list (@UploadedFiles.Count)</h3>
-                <ul>
-                    @foreach (var file in UploadedFiles)
-                    {
-                        <li>
-                            <article>
-                                <img src="images/image-03.png" alt="File Icon" />
-                                <div>
-                                    <h2>@file.FileName</h2>
-                                    <p>@(file.FileSize / (1024 * 1024)) MB</p>
-                                </div>
-                                <button @onclick="() => Remove(file)">x</button>
-                            </article>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: @file.Progress%"></div>
+        <section>
+            <h3>Uploaded list (@UploadedFiles.Count)</h3>
+            <ul>
+                @foreach (var file in UploadedFiles)
+                {
+                    <li>
+                        <article>
+                            <img src="images/image-03.png" alt="File Icon" />
+                            <div>
+                                <h2>@file.FileName</h2>
+                                <p>@(file.FileSize / (1024 * 1024)) MB</p>
                             </div>
-                        </li>
-                    }
-                </ul>
-            </section>
-        </EditForm>
-    </div>
+                            <button @onclick="() => Remove(file)">x</button>
+                        </article>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: @file.Progress%"></div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </section>
+    </EditForm>
 }
 
 @inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
@@ -69,11 +65,11 @@ else if (CurrentStep == 1)
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
     [Parameter] public EditContext EditContext { get; set; }
     [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
-    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
+    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }  
     [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 
     public async Task HandleFileSelection(InputFileChangeEventArgs e)
-    {
+    {  
         await OnUploadStatusChanged.InvokeAsync(true);
 
         foreach (var file in e.GetMultipleFiles())

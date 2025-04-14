@@ -7,7 +7,6 @@
   border-radius: 16px;
   background: var(--yellow-50);
   box-shadow: 4px 4px 16px rgba(63, 24, 5, 0.25);
-  gap: 24px;
 }
 .add-card .card-nav {
   display: flex;
@@ -47,7 +46,7 @@
 .add-card .progress-bar {
   height: 2px;
   background: var(--purple-100);
-  /*margin: 0 0 24px 0;*/
+  margin: 24px 0;
 }
 .add-card .progress-bar .progress {
   height: 2px;
@@ -75,11 +74,11 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  max-height: 512px;
+  max-height: 448px;
   gap: 24px;
 }
 .add-card footer {
   display: flex;
   justify-content: space-between;
-  /*margin-top: 34px;*/
+  margin-top: 34px;
 }

@@ -6,7 +6,8 @@
                 <SparcLogo />
             </div>
             <div class="right">
-                <button id="ideas-btn" class="secondary-btn">Ideas</button>
+                <button id="ideas-btn" class="secondary-btn" @* @onclick='() => Navigate("/ideas")' *@>Ideas</button>
+                @* <button class="secondary-btn">Button</button> *@
             </div>
         }
         else
@@ -18,8 +19,9 @@
                 <input type="text" placeholder="Search" class="input-text" />
             </div>
             <div class="right">
-                <button class="add-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></button>
-                <button class="add-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></button>
+                <button><ExploreIcon /> <span>Explore</span></button>
+                <button><FilterIcon /> <span>Filter</span></button>
+                <button class="add-btn" @onclick="ToggleAddCard"><AddIcon /> <span>Add</span></button>
             </div>
         }
     </div>
@@ -28,24 +30,22 @@
 @if (ShowAddCard)
 {
     <div class="modal-overlay" @onclick:stopPropagation>
-        <AddCard OnClose="CloseAddCard" SelectedHeaderButton="@SelectedHeaderButton" />
+        <AddCard OnClose="CloseAddCard" />
     </div>
 }
 
 @code {
     private bool ShowAddCard = false;
     private bool IsHomePage => Nav.Uri.EndsWith("/");
-    private int SelectedHeaderButton = 0;
 
     private void Navigate(string path)
     {
         Nav.NavigateTo(path);
     }
 
-    private void OpenAddCard(int headerIndex)
+    private void ToggleAddCard()
     {
-        SelectedHeaderButton = headerIndex;
-        ShowAddCard = true;
+        ShowAddCard = !ShowAddCard;
     }
 
     private void CloseAddCard(bool shouldClose)
@@ -53,5 +53,10 @@
         if (shouldClose)
             ShowAddCard = false;
     }
+
+    // private void CancelAddCard()
+    // {
+    //     
+    // }
 }
 
