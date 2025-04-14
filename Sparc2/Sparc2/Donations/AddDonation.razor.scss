@@ -1,32 +1,53 @@
-﻿div {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    h2 {
-        color: var(--gray-900);
-        font-size: 2.133rem;
+﻿form {
+    label {
+        font-size: 1.2rem;
         font-weight: 600;
-        line-height: 110%;
-        letter-spacing: -0.427px;
+        letter-spacing: -0.12px;
+    }
 
-        &:last-of-type {
-            margin-bottom: 24px;
+    button {
+        height: 40px;
+        padding: 8px 16px 8px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1.6rem;
+
+        &.selected {
+            box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
+            border-color: var(--purple-900);
+            color: var(--purple-900);
+
+            ::deep svg path {
+                stroke: var(--purple-900);
+            }
         }
     }
 }
 
-p {
-    color: var(--gray-600);
-    font-size: 1.4rem;
-    font-weight: 450;
-    line-height: 120%;
-    margin-bottom: 24px;
+.donation-form {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+    ::deep form {
+        width: 100%;
+        height: fit-content;
+        margin: auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        input {
+            width: calc(100% - 24px);
+        }
+    }
 }
 
-.field-group:first-of-type {
-    margin-bottom: 24px;
-    margin-top: 30px;
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .btn-group {
@@ -40,42 +61,6 @@ p {
         display: flex;
         gap: 4px;
         align-items: center;
-    }
-
-    ::deep svg path {
-        stroke: var(--gray-600);
-    }
-}
-
-label {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: -0.12px;
-}
-
-button {
-    height: 40px;
-    padding: 8px 16px 8px 14px;
-    border-radius: 20px;
-    border: 1px solid var(--gray-100);
-    background: var(--yellow-50);
-    cursor: pointer;
-    color: var(--gray-600);
-    font-weight: 600;
-    font-size: 16px;
-
-    &:hover {
-        border-color: var(--purple-800);
-    }
-
-    &.selected {
-        box-shadow: 0px 0px 8px 0px rgba(178, 116, 250, 0.25);
-        border-color: var(--purple-900);
-        color: var(--purple-900);
-
-        ::deep svg path {
-            stroke: var(--purple-900);
-        }
     }
 }
 
@@ -149,7 +134,7 @@ button {
 }
 
 .payment-form {
-    overflow-y: auto; 
+    overflow-y: auto;
 
     label {
         display: flex;
@@ -180,7 +165,7 @@ button {
         }
     }
 
-    div {
+    .expiration {
         display: flex;
         gap: 12px;
         flex-direction: row;

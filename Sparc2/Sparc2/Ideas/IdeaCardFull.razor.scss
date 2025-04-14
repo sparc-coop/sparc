@@ -1,10 +1,15 @@
-.card {
-    width: 332px;
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    width: 501px;
     height: fit-content;
+    max-height: 732px;
     padding: 24px;
     border-radius: 16px;
     background: var(--yellow-50);
-    box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
     cursor: pointer;
 
     header {
@@ -69,8 +74,12 @@
                 height: fit-content;
 
                 img {
-                    display: block;
-                    width: 100%;                    
+                    display: none;
+                    width: 100%;
+
+                    &.active {
+                        display: block;
+                    }
                 }
             }
 

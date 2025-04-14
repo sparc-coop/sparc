@@ -1,20 +1,20 @@
-﻿using Sparc2.Ideas;
+﻿namespace Sparc2.Files;
 
-namespace Sparc2.Files;
-
-public class FileUpload : BlossomEntity<string>
+public class FileUpload 
 {
-    public string FileName { get; private set; }
-    public string FilePath { get; private set; }
-    public DateTime UploadedDate { get; set; }
-    public string IdeaId { get; set; } 
-    public ProjectIdea Idea { get; set; } = null!;
+    public string FileName { get; set; }
+    public string Url { get; set; }
+    public string FileFormat { get; set; }
+    public int FileSize { get; set; }
+    public string? BlobName { get; set; }
+    public int Progress { get; set; } = 0;
 
-    public FileUpload(string fileName, string filePath, string ideaId) : base(Guid.NewGuid().ToString())
+    public FileUpload(string fileName, string url, string fileFormat, int fileSize, string? blobName = null)
     {
         FileName = fileName;
-        FilePath = filePath;
-        UploadedDate = DateTime.UtcNow;
-        IdeaId = ideaId;
+        Url = url;
+        FileFormat = fileFormat;
+        FileSize = fileSize;
+        BlobName = blobName;
     }
 }

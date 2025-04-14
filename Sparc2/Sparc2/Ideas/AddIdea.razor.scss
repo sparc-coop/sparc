@@ -1,23 +1,3 @@
-div {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    h2 {
-        color: var(--gray-900);
-        font-size: 2.133rem;
-        font-weight: 600;
-        letter-spacing: -0.427px;
-    }
-}
-
-p {
-    color: var(--gray-600);
-    font-size: 1.4rem;
-    font-weight: 450;
-    margin-bottom: 24px;
-}
-
 form {
     display: flex;
     flex-direction: column;
@@ -33,10 +13,18 @@ form {
             font-size: 1.2rem;
             font-weight: 600;
             letter-spacing: -0.12px;
+            display: flex;
+
+            ::deep .validation-message {
+                color: var(--red);
+                font-weight: 500;
+                margin-left: 15px;
+            }
         }
 
         .required {
             color: var(--red);
+            margin-left: 2px;
         }
 
         ::deep input, ::deep textarea {
@@ -60,73 +48,78 @@ form {
             resize: none;
         }
 
+        ::deep input.invalid {
+            border-color: var(--red);
+        }
+
         &:last-of-type {
             margin-bottom: 0;
         }
     }
 
+    h2 {
+        font-size: 1.3rem;
+    }
+
     h3 {
-        font-size: 1.6rem;
-        font-weight: 600;
-        letter-spacing: -0.16px;
-        margin-bottom: 8px;
-    }
-
-    h4 {
-        font-size: 1.4rem;
-        font-weight: 600;
-        letter-spacing: -0.14px;
-    }
-
-    h5 {
         font-size: 1.2rem;
         font-weight: 600;
         letter-spacing: -0.12px;
         margin-bottom: 8px;
     }
 
+    h4 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: -0.12px;
+        margin-bottom: 8px;
+    }
+
+    h5 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        letter-spacing: -0.12px;
+    }
+
     section:first-of-type {
         div {
+            width: 100%;
+            max-width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 32px 16px;
-            border: 2px dashed var(--gray-100);
-            border-radius: 16px;
-            cursor: pointer;
-
-            &:hover {
-                background: var(--gray-200);
-            }
-
-            &.dragover {
-                border-color: #007bff;
-                background: var(--gray-300);
-            }
 
             div {
+                flex: 1;
+                position: relative;
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                gap: 4px;
-                padding: 0;
-                border: none;
-
-                h3 {
-                    margin-bottom: 0;
-                }
-            }
-
-            label span {
-                padding: 4px 10px;
-                color: var(--purple-800);
-                border: none;
-                border-radius: 50px;
-                font-size: 12px;
-                font-weight: 500;
+                justify-content: center;
+                padding: 10px 20px;
+                font-size: 1.4rem;
+                font-weight: 600;
+                border: 1px solid var(--purple-800);
+                border-radius: 20px;
                 cursor: pointer;
+                background: transparent;
+                overflow: hidden;
+                box-sizing: border-box;
+                max-width: 100%;
+
+                &:hover {
+                    background-color: var(--purple-50);
+                }
+
+                &:active {
+                    background-color: var(--purple-100);
+                }
+
+                ::deep input[type="file"] {
+                    opacity: 0;
+                    position: absolute;
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -172,6 +165,10 @@ form {
                         flex-direction: column;
                         flex-grow: 1;
                         gap: 2px;
+
+                        p {
+                            font-size: 1.2rem;
+                        }
 
                         .file-name {
                             font-weight: 600;

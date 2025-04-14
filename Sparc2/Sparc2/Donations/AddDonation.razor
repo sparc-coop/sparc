@@ -1,41 +1,45 @@
 ﻿@if (CurrentStep == 0)
 {
-    <div>
+    <header>
         <h2>Be Part of Sparc</h2>
         <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta  lacus. Libero purus sapien nulla commodo fringilla, sed efficitur. At  rutrum facilisis elementum per neque magna quis tincidunt. Faucibus  dignissim scelerisque penatibus lacinia, lacus luctus.</p>
-    </div>
-    <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
-        <div class="field-group">
-            <label>Donation frequency</label>
-            <div class="btn-group">
-                <button type="button" class="@GetButtonClass(Donation.Frequency == "One time")" @onclick="@(() => SetFrequency("One time"))">
-                    <CoinIcon /> <span>One time</span>
-                </button>
+    </header>
+    <div class="donation-form">
+        <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
+            <div class="field-group">
+                <label>Donation frequency</label>
+                <div class="btn-group">
+                    <button type="button" class="tertiary-btn @GetButtonClass(Donation.Frequency == "One time")" @onclick="@(() => SetFrequency("One time"))">
+                        <CoinIcon /> <span>One time</span>
+                    </button>
 
-                <button type="button" class="@GetButtonClass(Donation.Frequency == "Monthly")" @onclick="@(() => SetFrequency("Monthly"))">
-                    <RefreshIcon /> <span>Monthly</span>
-                </button>
-            </div>
-        </div>
-
-        <div class="field-group">
-            <label>Amount</label>
-            <div class="amount-grid">
-                @foreach (var amount in PredefinedAmounts)
-                {
-                    <button type="button" class="@GetButtonClass(SelectedAmount == amount)" @onclick="() => SetAmount(amount)">$@amount</button>
-                }
-                <div class="currency-input">
-                    <CurrencyIcon />
-                    <InputNumber @bind-Value="CustomAmount" placeholder="0" @onfocus="() => SetAmount(null)" @oninput="() => SetAmount(null)" />
+                    <button type="button" class="tertiary-btn @GetButtonClass(Donation.Frequency == "Monthly")" @onclick="@(() => SetFrequency("Monthly"))">
+                        <RefreshIcon /> <span>Monthly</span>
+                    </button>
                 </div>
             </div>
-        </div>
-    </EditForm>
+
+            <div class="field-group">
+                <label>Amount</label>
+                <div class="amount-grid">
+                    @foreach (var amount in PredefinedAmounts)
+                    {
+                        <button type="button" class="tertiary-btn @GetButtonClass(SelectedAmount == amount)" @onclick="() => SetAmount(amount)">$@amount</button>
+                    }
+                    <div class="currency-input">
+                        <CurrencyIcon />
+                        <InputNumber @bind-Value="CustomAmount" placeholder="0" @onfocus="() => SetAmount(null)" @oninput="() => SetAmount(null)" />
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div>
 }
 else if (CurrentStep == 1)
 {
-    <h2>Payment Method</h2>
+    <header>
+        <h2>Payment Method</h2>
+    </header>
     <div class="payment-form">
         <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
             <label>
@@ -46,7 +50,7 @@ else if (CurrentStep == 1)
                 <span>Card Number <span class="required">*</span></span>
                 <InputText placeholder="Card number" @bind-Value="Donation.Payment.CardNumber" />
             </label>
-            <div>
+            <div class="expiration">
                 <label>
                     <span>Expiry Date <span class="required">*</span></span>
                     <InputText placeholder="MM/YY" @bind-Value:format="MM/yy" @bind-Value="Donation.Payment.ExpiryDate" />

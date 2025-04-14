@@ -1,17 +1,19 @@
 ﻿@if (CurrentStep == 0)
 {
-    <div>
+    <header>
         <h2>Be Part of Sparc</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
-    </div>
-    <EditForm Model="@Idea" OnValidSubmit="HandleValidSubmit">
+    </header>
+    <EditForm EditContext="@EditContext">
+        <DataAnnotationsValidator />
+
         <label>
-            <span>Title <span class="required">*</span></span>
-            <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />
+            <span>Title <span class="required">*</span> <ValidationMessage For="@(() => Idea.Title)" /> </span>
+            <InputText placeholder="Name your contribution" @bind-Value="Idea.Title" />            
         </label>
         <label>
-            <span>Name <span class="required">*</span></span>
-            <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />
+            <span>Name <span class="required">*</span> <ValidationMessage For="@(() => Idea.Author)" /> </span>
+            <InputText placeholder="Preferred name" @bind-Value="Idea.Author" />            
         </label>
         <label>
             <span>Description</span>
@@ -21,106 +23,85 @@
 }
 else if (CurrentStep == 1)
 {
-    <EditForm Model="@Idea" OnValidSubmit="HandleValidSubmit">
+    <EditForm EditContext="@EditContext">
         <section>
-            <h5>Share files</h5>
-            <div @ref="fileDropContainer"
-                 class="@HoverClass"
-                 @ondragenter="HandleDragEnter"
-                 @ondragleave="HandleDragLeave">
-                <UploadIcon />
+            <h3>Share files (Optional)</h3>
+            <div>
                 <div>
-                    <h3>Drag files here to upload</h3>
-                    <p>Or, click to browse</p>
-                </div>
-                <label>
-                    <span>Upload</span>
+                    Upload Files
                     <InputFile OnChange="HandleFileSelection" multiple />
-                </label>
-            </div>
+                </div>
+            </div>            
         </section>
 
         <section>
-            <h5>Uploaded list (@UploadedFiles.Count)</h5>
+            <h3>Uploaded list (@UploadedFiles.Count)</h3>
             <ul>
-                <li>
-                    <article>
-                        <img src="images/image-03.png" alt="File Icon" />
-                        <div>
-                            <h4>File name.format</h4>
-                            <p>14MB</p>
-                        </div>
-                        <button>x</button>
-                    </article>
-                    <div class="progress-bar">
-                        <div class="progress" style="width: 20%"></div>
-                    </div>
-                </li>
                 @foreach (var file in UploadedFiles)
                 {
-                    @* <li>
+                    <li>
                         <article>
                             <img src="images/image-03.png" alt="File Icon" />
                             <div>
-                                <h4>@file.Name.@file.Format</h4>
-                                <p>@(file.Size / (1024 * 1024)) MB</p>
+                                <h2>@file.FileName</h2>
+                                <p>@(file.FileSize / (1024 * 1024)) MB</p>
                             </div>
-                            <button @onclick="() => UploadedFiles.Remove(file)">x</button>
+                            <button @onclick="() => Remove(file)">x</button>
                         </article>
                         <div class="progress-bar">
-                            <div class="progress" style="width: @GetUploadProgress(file)%"></div>
+                            <div class="progress" style="width: @file.Progress%"></div>
                         </div>
-                    </li> *@
+                    </li>
                 }
             </ul>
         </section>
     </EditForm>
 }
 
+@inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
+
 @code {
     [Parameter] public int CurrentStep { get; set; }
-    [Parameter] public EventCallback OnNext { get; set; }
-    [Parameter] public EventCallback OnBack { get; set; }
-    ElementReference fileDropContainer;
+    [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
+    [Parameter] public EditContext EditContext { get; set; }
+    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
+    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }  
+    [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 
-    private List<Sparc2.Files.FileUpload> UploadedFiles = new();
-    private ProjectIdea Idea = new ProjectIdea(string.Empty, string.Empty, string.Empty);
-
-    private string HoverClass = "";
-    void HandleDragEnter(DragEventArgs e) => HoverClass = "dragover";
-    void HandleDragLeave(DragEventArgs e) => HoverClass = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        await Api.ProjectIdeas.Create("Idea.Title", "Idea.Author", "Idea.Description");
-    }
-
-    private async Task HandleValidSubmit()
-    {
-        if (CurrentStep == 0)
-        {
-            await OnNext.InvokeAsync();
-        }
-        else
-        {
-            await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description);
-        }
-    }
-
-    private async Task HandleFileSelection(InputFileChangeEventArgs e)
-    {
-        UploadedFiles.Clear();
+    public async Task HandleFileSelection(InputFileChangeEventArgs e)
+    {  
+        await OnUploadStatusChanged.InvokeAsync(true);
 
         foreach (var file in e.GetMultipleFiles())
         {
-            UploadedFiles.Add(new(file.Name, "path", Idea.Id));            
+            var uploaded = new Sparc2.Files.FileUpload(
+                file.Name,
+                url: "",
+                fileFormat: Path.GetExtension(file.Name)?.TrimStart('.') ?? "unknown",
+                fileSize: (int)file.Size
+            );
+
+            UploadedFiles.Add(uploaded);
+            StateHasChanged();
+
+            var progress = new Progress<int>(percent =>
+            {
+                uploaded.Progress = percent;
+                InvokeAsync(StateHasChanged);
+            });
+
+            using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+            uploaded.Url = await AzureBlob.UploadFileAsync("uploads", file.Name, stream, file.ContentType, progress);
+            Idea.FileUrls.Add(uploaded.Url);
         }
 
-        await Task.CompletedTask; 
+        await OnFilesChanged.InvokeAsync(UploadedFiles);
+        await OnUploadStatusChanged.InvokeAsync(false);
     }
 
     private void Remove(Sparc2.Files.FileUpload file)
     {
         UploadedFiles.Remove(file);
+        Idea.FileUrls.Remove(file.Url);
     }
 }

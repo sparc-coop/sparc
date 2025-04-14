@@ -1,13 +1,18 @@
-﻿.card {
-  width: 332px;
+﻿.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  width: 501px;
   height: fit-content;
+  max-height: 732px;
   padding: 24px;
   border-radius: 16px;
   background: var(--yellow-50);
-  box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
   cursor: pointer;
 }
-.card header {
+.modal header {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -15,58 +20,61 @@
   gap: 12px;
   margin-bottom: 16px;
 }
-.card header img {
+.modal header img {
   width: 32px;
   height: 32px;
 }
-.card header div {
+.modal header div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   gap: 0;
 }
-.card header div h3 {
+.modal header div h3 {
   color: var(--purple-800);
   font-size: 1.6rem;
   font-weight: 450;
   line-height: 120%;
   letter-spacing: -0.16px;
 }
-.card header div p {
+.modal header div p {
   color: var(--purple-800);
   font-size: 1.4rem;
   font-weight: 450;
   line-height: 120%;
   letter-spacing: -0.14px;
 }
-.card section {
+.modal section {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.card section h2 {
+.modal section h2 {
   color: var(--gray-900);
   font-size: 2.133rem;
   font-weight: 600;
   line-height: 110%;
   letter-spacing: -0.427px;
 }
-.card section .files {
+.modal section .files {
   position: relative;
 }
-.card section .files .images {
+.modal section .files .images {
   display: flex;
   flex-direction: row;
   overflow-x: hidden;
   width: 100%;
   height: fit-content;
 }
-.card section .files .images img {
-  display: block;
+.modal section .files .images img {
+  display: none;
   width: 100%;
 }
-.card section .files:hover .arrows {
+.modal section .files .images img.active {
+  display: block;
+}
+.modal section .files:hover .arrows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -79,7 +87,7 @@
   transform: translate(-50%, -50%);
   animation: fadeIn 0.3s ease-in-out;
 }
-.card section .files:hover .arrows button {
+.modal section .files:hover .arrows button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,33 +95,33 @@
   background: rgba(218, 190, 250, 0.5);
   cursor: pointer;
 }
-.card section .files:hover .arrows button ::deep svg {
+.modal section .files:hover .arrows button ::deep svg {
   width: 20px;
 }
-.card section .files:hover .arrows button ::deep svg path {
+.modal section .files:hover .arrows button ::deep svg path {
   stroke: var(--purple-50);
 }
-.card section .files:hover .arrows button.arrow-left {
+.modal section .files:hover .arrows button.arrow-left {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-.card section .files:hover .arrows button.arrow-right {
+.modal section .files:hover .arrows button.arrow-right {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
-.card section .files:hover .arrows button.arrow-right ::deep svg {
+.modal section .files:hover .arrows button.arrow-right ::deep svg {
   transform: rotate(180deg);
 }
-.card section div:last-of-type p {
+.modal section div:last-of-type p {
   color: var(--gray-900);
   font-size: 1.4rem;
   font-weight: 450;
   line-height: 120%;
 }
-.card section .arrows {
+.modal section .arrows {
   display: none;
 }
-.card section .indicators {
+.modal section .indicators {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -122,16 +130,16 @@
   width: 100%;
   margin-top: 2px;
 }
-.card section .indicators .indicator {
+.modal section .indicators .indicator {
   background: var(--purple-200);
   width: 5px;
   height: 5px;
   border-radius: 50%;
 }
-.card section .indicators .indicator.active {
+.modal section .indicators .indicator.active {
   background: var(--purple-800);
 }
-.card footer {
+.modal footer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -165,7 +173,7 @@
       }
   }*/
 }
-.card footer div:first-of-type {
+.modal footer div:first-of-type {
   display: flex;
   flex-direction: row;
   gap: 4px;

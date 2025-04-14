@@ -3,6 +3,7 @@
   --black: #000000;
   --red: #FF4D4D;
   --gray-100: #E6E6E6;
+  --gray-200: #D1D1D1;
   --gray-600: #6B6B6B;
   --gray-700: #525252;
   --gray-900: ##1F1F1F;
@@ -40,7 +41,7 @@
 
 html, body {
   font-size: 62.5%;
-  font-family: Helvetica, sans-serif;
+  font-family: "neue-haas-grotesk-display", Helvetica, sans-serif;
   margin: 0;
 }
 html ::-webkit-scrollbar, body ::-webkit-scrollbar {
@@ -57,8 +58,8 @@ p {
   padding: 0;
 }
 
-input, select, textarea {
-  font-family: Helvetica, sans-serif;
+button, input, select, textarea {
+  font-family: "neue-haas-grotesk-display", Helvetica, sans-serif;
 }
 
 a {
@@ -71,6 +72,148 @@ a:visited {
 button {
   padding: 0;
   border: 1px solid transparent;
+  font-family: "neue-haas-grotesk-display", Helvetica, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 120%; /* 16.8px */
+  letter-spacing: -0.14px;
+  cursor: pointer;
+}
+button.primary-btn {
+  display: flex;
+  height: 40px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  border-radius: 20px;
+  background: var(--purple-800);
+  color: var(--yellow-50);
+  transition: 0.2s all ease-in-out;
+}
+button.primary-btn > svg path {
+  stroke: var(--yellow-50);
+}
+button.primary-btn:hover {
+  background: var(--purple-700);
+}
+button.primary-btn:active {
+  background: var(--purple-800);
+}
+button.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button.secondary-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--purple-800);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.14px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+button.secondary-btn > svg path {
+  stroke: var(--purple-800);
+}
+button.secondary-btn:hover {
+  border: 1px solid var(--purple-800);
+  color: var(--purple-800);
+}
+button.secondary-btn:hover > svg path {
+  stroke: var(--purple-800);
+}
+button.secondary-btn:active {
+  border: 1px solid var(--purple-900);
+  color: var(--purple-900);
+}
+button.secondary-btn:active > svg path {
+  stroke: var(--purple-900);
+}
+button.secondary-btn:disabled {
+  border: 1px solid transparent;
+  opacity: 0.5;
+}
+button.tertiary-btn {
+  display: flex;
+  height: 40px;
+  padding: 10px 20px 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border-radius: 20px;
+  border: 1px solid var(--gray-100);
+  color: var(--gray-600);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.16px;
+  cursor: pointer;
+  transition: 0.2s all ease-in-out;
+}
+button.tertiary-btn > svg path {
+  stroke: var(--gray-600);
+}
+button.tertiary-btn:hover {
+  border: 1px solid var(--purple-500);
+  color: var(--purple-500);
+}
+button.tertiary-btn:hover > svg path {
+  stroke: var(--purple-500);
+}
+button.tertiary-btn:active {
+  border: 1px solid var(--purple-800);
+  color: var(--purple-800);
+}
+button.tertiary-btn:active > svg path {
+  stroke: var(--purple-800);
+}
+button.tertiary-btn:disabled {
+  border: 1px solid transparent;
+  opacity: 0.5;
+}
+button.icon-btn {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+}
+button.icon-btn > svg {
+  width: 16px;
+  height: 16px;
+}
+button.medium-btn {
+  height: 32px;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+button.medium-btn.icon-btn {
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+}
+button.medium-btn.icon-btn > svg {
+  width: 14px;
+  height: 14px;
+}
+button.small-btn {
+  height: 24px;
+  padding: 4px 8px;
+  border-radius: 50px;
+}
+button.small-btn.icon-btn {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+}
+button.small-btn.icon-btn > svg {
+  width: 12px;
+  height: 12px;
 }
 
 ul {
@@ -82,3 +225,51 @@ ul li {
   padding: 0;
   margin: 0;
 }
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 300;
+  box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(26, 12, 50, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+/*
+Fonts Added:
+
+Neue Haas Grotesk Display Pro 45 Light
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 400;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 55 Roman
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 500;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 65 Medium
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 600;
+font-style: normal;
+
+Neue Haas Grotesk Display Pro 75 Bold
+font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 700;
+font-style: normal;
+
+*/

@@ -4,23 +4,50 @@
 <PageTitle>Ideas | Sparc</PageTitle>
 
 <article>
-    @foreach (var idea in ideas)
+    @foreach (var idea in ProjectIdeas)
     {
-        <IdeaCard Idea=@idea />
+        <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
+    }
+    @if (ShowFullIdeaCard)
+    {
+        <IdeaCardFull Idea=@CurrentIdea OnClose="CloseFullIdea" />
     }
 </article>
 
+@* <div class="modal-overlay"></div> *@
+
+@inject Sparc2.Ideas.IdeaService IdeaService
+
 @code {
-    List<ProjectIdea> ideas = new();
+    bool ShowFullIdeaCard;
+    Idea? CurrentIdea;
+    IEnumerable<Idea> ProjectIdeas = new List<Idea>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        var newIdea = new ProjectIdea("Name of the idea", "John Doe", "Mollis nisi vel varius litora rutrum urna. Suscipit velit fermentum  sollicitudin pulvinar netus ultrices efficitur nulla. Varius fermentum  habitasse ultricies nulla curabitur tempus quis accumsan. Vivamus auctor lacus massa magna bibendum donec. Quisque elementum habitasse; interdum volutpat senectus lobortis lacus torquent. Rutrum aliquam enim  ultricies diam lectus consequat finibus. Diam vulputate lacinia, blandit quisque quam ante pharetra. Enim iaculis conubia vitae rutrum facilisi  est, blandit himenaeos dolor");
-        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/Rectangle 13.png", newIdea.Id));
-        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-1.jpg", newIdea.Id));
-        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-2.jpg", newIdea.Id));
-        newIdea.AddFile(new Sparc2.Files.FileUpload("File 1", "images/idea-3.jpg", newIdea.Id));
+        IdeaService.OnIdeasChanged += UpdateIdeas;
+        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+    }
 
-        ideas.Add(newIdea);
+    private void UpdateIdeas()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        IdeaService.OnIdeasChanged -= UpdateIdeas;
+    }
+
+    void OpenFullIdea(Idea idea)
+    {
+        ShowFullIdeaCard = true;
+        CurrentIdea = idea;
+    }
+
+    void CloseFullIdea()
+    {
+        ShowFullIdeaCard = false;
+        CurrentIdea = null;
     }
 }
