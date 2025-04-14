@@ -19,6 +19,7 @@
 @* <div class="modal-overlay"></div> *@
 
 @inject Sparc2.Ideas.IdeaService IdeaService
+@inject IJSRuntime Js
 
 @code {
     bool ShowFullIdeaCard;
@@ -29,6 +30,11 @@
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
         ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await Js.InvokeVoidAsync("findCenter");
     }
 
     private void UpdateIdeas()
