@@ -5,15 +5,16 @@ article {
     row-gap: 60px;
     width: fit-content;
     height: fit-content;
-    padding: 120px 60px;
+    padding: 240px;
 
     .card-container {
+        width: 500px;
         height: 700px;
         display: flex;
-        justify-content: center;
+        justify-content: start;
         align-items: start;
 
-        &:nth-of-type(2n+1) {
+        &:nth-of-type(odd) {
             align-items: end;
         }
     }
