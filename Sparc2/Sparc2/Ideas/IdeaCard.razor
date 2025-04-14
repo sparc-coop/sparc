@@ -34,8 +34,8 @@
 </div>
 
 @code {
-    [Parameter] public EventCallback<ProjectIdea> OnOpenFullView { get; set; }
-    [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
+    [Parameter] public EventCallback<Idea> OnOpenFullView { get; set; }
+    [Parameter, EditorRequired] public Idea Idea { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();

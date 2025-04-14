@@ -52,7 +52,7 @@
 <div class="modal-overlay" @onclick="CloseModal"></div>
 
 @code {
-    [Parameter, EditorRequired] public ProjectIdea Idea { get; set; }
+    [Parameter, EditorRequired] public Idea Idea { get; set; }
     [Parameter] public EventCallback<bool> OnClose { get; set; }
 
     List<string> comments = new List<string>();

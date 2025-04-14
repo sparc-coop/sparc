@@ -4,7 +4,7 @@
 <PageTitle>Ideas | Sparc</PageTitle>
 
 <article>
-    @foreach (var idea in IdeaService.Ideas)
+    @foreach (var idea in ProjectIdeas)
     {
         <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
     }
@@ -20,11 +20,13 @@
 
 @code {
     bool ShowFullIdeaCard;
-    ProjectIdea? CurrentIdea;
+    Idea? CurrentIdea;
+    IEnumerable<Idea> ProjectIdeas = new List<Idea>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
+        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
     }
 
     private void UpdateIdeas()
@@ -37,7 +39,7 @@
         IdeaService.OnIdeasChanged -= UpdateIdeas;
     }
 
-    void OpenFullIdea(ProjectIdea idea)
+    void OpenFullIdea(Idea idea)
     {
         ShowFullIdeaCard = true;
         CurrentIdea = idea;
