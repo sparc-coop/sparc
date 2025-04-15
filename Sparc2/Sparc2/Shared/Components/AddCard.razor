@@ -85,9 +85,9 @@
 
     private async Task SubmitIdea()
     {
-        await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);      
-        await IdeaService.NotifyIdeaPostedAsync();
+        var createdIdea = await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
         await OnClose.InvokeAsync(true);
+        await IdeaService.NotifyIdeaPostedAsync(createdIdea.Id);        
     }
 
     private Task SubmitDonation()

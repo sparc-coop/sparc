@@ -179,3 +179,7 @@
     opacity: 1;
   }
 }
+.highlight-glow {
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.58), 0px 0px 60px 0px #FF5A08;
+  transition: box-shadow 0.3s ease-in-out;
+}

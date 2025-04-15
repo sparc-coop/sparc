@@ -22,6 +22,7 @@
     bool ShowFullIdeaCard;
     Idea? CurrentIdea;
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
+    string? HighlightedIdeaId;
 
     protected override async Task OnInitializedAsync()
     {     
@@ -32,11 +33,35 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await Js.InvokeVoidAsync("findCenter");
+
+        if (HighlightedIdeaId is not null)
+        {
+            await Js.InvokeVoidAsync("highlightIdeaCard", HighlightedIdeaId);
+            HighlightedIdeaId = null;
+        }
     }
 
     private async Task UpdateIdeas()
     {
-        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        var allIdeas = ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+
+        if (IdeaService.LastPostedIdeaId != null)
+        {
+            var newId = IdeaService.LastPostedIdeaId;
+            var newIdea = allIdeas.FirstOrDefault(i => i.Id == newId);
+            var others = allIdeas.Where(i => i.Id != newId).ToList();
+
+            int middleIndex = others.Count / 2;
+            others.Insert(middleIndex, newIdea!);
+
+            ProjectIdeas = others;
+            HighlightedIdeaId = newId.ToString();
+        }
+        else
+        {
+            ProjectIdeas = allIdeas;
+        }
+
         StateHasChanged();
     }       
 

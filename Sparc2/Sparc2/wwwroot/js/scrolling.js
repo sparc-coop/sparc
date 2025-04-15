@@ -125,3 +125,17 @@ function ScrollToCenter(x, y) {
     window.scrollTo(x, y);
     console.log("scrolling to center of content at: " + x + ", " + y);
 }
+
+
+function highlightIdeaCard(ideaId) {
+    const card = document.getElementById(`idea-${ideaId}`);
+    if (!card) return;
+
+    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' });
+
+    card.classList.add('highlight-glow');
+
+    setTimeout(() => {
+        card.classList.remove('highlight-glow');
+    }, 30000); 
+};
