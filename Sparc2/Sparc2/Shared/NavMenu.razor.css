@@ -30,6 +30,9 @@ nav button {
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 }
+nav button ::deep svg path {
+  stroke: #FFFCF6;
+}
 
 .other-nav {
   position: fixed;

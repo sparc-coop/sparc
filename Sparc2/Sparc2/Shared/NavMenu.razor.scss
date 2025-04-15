@@ -31,6 +31,10 @@
         letter-spacing: -0.14px;
         cursor: pointer;
         transition: .2s all ease-in-out;
+
+        ::deep svg path {
+            stroke: #FFFCF6;
+        }
     }
 }
 
