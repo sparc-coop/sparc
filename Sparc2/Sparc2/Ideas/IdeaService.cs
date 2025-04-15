@@ -1,10 +1,10 @@
 ﻿namespace Sparc2.Ideas;
 
-public class IdeaService
+internal class IdeaService
 {
     public List<ProjectIdea> Ideas { get; private set; } = new();
 
-    public event Action OnIdeasChanged;
+    public event Action? OnIdeasChanged;
 
     public void AddIdea(ProjectIdea idea)
     {

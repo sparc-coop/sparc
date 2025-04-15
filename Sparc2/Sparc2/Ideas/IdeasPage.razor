@@ -18,18 +18,15 @@
 
 @* <div class="modal-overlay"></div> *@
 
-@inject Sparc2.Ideas.IdeaService IdeaService
-@inject IJSRuntime Js
-
 @code {
     bool ShowFullIdeaCard;
     Idea? CurrentIdea;
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
 
     protected override async Task OnInitializedAsync()
-    {
-        IdeaService.OnIdeasChanged += UpdateIdeas;
-        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+    {        
+        IdeaService.OnIdeasChanged += UpdateIdeasHandler;
+        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();        
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -37,15 +34,21 @@
         await Js.InvokeVoidAsync("findCenter");
     }
 
-    private void UpdateIdeas()
+    private async void UpdateIdeasHandler()
     {
-        InvokeAsync(StateHasChanged);
+        await UpdateIdeas();        
+    }
+
+    private async Task UpdateIdeas()
+    {
+        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        StateHasChanged();
     }
 
     public void Dispose()
     {
-        IdeaService.OnIdeasChanged -= UpdateIdeas;
-    }
+        IdeaService.OnIdeasChanged -= UpdateIdeasHandler;
+    }     
 
     void OpenFullIdea(Idea idea)
     {

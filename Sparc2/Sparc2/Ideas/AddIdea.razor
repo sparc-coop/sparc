@@ -62,8 +62,6 @@ else if (CurrentStep == 1)
     </div>
 }
 
-@inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
-
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());

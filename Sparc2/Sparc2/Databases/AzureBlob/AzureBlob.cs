@@ -3,7 +3,7 @@ using System;
 
 namespace Sparc2.Databases.AzureBlob;
 
-public class AzureBlob
+internal class AzureBlob
 {
     internal BlobServiceClient Client { get; private set; } = null!;
 
