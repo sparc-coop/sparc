@@ -2,14 +2,14 @@
 
 internal class IdeaService
 {
-    public List<ProjectIdea> Ideas { get; private set; } = new();
+    public event Func<Task>? OnIdeaPosted;
 
-    public event Action? OnIdeasChanged;
-
-    public void AddIdea(ProjectIdea idea)
+    public async Task NotifyIdeaPostedAsync()
     {
-        Ideas.Insert(0, idea);
-        OnIdeasChanged?.Invoke();
+        if (OnIdeaPosted is not null)
+        {
+            await OnIdeaPosted.Invoke();
+        }
     }
 }
 

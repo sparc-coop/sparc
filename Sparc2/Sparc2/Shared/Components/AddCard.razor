@@ -85,8 +85,8 @@
 
     private async Task SubmitIdea()
     {
-        await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
-        IdeaService.AddIdea(Idea);        
+        await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);      
+        await IdeaService.NotifyIdeaPostedAsync();
         await OnClose.InvokeAsync(true);
     }
 
