@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.ApiGenerator"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Pouch.Server", "..\..\blossom\Sparc.Blossom.Data.Pouch.Server\Sparc.Blossom.Data.Pouch.Server.csproj", "{886DDAF7-A51D-4C94-9DFE-741156A6036B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Cosmos", "..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj", "{9D293A5D-6B48-DB01-5C62-4FED86572FB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{886DDAF7-A51D-4C94-9DFE-741156A6036B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{886DDAF7-A51D-4C94-9DFE-741156A6036B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{886DDAF7-A51D-4C94-9DFE-741156A6036B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{AA5E56B3-B270-48EE-8963-C5E5E41A417A} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
 		{4B9016F4-FE6F-4FBF-AFD2-10EFB95E5E9C} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
 		{886DDAF7-A51D-4C94-9DFE-741156A6036B} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0} = {F83D3AC6-CCF9-4CA1-9D1C-B9C04712D775}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE37A5-99D0-4C05-A3CD-36A058394C96}
