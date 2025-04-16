@@ -1,12 +1,18 @@
 ﻿<div class="modal idea-card-full">
     <header>
-        <img src="images/user-stock.png" />
-        <div>
-            <h3>@Idea.Author</h3>
-            <p>@Idea.DateCreated.ToShortDateString()</p>
+        <div class="left">
+            <button class="secondary-btn icon-btn" @onclick=CloseModal><ArrowLeftIcon /></button>
+            <img src="images/user-stock.png" />
+            <div>
+                <h3>@Idea.Author</h3>
+                <p>@Idea.DateCreated.ToShortDateString()</p>
+            </div>
+        </div>
+        <div class="right">
+            <button class="secondary-btn icon-btn"><MoreIcon /></button>
         </div>
     </header>
-    <section>
+    <section class="content">
         <h2>@Idea.Title</h2>
         <div class="files">
             <div class="images">
@@ -47,6 +53,14 @@
         </div>
         <button class="tertiary-btn"><FileIcon /> <span>@(Idea.FileUrls?.Count ?? 0)</span></button>
     </footer>
+    <section class="comments">
+        <hr />
+        <h4>Comment</h4>
+        <div>
+            <input type="text" placeholder="Leave a comment" />
+            <button class="secondary-btn">Send</button>
+        </div>
+    </section>
 </div>
 
 <div class="modal-overlay" @onclick="CloseModal"></div>
