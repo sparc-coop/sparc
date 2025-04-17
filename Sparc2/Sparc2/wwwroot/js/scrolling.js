@@ -133,8 +133,6 @@ function disableBodyScrolling(bool) {
         document.body.classList.remove("modal-open");
     }
 }
-}
-
 
 function highlightIdeaCard(ideaId) {
     const card = document.getElementById(`idea-${ideaId}`);
