@@ -12,7 +12,14 @@
     }
     @if (ShowIdeaModal)
     {
-        <IdeaModal Idea=@CurrentIdea OnClose="CloseIdeaModal" FocusComments="FocusComments" FocusFiles="FocusFiles" />
+        <IdeaModal Idea=@CurrentIdea OnClose="CloseIdeaModal" FocusComments="FocusComments" FocusFiles="FocusFiles" OnEdit="@(idea => OpenEditModal(idea))" />
+    }
+    else if (ShowEditModal)
+    {
+        <AddCard OnClose="CloseEditModal"
+                 SelectedHeaderButton="0"
+                 IdeaToEdit="CurrentIdea"
+                 StartOnFiles="FocusFiles" />
     }
 </article>
 
@@ -25,6 +32,8 @@
     bool FocusComments;
     bool FocusFiles;
     string? HighlightedIdeaId;
+    bool ShowEditModal;
+    bool StartOnFiles;
 
     protected override async Task OnInitializedAsync()
     {     
@@ -103,5 +112,21 @@
     public void Dispose()
     {
         IdeaService.OnIdeaPosted -= UpdateIdeas;
+    }
+
+    async Task OpenEditModal(Idea idea, bool startOnFiles = false)
+    {
+        CurrentIdea = idea;
+        ShowEditModal = true;
+        StartOnFiles = startOnFiles;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    void CloseEditModal()
+    {
+        ShowEditModal = false;
+        CurrentIdea = null;
+        StartOnFiles = false;
+        Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 }

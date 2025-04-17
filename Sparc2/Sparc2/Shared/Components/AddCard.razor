@@ -1,4 +1,4 @@
-﻿<div class="modal add-card">
+﻿<div class="modal add-card @(IsEditMode ? "edit-mode" : "")">
     <div class="progress-bar">
         <div class="progress" style="width: @(StepProgress + "%");"></div>
     </div>
@@ -25,9 +25,15 @@
     </footer>
 </div>
 
+<div class="modal-overlay"></div>
+
 @code {
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public int SelectedHeaderButton { get; set; }
+    [Parameter] public Idea? IdeaToEdit { get; set; }
+    [Parameter] public bool StartOnFiles { get; set; }
+
+    private bool IsEditMode => IdeaToEdit != null;
 
     private int CurrentStep;
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
@@ -39,6 +45,17 @@
 
     protected override void OnInitialized()
     {
+        if (IsEditMode)
+        {
+            Idea = new Sparc2.Ideas.ProjectIdea(
+                IdeaToEdit.Title,
+                IdeaToEdit.Author,
+                IdeaToEdit.Description,
+                IdeaToEdit.FileUrls.ToList()
+            );
+            CurrentStep = StartOnFiles ? 1 : 0;
+        }
+
         editContext = new EditContext(Idea);
     }
 
@@ -81,13 +98,22 @@
     private void OnUploadStatusChanged(bool uploading)
     {
         IsUploading = uploading;
+        InvokeAsync(StateHasChanged);
     }
 
     private async Task SubmitIdea()
     {
-        var createdIdea = await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
-        await OnClose.InvokeAsync(true);
-        await IdeaService.NotifyIdeaPostedAsync(createdIdea.Id);        
+        if (IsEditMode)
+        {
+            await IdeaToEdit!.Update(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
+            await OnClose.InvokeAsync(true);
+        }
+        else
+        {
+            var createdIdea = await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
+            await OnClose.InvokeAsync(true);
+            await IdeaService.NotifyIdeaPostedAsync(createdIdea.Id);
+        }
     }
 
     private Task SubmitDonation()

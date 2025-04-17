@@ -12,21 +12,25 @@ public class ProjectIdea : BlossomEntity<string>
     public string Author { get; set; }
     public string Description { get; set; }
     public DateTime DateCreated { get; set; }
+    public DateTime LastModified { get; set; }
     public List<string> FileUrls { get; set; } = new();
 
     public ProjectIdea(string title, string author, string description, List<string> fileUrls) : base(Guid.NewGuid().ToString())
     {
         Title = title;
         Author = author;
-        Description = description;
-        DateCreated = DateTime.UtcNow;
+        Description = description;        
         FileUrls = fileUrls;
+        DateCreated = DateTime.UtcNow;
     }
 
-    public void Update(string title, string description)
+    public void Update(string title, string author, string description, List<string> fileUrls)
     {
         Title = title;
+        Author = author;
         Description = description;
+        FileUrls = fileUrls;
+        LastModified = DateTime.UtcNow;
     }
 
     internal static IEnumerable<ProjectIdea> Generate(int qty)

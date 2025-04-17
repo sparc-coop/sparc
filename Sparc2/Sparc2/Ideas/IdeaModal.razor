@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="right">
-                <button class="secondary-btn icon-btn"><MoreIcon /></button>
+                <button class="secondary-btn icon-btn" @onclick="() => OpenEdit(Idea)"><MoreIcon /></button>
             </div>
         </header>
         <div class="container">
@@ -114,6 +114,7 @@
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public bool FocusComments { get; set; }
     [Parameter] public bool FocusFiles { get; set; }
+    [Parameter] public EventCallback<Idea> OnEdit { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
@@ -177,5 +178,11 @@
     void CloseModal()
     {
         OnClose.InvokeAsync(true);
+    }
+
+    void OpenEdit(Idea idea)
+    {
+        OnClose.InvokeAsync(true); 
+        OnEdit.InvokeAsync(idea);  
     }
 }
