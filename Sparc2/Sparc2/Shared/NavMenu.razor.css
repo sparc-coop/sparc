@@ -92,29 +92,38 @@ nav button ::deep svg path {
 .other-nav button:active {
   background: rgba(255, 252, 246, 0.1);
 }
-.other-nav button.add-btn {
+.other-nav .right {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.other-nav .right .tertiary-btn {
   background: var(--white);
   border-radius: 20px;
   transition: 0.1s all ease-in-out;
 }
-.other-nav button.add-btn span {
-  color: var(--purple-800);
-}
-.other-nav button.add-btn:hover {
-  color: var(--purple-800);
-  transform: scale(103%);
-}
-.other-nav button.add-btn:hover > svg path {
+.other-nav .right .tertiary-btn ::deep svg path {
   stroke: var(--purple-800);
 }
-.other-nav button.add-btn:active {
-  color: var(--purple-900);
-  transform: scale(1);
+.other-nav .right .tertiary-btn.donate-btn ::deep svg path {
+  stroke: none;
+  fill: var(--purple-800);
 }
-.other-nav button.add-btn:active > svg path {
+.other-nav .right .tertiary-btn span {
+  color: var(--purple-800);
+}
+.other-nav .right .tertiary-btn:hover {
+  color: var(--purple-800);
+  background: var(--purple-50);
+}
+.other-nav .right .tertiary-btn:active {
+  color: var(--purple-900);
+  border-color: var(--purple-900);
+}
+.other-nav .right .tertiary-btn:active > svg path {
   stroke: var(--purple-900);
 }
-.other-nav button.add-btn:disabled {
+.other-nav .right .tertiary-btn:disabled {
   border: 1px solid transparent;
   opacity: 0.5;
 }

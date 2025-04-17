@@ -105,7 +105,7 @@ function findCenter() {
             centerX = width / 8;
             centerY = height / 4;
 
-            ScrollToCenter(centerX, centerY);
+            scrollToCenter(centerX, centerY);
         } else {
             console.log("background is zero");
             background = findBackground();
@@ -116,14 +116,23 @@ function findCenter() {
 
             console.log("Width: " + width);
             console.log("Height: " + height);
-            ScrollToCenter(centerX, centerY);
+            scrollToCenter(centerX, centerY);
         }
     } 
 }
 
-function ScrollToCenter(x, y) {
+function scrollToCenter(x, y) {
     window.scrollTo(x, y);
     console.log("scrolling to center of content at: " + x + ", " + y);
+}
+
+function disableBodyScrolling(bool) {
+    if (bool == true) {
+        document.body.classList.add("modal-open");
+    } else {
+        document.body.classList.remove("modal-open");
+    }
+}
 }
 
 

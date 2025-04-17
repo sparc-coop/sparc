@@ -9,6 +9,10 @@ html, body {
     ::-webkit-scrollbar {
         display: none;
     }
+
+    &.modal-open {
+        overflow: hidden;
+    }
 }
 
 h1, h2, h3, h4, h5, h6, h7 {
@@ -16,7 +20,7 @@ h1, h2, h3, h4, h5, h6, h7 {
     padding: 0;
 }
 
-p {
+p, ul, li {
     margin: 0;
     padding: 0;
 }
@@ -172,6 +176,13 @@ button {
         }
     }
 
+    &.link-btn {
+
+    }
+
+    &.select-btn {
+
+    }
 
     &.medium-btn {
         height: 32px;

@@ -1,4 +1,4 @@
-﻿<div class="card" id="idea-@Idea.Id" @onclick=OpenFullView @onclick:stopPropagation=true>
+﻿<div class="card" id="idea-@Idea.Id" @onclick='() => OpenIdeaModal("")' @onclick:stopPropagation=true>
     <header>
         <img src="images/user-stock.png" />
         <div>
@@ -26,16 +26,18 @@
     </section>
     <footer>
         <div>
-            <button class="tertiary-btn"><ChatBubbleIcon /> <span>@comments.Count</span></button>
+            <button class="tertiary-btn" @onclick='() => OpenIdeaModal("comments")'><ChatBubbleIcon /> <span>@comments.Count</span></button>
             <button class="tertiary-btn"><ThumbsUpIcon /> <span>@likes.Count</span></button>
         </div>
-        <button class="tertiary-btn"><FileIcon /> <span>@(Idea.FileUrls?.Count ?? 0)</span></button>
+        <button class="tertiary-btn" @onclick='() => OpenIdeaModal("files")'><FileIcon /> <span>@(Idea.FileUrls?.Count ?? 0)</span></button>
     </footer>
 </div>
 
 @code {
-    [Parameter] public EventCallback<Idea> OnOpenFullView { get; set; }
     [Parameter, EditorRequired] public Idea Idea { get; set; }
+    [Parameter] public EventCallback<Idea> OnOpenIdeaModal { get; set; }
+    [Parameter] public EventCallback<Idea> OnOpenComments { get; set; }
+    [Parameter] public EventCallback<Idea> OnOpenFiles { get; set; }
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
@@ -51,9 +53,21 @@
         }
     }    
 
-    void OpenFullView()
+    void OpenIdeaModal(string focus)
     {
-        Console.WriteLine("opening full view");
-        OnOpenFullView.InvokeAsync(Idea);
+        if (focus == "")
+        {
+            OnOpenIdeaModal.InvokeAsync(Idea);
+        }
+
+        if (focus == "comments")
+        {
+            OnOpenComments.InvokeAsync(Idea);
+        }
+
+        if (focus == "files")
+        {
+            OnOpenFiles.InvokeAsync(Idea);
+        }
     }
 }
