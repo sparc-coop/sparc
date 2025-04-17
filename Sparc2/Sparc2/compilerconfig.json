@@ -32,8 +32,8 @@
     "inputFile": "Ideas/IdeaCard.razor.scss"
   },
   {
-    "outputFile": "Ideas/IdeaCardFull.razor.css",
-    "inputFile": "Ideas/IdeaCardFull.razor.scss"
+    "outputFile": "Ideas/IdeaModal.razor.css",
+    "inputFile": "Ideas/IdeaModal.razor.scss"
   },
   {
     "outputFile": "Ideas/IdeasPage.razor.css",

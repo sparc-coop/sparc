@@ -108,11 +108,28 @@
         &:active {
             background: rgba(255, 252, 246, 0.1);
         }
+    }
 
-        &.add-btn {
+    .right {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+
+        .tertiary-btn {
             background: var(--white);
             border-radius: 20px;
             transition: 0.1s all ease-in-out;
+
+            ::deep svg path {
+                stroke: var(--purple-800);
+            }
+
+            &.donate-btn {
+                ::deep svg path {
+                    stroke: none;
+                    fill: var(--purple-800);
+                }
+            }
 
             span {
                 color: var(--purple-800);
@@ -120,16 +137,12 @@
 
             &:hover {
                 color: var(--purple-800);
-                transform: scale(103%);
-
-                > svg path {
-                    stroke: var(--purple-800);
-                }
+                background: var(--purple-50);
             }
 
             &:active {
                 color: var(--purple-900);
-                transform: scale(1);
+                border-color: var(--purple-900);
 
                 > svg path {
                     stroke: var(--purple-900);

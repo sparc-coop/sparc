@@ -3,16 +3,16 @@
 
 <PageTitle>Ideas | Sparc</PageTitle>
 
-<article class="explore draggable">
+<article class="explore draggable @(ShowIdeaModal ? "noscroll" : "")">
     @foreach (var idea in ProjectIdeas)
     {
         <div class="card-container draggable">
-            <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
+            <IdeaCard @key="idea.Id" Idea=@idea OnOpenIdeaModal="OpenIdeaModal" OnOpenComments="OpenComments" OnOpenFiles="OpenFiles" />
         </div>
     }
-    @if (ShowFullIdeaCard)
+    @if (ShowIdeaModal)
     {
-        <IdeaCardFull Idea=@CurrentIdea OnClose="CloseFullIdea" />
+        <IdeaModal Idea=@CurrentIdea OnClose="CloseIdeaModal" FocusComments="FocusComments" FocusFiles="FocusFiles" />
     }
 </article>
 
@@ -22,9 +22,11 @@
 @inject IJSRuntime Js
 
 @code {
-    bool ShowFullIdeaCard;
+    bool ShowIdeaModal;
     Idea? CurrentIdea;
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
+    bool FocusComments;
+    bool FocusFiles;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,7 +36,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Js.InvokeVoidAsync("findCenter");
+        if (firstRender) await Js.InvokeVoidAsync("findCenter");
     }
 
     private void UpdateIdeas()
@@ -47,15 +49,35 @@
         IdeaService.OnIdeasChanged -= UpdateIdeas;
     }
 
-    void OpenFullIdea(Idea idea)
+    async Task OpenIdeaModal(Idea idea)
     {
-        ShowFullIdeaCard = true;
+        ShowIdeaModal = true;
         CurrentIdea = idea;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
     }
 
-    void CloseFullIdea()
+    async Task OpenComments(Idea idea)
     {
-        ShowFullIdeaCard = false;
+        ShowIdeaModal = true;
+        CurrentIdea = idea;
+        FocusComments = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    async Task OpenFiles(Idea idea)
+    {
+        ShowIdeaModal = true;
+        CurrentIdea = idea;
+        FocusFiles = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    async void CloseIdeaModal()
+    {
+        ShowIdeaModal = false;
         CurrentIdea = null;
+        FocusComments = false;
+        FocusFiles = false;
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 }
