@@ -18,6 +18,7 @@
 
 @inject Sparc2.Ideas.IdeaService IdeaService
 
+
 @code {
     bool ShowFullIdeaCard;
     Idea? CurrentIdea;
@@ -26,7 +27,6 @@
     protected override async Task OnInitializedAsync()
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
-        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
     }
 
     private void UpdateIdeas()
@@ -50,4 +50,5 @@
         ShowFullIdeaCard = false;
         CurrentIdea = null;
     }
+   
 }

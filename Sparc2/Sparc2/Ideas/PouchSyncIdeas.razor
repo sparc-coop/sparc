@@ -1,0 +1,37 @@
+﻿@page "/ideas-pouch-sync"  
+@layout EmptyLayout  
+
+<main>  
+   <h3>Ideas Pouch Sync</h3>  
+
+   <ul>  
+       @foreach (var idea in Ideas)  
+       {  
+           <li>@idea.Title</li>  
+       }  
+   </ul>  
+
+   <button @onclick="SyncIdeas">Sync Ideas</button>  
+</main>  
+
+@inject IRepository<ProjectIdea> _ideasRepo  
+
+@code {  
+   private List<Idea> Ideas = new();  
+   private string SyncResult = string.Empty;  
+
+   protected override async Task OnInitializedAsync()  
+   {  
+       Ideas = await LoadLocalIdeasAsync();  
+   }  
+
+   private async Task<List<Idea>> LoadLocalIdeasAsync()  
+   {  
+       return (await Api.ProjectIdeas.GetAllIdeas()).ToList();  
+   }  
+
+   private async void SyncIdeas(MouseEventArgs args)  
+   {  
+       await _ideasRepo.SyncAsync();  
+   }  
+}
