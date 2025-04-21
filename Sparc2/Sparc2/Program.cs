@@ -2,7 +2,7 @@
 using Sparc2.Ideas;
 using Sparc.Blossom.Data;
 
-var builder  = BlossomApplication.CreateBuilder(args);
+var builder  = BlossomApplication.CreateBuilder<Html>(args);
 builder.Services.AddAzureStorage(builder.Configuration);
 
 builder.Services.AddSingleton<IdeaService>();
