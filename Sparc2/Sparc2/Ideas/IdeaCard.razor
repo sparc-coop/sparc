@@ -16,7 +16,7 @@
                 }
                 else
                 {
-                    <img src="@currentFile" />                    
+                    <img src="@Idea.FileUrls.First()" />                    
                 }
             </div>            
         </div>
@@ -41,17 +41,6 @@
 
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
-
-    string currentFile;
-
-    protected override void OnInitialized()
-    {
-        if (Idea.FileUrls.Count > 0)
-        {
-            currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
-            StateHasChanged();
-        }
-    }    
 
     void OpenIdeaModal(string focus)
     {

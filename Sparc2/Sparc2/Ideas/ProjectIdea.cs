@@ -3,26 +3,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sparc2.Ideas;
 
-public class ProjectIdea : BlossomEntity<string>
+public class ProjectIdea(string title, string author, string description, List<string> fileUrls) : BlossomEntity<string>(Guid.NewGuid().ToString())
 {
     [Required(ErrorMessage = "Title is required")]
-    public string Title { get; set; }
+    public string Title { get; set; } = title;
 
     [Required(ErrorMessage = "Name is required")]
-    public string Author { get; set; }
-    public string Description { get; set; }
-    public DateTime DateCreated { get; set; }
+    public string Author { get; set; } = author;
+    public string Description { get; set; } = description;
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public DateTime LastModified { get; set; }
-    public List<string> FileUrls { get; set; } = new();
-
-    public ProjectIdea(string title, string author, string description, List<string> fileUrls) : base(Guid.NewGuid().ToString())
-    {
-        Title = title;
-        Author = author;
-        Description = description;        
-        FileUrls = fileUrls;
-        DateCreated = DateTime.UtcNow;
-    }
+    public List<string> FileUrls { get; set; } = fileUrls;
 
     public void Update(string title, string author, string description, List<string> fileUrls)
     {

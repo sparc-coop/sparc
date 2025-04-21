@@ -1,4 +1,4 @@
-﻿<div class="modal add-card @(IsEditMode ? "edit-mode" : "")">
+﻿<div class="modal add-card @(IdeaToEdit != null ? "edit-mode" : "")">
     <div class="progress-bar">
         <div class="progress" style="width: @(StepProgress + "%");"></div>
     </div>
@@ -33,19 +33,17 @@
     [Parameter] public Idea? IdeaToEdit { get; set; }
     [Parameter] public bool StartOnFiles { get; set; }
 
-    private bool IsEditMode => IdeaToEdit != null;
-
     private int CurrentStep;
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
     private bool IsUploading;
 
     private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
-    private EditContext editContext;
+    private EditContext editContext = null!;
     private List<Sparc2.Files.FileUpload> UploadedFiles = new();
 
     protected override void OnInitialized()
     {
-        if (IsEditMode)
+        if (IdeaToEdit != null)
         {
             Idea = new Sparc2.Ideas.ProjectIdea(
                 IdeaToEdit.Title,
@@ -103,9 +101,9 @@
 
     private async Task SubmitIdea()
     {
-        if (IsEditMode)
+        if (IdeaToEdit != null)
         {
-            await IdeaToEdit!.Update(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
+            await IdeaToEdit.Update(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
             await OnClose.InvokeAsync(true);
         }
         else

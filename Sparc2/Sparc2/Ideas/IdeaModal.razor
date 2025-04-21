@@ -81,7 +81,7 @@
         <div class="container">
             <section class="files">
                 <ul>
-                    @foreach (var file in Idea.FileUrls)
+                    @foreach (var file in Idea.FileUrls!)
                     {
                         <li>
                             <div class="left">
@@ -119,14 +119,14 @@
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
 
-    string currentFile;
+    string? currentFile;
     string currentFocus = "main";
 
     protected override void OnInitialized()
     {
         if (Idea.FileUrls.Count > 0)
         {
-            currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+            currentFile = Idea.FileUrls.First();
             StateHasChanged();
         }
 

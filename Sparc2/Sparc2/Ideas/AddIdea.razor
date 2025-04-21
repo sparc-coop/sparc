@@ -6,7 +6,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
     </header>
     <div class="form first-step-idea">
-        <EditForm EditContext="@EditContext">
+        <EditForm Model="Idea">
             <DataAnnotationsValidator />
 
             <label>
@@ -27,7 +27,7 @@
 else if (CurrentStep == 1)
 {
     <div class="form">
-        <EditForm EditContext="@EditContext">
+        <EditForm Model="Idea">
             <section>
                 <h3>Share files (Optional)</h3>
                 <div>
@@ -67,7 +67,6 @@ else if (CurrentStep == 1)
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
-    [Parameter] public EditContext EditContext { get; set; }
     [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; } = [];
     [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
     [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }

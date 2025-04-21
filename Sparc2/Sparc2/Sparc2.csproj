@@ -18,8 +18,4 @@
     <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj" />
     <ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Databases\" />
-  </ItemGroup>
 </Project>
