@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sparc2.Ideas;
 
-public class ProjectIdea(string title, string author, string description, List<string> fileUrls) : BlossomEntity<string>(Guid.NewGuid().ToString())
+public class ProjectIdea(string title, string author, string description, List<string> fileUrls) 
+    : BlossomEntity<string>(Guid.NewGuid().ToString())
 {
     [Required(ErrorMessage = "Title is required")]
     public string Title { get; set; } = title;
