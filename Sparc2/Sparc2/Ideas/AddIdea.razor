@@ -1,4 +1,5 @@
-﻿@if (CurrentStep == 0)
+﻿@using Sparc.Blossom.Data
+@if (CurrentStep == 0)
 {
     <header>
         <h2>Be Part of Sparc</h2>
@@ -62,11 +63,12 @@ else if (CurrentStep == 1)
     </div>
 }
 
+@inject AzureBlobRepository Files
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
     [Parameter] public EditContext EditContext { get; set; }
-    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
+    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; } = [];
     [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
     [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 
@@ -92,8 +94,11 @@ else if (CurrentStep == 1)
                 InvokeAsync(StateHasChanged);
             });
 
+
             using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
-            uploaded.Url = await AzureBlob.UploadFileAsync("uploads", file.Name, stream, file.ContentType, progress);
+            var newFile = new BlossomFile("uploads", file.Name, AccessTypes.Public, stream);
+            await Files.AddAsync(newFile, progress);
+            uploaded.Url = newFile.Url!;
             Idea.FileUrls.Add(uploaded.Url);
         }
 
