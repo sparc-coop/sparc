@@ -12,6 +12,17 @@
     background: var(--yellow-50);
     animation: fadeIn 1s ease-in-out;
 
+    @media only screen and (max-width: 600px) {
+        width: calc(100% - 64px) !important;
+        max-height: 75% !important;
+        padding: 16px !important;
+
+        .container {
+            max-height: calc(100vh * .6) !important;
+            padding-bottom: 1px;
+        }
+    }
+
     header {
         display: flex;
         flex-direction: row;

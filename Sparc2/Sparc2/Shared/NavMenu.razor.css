@@ -1,11 +1,10 @@
 ﻿nav {
-  width: calc(100vw - 158px);
-  padding: 8px 16px;
+  width: calc(100% - 200px);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  margin: 32px 60px;
+  margin: 32px 100px;
 }
 nav .container {
   display: flex;
@@ -36,7 +35,8 @@ nav button ::deep svg path {
 
 .other-nav {
   position: fixed;
-  width: calc(100vw - 158px);
+  width: calc(100vw - 238px);
+  padding: 8px 16px;
   border-radius: 12px;
   background: rgba(26, 12, 50, 0.26);
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
@@ -126,4 +126,29 @@ nav button ::deep svg path {
 .other-nav .right .tertiary-btn:disabled {
   border: 1px solid transparent;
   opacity: 0.5;
+}
+
+@media only screen and (max-width: 874px) {
+  .other-nav {
+    width: calc(100% - 64px);
+    margin: 16px;
+  }
+  .other-nav .right {
+    position: fixed;
+    top: calc(100vh - 82px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: rgba(26, 12, 50, 0.26);
+    box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    justify-content: center;
+    gap: 8px;
+  }
+  .other-nav .right > * {
+    width: 100%;
+  }
 }

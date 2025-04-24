@@ -5,7 +5,7 @@
 <section id="home">
     <div class="hero">
         <div id="hero-text">
-            <h1>Striving for a world where startups are owned by those who built it <button><ArrowRightIcon /></button></h1>        
+            <h1>Striving for a world where startups are owned by those who built it <button id="enter-btn"><ArrowRightIcon /></button></h1>        
         </div>
         <div id="mosaic-container">
             <img src="images/LogoMosaic-withbackground.png" id="mosaic" />
@@ -16,22 +16,3 @@
         <ArrowLeftIcon />
     </div>
 </section>
-
-@* <script>
-    function scroll() {
-        window.scroll({
-            bottom: 0,
-        });
-
-        console.log("click to scroll");
-    }
-</script>
-
-@inject IJSRuntime Js
-
-@code {
-    private async void Scroll()
-    {
-        await Js.InvokeVoidAsync("scroll");
-    }
-} *@

@@ -27,9 +27,8 @@ function initScroll() {
                 //    scrub: 1,
                 //},
                 scale: 10,
-                x: -(mosaicWidth / 2),
-                y: mosaicHeight / 2,
-                //y: mosaicHeight,
+                x: (mosaicWidth + 400) / -2,
+                y: (mosaicHeight - 400) / 2,
                 opacity: 0,
                 duration: 2,
                 ease: "power1.in",
@@ -63,17 +62,10 @@ function navigateToIdeas() {
 
 function mouseClickHandler() {
     addEventListener("click", function (e) {
-        if (e.target.id === "scroll-text" || e.target.id === "ideas-btn") {
+        if (e.target.id === "scroll-text" || e.target.id === "ideas-btn" || e.target.closest("#enter-btn") || e.target.id === "mosaic") {
             window.scrollTo(0, 10);
         }
     });
-//    var scrollText = document.getElementById("scroll-text");
-
-//    if (scrollText) {
-//        scrollText.addEventListener("click", function (event) {
-//            window.scrollTo(0, 10);
-//        });
-//    }
 }
 
 function pressEnter() {

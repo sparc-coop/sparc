@@ -1,28 +1,33 @@
 ﻿section {
+  width: 100vw;
   height: calc(100vh + 1px);
   overflow: hidden;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  container-type: inline-size;
+  container-name: home-container;
 }
 section .hero {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 9rem 6.3rem 0 6.3rem;
-}
-section .hero div {
+  width: calc(100% - 200px);
+  margin: 0 100px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 section .hero #hero-text {
-  padding: 20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 50%;
+  max-width: 750px;
   animation: fadeIn 3s ease-in-out;
 }
 section .hero #hero-text h1 {
-  max-width: 750px;
   margin: 0;
   color: var(--purple-800);
-  font-size: 89px;
+  font-size: 8.9rem;
   letter-spacing: -1.795px;
 }
 section .hero #hero-text h1 button {
@@ -37,11 +42,16 @@ section .hero #hero-text.faded {
   opacity: 0.75;
 }
 section .hero #mosaic-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
   width: 50%;
   animation: fadeInScaleUp 2s ease-in-out;
+  cursor: pointer;
 }
 section .hero #mosaic-container img {
   width: 100%;
+  margin-right: -35px;
 }
 section #scroll-text {
   margin: 0 auto;
@@ -73,6 +83,32 @@ section #scroll-text ::deep svg path {
   stroke: var(--purple-800);
 }
 
+@container home-container (max-width: 1403px) {
+  .hero #hero-text h1 {
+    font-size: 6.4rem !important;
+  }
+}
+@container home-container (max-width: 1048px) {
+  .hero #hero-text {
+    width: 40% !important;
+  }
+  .hero #hero-text h1 {
+    font-size: 5.2rem !important;
+  }
+  .hero #mosaic-container {
+    width: 60% !important;
+  }
+}
+@container home-container (max-width: 874px) {
+  .hero #hero-text h1 {
+    font-size: 4.8rem !important;
+  }
+}
+/*@container home-container (max-width: 819px) {
+    .hero {
+        flex-direction: column !important;
+    }
+}*/
 ::-webkit-scrollbar {
   display: none;
 }
