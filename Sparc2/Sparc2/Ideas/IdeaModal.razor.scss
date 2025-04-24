@@ -12,13 +12,14 @@
     background: var(--yellow-50);
     animation: fadeIn 1s ease-in-out;
 
-    @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 580px) {
         width: calc(100% - 64px) !important;
-        max-height: 75% !important;
+        height: fit-content;
+        max-height: 80% !important;
         padding: 16px !important;
 
         .container {
-            max-height: calc(100vh * .6) !important;
+            max-height: calc(100vh * .7) !important;
             padding-bottom: 1px;
         }
     }
