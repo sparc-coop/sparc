@@ -55,6 +55,7 @@
     {
         if (ShouldScrollToLatest && LatestIdea != null)
         {
+            await Task.Delay(1000);
             await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
             ShouldScrollToLatest = false; 
         }
