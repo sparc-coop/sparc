@@ -6,8 +6,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    container-type: inline-size;
-    container-name: home-container;
 
     .hero {
         width: calc(100% - 200px);
@@ -62,7 +60,7 @@
 
     #scroll-text {
         margin: 0 auto;
-        width: fit-content;
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -74,6 +72,7 @@
         transform: translateX(-50%);
         animation: fadeIn 6s ease-in-out;
         cursor: pointer;
+        z-index: 30;
 
         p {
             font-size: 1.2rem;
@@ -92,49 +91,110 @@
             }
         }
     }
-}
 
-@container home-container (max-width: 1403px) {
-    .hero {
-        #hero-text {
-            h1 {
-                font-size: 6.4rem !important
+    @media only screen and (max-width: 1403px) {
+        .hero {
+            #hero-text {
+                h1 {
+                    font-size: 6.4rem !important
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1048px) {
+        .hero {
+            #hero-text {
+                width: 40% !important;
+
+                h1 {
+                    font-size: 5.2rem !important;
+                }
+            }
+
+            #mosaic-container {
+                width: 60% !important;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 874px) {
+        .hero {
+            #hero-text {
+                h1 {
+                    font-size: 4.8rem !important;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 819px), (orientation: portrait) {
+        .hero {
+            display: block !important;
+            height: calc(100% - 100px); 
+            margin-top: 100px;
+            position: relative;
+
+            #hero-text {
+                width: 100% !important;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 20;
+
+                ::deep svg {
+                    height: 48px;
+                    width: auto;
+                }
+            }
+
+            #mosaic-container {
+                position: absolute;
+                top: 75%;
+                left: 50%;
+                transform: translate(-50%, -75%);
+                width: 100% !important;
+                z-index: 10;
+
+                #mosaic {
+                    margin: 0;
+                }
+            }
+        }
+
+        #scroll-text {
+            bottom: 24px;
+        }
+    }
+
+    @media only screen and (max-width: 700px) {
+        .hero {
+            width: calc(100% - 120px);
+            margin: 0 60px;
+            margin-top: 100px;
+
+            #hero-text {
+                font-size: 4.2rem;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        .hero {
+            width: calc(100% - 64px);
+            margin: 0 32px;
+
+            #hero-text {
+                top: 40px;
+            }
+
+            #mosaic-container {
+                width: calc(100% + 64px) !important;
+                margin: 0;
             }
         }
     }
 }
-
-@container home-container (max-width: 1048px) {
-    .hero {
-        #hero-text {
-            width: 40% !important;
-
-            h1 {
-                font-size: 5.2rem !important;
-            }
-        }
-
-        #mosaic-container {
-            width: 60% !important;
-        }
-    }
-}
-
-@container home-container (max-width: 874px) {
-    .hero {
-        #hero-text {
-            h1 {
-                font-size: 4.8rem !important;
-            }
-        }
-    }
-}
-
-/*@container home-container (max-width: 819px) {
-    .hero {
-        flex-direction: column !important;
-    }
-}*/
 
 ::-webkit-scrollbar {
     display: none;

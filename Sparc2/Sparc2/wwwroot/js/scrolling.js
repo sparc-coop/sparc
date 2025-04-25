@@ -62,7 +62,7 @@ function navigateToIdeas() {
 
 function mouseClickHandler() {
     addEventListener("click", function (e) {
-        if (e.target.id === "scroll-text" || e.target.id === "ideas-btn" || e.target.closest("#enter-btn") || e.target.id === "mosaic") {
+        if (e.target.closest("#scroll-text") || e.target.closest("#ideas-btn") || e.target.closest("#enter-btn") || e.target.closest("#mosaic")) {
             window.scrollTo(0, 10);
         }
     });
@@ -123,5 +123,17 @@ function disableBodyScrolling(bool) {
         document.body.classList.add("modal-open");
     } else {
         document.body.classList.remove("modal-open");
+    }
+}
+function scrollToElement(id) {
+    if (id) {
+        //var elem = document.getElementById(id);
+        var elem = document.getElementById("idea-7f35eca4-5e85-4575-bf9a-a357211d277e");
+        elem.classList.add("highlight");
+        elem.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+        });
     }
 }

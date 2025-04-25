@@ -6,8 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  container-type: inline-size;
-  container-name: home-container;
 }
 section .hero {
   width: calc(100% - 200px);
@@ -55,7 +53,7 @@ section .hero #mosaic-container img {
 }
 section #scroll-text {
   margin: 0 auto;
-  width: fit-content;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,6 +65,7 @@ section #scroll-text {
   transform: translateX(-50%);
   animation: fadeIn 6s ease-in-out;
   cursor: pointer;
+  z-index: 30;
 }
 section #scroll-text p {
   font-size: 1.2rem;
@@ -82,33 +81,84 @@ section #scroll-text ::deep svg {
 section #scroll-text ::deep svg path {
   stroke: var(--purple-800);
 }
-
-@container home-container (max-width: 1403px) {
-  .hero #hero-text h1 {
+@media only screen and (max-width: 1403px) {
+  section .hero #hero-text h1 {
     font-size: 6.4rem !important;
   }
 }
-@container home-container (max-width: 1048px) {
-  .hero #hero-text {
+@media only screen and (max-width: 1048px) {
+  section .hero #hero-text {
     width: 40% !important;
   }
-  .hero #hero-text h1 {
+  section .hero #hero-text h1 {
     font-size: 5.2rem !important;
   }
-  .hero #mosaic-container {
+  section .hero #mosaic-container {
     width: 60% !important;
   }
 }
-@container home-container (max-width: 874px) {
-  .hero #hero-text h1 {
+@media only screen and (max-width: 874px) {
+  section .hero #hero-text h1 {
     font-size: 4.8rem !important;
   }
 }
-/*@container home-container (max-width: 819px) {
-    .hero {
-        flex-direction: column !important;
-    }
-}*/
+@media only screen and (max-width: 819px), (orientation: portrait) {
+  section .hero {
+    display: block !important;
+    height: calc(100% - 100px);
+    margin-top: 100px;
+    position: relative;
+  }
+  section .hero #hero-text {
+    width: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+  }
+  section .hero #hero-text ::deep svg {
+    height: 48px;
+    width: auto;
+  }
+  section .hero #mosaic-container {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    width: 100% !important;
+    z-index: 10;
+  }
+  section .hero #mosaic-container #mosaic {
+    margin: 0;
+  }
+  section #scroll-text {
+    bottom: 24px;
+  }
+}
+@media only screen and (max-width: 700px) {
+  section .hero {
+    width: calc(100% - 120px);
+    margin: 0 60px;
+    margin-top: 100px;
+  }
+  section .hero #hero-text {
+    font-size: 4.2rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  section .hero {
+    width: calc(100% - 64px);
+    margin: 0 32px;
+  }
+  section .hero #hero-text {
+    top: 40px;
+  }
+  section .hero #mosaic-container {
+    width: calc(100% + 64px) !important;
+    margin: 0;
+  }
+}
+
 ::-webkit-scrollbar {
   display: none;
 }

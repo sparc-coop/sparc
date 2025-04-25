@@ -1,5 +1,6 @@
 ﻿@page "/ideas"
 @layout PageLayout
+@rendermode InteractiveServer
 
 <PageTitle>Ideas | Sparc</PageTitle>
 
@@ -24,6 +25,7 @@
 @code {
     bool ShowIdeaModal;
     Idea? CurrentIdea;
+    Idea? LatestIdea;
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
     bool FocusComments;
     bool FocusFiles;
@@ -32,11 +34,26 @@
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
         ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        LatestIdea = ProjectIdeas.OrderByDescending(x => x.DateCreated).FirstOrDefault();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) await Js.InvokeVoidAsync("findCenter");
+        // if firstRender not working
+        // if (firstRender)
+        // {
+        //     if (LatestIdea != null)
+        //     {
+        //         // this is working, but being called too early (before the photo loads)
+        //         await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
+        //     }
+        // }
+
+        if (LatestIdea != null)
+        {
+            // this is working, but being called too early (before the photo loads)
+            await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
+        }
     }
 
     private void UpdateIdeas()
