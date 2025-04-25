@@ -1,5 +1,4 @@
-﻿@using Sparc.Blossom.Data
-@if (CurrentStep == 0)
+﻿@if (CurrentStep == 0)
 {
     <header>
         <h2>Be Part of Sparc</h2>
@@ -63,7 +62,7 @@ else if (CurrentStep == 1)
     </div>
 }
 
-@inject AzureBlobRepository Files
+@inject IRepository<BlossomFile> Files
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
@@ -103,7 +102,7 @@ else if (CurrentStep == 1)
 
             using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
             var newFile = new BlossomFile("uploads", file.Name, AccessTypes.Public, stream);
-            await Files.AddAsync(newFile, progress);
+            await Files.AddAsync(newFile);
             uploaded.Url = newFile.Url!;
             Idea.FileUrls.Add(uploaded.Url);
         }

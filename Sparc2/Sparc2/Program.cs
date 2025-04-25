@@ -1,10 +1,11 @@
 ﻿using Sparc2;
 using Sparc2.Ideas;
-using Sparc.Blossom.Data;
+using Sparc2.Shared;
 
-var builder  = BlossomApplication.CreateBuilder<Html>(args);
+var builder  = BlossomApplication.CreateBuilder<App>(args);
 builder.AddBlossomCloud();
-builder.Services.AddAzureStorage(builder.Configuration);
+
+//builder.Services.AddAzureStorage(builder.Configuration);
 
 builder.Services.AddSingleton<IdeaService>();
 
@@ -14,4 +15,4 @@ using var scope = app.Services.CreateScope();
 var ideaRepository = scope.ServiceProvider.GetRequiredService<IRepository<ProjectIdea>>();
 await ideaRepository.AddAsync(ProjectIdea.Generate(20));
 
-await app.RunAsync<Html>(); 
+await app.RunAsync<MainLayout>(); 
