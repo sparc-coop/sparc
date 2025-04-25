@@ -28,6 +28,7 @@
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
     bool FocusComments;
     bool FocusFiles;
+    bool ShouldScrollToLatest = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -42,6 +43,7 @@
             list.Insert(middleIndex, latest);
             ProjectIdeas = list;
             LatestIdea = latest;
+            ShouldScrollToLatest = true; 
         }
         else
         {
@@ -51,20 +53,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        // if firstRender not working
-        // if (firstRender)
-        // {
-        //     if (LatestIdea != null)
-        //     {
-        //         // this is working, but being called too early (before the photo loads)
-        //         await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
-        //     }
-        // }
-
-        if (LatestIdea != null)
+        if (ShouldScrollToLatest && LatestIdea != null)
         {
-            // this is working, but being called too early (before the photo loads)
             await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
+            ShouldScrollToLatest = false; 
         }
     }
 
