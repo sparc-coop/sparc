@@ -19,7 +19,6 @@
 
 @* <div class="modal-overlay"></div> *@
 
-@inject Sparc2.Ideas.IdeaService IdeaService
 @inject IJSRuntime Js
 
 @code {
@@ -33,8 +32,21 @@
     protected override async Task OnInitializedAsync()
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
-        ProjectIdeas = await Api.ProjectIdeas.GetAllIdeas();
-        LatestIdea = ProjectIdeas.OrderByDescending(x => x.DateCreated).FirstOrDefault();
+        var allIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        var latest = allIdeas.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        if (latest != null)
+        {
+            var list = allIdeas.Where(i => i.Id != latest.Id).ToList();
+            int middleIndex = list.Count / 2;
+            list.Insert(middleIndex, latest);
+            ProjectIdeas = list;
+            LatestIdea = latest;
+        }
+        else
+        {
+            ProjectIdeas = allIdeas;
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -56,9 +68,24 @@
         }
     }
 
-    private void UpdateIdeas()
+    private async Task UpdateIdeas()
     {
-        InvokeAsync(StateHasChanged);
+        var allIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        var latest = allIdeas.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        if (latest != null)
+        {
+            var list = allIdeas.Where(i => i.Id != latest.Id).ToList(); 
+            int middleIndex = list.Count / 2;
+            list.Insert(middleIndex, latest); 
+            ProjectIdeas = list;
+            LatestIdea = latest;
+        }
+        else
+        {
+            ProjectIdeas = allIdeas;
+        }
+        StateHasChanged();
     }
 
     public void Dispose()

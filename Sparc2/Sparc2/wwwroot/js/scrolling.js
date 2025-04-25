@@ -127,11 +127,11 @@ function disableBodyScrolling(bool) {
 }
 function scrollToElement(id) {
     if (id) {
-        //var elem = document.getElementById(id);
-        var elem = document.getElementById("idea-7f35eca4-5e85-4575-bf9a-a357211d277e");
+        var elem = document.getElementById(id);
+        //var elem = document.getElementById("idea-4a4d8eeb-d3fc-42c7-a311-c65d0642479a");
         elem.classList.add("highlight");
         elem.scrollIntoView({
-            behavior: 'auto',
+            behavior: 'smooth',
             block: 'center',
             inline: 'center'
         });
