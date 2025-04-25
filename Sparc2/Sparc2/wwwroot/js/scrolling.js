@@ -128,7 +128,6 @@ function disableBodyScrolling(bool) {
 function scrollToElement(id) {
     if (id) {
         var elem = document.getElementById(id);
-        //var elem = document.getElementById("idea-4a4d8eeb-d3fc-42c7-a311-c65d0642479a");
         elem.classList.add("highlight");
         elem.scrollIntoView({
             behavior: 'smooth',

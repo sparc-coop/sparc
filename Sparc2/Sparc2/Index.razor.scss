@@ -131,7 +131,7 @@
     @media only screen and (max-width: 819px), (orientation: portrait) {
         .hero {
             display: block !important;
-            height: calc(100% - 100px); 
+            height: calc(100% - 100px);
             margin-top: 100px;
             position: relative;
 
@@ -150,14 +150,14 @@
 
             #mosaic-container {
                 position: absolute;
-                top: 75%;
-                left: 50%;
-                transform: translate(-50%, -75%);
                 width: 100% !important;
+                height: 100%;
+                margin: 0;
                 z-index: 10;
 
                 #mosaic {
                     margin: 0;
+                    margin-top: 15%;
                 }
             }
         }
@@ -176,6 +176,16 @@
             #hero-text {
                 font-size: 4.2rem;
             }
+
+            #mosaic-container {
+                width: calc(100% + 64px) !important;
+                margin: 0 -32px;
+
+                #mosaic {
+                    margin: 0;
+                    margin-top: 15%;
+                }
+            }
         }
     }
 
@@ -189,8 +199,10 @@
             }
 
             #mosaic-container {
-                width: calc(100% + 64px) !important;
-                margin: 0;
+                #mosaic {
+                    margin: 0;
+                    margin-top: 25%;
+                }
             }
         }
     }
