@@ -128,7 +128,7 @@ nav button ::deep svg path {
   opacity: 0.5;
 }
 
-@media only screen and (max-width: 874px), (orientation: portrait) {
+@media only screen and (max-width: 1024px), (orientation: portrait) {
   .other-nav {
     width: calc(100% - 64px);
     margin: 16px;
@@ -152,7 +152,7 @@ nav button ::deep svg path {
     width: 100%;
   }
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 800px) {
   nav {
     width: calc(100% - 120px);
     margin: 32px 60px;
