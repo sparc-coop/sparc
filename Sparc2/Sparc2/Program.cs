@@ -2,6 +2,7 @@
 using Sparc2;
 using Sparc2.Databases.AzureBlob;
 using Sparc2.Ideas;
+using Sparc2.Services;
 
 var builder  = BlossomApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ builder.Services.AddSingleton<AzureBlob>(sp =>
     return new AzureBlob(connectionString);
 });
 builder.Services.AddSingleton<IdeaService>();
+
+builder.Services.AddSlackIntegration(builder.Configuration);
 
 var app = builder.Build();
 
