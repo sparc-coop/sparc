@@ -59,9 +59,29 @@
             <section class="comments">
                 <hr />
                 <h4>Comment</h4>
+                @if (Comments == null)
+                {
+                    <p>Loading messages...</p>
+                }
+                else if (!Comments.Any())
+                {
+                    <p>No messages in this channel.</p>
+                }
+                else
+                {
+                    <ul class="list-group">
+                        @foreach (var msg in Comments.OrderBy(m => m.ThreadTs))
+                        {
+                            <li class="list-group-item" style="font-size: 14px">
+                                <small class="text-muted">@msg.User (@msg.ThreadTs)</small><br />
+                                @msg.Text
+                            </li>
+                        }
+                    </ul>
+                }
                 <div>
-                    <input type="text" placeholder="Leave a comment" autofocus=@(currentFocus == "comments" ? true : false)/>
-                    <button class="secondary-btn">Send</button>
+                    <input type="text" @bind="newComment" placeholder="Leave a comment" autofocus=@(currentFocus == "comments" ? true : false)/>
+                    <button @onclick="SendComment"  class ="secondary-btn">Send</button>
                 </div>
             </section>
         </div>
@@ -109,19 +129,24 @@
 
 <div class="modal-overlay" @onclick="CloseModal"></div>
 
+@using SlackNet.Events
+@using Sparc2.Services
+@inject ISlackIntegrationService SlackService
+
 @code {
     [Parameter, EditorRequired] public Idea Idea { get; set; }
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public bool FocusComments { get; set; }
     [Parameter] public bool FocusFiles { get; set; }
 
-    List<string> comments = new List<string>();
     List<string> likes = new List<string>();
+    private List<MessageEvent> Comments;
+    string newComment = "";
 
     string currentFile;
     string currentFocus = "main";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (Idea.FileUrls.Count > 0)
         {
@@ -132,6 +157,7 @@
         if (FocusComments == true)
         {
             currentFocus = "comments";
+            await LoadComments();
         }
 
         if (FocusFiles == true)
@@ -162,6 +188,17 @@
         {
             currentFile = Idea.FileUrls[Idea.FileUrls.IndexOf(currentFile) - 1];
         }
+    }
+    public async Task LoadComments()
+    {
+        Comments = (await SlackService.GetMessagesAsync(new[] { Idea.ChannelId })).ToList();
+    }
+
+    public async Task SendComment()
+    {
+        await SlackService.SendMessageAsync(Idea.ChannelId, newComment);
+        newComment = "";
+        await LoadComments();
     }
 
     void OpenFiles()

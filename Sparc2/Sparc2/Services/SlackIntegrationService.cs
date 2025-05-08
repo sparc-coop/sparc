@@ -9,7 +9,7 @@ namespace Sparc2.Services
         Task<IEnumerable<Conversation>> GetChannelsAsync(bool excludeArchived = true, int limit = 100);
         Task<IEnumerable<string>> GetChannelIdsAsync(bool excludeArchived = true, int limit = 100);
         Task<IEnumerable<MessageEvent>> GetMessagesAsync(IEnumerable<string> channelIds, int limit = 100);
-        Task PostMessageAsync(IEnumerable<string> channelIds, string text);
+        Task SendMessageAsync(string channelId, string text);
     }
 
     public class SlackIntegrationService : ISlackIntegrationService
@@ -68,12 +68,9 @@ namespace Sparc2.Services
             return allMessages;
         }
 
-        public async Task PostMessageAsync(IEnumerable<string> channelIds, string text)
+        public Task SendMessageAsync(string channelId, string text)
         {
-            foreach (var channelId in channelIds)
-            {
-                await _chatApi.PostMessage(new Message { Channel = channelId, Text = text });
-            }
+            return _chatApi.PostMessage(new Message { Channel = channelId, Text = text });
         }
     }
 }

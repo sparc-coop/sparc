@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sparc2.Ideas;
@@ -13,6 +14,10 @@ public class ProjectIdea : BlossomEntity<string>
     public string Description { get; set; }
     public DateTime DateCreated { get; set; }
     public List<string> FileUrls { get; set; } = new();
+    // Temporary solution. The ChannelId is hardcoded between three values.
+    public string ChannelId => ChannelIdOptions[Rng.Next(ChannelIdOptions.Length)];
+    private static readonly string[] ChannelIdOptions = ["C08RH3SD4M7", "C08RH3VUBB3", "C08R8PRF79S"];
+    private static readonly Random Rng = new Random();
 
     public ProjectIdea(string title, string author, string description, List<string> fileUrls) : base(Guid.NewGuid().ToString())
     {
