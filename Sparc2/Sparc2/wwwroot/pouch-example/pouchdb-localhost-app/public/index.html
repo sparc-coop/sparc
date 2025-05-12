@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PouchDB Localhost App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>PouchDB Localhost App</h1>
+
+  <form id="person-form">
+    <label>Name: <input type="text" id="name" required></label>
+    <label>Age: <input type="number" id="age" required></label>
+    <label>Height (cm): <input type="number" id="height" required></label>
+    <button type="button" onclick="addToList()">Add to List</button>
+  </form>
+
+  <button onclick="saveAll()">Save All to Database</button>
+  <button onclick="syncNow()">Sync Now</button>
+
+  <h2>Pending Entries</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Age</th><th>Height</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="pending-table"></tbody>
+  </table>
+
+  <h2>Saved Data</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Age</th><th>Height</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="local-table"></tbody>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/pouchdb@9.0.0/dist/pouchdb.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

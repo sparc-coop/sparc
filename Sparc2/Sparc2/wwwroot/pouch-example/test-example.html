@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PouchDB Multi Person Entry</title>
+  <script src="https://cdn.jsdelivr.net/npm/pouchdb@9.0.0/dist/pouchdb.min.js"></script>
+  <style>
+    label { display: block; margin-top: 10px; }
+    table { margin-top: 20px; border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ccc; padding: 5px; text-align: center; }
+    input { margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+  <h1>PouchDB Multi Person Entry</h1>
+
+  <form id="person-form">
+    <label>Name: <input type="text" id="name" required></label>
+    <label>Age: <input type="number" id="age" required></label>
+    <label>Height (cm): <input type="number" id="height" required></label>
+    <button type="button" onclick="addToList()">Adicionar à lista</button>
+  </form>
+
+  <button onclick="saveAll()">Salvar todos no banco</button>
+  <button onclick="syncNow()">Sincronizar</button>
+
+  <h2>Entradas pendentes</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Age</th><th>Height</th><th>Ações</th></tr>
+    </thead>
+    <tbody id="pending-table"></tbody>
+  </table>
+
+  <h2>Dados salvos localmente</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Age</th><th>Height</th><th>Ações</th></tr>
+    </thead>
+    <tbody id="local-table"></tbody>
+  </table>
+
+  <script>
+    const localDb = new PouchDB("person");
+    const remoteDb = new PouchDB("https://localhost:7185/data/db/person", {
+      fetch: function (url, opts) {
+        opts.headers.set("x-functions-key", "abc123");
+        return PouchDB.fetch(url, opts);
+      }
+    });
+
+    let pending = [];
+
+    function addToList() {
+      const name = document.getElementById("name").value;
+      const age = parseInt(document.getElementById("age").value);
+      const height = parseFloat(document.getElementById("height").value);
+
+      if (!name || isNaN(age) || isNaN(height)) return;
+
+      const id = crypto.randomUUID();
+      pending.push({ _id: id, name, age, height });
+
+      document.getElementById("person-form").reset();
+      renderPending();
+    }
+
+    function renderPending() {
+      const tbody = document.getElementById("pending-table");
+      tbody.innerHTML = "";
+      pending.forEach((person, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${person.name}</td>
+          <td>${person.age}</td>
+          <td>${person.height}</td>
+          <td>
+            <button onclick="removePending(${index})">Remover</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function removePending(index) {
+      pending.splice(index, 1);
+      renderPending();
+    }
+
+    async function saveAll() {
+      if (pending.length === 0) return;
+      await localDb.bulkDocs(pending);
+      pending = [];
+      renderPending();
+      await loadLocal();
+    }
+
+    async function deletePerson(id, rev) {
+      await localDb.remove(id, rev);
+      await loadLocal();
+    }
+
+    async function loadLocal() {
+      const result = await localDb.allDocs({ include_docs: true });
+      const tbody = document.getElementById("local-table");
+      tbody.innerHTML = "";
+      result.rows.forEach(row => {
+        const person = row.doc;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${person.name}</td>
+          <td>${person.age}</td>
+          <td>${person.height}</td>
+          <td>
+            <button onclick='deletePerson("${person._id}", "${person._rev}")'>Excluir</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function syncNow() {
+      localDb.sync(remoteDb, {
+        live: false,
+        retry: false
+      }).on("complete", info => {
+        console.log("Sync complete", info);
+        loadLocal();
+      }).on("error", err => {
+        console.error("Sync error", err);
+      });
+    }
+
+    loadLocal();
+  </script>
+</body>
+</html>

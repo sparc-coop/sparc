@@ -1,0 +1,15 @@
+{
+  "name": "pouchdb-localhost-app",
+  "version": "1.0.0",
+  "description": "A simple application using PouchDB for local data storage and retrieval.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "pouchdb": "^7.2.0"
+  },
+  "author": "",
+  "license": "ISC"
+}
