@@ -54,5 +54,17 @@
   {
     "outputFile": "Donations/AddDonation.razor.css",
     "inputFile": "Donations/AddDonation.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Breadcrumbs.razor.css",
+    "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
+  },
+  {
+    "outputFile": "Pages/KoriReferral.razor.css",
+    "inputFile": "Pages/KoriReferral.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/FaqItem.razor.css",
+    "inputFile": "Shared/Components/FaqItem.razor.scss"
   }
 ]

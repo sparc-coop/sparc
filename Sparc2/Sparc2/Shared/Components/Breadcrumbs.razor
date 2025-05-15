@@ -1,0 +1,27 @@
+﻿@if (Items?.Any() == true)
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+                var isLast = i == Items.Count - 1;
+
+                <li class="breadcrumb-item @(isLast ? "active" : "")" aria-current="@(isLast ? "page" : null)">
+                    @if (!isLast)
+                    {
+                        <a href="@item.Url">@item.Text</a>
+                    }
+                    else
+                    {
+                        @item.Text
+                    }
+                </li>
+            }
+        </ol>
+    </nav>
+}
+
+@code {
+    [Parameter] public List<(string Text, string Url)> Items { get; set; } = new();
+}

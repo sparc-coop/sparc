@@ -1,0 +1,28 @@
+﻿.faq-item.expanded {
+  border-bottom: 1px solid var(--black);
+}
+.faq-item .faq-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0;
+}
+.faq-item .faq-header h3 {
+  margin: 0;
+  font-size: 24px;
+  color: var(--black);
+}
+.faq-item .faq-header .toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 50px;
+  height: 50px;
+}
+.faq-item .faq-header .toggle-button:hover {
+  transform: scale(1.2);
+}
+.faq-item .faq-body {
+  font-size: 20px;
+}

@@ -1,15 +1,6 @@
-﻿<nav id="nav" class="@(IsHomePage ? "home-nav" : "other-nav")">
+﻿<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
     <div class="container">
-        @if (IsHomePage)
-        {
-            <div class="left" @onclick='() => Navigate("/")'>
-                <SparcLogo />
-            </div>
-            <div class="right">
-                <button id="ideas-btn" class="secondary-btn">Ideas</button>
-            </div>
-        }
-        else
+        @if (IsIdeasPage)
         {
             <div class="left">
                 <button @onclick='() => Navigate("/")'><ArrowLeftIcon /> <span>Exit</span></button>
@@ -20,6 +11,15 @@
             <div class="right">
                 <button class="tertiary-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></button>
                 <button class="tertiary-btn donate-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></button>
+            </div>
+        }
+        else
+        {
+            <div class="left" @onclick='() => Navigate("/")'>
+                <SparcLogo />
+            </div>
+            <div class="right">
+                <button id="ideas-btn" class="secondary-btn">Ideas</button>
             </div>
         }
     </div>
@@ -34,7 +34,7 @@
 
 @code {
     private bool ShowAddCard = false;
-    private bool IsHomePage => Nav.Uri.EndsWith("/");
+    private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
     private int SelectedHeaderButton = 0;
 
     private void Navigate(string path)
