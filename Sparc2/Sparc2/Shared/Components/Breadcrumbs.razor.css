@@ -23,3 +23,9 @@
 .breadcrumb-item.active {
   pointer-events: none;
 }
+
+@media (min-width: 375px) and (max-width: 766px) {
+  .breadcrumb {
+    font-size: 16px;
+  }
+}

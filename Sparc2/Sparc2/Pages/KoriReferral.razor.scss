@@ -2,12 +2,6 @@
     padding: 99px 100px 0;
     display: flex;
     flex-direction: column;
-    /*.hero {
-        width: calc(100% - 200px);
-        margin: 0 100px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;*/
 
     .line {
         height: 1px;
@@ -244,6 +238,314 @@
             &:hover {
                 color: var(--gray-600);
             }
+        }
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1024px) {
+    section {
+        padding: 80px 32px 0;
+
+        header h1 {
+            font-size: 44px;
+        }
+
+        .landing .landing-text {
+            position: relative;
+            width: 39%;
+
+            h2 {
+                position: relative;
+                width: 49vw;
+                max-width: none;
+            }
+        }
+
+        .cta {
+            align-items: center;
+        }
+
+        .how-it-works {
+            padding: 17px 0 16px 0;
+
+            h3 {
+                margin-bottom: 51px;
+            }
+
+            .articles {
+                padding-top: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+
+        .kori-updates {
+            padding: 100px 0;
+        }
+
+        .terms {
+            margin-bottom: 47px;
+        }
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1096px) {
+    section .landing .landing-text {
+        position: relative;
+        width: 39%;
+
+        h2 {
+            position: relative;
+            width: 49vw;
+            max-width: none;
+        }
+    }
+}
+
+
+@media (min-width: 430px) and (max-width: 766px) {
+    section {
+        padding: 97px 16px 0 16px;
+
+        header {
+            padding: 70px 0 46px 0;
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        .landing {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+
+            .landing-text {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                h2 {
+                    font-size: 23px;
+                    align-self: center;
+                }
+
+                section {
+                    h3 {
+                        font-size: 22px;
+                    }
+
+                    p {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            ::deep svg {
+                height: 313px;
+            }
+        }
+
+        .cta {
+            padding: 31px 0 0 0;
+            align-items: center;
+
+            small {
+                font-size: 16px;
+                background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        .how-it-works {
+            padding: 46px 0;
+
+            h3 {
+                font-size: 22px;
+                margin-bottom: 30px;
+            }
+
+            .articles {
+                padding-top: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+
+                article {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 0 5px 0 20px;
+                    height: auto;
+
+                    div {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .kori-updates {
+            padding: 50px 0;
+
+            div {
+                h3 {
+                    font-size: 22px;
+                }
+
+                p, a {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .faq {
+            padding: 50px 0 30px 0;
+
+            h3 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 16px;
+                padding-bottom: 0;
+            }
+        }
+
+        .terms {
+            margin-bottom: 25px;
+            font-size: 16px;
+            flex-wrap: wrap;
+        }
+    }
+}
+
+@media (min-width: 375px) and (max-width: 429px) {
+    section {
+        padding: 97px 16px 0 16px;
+
+        header {
+            padding: 50px 0 46px 0;
+
+            h1 {
+                font-size: 21px;
+            }
+        }
+
+        .landing {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+
+            .landing-text {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+
+                h2 {
+                    font-size: 23px;
+                    align-self: center;
+                }
+
+                section {
+                    h3 {
+                        font-size: 22px;
+                    }
+
+                    p {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            ::deep svg {
+                height: 286px;
+            }
+        }
+
+        .cta {
+            padding: 31px 0 0 0;
+            align-items: center;
+            gap: 15px;
+
+            small {
+                font-size: 16px;
+                background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            button {
+                width: 345px;
+            }
+        }
+
+        .how-it-works {
+            padding: 46px 0;
+
+            h3 {
+                font-size: 22px;
+                margin-bottom: 30px;
+            }
+
+            .articles {
+                padding-top: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+
+                article {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 0 5px 0 20px;
+                    height: auto;
+
+                    div {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .kori-updates {
+            padding: 50px 0;
+
+            div {
+                h3 {
+                    font-size: 22px;
+                }
+
+                p, a {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .faq {
+            padding: 50px 0 30px 0;
+
+            h3 {
+                font-size: 22px;
+            }
+
+            p {
+                font-size: 16px;
+                padding-bottom: 0;
+            }
+        }
+
+        .terms {
+            margin-bottom: 25px;
+            font-size: 16px;
+            flex-wrap: wrap;
         }
     }
 }
