@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Authenticatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Pouch", "..\..\blossom\Sparc.Blossom.Data.Pouch\Sparc.Blossom.Data.Pouch.csproj", "{47C4925F-38ED-2689-24D7-D36583EF0738}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Cloud.AuthExample", "..\..\blossom\Sparc.Blossom.Cloud.AuthExample\Sparc.Blossom.Cloud.AuthExample.csproj", "{B197B6C3-B0BF-4225-A76E-A7128A85C2F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{47C4925F-38ED-2689-24D7-D36583EF0738}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C4925F-38ED-2689-24D7-D36583EF0738}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47C4925F-38ED-2689-24D7-D36583EF0738}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B197B6C3-B0BF-4225-A76E-A7128A85C2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B197B6C3-B0BF-4225-A76E-A7128A85C2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B197B6C3-B0BF-4225-A76E-A7128A85C2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B197B6C3-B0BF-4225-A76E-A7128A85C2F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{FCE214DD-DA9B-4382-9ABC-DBA4F601636E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{115E6E24-1A10-C21F-6703-79035E66E2FA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{47C4925F-38ED-2689-24D7-D36583EF0738} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B197B6C3-B0BF-4225-A76E-A7128A85C2F4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE37A5-99D0-4C05-A3CD-36A058394C96}
