@@ -15,11 +15,19 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="SlackNet" Version="0.16.1" />
-    <PackageReference Include="Sparc.Blossom" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Auth\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference OutputItemType="Analyzer" Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
   </ItemGroup>
 
 </Project>

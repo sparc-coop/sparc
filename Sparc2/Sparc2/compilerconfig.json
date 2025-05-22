@@ -8,6 +8,10 @@
     "inputFile": "Html.razor.scss"
   },
   {
+    "outputFile": "Shared/Auth.razor.css",
+    "inputFile": "Shared/Auth.razor.scss"
+  },
+  {
     "outputFile": "Shared/MainLayout.razor.css",
     "inputFile": "Shared/MainLayout.razor.scss"
   },
@@ -66,5 +70,9 @@
   {
     "outputFile": "Shared/Components/FaqItem.razor.css",
     "inputFile": "Shared/Components/FaqItem.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Auth.razor.css",
+    "inputFile": "Shared/Components/Auth.razor.scss"
   }
 ]
