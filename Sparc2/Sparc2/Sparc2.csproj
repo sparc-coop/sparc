@@ -27,6 +27,8 @@
 
   <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Cloud\Sparc.Blossom.Cloud.csproj" />
+    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj" />
     <ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,7 @@
-﻿@page "/kori"
+﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
+
+@page "/kori"
 
 <PageTitle>Kori</PageTitle>
 
@@ -39,11 +42,29 @@
     </section>
 
     <section class="cta">
-        <button>
-            Try Beta Program Testing
-            <ArrowRight />
-        </button>
-        <small>* Referral access required *</small>
+        @if (IsCheckingUser)
+        {
+
+        }
+        else if (HasKoriAccess)
+        {
+            <h4>You already have access! Click <a href="" target="_blank">here</a> to go to Kori Beta app!</h4>
+        }
+        else
+        {
+            @if (IsAddingProduct)
+            {
+                <div class="loader"></div>
+            }
+            else
+            {
+                <button @onclick="AddKoriProduct">
+                    Try Beta Program Testing
+                    <ArrowRight />
+                </button>
+                <small>* Referral access required *</small>
+            }
+        }
     </section>
 
     <section class="how-it-works">
@@ -138,9 +159,48 @@
 </section>
 
 @code {
-    private List<(string, string)> BreadcrumbItems = new()
+    BlossomUser? CurrentUser;
+    private bool IsCheckingUser = true;
+    private bool IsAddingProduct = false;
+
+    private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
+
+    private readonly List<(string, string)> BreadcrumbItems = new()
     {
         ("Sparc", "/"),
         ("Kori Beta Referral Program", "/kori")
     };
+
+    protected override async Task OnInitializedAsync() => await GetUserInfo();
+
+    private async Task GetUserInfo()
+    {
+        IsCheckingUser = true;
+        try
+        {
+            CurrentUser = await BlossomCloud.UserInfo();
+        }
+        finally
+        {
+            IsCheckingUser = false;
+        }
+    }
+
+    private async Task AddKoriProduct()
+    {
+        if (IsAddingProduct || HasKoriAccess)
+            return;
+
+        IsAddingProduct = true;
+
+        try
+        {
+            await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
+            await GetUserInfo();
+        }
+        finally
+        {
+            IsAddingProduct = false;
+        }
+    }
 }

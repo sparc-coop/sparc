@@ -61,6 +61,45 @@ section .cta {
   gap: 25px;
   padding: 70px 50px 45px 0px;
 }
+section .cta .loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0);
+  background: linear-gradient(90deg, #d7c2f0 calc(50% + 0.5ch), #f5b393 0) right/calc(200% + 1ch) 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: l7 2s infinite steps(11);
+}
+section .cta .loader:before {
+  content: "Loading...";
+}
+@keyframes l7 {
+  to {
+    background-position: left;
+  }
+}
+section .cta h4 {
+  font-size: 24px;
+  background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+section .cta h4 a {
+  text-decoration: underline;
+  background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: lightcoral;
+}
+section .cta h4 a:hover {
+  filter: brightness(1.5);
+}
+section .cta h4 a:active {
+  filter: brightness(0.5);
+}
 section .cta button {
   display: flex;
   justify-content: center;

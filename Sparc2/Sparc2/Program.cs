@@ -1,4 +1,5 @@
-﻿using Sparc.Blossom;
+﻿using Refit;
+using Sparc.Blossom;
 using Sparc2;
 using Sparc2.Databases.AzureBlob;
 using Sparc2.Ideas;
@@ -22,7 +23,7 @@ builder.Services.AddSingleton<AzureBlob>(sp =>
 
 builder.Services.AddHttpClient("AuthService", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:44300/");
+    client.BaseAddress = new Uri("https://localhost:7185/");
 }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
     UseCookies = true,
@@ -32,6 +33,10 @@ builder.Services.AddHttpClient("AuthService", client =>
 builder.Services.AddScoped(sp =>
     sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
 );
+
+builder.Services.AddRefitClient<IBlossomCloud>()
+            .ConfigureHttpClient(x => x.BaseAddress = new Uri("https://localhost:7185"))
+            .AddStandardResilienceHandler();
 
 builder.Services.AddSingleton<IdeaService>();
 

@@ -72,6 +72,52 @@
         gap: 25px;
         padding: 70px 50px 45px 0px;
 
+        .loader {
+            width: fit-content;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 20px;
+            color: #0000;
+            background: linear-gradient(90deg,#d7c2f0 calc(50% + 0.5ch),#f5b393 0) right/calc(200% + 1ch) 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: l7 2s infinite steps(11);
+
+            &:before {
+                content: "Loading..."
+            }
+        }
+
+        @keyframes l7 {
+            to {
+                background-position: left
+            }
+        }
+
+        h4 {
+            font-size: 24px;
+            background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            a {
+                text-decoration: underline;
+                background: linear-gradient(90deg, #C596FB 0%, #FF5A08 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: lightcoral;
+
+                &:hover {
+                    filter: brightness(1.5);
+                }
+
+                &:active {
+                    filter: brightness(0.5);
+                }
+            }
+        }
+
         button {
             display: flex;
             justify-content: center;
