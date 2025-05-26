@@ -34,9 +34,7 @@ builder.Services.AddScoped(sp =>
     sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
 );
 
-builder.Services.AddRefitClient<IBlossomCloud>()
-            .ConfigureHttpClient(x => x.BaseAddress = new Uri("https://localhost:7185"))
-            .AddStandardResilienceHandler();
+builder.AddBlossomCloud();
 
 builder.Services.AddSingleton<IdeaService>();
 
