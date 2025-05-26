@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Auth\**" />
+    <Content Remove="Auth\**" />
+    <EmbeddedResource Remove="Auth\**" />
+    <None Remove="Auth\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
 
@@ -19,10 +26,6 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Auth\" />
   </ItemGroup>
 
   <ItemGroup>
