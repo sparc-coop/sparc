@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom", "..\..\blos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Cloud", "..\..\blossom\Sparc.Blossom.Cloud\Sparc.Blossom.Cloud.csproj", "{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp2", "BlazorApp2\BlazorApp2.csproj", "{BF022261-665A-449E-A806-B60D295D5973}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,10 +47,6 @@ Global
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BF022261-665A-449E-A806-B60D295D5973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF022261-665A-449E-A806-B60D295D5973}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF022261-665A-449E-A806-B60D295D5973}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF022261-665A-449E-A806-B60D295D5973}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
