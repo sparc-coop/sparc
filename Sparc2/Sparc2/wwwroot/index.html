@@ -1,20 +1,27 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparc Cooperative</title>
     <base href="/" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="stylesheet" href="Sparc2.styles.css" />
     <link rel="icon" href="images/Logo.svg" sizes="any" type="image/svg+xml" />
     <link rel="stylesheet" href="https://use.typekit.net/mur1cay.css">
-
-    <HeadOutlet />
 </head>
-<body>
-    <div id="app"></div>
 
-    <script src="_framework/blazor.web.js"></script>
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/dragging.js"></script>
     <script src="js/scrolling.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
