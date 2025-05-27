@@ -43,9 +43,13 @@ html, body {
   font-size: 62.5%;
   font-family: "neue-haas-grotesk-display", Helvetica, sans-serif;
   margin: 0;
+  position: relative;
 }
 html ::-webkit-scrollbar, body ::-webkit-scrollbar {
   display: none;
+}
+html.modal-open, body.modal-open {
+  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, h7 {
@@ -53,7 +57,7 @@ h1, h2, h3, h4, h5, h6, h7 {
   padding: 0;
 }
 
-p {
+p, ul, li {
   margin: 0;
   padding: 0;
 }

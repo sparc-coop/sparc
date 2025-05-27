@@ -4,11 +4,13 @@ let isDragging = false;
 let initialX, initialY;
 const scrollSpeed = 1;
 
-console.log("start: " + window.scrollX, window.scrollY);
+//console.log("start: " + window.scrollX, window.scrollY);
 
 document.addEventListener('mousedown', (e) => {
-    var draggableContent = document.getElementsByTagName('article')[0];
-    if (e.target !== draggableContent) return;
+    var draggableContent = document.getElementsByClassName('draggable');
+    var draggableArray = Array.prototype.slice.call(draggableContent);
+
+    if (draggableArray.includes(e.target) == false) return;
 
     isDragging = true;
 
@@ -24,7 +26,7 @@ document.addEventListener('mousedown', (e) => {
         initialY = e.clientY + window.scrollY;
     }
 
-    console.log("initial: " + initialX, initialY);
+    //console.log("initial: " + initialX, initialY);
     document.body.style.cursor = 'grab';
 });
 
@@ -33,11 +35,11 @@ document.addEventListener('mousemove', (e) => {
 
     const currentX = e.clientX;
     const currentY = e.clientY;
-    console.log("current: " + currentX, currentY);
+    //console.log("current: " + currentX, currentY);
 
     var scrollToX = scrollSpeed * (initialX - currentX);
     var scrollToY = scrollSpeed * (initialY - currentY);
-    console.log("scroll to: " + scrollToX, scrollToY);
+    //console.log("scroll to: " + scrollToX, scrollToY);
 
     window.scrollTo(scrollToX, scrollToY);
 });

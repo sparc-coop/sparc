@@ -1,7 +1,21 @@
 article {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200vw;
-    height: 200vh;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 120px;
+    row-gap: 60px;
+    width: fit-content;
+    height: fit-content;
+    padding: 240px;
+
+    .card-container {
+        width: 500px;
+        height: 700px;
+        display: flex;
+        justify-content: start;
+        align-items: start;
+
+        &:nth-of-type(odd) {
+            align-items: end;
+        }
+    }
 }

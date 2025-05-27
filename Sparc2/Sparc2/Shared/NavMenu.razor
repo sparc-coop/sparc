@@ -1,16 +1,6 @@
-﻿<nav id="nav" class="@(IsHomePage ? "home-nav" : "other-nav")">
+﻿<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
     <div class="container">
-        @if (IsHomePage)
-        {
-            <div class="left" @onclick='() => Navigate("/")'>
-                <SparcLogo />
-            </div>
-            <div class="right">
-                <button id="ideas-btn" class="secondary-btn" @* @onclick='() => Navigate("/ideas")' *@>Ideas</button>
-                @* <button class="secondary-btn">Button</button> *@
-            </div>
-        }
-        else
+        @if (IsIdeasPage)
         {
             <div class="left">
                 <button @onclick='() => Navigate("/")'><ArrowLeftIcon /> <span>Exit</span></button>
@@ -19,9 +9,18 @@
                 <input type="text" placeholder="Search" class="input-text" />
             </div>
             <div class="right">
-                <button><ExploreIcon /> <span>Explore</span></button>
-                <button><FilterIcon /> <span>Filter</span></button>
-                <button class="add-btn" @onclick="ToggleAddCard"><AddIcon /> <span>Add</span></button>
+                <button class="tertiary-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></button>
+                <button class="tertiary-btn donate-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></button>
+            </div>
+        }
+        else
+        {
+            <div class="left" @onclick='() => Navigate("/")'>
+                <SparcLogo />
+            </div>
+            <div class="right">
+                <Auth />
+                <button id="ideas-btn" class="secondary-btn">Ideas</button>
             </div>
         }
     </div>
@@ -30,22 +29,24 @@
 @if (ShowAddCard)
 {
     <div class="modal-overlay" @onclick:stopPropagation>
-        <AddCard OnClose="CloseAddCard" />
+        <AddCard OnClose="CloseAddCard" SelectedHeaderButton="@SelectedHeaderButton" />
     </div>
 }
 
 @code {
     private bool ShowAddCard = false;
-    private bool IsHomePage => Nav.Uri.EndsWith("/");
+    private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
+    private int SelectedHeaderButton = 0;
 
     private void Navigate(string path)
     {
         Nav.NavigateTo(path);
     }
 
-    private void ToggleAddCard()
+    private void OpenAddCard(int headerIndex)
     {
-        ShowAddCard = !ShowAddCard;
+        SelectedHeaderButton = headerIndex;
+        ShowAddCard = true;
     }
 
     private void CloseAddCard(bool shouldClose)
@@ -53,10 +54,5 @@
         if (shouldClose)
             ShowAddCard = false;
     }
-
-    // private void CancelAddCard()
-    // {
-    //     
-    // }
 }
 

@@ -1,37 +1,85 @@
 ﻿@page "/ideas"
 @layout PageLayout
+@rendermode InteractiveServer
 
 <PageTitle>Ideas | Sparc</PageTitle>
 
-<article>
+<article class="explore draggable @(ShowIdeaModal ? "noscroll" : "")">
     @foreach (var idea in ProjectIdeas)
     {
-        <IdeaCard @key="idea.Id" Idea=@idea OnOpenFullView="OpenFullIdea" />
+        <div class="card-container draggable">
+            <IdeaCard @key="idea.Id" Idea=@idea OnOpenIdeaModal="OpenIdeaModal" OnOpenComments="OpenComments" OnOpenFiles="OpenFiles" />
+        </div>
     }
-    @if (ShowFullIdeaCard)
+    @if (ShowIdeaModal)
     {
-        <IdeaCardFull Idea=@CurrentIdea OnClose="CloseFullIdea" />
+        <IdeaModal Idea=@CurrentIdea OnClose="CloseIdeaModal" FocusComments="FocusComments" FocusFiles="FocusFiles" />
     }
 </article>
 
 @* <div class="modal-overlay"></div> *@
 
-@inject Sparc2.Ideas.IdeaService IdeaService
+@inject IJSRuntime Js
 
 
 @code {
-    bool ShowFullIdeaCard;
+    bool ShowIdeaModal;
     Idea? CurrentIdea;
+    Idea? LatestIdea;
     IEnumerable<Idea> ProjectIdeas = new List<Idea>();
+    bool FocusComments;
+    bool FocusFiles;
+    bool ShouldScrollToLatest = false;
 
     protected override async Task OnInitializedAsync()
     {
         IdeaService.OnIdeasChanged += UpdateIdeas;
+        var allIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        var latest = allIdeas.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        if (latest != null)
+        {
+            var list = allIdeas.Where(i => i.Id != latest.Id).ToList();
+            int middleIndex = list.Count / 2;
+            list.Insert(middleIndex, latest);
+            ProjectIdeas = list;
+            LatestIdea = latest;
+            ShouldScrollToLatest = true;
+        }
+        else
+        {
+            ProjectIdeas = allIdeas;
+        }
     }
 
-    private void UpdateIdeas()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        InvokeAsync(StateHasChanged);
+        if (ShouldScrollToLatest && LatestIdea != null)
+        {
+            await Task.Delay(1000);
+            await Js.InvokeVoidAsync("scrollToElement", "idea-" + LatestIdea.Id);
+            ShouldScrollToLatest = false; 
+        }
+    }
+
+    private async Task UpdateIdeas()
+    {
+        var allIdeas = await Api.ProjectIdeas.GetAllIdeas();
+        var latest = allIdeas.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        if (latest != null)
+        {
+            var list = allIdeas.Where(i => i.Id != latest.Id).ToList(); 
+            int middleIndex = list.Count / 2;
+            list.Insert(middleIndex, latest); 
+            ProjectIdeas = list;
+            LatestIdea = latest;
+        }
+        else
+        {
+            ProjectIdeas = allIdeas;
+        }
+        StateHasChanged();
     }
 
     public void Dispose()
@@ -39,16 +87,36 @@
         IdeaService.OnIdeasChanged -= UpdateIdeas;
     }
 
-    void OpenFullIdea(Idea idea)
+    async Task OpenIdeaModal(Idea idea)
     {
-        ShowFullIdeaCard = true;
+        ShowIdeaModal = true;
         CurrentIdea = idea;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
     }
 
-    void CloseFullIdea()
+    async Task OpenComments(Idea idea)
     {
-        ShowFullIdeaCard = false;
+        ShowIdeaModal = true;
+        CurrentIdea = idea;
+        FocusComments = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    async Task OpenFiles(Idea idea)
+    {
+        ShowIdeaModal = true;
+        CurrentIdea = idea;
+        FocusFiles = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    async void CloseIdeaModal()
+    {
+        ShowIdeaModal = false;
         CurrentIdea = null;
+        FocusComments = false;
+        FocusFiles = false;
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
    
 }

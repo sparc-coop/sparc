@@ -1,0 +1,206 @@
+﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
+
+@page "/kori"
+
+<PageTitle>Kori</PageTitle>
+
+<section>
+    <div class="line"></div>
+
+    <Breadcrumbs Items="@BreadcrumbItems" />
+
+    <header>
+        <h1>Kori Beta Referral Program at Sparc</h1>
+    </header>
+
+    <section class="landing">
+        <div class="landing-text">
+            <h2>
+                Refer friends to Kori
+                <br />
+                Get rewards in return
+            </h2>
+
+            <section>
+                <h3>Support Kori</h3>
+                <p>Help Kori enhance content management experiences.</p>
+            </section>
+
+            <section>
+                <h3>Test New Tool</h3>
+                <p>Be among the first to try the new content management tool.</p>
+            </section>
+
+            <section>
+                <h3>Make an Impact</h3>
+                <p>Your feedback will significantly improve the tool’s functionality.</p>
+            </section>
+        </div>
+
+        <Landing />
+    </section>
+
+    <section class="cta">
+        @if (IsCheckingUser)
+        {
+
+        }
+        else if (HasKoriAccess)
+        {
+            <h4>You already have access! Click <a href="" target="_blank">here</a> to go to Kori Beta app!</h4>
+        }
+        else
+        {
+            @if (IsAddingProduct)
+            {
+                <div class="loader"></div>
+            }
+            else
+            {
+                <button @onclick="AddKoriProduct">
+                    Try Beta Program Testing
+                    <ArrowRight />
+                </button>
+                <small>* Referral access required *</small>
+            }
+        }
+    </section>
+
+    <section class="how-it-works">
+        <h3>How it works</h3>
+        <div class="articles">
+            <article>
+                <CloudElement />
+                <div>
+                    <h5>1) Refer Kori to your friends</h5>
+                    <p>Share your unique code with friends, marketing agencies, and social media pros!</p>
+                </div>
+            </article>
+
+            <article>
+                <BlogElement />
+                <div>
+                    <h5>2) Software Insights & Kori Demo</h5>
+                    <p>Discuss your tools currently used with your organization. Learn about the features and benefits of the Kori software demo.</p>
+                </div>
+            </article>
+
+            <article>
+                <ContentElement />
+                <div>
+                    <h5>3) Feedback</h5>
+                    <p>Share feedback on product usage, overall impressions, and suggestions for improvement.</p>
+                </div>
+            </article>
+
+            <article>
+                <CurveLineElement />
+                <div>
+                    <h5>4) Feedback Usage</h5>
+                    <p>Utilize feedback from beta testers to enhance Kori product features.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="kori-updates">
+        <div>
+            <h3>Kori Beta Referral Program</h3>
+            <p>The Kori Beta Program provides an easy way to explore pre-release versions of Kori and test our new features. Your feedback will assist us in pinpointing and resolving issues to further enhance the platform. Devices enrolled in the program will automatically receive updates for the latest beta version of Kori through the Sparc community.</p>
+        </div>
+
+        <div>
+            <h3>Latest updates</h3>
+            <p>Share updates that provide early access to test upcoming features of our unreleased platform, which is currently in active development.</p>
+            <a href="" target="_blank">See more updates</a>
+        </div>
+    </section>
+
+    <section class="faq">
+        <h3>Beta Referral Program FAQs</h3>
+        <p>Find the most frequently asked questions and answers for Kori Beta Program</p>
+
+        <FaqItem Title="How often will I receive beta updates">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="What does Kori do?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="How long does the beta program last?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="How long does it take to recceive the updates after opting in or out?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="What happens to my feedback and suggestions?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="How do I verify that I'm running a beta version of Kori?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="How can I  opt out and return to a public Kori release?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="How do I report bugs or give feedbacks?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="Am II allowed to post betas on social media or stream/broadcast my experience?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+        <FaqItem Title="Who should I refer to?">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Sit amed consectur adipiscing elit quisque faucibus ex. Adipiscing elit quisque faucibus ex sapien vitae pellentesque.</p>
+        </FaqItem>
+    </section>
+
+    <footer class="terms">
+        Please see the <a href="" target="_blank">Kori Beta Program at Sparc Terms</a> for more information.
+    </footer>
+</section>
+
+@code {
+    BlossomUser? CurrentUser;
+    private bool IsCheckingUser = true;
+    private bool IsAddingProduct = false;
+
+    private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
+
+    private readonly List<(string, string)> BreadcrumbItems = new()
+    {
+        ("Sparc", "/"),
+        ("Kori Beta Referral Program", "/kori")
+    };
+
+    protected override async Task OnInitializedAsync() => await GetUserInfo();
+
+    private async Task GetUserInfo()
+    {
+        IsCheckingUser = true;
+        try
+        {
+            CurrentUser = await BlossomCloud.UserInfo();
+        }
+        finally
+        {
+            IsCheckingUser = false;
+        }
+    }
+
+    private async Task AddKoriProduct()
+    {
+        if (IsAddingProduct || HasKoriAccess)
+            return;
+
+        IsAddingProduct = true;
+
+        try
+        {
+            await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
+            await GetUserInfo();
+        }
+        finally
+        {
+            IsAddingProduct = false;
+        }
+    }
+}

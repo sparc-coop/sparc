@@ -1,26 +1,26 @@
 ﻿nav {
-    width: calc(100vw - 158px);
-    padding: 8px 16px;
+    width: calc(100% - 200px);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
-    margin: 32px 60px;
+    margin: 32px 100px;
+    background: var(--white);
 
     .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
+        gap: 32px;
     }
 
     .right {
         display: flex;
-        gap: 8px;
+        gap: 4px;
     }
 
     button {
-        padding: 8px 16px;
+        padding: 8px 16px 8px 14px;
         background: transparent;
         border: 1px solid transparent;
         border-radius: 20px;
@@ -31,18 +31,23 @@
         letter-spacing: -0.14px;
         cursor: pointer;
         transition: .2s all ease-in-out;
+
+        ::deep svg path {
+            stroke: #FFFCF6;
+        }
     }
 }
 
 .other-nav {
     position: fixed;
-    width: calc(100vw - 158px);
+    width: calc(100vw - 238px);
+    padding: 8px 16px;
     border-radius: 12px;
     background: rgba(26, 12, 50, 0.26);
     box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
     backdrop-filter: blur(100px);
     -webkit-backdrop-filter: blur(100px);
-
+    
     .left {
         button {
             > svg {
@@ -86,7 +91,7 @@
     }
 
     button {
-        height: 34px;
+        height: 32px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -104,11 +109,28 @@
         &:active {
             background: rgba(255, 252, 246, 0.1);
         }
+    }
 
-        &.add-btn {
-            background: var(--yellow-50);
+    .right {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+
+        .tertiary-btn {
+            background: var(--white);
             border-radius: 20px;
             transition: 0.1s all ease-in-out;
+
+            ::deep svg path {
+                stroke: var(--purple-800);
+            }
+
+            &.donate-btn {
+                ::deep svg path {
+                    stroke: none;
+                    fill: var(--purple-800);
+                }
+            }
 
             span {
                 color: var(--purple-800);
@@ -116,16 +138,12 @@
 
             &:hover {
                 color: var(--purple-800);
-                transform: scale(103%);
-
-                > svg path {
-                    stroke: var(--purple-800);
-                }
+                background: var(--purple-50);
             }
 
             &:active {
                 color: var(--purple-900);
-                transform: scale(1);
+                border-color: var(--purple-900);
 
                 > svg path {
                     stroke: var(--purple-900);
@@ -137,5 +155,65 @@
                 opacity: 0.5;
             }
         }
+    }
+}
+
+.home-nav {
+    margin: 0;
+    padding: 32px 100px;
+}
+
+@media only screen and (max-width: 1024px), (orientation: portrait) {
+    .other-nav {
+        width: calc(100% - 64px);
+        margin: 16px;
+
+        .right {
+            position: fixed;
+            top: calc(100vh - 82px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: rgba(26, 12, 50, 0.26);
+            box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
+            backdrop-filter: blur(100px);
+            -webkit-backdrop-filter: blur(100px);
+            justify-content: center;
+            gap: 8px;
+
+            > * {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    nav {
+        width: calc(100% - 120px);
+        margin: 32px 60px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    nav {
+        width: calc(100% - 32px);
+        margin: 16px
+    }
+}
+
+@media (min-width: 767px) and (max-width: 1024px) {
+    .home-nav {
+        width: calc(100vw - 64px);
+        padding: 32px 32px 12px 32px;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 766px) {
+    .home-nav {
+        width: calc(100vw - 32px);
+        padding: 42px 16px 16px 16px;        
     }
 }

@@ -1,0 +1,34 @@
+﻿<div class="faq-item @(IsExpanded ? "expanded" : "")">
+    <div class="faq-header" @onclick="Toggle">
+        <h3>@Title</h3>
+        <button type="button" class="toggle-button">
+            @if (IsExpanded)
+            {
+                <DropdownUp />
+            }
+            else
+            {
+                <Dropdown />
+            }
+        </button>
+    </div>
+    @if (IsExpanded)
+    {
+        <div class="faq-body">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+
+    private bool IsExpanded { get; set; } = false;
+
+    private void Toggle()
+    {
+        IsExpanded = !IsExpanded;
+    }
+}
+

@@ -27,9 +27,8 @@ function initScroll() {
                 //    scrub: 1,
                 //},
                 scale: 10,
-                x: -(mosaicWidth / 2),
-                y: mosaicHeight / 2,
-                //y: mosaicHeight,
+                x: (mosaicWidth + 400) / -2,
+                y: (mosaicHeight - 400) / 2,
                 opacity: 0,
                 duration: 2,
                 ease: "power1.in",
@@ -63,17 +62,10 @@ function navigateToIdeas() {
 
 function mouseClickHandler() {
     addEventListener("click", function (e) {
-        if (e.target.id === "scroll-text" || e.target.id === "ideas-btn") {
+        if (e.target.closest("#scroll-text") || e.target.closest("#ideas-btn") || e.target.closest("#enter-btn") || e.target.closest("#mosaic")) {
             window.scrollTo(0, 10);
         }
     });
-//    var scrollText = document.getElementById("scroll-text");
-
-//    if (scrollText) {
-//        scrollText.addEventListener("click", function (event) {
-//            window.scrollTo(0, 10);
-//        });
-//    }
 }
 
 function pressEnter() {
@@ -82,4 +74,65 @@ function pressEnter() {
             window.scrollTo(0, 10);
         }
     });
+}
+
+// loading ideas explore page at center of content
+
+function findBackground() {
+    console.log("finding background");
+    return document.getElementById("background");
+}
+
+function findCenter() {
+    var background = document.getElementById("background");
+    var width = background.offsetWidth;
+    var height = background.offsetHeight;
+    var centerX;
+    var centerY;
+
+    if (background) {
+        if (width > 0 && height > 0) {       
+            width = background.offsetWidth;
+            height = background.offsetHeight;
+            centerX = width / 8;
+            centerY = height / 4;
+
+            scrollToCenter(centerX, centerY);
+        } else {
+            console.log("background is zero");
+            background = findBackground();
+            width = background.offsetWidth;
+            height = background.offsetHeight;
+            centerX = width / 8;
+            centerY = height / 4;
+
+            console.log("Width: " + width);
+            console.log("Height: " + height);
+            scrollToCenter(centerX, centerY);
+        }
+    } 
+}
+
+function scrollToCenter(x, y) {
+    window.scrollTo(x, y);
+    console.log("scrolling to center of content at: " + x + ", " + y);
+}
+
+function disableBodyScrolling(bool) {
+    if (bool == true) {
+        document.body.classList.add("modal-open");
+    } else {
+        document.body.classList.remove("modal-open");
+    }
+}
+function scrollToElement(id) {
+    if (id) {
+        var elem = document.getElementById(id);
+        elem.classList.add("highlight");
+        elem.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center'
+        });
+    }
 }

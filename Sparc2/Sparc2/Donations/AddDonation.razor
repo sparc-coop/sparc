@@ -4,7 +4,7 @@
         <h2>Be Part of Sparc</h2>
         <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta  lacus. Libero purus sapien nulla commodo fringilla, sed efficitur. At  rutrum facilisis elementum per neque magna quis tincidunt. Faucibus  dignissim scelerisque penatibus lacinia, lacus luctus.</p>
     </header>
-    <div class="donation-form">
+    <div class="form donation-form">
         <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
             <div class="field-group">
                 <label>Donation frequency</label>
@@ -32,6 +32,11 @@
                     </div>
                 </div>
             </div>
+
+            <label>
+                <span>Share Message</span>
+                <InputTextArea placeholder="Text" @bind-Value="Donation.Message" />
+            </label>
         </EditForm>
     </div>
 }
@@ -40,7 +45,7 @@ else if (CurrentStep == 1)
     <header>
         <h2>Payment Method</h2>
     </header>
-    <div class="payment-form">
+    <div class="form payment-form">
         <EditForm Model="@Donation" OnValidSubmit="HandleValidSubmit">
             <label>
                 <span>Name <span class="required">*</span></span>
@@ -50,7 +55,7 @@ else if (CurrentStep == 1)
                 <span>Card Number <span class="required">*</span></span>
                 <InputText placeholder="Card number" @bind-Value="Donation.Payment.CardNumber" />
             </label>
-            <div class="expiration">
+            <div class="two-slots">
                 <label>
                     <span>Expiry Date <span class="required">*</span></span>
                     <InputText placeholder="MM/YY" @bind-Value:format="MM/yy" @bind-Value="Donation.Payment.ExpiryDate" />
@@ -72,6 +77,16 @@ else if (CurrentStep == 1)
                 <span>Billing Address Line 2 <span class="required">*</span></span>
                 <InputText placeholder="Billing Address" @bind-Value="Donation.Payment.BillingAddress" />
             </label>
+            <div class="two-slots">
+                <label>
+                    <span>City <span class="required">*</span></span>
+                    <InputText placeholder="City" @bind-Value="Donation.Payment.City" />
+                </label>
+                <label>
+                    <span>Zip <span class="required">*</span></span>
+                    <InputText placeholder="Zip code" @bind-Value="Donation.Payment.ZipCode" />
+                </label>
+            </div>
         </EditForm>
     </div>
 }
@@ -83,7 +98,7 @@ else if (CurrentStep == 1)
 
     private readonly int[] PredefinedAmounts = { 5, 25, 50, 60, 75, 100 };
 
-    private UserDonation Donation = new UserDonation(0, string.Empty, new PaymentInfo(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
+    private UserDonation Donation = new UserDonation(0, string.Empty, string.Empty, new PaymentInfo(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty));
 
     private decimal? SelectedAmount { get; set; } = null;
     private decimal? CustomAmount
@@ -125,7 +140,7 @@ else if (CurrentStep == 1)
         }
         else
         {
-            // await Api.UserDonations.Create(Donation.Amount, Donation.Frequency, Donation.Payment);
+            // await Api.UserDonations.Create(Donation.Amount, Donation.Frequency, Donation.Message, Donation.Payment);
         }
     }
 }

@@ -7,6 +7,10 @@
     box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
     cursor: pointer;
 
+    &.highlight {
+        animation: highlight 7s ease-in-out;
+    }
+
     header {
         display: flex;
         flex-direction: row;
@@ -30,7 +34,7 @@
             h3 {
                 color: var(--purple-800);
                 font-size: 1.6rem;
-                font-weight: 450;
+                font-weight: 600;
                 line-height: 120%;
                 letter-spacing: -0.16px;
             }
@@ -38,7 +42,7 @@
             p {
                 color: var(--purple-800);
                 font-size: 1.4rem;
-                font-weight: 450;
+                font-weight: 400;
                 line-height: 120%;
                 letter-spacing: -0.14px;
             }
@@ -70,7 +74,7 @@
 
                 img {
                     display: block;
-                    width: 100%;                    
+                    width: 100%;
                 }
             }
 
@@ -206,5 +210,20 @@
 
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes highlight {
+    0% {
+        box-shadow: none;
+    }
+
+    25% {
+        //box-shadow: 0 0 40px 5px rgba(198, 151, 252, 1);
+        box-shadow: 0 0 40px 5px rgba(254, 238, 205, 1);
+    }
+
+    100% {
+        box-shadow: none;
     }
 }

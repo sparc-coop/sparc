@@ -8,6 +8,10 @@
     "inputFile": "Html.razor.scss"
   },
   {
+    "outputFile": "Shared/Auth.razor.css",
+    "inputFile": "Shared/Auth.razor.scss"
+  },
+  {
     "outputFile": "Shared/MainLayout.razor.css",
     "inputFile": "Shared/MainLayout.razor.scss"
   },
@@ -32,8 +36,8 @@
     "inputFile": "Ideas/IdeaCard.razor.scss"
   },
   {
-    "outputFile": "Ideas/IdeaCardFull.razor.css",
-    "inputFile": "Ideas/IdeaCardFull.razor.scss"
+    "outputFile": "Ideas/IdeaModal.razor.css",
+    "inputFile": "Ideas/IdeaModal.razor.scss"
   },
   {
     "outputFile": "Ideas/IdeasPage.razor.css",
@@ -54,5 +58,21 @@
   {
     "outputFile": "Donations/AddDonation.razor.css",
     "inputFile": "Donations/AddDonation.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Breadcrumbs.razor.css",
+    "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
+  },
+  {
+    "outputFile": "Pages/KoriReferral.razor.css",
+    "inputFile": "Pages/KoriReferral.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/FaqItem.razor.css",
+    "inputFile": "Shared/Components/FaqItem.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Auth.razor.css",
+    "inputFile": "Shared/Components/Auth.razor.scss"
   }
 ]

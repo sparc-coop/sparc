@@ -1,8 +1,11 @@
+using Refit;
 using Sparc2;
 using Sparc.Blossom.Data;
 using Sparc.Blossom;
 using Sparc2.Databases.AzureBlob;
 using Sparc2.Ideas;
+using Sparc2.Services;
+using System.Net;
 
 var builder  = BlossomApplication.CreateBuilder<Html>(args);
 
@@ -20,7 +23,25 @@ builder.Services.AddSingleton<AzureBlob>(sp =>
 
     return new AzureBlob(connectionString);
 });
+
+builder.Services.AddHttpClient("AuthService", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7185/");
+}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    UseCookies = true,
+    CookieContainer = new CookieContainer()
+});
+
+builder.Services.AddScoped(sp =>
+    sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
+);
+
+builder.AddBlossomCloud();
+
 builder.Services.AddSingleton<IdeaService>();
+
+builder.Services.AddSlackIntegration(builder.Configuration);
 
 var app = builder.Build();
 

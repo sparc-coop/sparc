@@ -1,0 +1,36 @@
+﻿.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+
+    &-item {
+        color: var(--orange-500);
+
+        & + .breadcrumb-item::before {
+            content: ">";
+            padding: 0 0.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &.active {
+            pointer-events: none;
+        }
+    }
+}
+
+@media (min-width: 375px) and (max-width: 766px) {
+    .breadcrumb {
+        font-size: 16px;
+    }
+}

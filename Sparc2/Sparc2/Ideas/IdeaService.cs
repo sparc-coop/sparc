@@ -1,15 +1,15 @@
 ﻿namespace Sparc2.Ideas;
 
-public class IdeaService
+internal class IdeaService
 {
-    public List<ProjectIdea> Ideas { get; private set; } = new();
+    public event Func<Task>? OnIdeasChanged;
 
-    public event Action OnIdeasChanged;
-
-    public void AddIdea(ProjectIdea idea)
+    public async Task AddIdea()
     {
-        Ideas.Insert(0, idea);
-        OnIdeasChanged?.Invoke();
+        if (OnIdeasChanged is not null)
+        {
+            await OnIdeasChanged.Invoke();
+        }
     }
 }
 

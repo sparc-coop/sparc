@@ -1,24 +1,24 @@
 ﻿nav {
-  width: calc(100vw - 158px);
-  padding: 8px 16px;
+  width: calc(100% - 200px);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
-  margin: 32px 60px;
+  margin: 32px 100px;
+  background: var(--white);
 }
 nav .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 32px;
 }
 nav .right {
   display: flex;
-  gap: 8px;
+  gap: 4px;
 }
 nav button {
-  padding: 8px 16px;
+  padding: 8px 16px 8px 14px;
   background: transparent;
   border: 1px solid transparent;
   border-radius: 20px;
@@ -30,10 +30,14 @@ nav button {
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 }
+nav button ::deep svg path {
+  stroke: #FFFCF6;
+}
 
 .other-nav {
   position: fixed;
-  width: calc(100vw - 158px);
+  width: calc(100vw - 238px);
+  padding: 8px 16px;
   border-radius: 12px;
   background: rgba(26, 12, 50, 0.26);
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
@@ -73,7 +77,7 @@ nav button {
   opacity: 0.6;
 }
 .other-nav button {
-  height: 34px;
+  height: 32px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -89,29 +93,92 @@ nav button {
 .other-nav button:active {
   background: rgba(255, 252, 246, 0.1);
 }
-.other-nav button.add-btn {
-  background: var(--yellow-50);
+.other-nav .right {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.other-nav .right .tertiary-btn {
+  background: var(--white);
   border-radius: 20px;
   transition: 0.1s all ease-in-out;
 }
-.other-nav button.add-btn span {
-  color: var(--purple-800);
-}
-.other-nav button.add-btn:hover {
-  color: var(--purple-800);
-  transform: scale(103%);
-}
-.other-nav button.add-btn:hover > svg path {
+.other-nav .right .tertiary-btn ::deep svg path {
   stroke: var(--purple-800);
 }
-.other-nav button.add-btn:active {
-  color: var(--purple-900);
-  transform: scale(1);
+.other-nav .right .tertiary-btn.donate-btn ::deep svg path {
+  stroke: none;
+  fill: var(--purple-800);
 }
-.other-nav button.add-btn:active > svg path {
+.other-nav .right .tertiary-btn span {
+  color: var(--purple-800);
+}
+.other-nav .right .tertiary-btn:hover {
+  color: var(--purple-800);
+  background: var(--purple-50);
+}
+.other-nav .right .tertiary-btn:active {
+  color: var(--purple-900);
+  border-color: var(--purple-900);
+}
+.other-nav .right .tertiary-btn:active > svg path {
   stroke: var(--purple-900);
 }
-.other-nav button.add-btn:disabled {
+.other-nav .right .tertiary-btn:disabled {
   border: 1px solid transparent;
   opacity: 0.5;
+}
+
+.home-nav {
+  margin: 0;
+  padding: 32px 100px;
+}
+
+@media only screen and (max-width: 1024px), (orientation: portrait) {
+  .other-nav {
+    width: calc(100% - 64px);
+    margin: 16px;
+  }
+  .other-nav .right {
+    position: fixed;
+    top: calc(100vh - 82px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    padding: 8px 16px;
+    border-radius: 12px;
+    background: rgba(26, 12, 50, 0.26);
+    box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    justify-content: center;
+    gap: 8px;
+  }
+  .other-nav .right > * {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  nav {
+    width: calc(100% - 120px);
+    margin: 32px 60px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  nav {
+    width: calc(100% - 32px);
+    margin: 16px;
+  }
+}
+@media (min-width: 767px) and (max-width: 1024px) {
+  .home-nav {
+    width: calc(100vw - 64px);
+    padding: 32px 32px 12px 32px;
+  }
+}
+@media (min-width: 375px) and (max-width: 766px) {
+  .home-nav {
+    width: calc(100vw - 32px);
+    padding: 42px 16px 16px 16px;
+  }
 }

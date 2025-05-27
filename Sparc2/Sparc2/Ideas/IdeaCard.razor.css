@@ -7,6 +7,9 @@
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.25);
   cursor: pointer;
 }
+.card.highlight {
+  animation: highlight 7s ease-in-out;
+}
 .card header {
   display: flex;
   flex-direction: row;
@@ -29,14 +32,14 @@
 .card header div h3 {
   color: var(--purple-800);
   font-size: 1.6rem;
-  font-weight: 450;
+  font-weight: 600;
   line-height: 120%;
   letter-spacing: -0.16px;
 }
 .card header div p {
   color: var(--purple-800);
   font-size: 1.4rem;
-  font-weight: 450;
+  font-weight: 400;
   line-height: 120%;
   letter-spacing: -0.14px;
 }
@@ -177,5 +180,16 @@
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes highlight {
+  0% {
+    box-shadow: none;
+  }
+  25% {
+    box-shadow: 0 0 40px 5px rgb(254, 238, 205);
+  }
+  100% {
+    box-shadow: none;
   }
 }

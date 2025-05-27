@@ -1,0 +1,181 @@
+﻿<div class="modal idea-modal">
+    @if (currentFocus == "main" || currentFocus == "comments")
+    {
+        <header>
+            <div class="left">
+                <button class="secondary-btn icon-btn" @onclick=CloseModal><ArrowLeftIcon /></button>
+                <img src="images/user-stock.png" />
+                <div>
+                    <h3>@Idea.Author</h3>
+                    <p>@Idea.DateCreated.ToShortDateString()</p>
+                </div>
+            </div>
+            <div class="right">
+                <button class="secondary-btn icon-btn"><MoreIcon /></button>
+            </div>
+        </header>
+        <div class="container">
+            <section class="content">
+                <h2>@Idea.Title</h2>
+                <div class="file-previews">
+                    <div class="images">
+                        @if (Idea.FileUrls.Count < 1)
+                        {
+                            <img src="images/Rectangle 13.png" />
+                        }
+                        else
+                        {
+                            @foreach (var fileUrl in Idea.FileUrls)
+                            {
+                                <img src="@fileUrl" class="@(currentFile == fileUrl ? "active" : "")" />
+                            }
+                        }
+                    </div>
+                    @if (Idea.FileUrls.Count > 1)
+                    {
+                        <div class="arrows">
+                            <button class="arrow-left" @onclick=previousFile><ArrowLeftIcon /></button>
+                            <button class="arrow-right" @onclick=nextFile><ArrowLeftIcon /></button>
+                        </div>
+                        <div class="indicators">
+                            @foreach (var file in Idea.FileUrls)
+                            {
+                                <div class="indicator @(currentFile == file ? "active" : "")"></div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div>
+                    <p>@Idea.Description</p>
+                </div>
+            </section>
+            <footer>
+                <div>
+                    @* <button class="tertiary-btn"><ChatBubbleIcon /> <span>@comments.Count</span></button> *@
+                    <button class="tertiary-btn"><ThumbsUpIcon /> <span>@likes.Count</span></button>
+                </div>
+                <button class="tertiary-btn" @onclick=OpenFiles><FileIcon /> <span>@(Idea.FileUrls?.Count ?? 0)</span></button>
+            </footer>
+            <section class="comments">
+                <hr />
+                <h4>Comment</h4>
+                <div>
+                    <input type="text" placeholder="Leave a comment" autofocus=@(currentFocus == "comments" ? true : false)/>
+                    <button class="secondary-btn">Send</button>
+                </div>
+            </section>
+        </div>
+    }
+
+    @if (currentFocus == "files")
+    {
+        <header class="files-header">
+            <div class="left">
+                <button class="secondary-btn icon-btn" @onclick=GoBack><ArrowLeftIcon /></button>
+                <h3>Back to Post</h3>
+            </div>
+            <div class="right">
+                <button class="secondary-btn icon-btn"><MoreIcon /></button>
+            </div>
+        </header>
+        <div class="container">
+            <section class="files">
+                <ul>
+                    @foreach (var file in Idea.FileUrls)
+                    {
+                        <li>
+                            <div class="left">
+                                <div class="img-container">
+                                    <PhotoIcon />
+                                </div>
+                                <div class="file-info">
+                                    <h5>@file</h5>
+                                    <p>Size MB</p>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <button><DownloadIcon/></button>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <footer>
+                    <button class="tertiary-btn"><span>Download All (#)</span> <DownloadIcon /></button>
+                </footer>
+            </section>
+        </div>
+    }
+</div>
+
+<div class="modal-overlay" @onclick="CloseModal"></div>
+
+@code {
+    [Parameter, EditorRequired] public Idea Idea { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public bool FocusComments { get; set; }
+    [Parameter] public bool FocusFiles { get; set; }
+
+    List<string> comments = new List<string>();
+    List<string> likes = new List<string>();
+
+    string currentFile;
+    string currentFocus = "main";
+
+    protected override void OnInitialized()
+    {
+        if (Idea.FileUrls.Count > 0)
+        {
+            currentFile = Idea.FileUrls?.FirstOrDefault() ?? "";
+            StateHasChanged();
+        }
+
+        if (FocusComments == true)
+        {
+            currentFocus = "comments";
+        }
+
+        if (FocusFiles == true)
+        {
+            currentFocus = "files";
+        }
+    }
+
+    void nextFile()
+    {
+        if (Idea.FileUrls.IndexOf(currentFile) == Idea.FileUrls.Count - 1)
+        {
+            return;
+        }
+        else
+        {
+            currentFile = Idea.FileUrls[Idea.FileUrls.IndexOf(currentFile) + 1];
+        }
+    }
+
+    void previousFile()
+    {
+        if (Idea.FileUrls.IndexOf(currentFile) == 0)
+        {
+            return;
+        }
+        else
+        {
+            currentFile = Idea.FileUrls[Idea.FileUrls.IndexOf(currentFile) - 1];
+        }
+    }
+
+    void OpenFiles()
+    {
+        currentFocus = "files";
+    }
+
+    void GoBack()
+    {
+        currentFocus = "main";
+    }
+
+    void CloseModal()
+    {
+        OnClose.InvokeAsync(true);
+    }
+}
