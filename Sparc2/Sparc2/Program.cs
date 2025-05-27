@@ -21,19 +21,6 @@ builder.Services.AddSingleton<AzureBlob>(sp =>
     return new AzureBlob(connectionString);
 });
 
-builder.Services.AddHttpClient("AuthService", client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7185/");
-}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-{
-    UseCookies = true,
-    CookieContainer = new CookieContainer()
-});
-
-builder.Services.AddScoped(sp =>
-    sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
-);
-
 builder.AddBlossomCloud();
 
 builder.Services.AddSingleton<IdeaService>();
