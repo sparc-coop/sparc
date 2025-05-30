@@ -1,5 +1,9 @@
 ﻿@using Sparc.Blossom.Authentication
 @inject IBlossomCloud BlossomCloud
+@inject HttpClient Http
+@inject IJSRuntime JS
+@using System.Net.Http.Json
+@using System.Text.Json
 
 @page "/kori"
 
@@ -58,11 +62,17 @@
             }
             else
             {
-                <button @onclick="AddKoriProduct">
+                <button @onclick="TryAuthAndJoinBeta">
                     Try Beta Program Testing
                     <ArrowRight />
                 </button>
                 <small>* Referral access required *</small>
+
+                // For development only. Will be removed later.
+                @if (!string.IsNullOrWhiteSpace(Message))
+                {
+                    <div class="alert alert-info mt-3">@Message</div>
+                }
             }
         }
     </section>
@@ -162,6 +172,8 @@
     BlossomUser? CurrentUser;
     private bool IsCheckingUser = true;
     private bool IsAddingProduct = false;
+    bool IsAuthenticating = false;
+    string? Message;
 
     private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
 
@@ -188,15 +200,90 @@
 
     private async Task AddKoriProduct()
     {
-        if (IsAddingProduct || HasKoriAccess)
-            return;
+        // if (IsAddingProduct || HasKoriAccess)
+        //     return;
 
-        IsAddingProduct = true;
+        // IsAddingProduct = true;
 
         try
         {
             await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
             await GetUserInfo();
+        }
+        finally
+        {
+            // IsAddingProduct = false;
+        }
+    }
+
+    private async Task TryAuthAndJoinBeta()
+    {
+        if (IsAddingProduct || HasKoriAccess)
+            return;
+
+        IsAddingProduct = true;
+        Message = null;
+
+        try
+        {
+            // 1. Try logging in with passkey
+            var token = await JS.InvokeAsync<string>("signInWithPasskey", null);
+            if (string.IsNullOrEmpty(token))
+            {
+                // 2. Sign up with passkey
+                var start = await Http.PostAsync("auth/login", null);
+                if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed."; return; }
+
+                var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
+                if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
+
+                var challenge = tok.GetString();
+                var passkey = await JS.InvokeAsync<string>("signUpWithPasskey", challenge);
+                if (string.IsNullOrWhiteSpace(passkey)) { Message = "⚠️ Passkey signup aborted."; return; }
+
+                var signupResp = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(passkey)}", null);
+                if (!signupResp.IsSuccessStatusCode)
+                {
+                    var err = await signupResp.Content.ReadAsStringAsync();
+                    Message = $"❌ Signup failed: {err}"; return;
+                }
+            }
+            else
+            {
+                // Normal login using passkey
+                var loginResp = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(token)}", null);
+                if (!loginResp.IsSuccessStatusCode)
+                {
+                    Message = $"❌ Login failed: {loginResp.StatusCode}"; return;
+                }
+            }
+
+            // 3. Retrieve authenticated user
+            await GetUserInfo();
+            if (CurrentUser is null) { Message = "⚠️ Could not fetch user after login."; return; }
+
+            // 4. Modal: request and save email
+            var email = await JS.InvokeAsync<string>("prompt", "Please enter your email:");
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                var patchResp = await BlossomCloud.AddUserEmail(new AddUserEmailRequest(email));
+
+                if (patchResp is null)
+                {
+                    Message = "⚠️ Failed to save email.";
+                    return;
+                }
+
+                Message = "✅ Email saved!";
+            }
+
+            // 5. Add Kori product
+            await AddKoriProduct();
+
+        }
+        catch (Exception ex)
+        {
+            Message = $"⚠️ Unexpected error: {ex.Message}";
         }
         finally
         {
