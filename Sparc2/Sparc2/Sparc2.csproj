@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="Shared\Icons\Language.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,7 @@
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="Shared\Icons\Language.razor" />
   </ItemGroup>
 
   <ItemGroup>
