@@ -74,5 +74,9 @@
   {
     "outputFile": "Shared/Components/Auth.razor.css",
     "inputFile": "Shared/Components/Auth.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/AddEmailModal.razor.css",
+    "inputFile": "Shared/Components/AddEmailModal.razor.scss"
   }
 ]
