@@ -1,5 +1,9 @@
 ﻿setTimeout(initScroll, 2000);
 
+window.setEditingUsername = function (value) {
+    window.isEditingUsername = value;
+}
+
 function initScroll() {
     window.addEventListener('scroll', () => {
         var home = document.getElementById("home");
@@ -61,7 +65,8 @@ function navigateToIdeas() {
 }
 
 function mouseClickHandler() {
-    addEventListener("click", function (e) {
+    addEventListener("click", function (e) {    
+        if (window.isEditingUsername) return;
         if (e.target.closest("#scroll-text") || e.target.closest("#ideas-btn") || e.target.closest("#enter-btn") || e.target.closest("#mosaic")) {
             window.scrollTo(0, 10);
         }
@@ -70,6 +75,7 @@ function mouseClickHandler() {
 
 function pressEnter() {
     addEventListener("keydown", function (e) {
+        if (window.isEditingUsername) return;
         if (e.key === "Enter") {
             window.scrollTo(0, 10);
         }

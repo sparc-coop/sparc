@@ -5,7 +5,7 @@
   left: 0;
   z-index: 100;
   margin: 32px 100px;
-  background: var(--white);
+  background: linear-gradient(to bottom, white 0%, white 70%, transparent 70%, transparent 100%);
 }
 nav .container {
   display: flex;
@@ -16,6 +16,28 @@ nav .container {
 nav .right {
   display: flex;
   gap: 4px;
+}
+nav .right div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 14px;
+}
+nav .right div ::deep svg path {
+  stroke: var(--purple-800);
+}
+nav .right div input {
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  color: var(--purple-800);
+  letter-spacing: 0.5px;
+}
+nav .right div span {
+  font-size: 14px;
+  color: var(--purple-800);
+  cursor: pointer;
+  letter-spacing: 0.5px;
 }
 nav button {
   padding: 8px 16px 8px 14px;

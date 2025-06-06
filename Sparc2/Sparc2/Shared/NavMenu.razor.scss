@@ -5,7 +5,7 @@
     left: 0;
     z-index: 100;
     margin: 32px 100px;
-    background: var(--white);
+    background: linear-gradient(to bottom, white 0%, white 70%, transparent 70%, transparent 100%);
 
     .container {
         display: flex;
@@ -17,6 +17,32 @@
     .right {
         display: flex;
         gap: 4px;
+
+        div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px 8px 14px;
+
+            ::deep svg path {
+                stroke: var(--purple-800);
+            }
+
+            input {
+                padding: 4px 8px;
+                border-radius: 12px;
+                border: 1px solid var(--gray-200);
+                color: var(--purple-800);
+                letter-spacing: 0.5px;
+            }
+
+            span {
+                font-size: 14px;
+                color: var(--purple-800);
+                cursor: pointer;
+                letter-spacing: 0.5px;
+            }
+        }
     }
 
     button {
@@ -47,7 +73,7 @@
     box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
     backdrop-filter: blur(100px);
     -webkit-backdrop-filter: blur(100px);
-    
+
     .left {
         button {
             > svg {
@@ -214,6 +240,6 @@
 @media (min-width: 375px) and (max-width: 766px) {
     .home-nav {
         width: calc(100vw - 32px);
-        padding: 42px 16px 16px 16px;        
+        padding: 42px 16px 16px 16px;
     }
 }

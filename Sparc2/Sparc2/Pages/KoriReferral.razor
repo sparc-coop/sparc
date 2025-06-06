@@ -260,7 +260,7 @@
             }
 
             // 3. Modal: request
-            if (string.IsNullOrWhiteSpace(CurrentUser.UserEmail))
+            if (string.IsNullOrWhiteSpace(CurrentUser.Email))
             {
                 ShowEmailModal = true;
                 StateHasChanged();
@@ -284,7 +284,7 @@
         try
         {
             // 4. Modal: save email
-            var patchResp = await BlossomCloud.AddUserEmail(new AddUserEmailRequest(Email));
+            var patchResp = await BlossomCloud.UpdateUser(new UpdateUserRequest(Email));
 
             if (patchResp is null)
             {
