@@ -1,0 +1,108 @@
+﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
+
+<div class="user-profile-container" @onmouseover="() => IsHovered = true" @onmouseout="() => IsHovered = false">
+    <div class="profile-picture-wrapper @(IsOnline ? "online" : "")">
+        <img src="@ProfileImageUrl" alt="User Profile" />
+    </div>
+
+    @if (IsHovered)
+    {
+        <button title="Email" class="top" @onclick="@(() => OnShowModal("Email"))">
+            <img src="images/email.png" alt="Email Icon" />
+        </button>
+        <button title="Phone Number" class="bottom" @onclick="@(() => OnShowModal("Phone"))">
+            <img src="images/phone.png" alt="Phone Icon" />
+        </button>
+    }
+</div>
+
+@if (ShowModal)
+{
+    <div class="modal-overlay">
+        <div class="modal">
+            @if (InfoType == "Email")
+            {
+                <header>
+                    <h3>Please enter your email:</h3>
+                </header>
+                <div>
+                    <InputText @bind-Value="Email" />
+                </div>
+            }
+            else if (InfoType == "Phone")
+            {
+                <header>
+                    <h3>Please enter your phone number:</h3>
+                </header>
+                <div>
+                    <InputText @bind-Value="PhoneNumber" />
+                </div>
+            }
+            <footer>
+                <button class="secondary-btn" @onclick="OnCancel">Cancel</button>
+                <button class="primary-btn" @onclick="OnInfoEntered">Save</button>
+            </footer>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string ProfileImageUrl { get; set; } = "images/puppy.jpg";
+    BlossomUser? CurrentUser;
+
+    private bool IsHovered = false;
+    private bool ShowModal = false;
+    private string InfoType = string.Empty;
+
+    private string Email { get; set; }
+    private string PhoneNumber { get; set; }
+
+    public bool IsOnline => CurrentUser is not null == true;
+
+    protected override async Task OnInitializedAsync() => await GetUserInfo();
+
+    private async Task GetUserInfo()
+    {
+        CurrentUser = await BlossomCloud.UserInfo();
+    }
+
+    private void OnShowModal(string type)
+    {
+        InfoType = type;
+
+        if (CurrentUser is not null)
+        {
+            if (type == "Email")
+                Email = CurrentUser.Email ?? string.Empty;
+
+            else if (type == "Phone")
+                PhoneNumber = CurrentUser.PhoneNumber ?? string.Empty;
+        }
+
+        ShowModal = true;
+    }
+
+
+    private void OnCancel()
+    {
+        ShowModal = false;
+        InfoType = string.Empty;
+    }
+
+    private async Task OnInfoEntered()
+    {
+        if (InfoType == "Email")
+            await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));
+
+        else if (InfoType == "Phone")
+            await BlossomCloud.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
+
+        ShowModal = false;
+        InfoType = string.Empty;
+        StateHasChanged();
+
+        await GetUserInfo();
+    }
+}
+

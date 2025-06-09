@@ -23,13 +23,14 @@
             </div>
             <div class="right">
                 @* <Auth /> *@
+                <ProfileCircle />
                 @if (CurrentUser is not null)
                 {
-                    <div @onclick:stopPropagation @onkeypress:stopPropagation>
-                        <UserIcon />
+                    <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
                         @if (IsEditingUsername)
                         {
                             <input type="text" @bind="Username"
+                                   @ref="UsernameInput"
                                    @bind:event="oninput"
                                    @onblur="SaveUsername"
                                    @onkeypress="HandleKeyPress" />
@@ -43,7 +44,7 @@
                     </div>
                 }
                 <button id="ideas-btn" class="secondary-btn">Ideas</button>
-            </div>
+            </div>            
         }
     </div>
 </nav>
@@ -65,6 +66,7 @@
     BlossomUser? CurrentUser;
     private bool IsEditingUsername = false;
     private string Username = string.Empty;
+    private ElementReference UsernameInput;
 
     protected override async Task OnInitializedAsync() => await GetUserInfo();
 
@@ -98,6 +100,7 @@
         }
         IsEditingUsername = true;
         await Js.InvokeVoidAsync("setEditingUsername", true);
+        await UsernameInput.FocusAsync();
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)

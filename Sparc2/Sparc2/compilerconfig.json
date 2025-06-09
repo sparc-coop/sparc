@@ -78,5 +78,9 @@
   {
     "outputFile": "Shared/Components/AddEmailModal.razor.css",
     "inputFile": "Shared/Components/AddEmailModal.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/ProfileCircle.razor.css",
+    "inputFile": "Shared/Components/ProfileCircle.razor.scss"
   }
 ]
