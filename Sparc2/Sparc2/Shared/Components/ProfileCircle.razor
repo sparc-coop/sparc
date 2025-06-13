@@ -47,6 +47,29 @@
     </div>
 }
 
+@if (ShowVerificationModal)
+{
+    <div class="modal-overlay">
+        <div class="modal">
+            <header>
+                <h3>Enter the verification code sent to @(CurrentVerificationDestination)</h3>
+            </header>
+            <div>
+                <InputText @bind-Value="VerificationCode" />
+                @if (!string.IsNullOrEmpty(VerificationError))
+                {
+                    <p class="error-text">@VerificationError</p>
+                }
+            </div>
+            <footer>
+                <button class="secondary-btn" @onclick="OnCancelVerification">Cancel</button>
+                <button class="primary-btn" @onclick="VerifyCode">Verify</button>
+            </footer>
+        </div>
+    </div>
+}
+
+
 @code {
     [Parameter] public string ProfileImageUrl { get; set; } = "images/puppy.jpg";
     BlossomUser? CurrentUser;
@@ -57,6 +80,11 @@
 
     private string Email { get; set; }
     private string PhoneNumber { get; set; }
+
+    private string VerificationCode { get; set; } = "";
+    private bool ShowVerificationModal = false;
+    private string CurrentVerificationDestination = "";
+    private string VerificationError = "";
 
     public bool IsOnline => CurrentUser is not null == true;
 
@@ -93,16 +121,47 @@
     private async Task OnInfoEntered()
     {
         if (InfoType == "Email")
-            await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));
-
+        {
+            await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));            
+            CurrentVerificationDestination = CurrentUser?.Email ?? Email;
+        }
         else if (InfoType == "Phone")
+        {
             await BlossomCloud.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
+            CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber;
+        }
 
         ShowModal = false;
+        ShowVerificationModal = true;
         InfoType = string.Empty;
+        VerificationCode = "";
+        VerificationError = "";
         StateHasChanged();
 
         await GetUserInfo();
+    }
+
+    private async Task VerifyCode()
+    {
+        var success = await BlossomCloud.VerifyEmailOrPhoneCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+
+        if (success)
+        {
+            ShowVerificationModal = false;
+            await GetUserInfo();
+            StateHasChanged();
+        }
+        else
+        {
+            VerificationError = "Invalid verification code. Please try again.";
+        }
+    }
+
+    private void OnCancelVerification()
+    {
+        ShowVerificationModal = false;
+        VerificationCode = "";
+        VerificationError = "";
     }
 }
 
