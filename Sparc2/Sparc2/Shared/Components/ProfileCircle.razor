@@ -28,6 +28,10 @@
                 </header>
                 <div>
                     <InputText @bind-Value="Email" />
+                    <label>
+                        <InputCheckbox @bind-Value="VerifyEmail" />
+                        <span>Verify this email</span>
+                    </label>
                 </div>
             }
             else if (InfoType == "Phone")
@@ -37,6 +41,10 @@
                 </header>
                 <div>
                     <InputText @bind-Value="PhoneNumber" />
+                    <label>
+                        <InputCheckbox @bind-Value="VerifyPhone" />
+                        <span>Verify this phone number</span>
+                    </label>
                 </div>
             }
             <footer>
@@ -81,6 +89,9 @@
     private string Email { get; set; }
     private string PhoneNumber { get; set; }
 
+    private bool VerifyEmail = false;
+    private bool VerifyPhone = false;
+
     private string VerificationCode { get; set; } = "";
     private bool ShowVerificationModal = false;
     private string CurrentVerificationDestination = "";
@@ -93,6 +104,8 @@
     private async Task GetUserInfo()
     {
         CurrentUser = await BlossomCloud.UserInfo();
+        Email = CurrentUser?.Email ?? "";
+        PhoneNumber = CurrentUser?.PhoneNumber ?? "";
     }
 
     private void OnShowModal(string type)
@@ -102,52 +115,69 @@
         if (CurrentUser is not null)
         {
             if (type == "Email")
-                Email = CurrentUser.Email ?? string.Empty;
-
+            {
+                Email = CurrentUser.Email ?? "";
+                VerifyEmail = false;
+            }
             else if (type == "Phone")
-                PhoneNumber = CurrentUser.PhoneNumber ?? string.Empty;
+            {
+                PhoneNumber = CurrentUser.PhoneNumber ?? "";
+                VerifyPhone = false;
+            }
         }
 
         ShowModal = true;
     }
 
-
     private void OnCancel()
     {
         ShowModal = false;
         InfoType = string.Empty;
+        VerificationError = "";
     }
 
     private async Task OnInfoEntered()
     {
+        var request = new UpdateUserRequest();
+
         if (InfoType == "Email")
         {
-            await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));            
-            CurrentVerificationDestination = CurrentUser?.Email ?? Email;
+            request = request with { Email = Email, RequireEmailVerification = VerifyEmail };
+            CurrentVerificationDestination = Email;
         }
         else if (InfoType == "Phone")
         {
-            await BlossomCloud.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
-            CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber;
+            request = request with { PhoneNumber = PhoneNumber, RequirePhoneVerification = VerifyPhone };
+            CurrentVerificationDestination = PhoneNumber;
         }
 
+        await BlossomCloud.UpdateUser(request);
+
+        var shouldShowVerification = (InfoType == "Email" && VerifyEmail) || (InfoType == "Phone" && VerifyPhone);
+
         ShowModal = false;
-        ShowVerificationModal = true;
         InfoType = string.Empty;
-        VerificationCode = "";
-        VerificationError = "";
-        StateHasChanged();
+
+        if (shouldShowVerification)
+        {
+            VerificationCode = "";
+            VerificationError = "";
+            ShowVerificationModal = true;
+        }
 
         await GetUserInfo();
+        StateHasChanged();
     }
+
 
     private async Task VerifyCode()
     {
-        var success = await BlossomCloud.VerifyEmailOrPhoneCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        var success = await BlossomCloud.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
 
         if (success)
         {
             ShowVerificationModal = false;
+            VerificationError = "";
             await GetUserInfo();
             StateHasChanged();
         }
