@@ -86,6 +86,11 @@ section #scroll-text ::deep svg {
 section #scroll-text ::deep svg path {
   stroke: var(--purple-800);
 }
+@media only screen and (min-width: 1680px) {
+  section .hero {
+    margin-top: 85px;
+  }
+}
 @media only screen and (max-width: 1536px) {
   section .hero #hero-text h1 {
     font-size: 7.2rem;

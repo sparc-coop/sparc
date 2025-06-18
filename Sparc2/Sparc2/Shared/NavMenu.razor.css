@@ -5,7 +5,7 @@
   left: 0;
   z-index: 100;
   margin: 32px 100px;
-  background: linear-gradient(to bottom, white 0%, white 45%, transparent 45%, transparent 100%);
+  background: linear-gradient(to bottom, white 0%, white 84%, transparent 84%, transparent 100%);
 }
 nav .container {
   display: flex;
@@ -156,7 +156,8 @@ nav button ::deep svg path {
 
 .home-nav {
   margin: 0;
-  padding: 32px 100px;
+  /*padding: 32px 100px;*/
+  padding: 16px 100px;
 }
 
 @media only screen and (max-width: 1024px), (orientation: portrait) {

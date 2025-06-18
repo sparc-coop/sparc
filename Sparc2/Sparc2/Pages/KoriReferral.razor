@@ -179,6 +179,28 @@
     </div>
 }
 
+@if (ShowVerificationModal)
+{
+    <div class="modal-overlay">
+        <div class="modal">
+            <header>
+                <h3>Enter the verification code sent to @CurrentVerificationDestination</h3>
+            </header>
+            <div>
+                <InputText @bind-Value="VerificationCode" />
+                @if (!string.IsNullOrEmpty(VerificationError))
+                {
+                    <p class="error-text">@VerificationError</p>
+                }
+            </div>
+            <footer>
+                <button class="primary-btn" @onclick="VerifyCodeAndJoinBeta">Verify</button>
+            </footer>
+        </div>
+    </div>
+}
+
+
 @code {
     BlossomUser? CurrentUser;
     private bool IsCheckingUser = true;
@@ -186,6 +208,10 @@
     string? Message;
     private bool ShowEmailModal = false;
     private string Email { get; set; } = string.Empty;
+    private string VerificationCode { get; set; } = "";
+    private string CurrentVerificationDestination = "";
+    private string VerificationError = "";
+    private bool ShowVerificationModal = false;
 
     private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
 
@@ -284,7 +310,9 @@
         try
         {
             // 4. Modal: save email
-            var patchResp = await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));
+            var patchResp = await BlossomCloud.UpdateUser(
+                new UpdateUserRequest(Email: Email, RequireEmailVerification: true)
+            );
 
             if (patchResp is null)
             {
@@ -292,20 +320,55 @@
                 return;
             }
 
+            CurrentVerificationDestination = Email;
+            VerificationCode = "";
+            VerificationError = "";
             ShowEmailModal = false;
-            IsAddingProduct = true;
+            ShowVerificationModal = true;
             StateHasChanged();
-
-            // 5. Add Kori product
-            await AddKoriProduct();
         }
         catch (Exception ex)
         {
             Message = $"❌ Error while saving email: {ex.Message}";
         }
+    }
+
+    private async Task VerifyCodeAndJoinBeta()
+    {
+        
+        ShowVerificationModal = false;
+        VerificationError = "";
+        IsAddingProduct = true;
+        StateHasChanged(); 
+
+        try
+        {
+            // 5. Verify code
+            var success = await BlossomCloud.VerifyCode(
+                new VerificationRequest(CurrentVerificationDestination, VerificationCode)
+            );
+
+            if (success)
+            {
+                // 6. Add Kori product
+                await AddKoriProduct();
+            }
+            else
+            {
+                VerificationError = "Invalid verification code. Please try again.";
+                ShowVerificationModal = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            VerificationError = $"Error verifying code: {ex.Message}";
+            ShowVerificationModal = true;
+        }
         finally
         {
             IsAddingProduct = false;
+            VerificationCode = "";
+            StateHasChanged(); 
         }
     }
 }
