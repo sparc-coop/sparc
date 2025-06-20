@@ -28,6 +28,7 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
     <None Include="Shared\Icons\Language.razor" />
+    <None Include="wwwroot\images\puppy.jpg" />
   </ItemGroup>
 
   <ItemGroup>

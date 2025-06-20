@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom", "..\..\blos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Cloud", "..\..\blossom\Sparc.Blossom.Cloud\Sparc.Blossom.Cloud.csproj", "{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Cosmos", "..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj", "{9D293A5D-6B48-DB01-5C62-4FED86572FB0}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Payment.Stripe", "..\..\blossom\Sparc.Blossom.Payment.Stripe\Sparc.Blossom.Payment.Stripe.csproj", "{2BA4E806-4F26-FC7E-835B-95331B75F9F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Example.Payment", "..\..\blossom\Sparc.Blossom.Example.Payment\Sparc.Blossom.Example.Payment.csproj", "{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}"

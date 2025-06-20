@@ -1,4 +1,7 @@
-﻿<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
+﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
+
+<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
     <div class="container">
         @if (IsIdeasPage)
         {
@@ -20,12 +23,35 @@
                 <SparcLogo />
             </div>
             <div class="right">
-                <Auth />
+                @* <Auth /> *@
+                <ProfileCircle />
+                @if (CurrentUser is not null)
+                {
+                    <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
+                        @if (IsEditingUsername)
+                        {
+                            <input type="text" @bind="Username"
+                                   @ref="UsernameInput"
+                                   @bind:event="oninput"
+                                   @onblur="SaveUsername"
+                                   @onkeypress="HandleKeyPress" />
+                        }
+                        else
+                        {
+                            <span @onclick="StartEditing">
+                                @CurrentUser.Username
+                            </span>
+                        }
+                    </div>
+                }
                 <button id="ideas-btn" class="secondary-btn">Ideas</button>
-            </div>
+            </div>            
         }
     </div>
 </nav>
+<Auth />
+
+@inject IJSRuntime Js
 
 @if (ShowAddCard)
 {
@@ -38,6 +64,17 @@
     private bool ShowAddCard = false;
     private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
     private int SelectedHeaderButton = 0;
+    BlossomUser? CurrentUser;
+    private bool IsEditingUsername = false;
+    private string Username = string.Empty;
+    private ElementReference UsernameInput;
+
+    protected override async Task OnInitializedAsync() => await GetUserInfo();
+
+    private async Task GetUserInfo()
+    {
+        CurrentUser = await BlossomCloud.UserInfo();
+    }
 
     private void Navigate(string path)
     {
@@ -54,6 +91,41 @@
     {
         if (shouldClose)
             ShowAddCard = false;
+    }
+
+    private async void StartEditing()
+    {
+        if (CurrentUser?.Username is not null)
+        {
+            Username = CurrentUser.Username;
+        }
+        IsEditingUsername = true;
+        await Js.InvokeVoidAsync("setEditingUsername", true);
+        await UsernameInput.FocusAsync();
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SaveUsername();
+        }
+    }
+
+    private async Task SaveUsername()
+    {
+        var newUsername = Username?.Trim();
+
+        IsEditingUsername = false;
+        StateHasChanged();  
+
+        if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
+        {
+            CurrentUser.Username = newUsername;
+            await BlossomCloud.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
+        }
+
+        await Js.InvokeVoidAsync("setEditingUsername", false);
     }
 }
 

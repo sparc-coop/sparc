@@ -56,7 +56,7 @@
         }
         else
         {
-            @if (IsAddingProduct)
+            @if (IsAddingProduct || ShowEmailModal)
             {
                 <div class="loader"></div>
             }
@@ -67,12 +67,6 @@
                     <ArrowRight />
                 </button>
                 <small>* Referral access required *</small>
-
-                // For development only. Will be removed later.
-                @if (!string.IsNullOrWhiteSpace(Message))
-                {
-                    <div class="alert alert-info mt-3">@Message</div>
-                }
             }
         }
     </section>
@@ -168,12 +162,56 @@
     </footer>
 </section>
 
+@if (ShowEmailModal)
+{
+    <div class="modal-overlay">
+        <div class="modal">
+            <header>
+                <h3>Please enter your email:</h3>
+            </header>
+            <div>
+                <InputText @bind-Value="Email" />
+            </div>
+            <footer>
+                <button class="primary-btn" @onclick="OnEmailEntered">Save</button>
+            </footer>
+        </div>
+    </div>
+}
+
+@if (ShowVerificationModal)
+{
+    <div class="modal-overlay">
+        <div class="modal">
+            <header>
+                <h3>Enter the verification code sent to @CurrentVerificationDestination</h3>
+            </header>
+            <div>
+                <InputText @bind-Value="VerificationCode" />
+                @if (!string.IsNullOrEmpty(VerificationError))
+                {
+                    <p class="error-text">@VerificationError</p>
+                }
+            </div>
+            <footer>
+                <button class="primary-btn" @onclick="VerifyCodeAndJoinBeta">Verify</button>
+            </footer>
+        </div>
+    </div>
+}
+
+
 @code {
     BlossomUser? CurrentUser;
     private bool IsCheckingUser = true;
     private bool IsAddingProduct = false;
-    bool IsAuthenticating = false;
     string? Message;
+    private bool ShowEmailModal = false;
+    private string Email { get; set; } = string.Empty;
+    private string VerificationCode { get; set; } = "";
+    private string CurrentVerificationDestination = "";
+    private string VerificationError = "";
+    private bool ShowVerificationModal = false;
 
     private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
 
@@ -200,20 +238,8 @@
 
     private async Task AddKoriProduct()
     {
-        // if (IsAddingProduct || HasKoriAccess)
-        //     return;
-
-        // IsAddingProduct = true;
-
-        try
-        {
-            await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
-            await GetUserInfo();
-        }
-        finally
-        {
-            // IsAddingProduct = false;
-        }
+        await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
+        await GetUserInfo();
     }
 
     private async Task TryAuthAndJoinBeta()
@@ -226,68 +252,123 @@
 
         try
         {
-            // 1. Try logging in with passkey
-            var token = await JS.InvokeAsync<string>("signInWithPasskey", null);
-            if (string.IsNullOrEmpty(token))
+            if (CurrentUser.Token == null)
             {
-                // 2. Sign up with passkey
+                // 1. Sign up with passkey
                 var start = await Http.PostAsync("auth/login", null);
                 if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed."; return; }
 
                 var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
                 if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
-
                 var challenge = tok.GetString();
+
                 var passkey = await JS.InvokeAsync<string>("signUpWithPasskey", challenge);
                 if (string.IsNullOrWhiteSpace(passkey)) { Message = "⚠️ Passkey signup aborted."; return; }
 
-                var signupResp = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(passkey)}", null);
-                if (!signupResp.IsSuccessStatusCode)
+                var finish = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(passkey)}", null);
+                if (finish.IsSuccessStatusCode)
                 {
-                    var err = await signupResp.Content.ReadAsStringAsync();
-                    Message = $"❌ Signup failed: {err}"; return;
+                    CurrentUser = await finish.Content.ReadFromJsonAsync<BlossomUser>();
+                    Message = "✅ Signed up & logged in!";
                 }
-            }
-            else
-            {
-                // Normal login using passkey
-                var loginResp = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(token)}", null);
-                if (!loginResp.IsSuccessStatusCode)
+                else
                 {
-                    Message = $"❌ Login failed: {loginResp.StatusCode}"; return;
+                    var err = await finish.Content.ReadAsStringAsync();
+                    Message = $"❌ Signup failed: {finish.StatusCode} – {err}";
                 }
-            }
+            }            
 
-            // 3. Retrieve authenticated user
+            // 2. Retrieve authenticated user
             await GetUserInfo();
-            if (CurrentUser is null) { Message = "⚠️ Could not fetch user after login."; return; }
-
-            // 4. Modal: request and save email
-            var email = await JS.InvokeAsync<string>("prompt", "Please enter your email:");
-            if (!string.IsNullOrWhiteSpace(email))
+            if (CurrentUser is null)
             {
-                var patchResp = await BlossomCloud.AddUserEmail(new AddUserEmailRequest(email));
-
-                if (patchResp is null)
-                {
-                    Message = "⚠️ Failed to save email.";
-                    return;
-                }
-
-                Message = "✅ Email saved!";
+                Message = "⚠️ Could not fetch user after login."; return;
             }
 
-            // 5. Add Kori product
-            await AddKoriProduct();
+            // 3. Modal: request
+            if (string.IsNullOrWhiteSpace(CurrentUser.Email))
+            {
+                ShowEmailModal = true;
+                StateHasChanged();
+                return;
+            }
+        }
+        catch (Exception ex)
+        {            
+            Message = $"❌ Unexpected error: {ex.Message}";
+        }
+    }
 
+    private async Task OnEmailEntered()
+    {
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            Message = "⚠️ Email is required to join the beta.";
+            return;
+        }
+
+        try
+        {
+            // 4. Modal: save email
+            var patchResp = await BlossomCloud.UpdateUser(
+                new UpdateUserRequest(Email: Email, RequireEmailVerification: true)
+            );
+
+            if (patchResp is null)
+            {
+                Message = "⚠️ Failed to save email.";
+                return;
+            }
+
+            CurrentVerificationDestination = Email;
+            VerificationCode = "";
+            VerificationError = "";
+            ShowEmailModal = false;
+            ShowVerificationModal = true;
+            StateHasChanged();
         }
         catch (Exception ex)
         {
-            Message = $"⚠️ Unexpected error: {ex.Message}";
+            Message = $"❌ Error while saving email: {ex.Message}";
+        }
+    }
+
+    private async Task VerifyCodeAndJoinBeta()
+    {
+        
+        ShowVerificationModal = false;
+        VerificationError = "";
+        IsAddingProduct = true;
+        StateHasChanged(); 
+
+        try
+        {
+            // 5. Verify code
+            var success = await BlossomCloud.VerifyCode(
+                new VerificationRequest(CurrentVerificationDestination, VerificationCode)
+            );
+
+            if (success)
+            {
+                // 6. Add Kori product
+                await AddKoriProduct();
+            }
+            else
+            {
+                VerificationError = "Invalid verification code. Please try again.";
+                ShowVerificationModal = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            VerificationError = $"Error verifying code: {ex.Message}";
+            ShowVerificationModal = true;
         }
         finally
         {
             IsAddingProduct = false;
+            VerificationCode = "";
+            StateHasChanged(); 
         }
     }
 }
