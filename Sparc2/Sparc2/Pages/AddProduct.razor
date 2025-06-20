@@ -2,7 +2,9 @@
 @inject IJSRuntime JS
 @inject NavigationManager NavManager
 @using System.ComponentModel.DataAnnotations
+@using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Billing
+@using System.Globalization
 
 
 @implements IDisposable
@@ -11,49 +13,67 @@
 {
     <div class="payment-success">
         <h2>Thank You!</h2>
-        <p>Your @(Donation.Frequency == "Monthly" ? "monthly donation setup" : "donation") was successful.</p>
-        <button class="btn btn-primary" @onclick="CloseComponent">Done</button>
+        <p>Your payment was successful.</p>
+        <button class="btn btn-primary" @onclick="OnComplete">Done</button>
     </div>
 }
 else if (CurrentStep == 0)
 {
-    <div>
-        <h2>Be Part of Sparc</h2>
-        <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta lacus.</p>
-    </div>
-    <EditForm Model="@Donation" OnValidSubmit="ProceedToPaymentStep">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="field-group">
-            <label>Donation frequency</label>
-            <div class="btn-group">
-                <button type="button" class="@GetFrequencyButtonClass("One time")" @onclick="@(() => SetFrequency("One time"))">
-                    <CoinIcon /> <span>One time</span>
-                </button>
-                <button type="button" class="@GetFrequencyButtonClass("Monthly")" @onclick="@(() => SetFrequency("Monthly"))">
-                    <RefreshIcon /> <span>Monthly</span>
-                </button>
+    @if (CurrentStep == 0)
+    {
+        <div>
+            <h2>@Product?.Name</h2>
+            <p>Aptent facilisi torquent tempor sapien iaculis ultrices nisi porta lacus.</p>
+            <div class="field-group">
+                <label>Currency</label>
+                <select value="@SelectedCurrency" @onchange="OnCurrencyChanged">
+                    @foreach (var cur in CurrencyOptions ?? Enumerable.Empty<string>())
+                    {
+                        <option value="@cur">@cur.ToUpper()</option>
+                    }
+                </select>
             </div>
-        </div>
 
-        <div class="field-group">
-            <label>Amount (USD)</label>
-            <div class="amount-grid">
-                @foreach (var amount in PredefinedAmounts)
-                {
-                    <button type="button" class="@GetAmountButtonClass(amount)" @onclick="() => SetAmount(amount)">$@amount</button>
-                }
-                <div class="currency-input">
-                    <CurrencyIcon />
-                    <InputNumber @bind-Value="Donation.Amount" placeholder="Custom" TValue="decimal" @bind-Value:after="HandleCustomAmountInput" min="1" step="0.01" />
+            @*             <div class="field-group">
+                <label>Price</label>
+                <p>
+                    @if (SelectedCurrency == "brl")
+                    {
+                        @(DisplayPrice.ToString("C", CultureInfo.GetCultureInfo("pt-BR")))
+                    }
+                    else if (SelectedCurrency == "eur")
+                    {
+                        @(DisplayPrice.ToString("C", CultureInfo.GetCultureInfo("fr-FR")))
+                    }
+                    else
+                    {
+                        @(DisplayPrice.ToString("C", CultureInfo.GetCultureInfo("en-US")))
+                    }
+                </p>
+            </div> *@
+
+            <div class="field-group">
+                <label>Amount (USD)</label>
+                <div class="amount-grid">
+                    @foreach (var amount in ConvertedPrices.OrderBy(x => x))
+                    {
+                        @* <button type="button" class="@GetAmountButtonClass(amount)" @onclick="() => SetAmount(amount)">$@amount</button> *@
+                        <button type="button"
+                                class="@GetAmountButtonClass(amount)"
+                                @onclick="() => SetAmount(amount)">
+                            @($"{GetCurrencySymbol(SelectedCurrency)}{amount}")
+                        </button>
+                    }
+                    @* <ValidationMessage For="@(() => Donation.Amount)" /> *@
                 </div>
-                <ValidationMessage For="@(() => Donation.Amount)" />
             </div>
+
+            @*             <button class="btn btn-primary" @onclick="ProceedToPaymentStep">
+                Proceed to Payment
+            </button> *@
         </div>
 
-        @* <button type="submit" class="btn btn-primary" disabled="@(Donation.Amount <= 0)">Proceed to Payment</button> *@
-    </EditForm>
+    }
 }
 else if (CurrentStep == 1 && !string.IsNullOrEmpty(_clientSecret))
 {
@@ -85,6 +105,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
     [Parameter] public EventCallback OnNext { get; set; }
     [Parameter] public EventCallback OnBack { get; set; }
     [Parameter] public EventCallback OnComplete { get; set; }
+    [Parameter] public string ProductId { get; set; } = default!;
 
     public class UserDonation
     {
@@ -96,9 +117,40 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
         public string Frequency { get; set; } = "One time";
     }
 
+    private static readonly Dictionary<string, string> _currencySymbols
+      = CultureInfo
+          .GetCultures(CultureTypes.SpecificCultures)
+          .Select(ci => ci.Name)                       // use the name, not the LCID
+          .Where(name => !string.IsNullOrWhiteSpace(name))
+          .Select(name =>
+          {
+              try
+              {
+                  return new RegionInfo(name);
+              }
+              catch
+              {
+                  return null;
+              }
+          })
+          .Where(ri => ri != null)
+          .GroupBy(ri => ri.ISOCurrencySymbol, StringComparer.OrdinalIgnoreCase)
+          .ToDictionary(
+            g => g.Key.ToLower(),                     // “usd”, “eur”, etc
+            g => g.First().CurrencySymbol,             // “$”, “€” …
+            StringComparer.OrdinalIgnoreCase
+          );
+
     private readonly decimal[] PredefinedAmounts = { 5, 25, 50, 100, 250, 500 };
+    private List<decimal> ConvertedPrices = new List<decimal>();
     private UserDonation Donation = new UserDonation();
     private decimal? _selectedPredefinedAmount = null;
+
+    BlossomUser? CurrentUser;
+    private GetProductResponse? Product;
+    private string SelectedCurrency = "USD";
+    private decimal DisplayPrice = 0m;
+    List<string> CurrencyOptions = new List<string> { };
 
     private string? _clientSecret;
     private string? _publishableKey;
@@ -107,9 +159,9 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
     private string? _baseUrl;
 
     private bool _paymentSuccessful = false;
-    private DotNetObjectReference<AddDonation>? dotNetHelper;
+    private DotNetObjectReference<AddProduct>? dotNetHelper;
 
-    protected override void OnInitialized()
+    protected async override Task OnInitializedAsync()
     {
         _publishableKey = Configuration["Stripe:PublishableKey"];
         if (string.IsNullOrEmpty(_publishableKey))
@@ -118,12 +170,71 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
         }
         _previousStep = CurrentStep;
         _baseUrl = NavManager.BaseUri;
+
+        CurrentUser = await Cloud.UserInfo();
+
         dotNetHelper = DotNetObjectReference.Create(this);
+
+        Product = await Cloud.GetProductAsync("prod_SW5yY8O8KprzFu");
+
+        var orderedCurrencies = Product.Prices[0].Keys.OrderBy(c => c).ToList() ?? new List<string>();
+        CurrencyOptions = orderedCurrencies;
+
+        var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
+        var currentCurrencyInfo = ri.ISOCurrencySymbol;
+        if (Product.Prices[0].ContainsKey(currentCurrencyInfo.ToLower()) == true)
+        {
+            SelectedCurrency = currentCurrencyInfo.ToLower();
+        }
+        else if (Product.Prices[0].ContainsKey("usd") == true)
+        {
+            SelectedCurrency = "usd";
+        }
+        else
+        {
+            SelectedCurrency = Product.Prices[0].Keys.FirstOrDefault()?.ToLower() ?? "usd";
+        }
+
+        UpdatePriceForCurrency();
     }
 
-    private void SetFrequency(string frequency)
+    private string GetCurrencySymbol(string isoCode)
     {
-        Donation.Frequency = frequency;
+        if (isoCode == null) return string.Empty;
+        var key = isoCode.ToLower();
+        if (_currencySymbols.TryGetValue(key, out var sym))
+            return sym;
+        // fallback to the code itself (e.g. “AED”)
+        return isoCode.ToUpper();
+    }
+
+    private Task OnCurrencyChanged(ChangeEventArgs e)
+    {
+        SelectedCurrency = e.Value?.ToString()?.ToLower() ?? SelectedCurrency;
+        UpdatePriceForCurrency();
+        return InvokeAsync(StateHasChanged);
+    }
+
+    private void UpdatePriceForCurrency()
+    {
+        if (Product is null) return;
+
+        var curValues = Product.Prices
+                .Where(dict => dict.ContainsKey(SelectedCurrency)).ToList();
+
+        List<long> selectedCurValues = curValues
+            .Select(d => d[SelectedCurrency])
+            .ToList();
+
+        ConvertedPrices.Clear();
+
+        ConvertedPrices.AddRange(selectedCurValues.Select(c => c / 100m));
+        if (!ConvertedPrices.Contains(0))
+        {
+            ConvertedPrices.Add(0);
+        }
+        ConvertedPrices.OrderBy(c => c);
+
         StateHasChanged();
     }
 
@@ -132,16 +243,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
         Donation.Amount = predefinedAmount;
         _selectedPredefinedAmount = predefinedAmount;
         StateHasChanged();
-    }
-
-    private void HandleCustomAmountInput()
-    {
-        _selectedPredefinedAmount = null;
-    }
-
-    private string GetFrequencyButtonClass(string frequency)
-    {
-        return Donation.Frequency == frequency ? "btn selected" : "btn";
     }
 
     private string GetAmountButtonClass(decimal amount)
@@ -237,24 +338,20 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
 
             var metadata = new Dictionary<string, string> {
                 { "DonationFrequency", Donation.Frequency },
-                { "DonationAmount", Donation.Amount.ToString() }
+                { "DonationAmount", Donation.Amount.ToString() },
+                { "product_id", Product.Id }
             };
 
-            if (Donation.Frequency == "Monthly")
+            string? customerId = null;
+            if (CurrentUser != null)
             {
-                setupFutureUsage = "off_session";
-                Console.WriteLine("Creating PaymentIntent with SetupFutureUsage for monthly donation.");
-            }
-            else
-            {
-                Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
+                customerId = CurrentUser.Id;
             }
 
             CreateOrderPaymentRequest request = new(
-
                 amountInCents,
-                "usd",
-                null,
+                SelectedCurrency,
+                customerId,
                 null,
                 metadata,
                 setupFutureUsage

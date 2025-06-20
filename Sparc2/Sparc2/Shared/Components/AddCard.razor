@@ -3,19 +3,24 @@
         <div class="progress" style="width: @(StepProgress + "%");"></div>
     </div>
 
-    <section>
-        @if (SelectedHeaderButton == 0)
+    <section style="overflow: scroll">
+        @switch (SelectedHeaderButton)
         {
-            <AddIdea CurrentStep="@CurrentStep"
-                     EditContext="@editContext"
-                     Idea="@Idea"
-                     UploadedFiles="@UploadedFiles"
-                     OnFilesChanged="@OnFilesChanged"
-                     OnUploadStatusChanged="@OnUploadStatusChanged" />
-        }
-        else
-        {
-            <AddDonation CurrentStep="@CurrentStep" />
+            case 0:
+                <AddIdea 
+                CurrentStep="@CurrentStep"
+                EditContext="@editContext"
+                Idea="@Idea"
+                UploadedFiles="@UploadedFiles"
+                OnFilesChanged="@OnFilesChanged"
+                OnUploadStatusChanged="@OnUploadStatusChanged" />
+                break;
+            case 1:
+                <AddDonation CurrentStep="@CurrentStep" OnComplete="@HandleComplete" />
+                break;
+            case 2:
+                <Sparc2.Pages.AddProduct CurrentStep="@CurrentStep" ProductId="prod_SW5yY8O8KprzFu" OnComplete="@HandleComplete" />
+                break;
         }
     </section>
 
@@ -42,8 +47,8 @@
         editContext = new EditContext(Idea);
     }
 
-    private string BackOrCancelLabel => CurrentStep == 0 ? "Cancel" : "Back";
-    private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : (SelectedHeaderButton == 0 ? "Post" : "Donate");
+    private string BackOrCancelLabel => CurrentStep == 0 ? "Cancel" : CurrentStep == 1 ? "Back" : "";
+    private string NextOrSubmitLabel => CurrentStep == 0 ? "Next" : SelectedHeaderButton == 0 ? "Post" : SelectedHeaderButton == 1 ? "Donate" : "Pay";
 
     private async Task OnNextOrSubmit()
     {
@@ -61,8 +66,10 @@
         {
             if (SelectedHeaderButton == 0)
                 await SubmitIdea();
-            else
+            else if (SelectedHeaderButton == 1)
                 await SubmitDonation();
+            else
+                await SubmitProduct();
         }
     }
 
@@ -78,6 +85,11 @@
         }
     }
 
+    private async Task HandleComplete()
+    {
+        await OnClose.InvokeAsync(true);
+    }
+
     private void OnUploadStatusChanged(bool uploading)
     {
         IsUploading = uploading;
@@ -91,6 +103,11 @@
     }
 
     private Task SubmitDonation()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task SubmitProduct()
     {
         return Task.CompletedTask;
     }

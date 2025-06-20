@@ -60,6 +60,10 @@
     "inputFile": "Donations/AddDonation.razor.scss"
   },
   {
+    "outputFile": "Pages/AddProduct.razor.css",
+    "inputFile": "Pages/AddProduct.razor.scss"
+  },
+  {
     "outputFile": "Shared/Components/Breadcrumbs.razor.css",
     "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
   },
