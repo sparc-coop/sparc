@@ -3,7 +3,7 @@ function initCatalog(dotnetReference) {
     document.addEventListener('mouseover', (e) => {
         var t = e.target;
 
-        if (t.closest(".product-card") || t.closest(".card-overlay")) {
+        if (t.closest(".product")) {
             console.log("hovered on product card: " + t.getAttribute("data-id"));
             productId = t.getAttribute("data-id");
             hoverProduct(dotnetReference);
@@ -13,7 +13,7 @@ function initCatalog(dotnetReference) {
     document.addEventListener('click', (e) => {
         var t = e.target;
 
-        if (t.closest(".product-card") || t.closest(".card-overlay")) {
+        if (t.closest(".product")) {
             console.log("clicked on product card: " + t.getAttribute("data-id"));
             productId = t.getAttribute("data-id");
             selectProduct(dotnetReference);

@@ -6,9 +6,9 @@
         <div class="left">
             @foreach (var app in Products)
             {
-                <div class=" product-card" data-id="@app.Id">
-                    <div class="card-overlay" data-id="@app.Id"></div>
-                    <div class="title">@app.Title</div>
+                <div class="product product-card" data-id="@app.Id">
+                    <div class="product card-overlay" data-id="@app.Id"></div>
+                    <div class="product title" data-id="@app.Id">@app.Title</div>
                 </div>
             }
         </div>

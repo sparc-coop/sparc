@@ -14,6 +14,7 @@ article .left {
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   overflow-y: auto;
+  padding-bottom: 32px;
 }
 article .left .product-card {
   width: calc(100% - 32px);
@@ -25,6 +26,7 @@ article .left .product-card {
   align-items: center;
   position: relative;
   text-align: center;
+  cursor: pointer;
 }
 article .left .product-card .card-overlay {
   width: 100%;
@@ -67,13 +69,14 @@ article .left .product-card:nth-of-type(4n) {
   color: var(--orange-50);
 }
 article .right {
-  height: calc(100vh - 128px);
+  height: calc(100vh - 144px);
   padding: 16px;
+  padding-bottom: 32px;
   position: relative;
 }
 article .right .container {
   width: 598px;
-  height: calc(100vh - 128px);
+  height: calc(100vh - 144px);
   position: fixed;
   overflow-y: auto;
   top: 112px;
