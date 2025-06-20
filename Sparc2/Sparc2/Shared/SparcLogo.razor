@@ -1,11 +1,24 @@
 ﻿<figure class="logo" @onclick="GoHome">
-    <Logo />    
-    <figcaption>
+    @if (LogoOnly) 
+    {
         <LogoText />
-    </figcaption>
+    } else if (TextOnly) 
+    {
+        <LogoText />
+    } 
+    else 
+    {
+        <Logo />
+        <figcaption>
+            <LogoText />
+        </figcaption>
+    }
 </figure>
 
 @code {
+    [Parameter] public bool TextOnly { get; set; } = false;
+    [Parameter] public bool LogoOnly { get; set; } = false;
+
     void GoHome()
     {
         Nav.NavigateTo("/");

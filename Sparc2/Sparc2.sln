@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom", "..\..\blos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Cloud", "..\..\blossom\Sparc.Blossom.Cloud\Sparc.Blossom.Cloud.csproj", "{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Cosmos", "..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj", "{9D293A5D-6B48-DB01-5C62-4FED86572FB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{1D36F260-8AB1-586E-1AFB-66E7AD0A25A4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{325F6838-D997-B057-028D-166902C585F6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A8903FBD-A178-DB80-57EE-7A4D4DDDFE32} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9D293A5D-6B48-DB01-5C62-4FED86572FB0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE37A5-99D0-4C05-A3CD-36A058394C96}

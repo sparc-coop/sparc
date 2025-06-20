@@ -1,0 +1,1 @@
+﻿main{width:100vw;height:calc(100vh - 80px);display:flex;justify-content:center;margin-top:80px;padding-top:16px;font-family:"elza-text",sans-serif;}main .grid{display:grid;grid-template-columns:repeat(12,80px);column-gap:20px;}

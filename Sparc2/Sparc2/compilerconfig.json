@@ -16,8 +16,8 @@
     "inputFile": "Shared/MainLayout.razor.scss"
   },
   {
-    "outputFile": "Shared/PageLayout.razor.css",
-    "inputFile": "Shared/PageLayout.razor.scss"
+    "outputFile": "Shared/IdeasLayout.razor.css",
+    "inputFile": "Shared/IdeasLayout.razor.scss"
   },
   {
     "outputFile": "Shared/NavMenu.razor.css",
@@ -82,5 +82,17 @@
   {
     "outputFile": "Shared/Components/ProfileCircle.razor.css",
     "inputFile": "Shared/Components/ProfileCircle.razor.scss"
+  },
+  {
+    "outputFile": "Shared/CatalogLayout.razor.css",
+    "inputFile": "Shared/CatalogLayout.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Catalog.razor.css",
+    "inputFile": "Catalog/Catalog.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPage.razor.css",
+    "inputFile": "Catalog/ProductPage.razor.scss"
   }
 ]

@@ -1,0 +1,151 @@
+﻿@page "/catalog"
+@layout CatalogLayout
+
+<article id="catalog" class="catalog">
+    <div class="page-container">
+        <div class="left">
+            @foreach (var app in Products)
+            {
+                <div class=" product-card" data-id="@app.Id">
+                    <div class="card-overlay" data-id="@app.Id"></div>
+                    <div class="title">@app.Title</div>
+                </div>
+            }
+        </div>
+        <div class="right">
+            @if (activeProduct != null)
+            {
+                <div class="container">
+                    <div class="product-info">
+                        <header>
+                            <h3>@activeProduct.Title</h3>
+                            <div class="subheader product-tags">
+                                @foreach (var tag in activeProduct.Tags)
+                                {
+                                    var color = TagColor(tag.Type);
+                                    <div class="tag product-tag @color">@tag.Name</div>
+                                }
+                            </div>
+                        </header>
+                        <section class="description">
+                            <p>@activeProduct.Description</p>
+                        </section>
+                        <footer>
+                            <div class="price">
+                                <span>Price: $@activeProduct.Price.ToString()</span>
+                            </div>
+                            <div class="credits">
+                                <h4>Credit +</h4>
+                                <div>
+                                    <p>Vitae pellentesque | Position Title</p>
+                                    <p>Sem placerat | Position Title</p>
+                                    <p>Accumsan maecenas | Position Title</p>
+                                    <p>Vestibulum fusce | Position Title</p>
+                                    <p>Dictum risus | Position Title</p>
+                                    <p>Suspendisse aliquet | Position Title</p>
+                                </div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            } else
+            {
+                <div class="container">
+                    <div class="product-info">
+                        <header>
+                            <h3>Select a product</h3>
+                            <p>Hover over each product image to view more details</p>
+                        </header>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</article>
+
+@code {
+    IEnumerable<Product> Products = new List<Product>();
+    Product activeProduct;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProductService.OnProductsChanged += UpdateProducts;
+        var allProducts = await Api.Products.GetAllProducts();
+
+        Products = allProducts;
+        if (Products != null)
+        {
+            activeProduct = Products.FirstOrDefault();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("initCatalog", DotNetObjectReference.Create(this));
+        }
+    }
+
+    private async Task UpdateProducts()
+    {
+        var allProducts = await Api.Products.GetAllProducts();
+        var latest = allProducts.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        // if (latest != null)
+        // {
+        //     var list = allProducts.Where(i => i.Id != latest.Id).ToList();
+        //     int middleIndex = list.Count / 2;
+        //     list.Insert(middleIndex, latest);
+        //     Products = list;
+        //     LatestProduct = latest;
+        // }
+        // else
+        // {
+        //     Products = allProducts;
+        // }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ProductService.OnProductsChanged -= UpdateProducts;
+    }
+
+    string TagColor(string tag)
+    {
+        var color = tag switch
+        {
+            "development" => "purple",
+            "testing" => "orange",
+            "gift" => "gradient",
+            "archived" => "grey",
+            "owned" => "blue",
+            _ => "default"
+        };
+
+        return color;
+    }
+
+    [JSInvokable("OnHoverProduct")]
+    public void OnHoverProduct(string id)
+    {
+        if (Products != null && Products.Any())
+        {
+            activeProduct = Products.FirstOrDefault(p => p.Id == id);
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable("OnSelectProduct")]
+    public void OnSelectProduct(string id)
+    {
+        if (Products != null && Products.Any())
+        {
+            activeProduct = Products.FirstOrDefault(p => p.Id == id);
+            StateHasChanged();
+        }
+
+        Nav.NavigateTo($"/catalog/{id}");
+    }
+}

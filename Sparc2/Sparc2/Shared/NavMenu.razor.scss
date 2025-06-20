@@ -1,13 +1,23 @@
 ﻿nav {
-    width: calc(100% - 200px);
+    width: calc(100% - 64px);
     position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
     margin: 32px 100px;
-    background: linear-gradient(to bottom, white 0%, white 45%, transparent 45%, transparent 100%);
+    //background: linear-gradient(to bottom, white 0%, white 45%, transparent 45%, transparent 100%);
+
+    &.home-nav {
+        display: flex;
+        align-items: center;
+        height: 48px;
+        margin: 0;
+        padding: 16px 32px;
+        background: white;
+    }
 
     .container {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -16,13 +26,15 @@
 
     .right {
         display: flex;
-        gap: 4px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 32px;
 
-        div {
+        .account-btn {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px 8px 4px;
 
             ::deep svg path {
                 stroke: var(--purple-800);
@@ -43,27 +55,45 @@
                 letter-spacing: 0.5px;
 
                 &:hover {
+                    color: var(--purple-500);
                     text-decoration: underline;
+                }
+
+                &:active {
+                    color: var(--purple-800);
                 }
             }
         }
     }
+}
 
-    button {
-        padding: 8px 16px 8px 14px;
-        background: transparent;
+button {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color: var(--purple-800);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 120%;
+    letter-spacing: -0.14px;
+    cursor: pointer;
+    transition: .2s all ease-in-out;
+
+    ::deep svg path {
+        stroke: #FFFCF6;
+    }
+
+    &.secondary-btn {
+        padding: 0 !important;
         border: 1px solid transparent;
-        border-radius: 20px;
-        color: var(--purple-800);
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 120%;
-        letter-spacing: -0.14px;
-        cursor: pointer;
-        transition: .2s all ease-in-out;
 
-        ::deep svg path {
-            stroke: #FFFCF6;
+        &:hover {
+            color: var(--purple-500);
+            text-decoration: underline;
+        }
+
+        &:active {
+            color: var(--purple-800);
         }
     }
 }
@@ -80,6 +110,10 @@
 
     .left {
         button {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px 8px 14px;
+
             > svg {
                 width: 14px;
                 height: 14px;

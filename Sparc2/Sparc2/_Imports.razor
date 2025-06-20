@@ -14,10 +14,14 @@
 @using Sparc2.Donations
 @using Sparc2.Files
 @using Sparc2.Ideas
+@using Sparc2.Products
 @using Sparc.Blossom.Api
 @using Idea = Sparc.Blossom.Api.ProjectIdea
 @using File = Sparc.Blossom.Api.FileUpload
+@using Product = Sparc.Blossom.Api.Product
 
 @inject NavigationManager Nav
 @inject BlossomApi Api
 @inject IdeaService IdeaService
+@inject ProductService ProductService
+@inject IJSRuntime Js

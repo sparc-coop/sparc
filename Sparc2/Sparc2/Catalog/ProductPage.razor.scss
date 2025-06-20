@@ -1,0 +1,124 @@
+article {
+    grid-column: 1 / span 12;
+
+    .page-container {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+
+        > * {
+            width: 50%;
+        }
+    }
+
+    .left {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .right {
+        height: calc(100vh - 128px);
+        padding: 16px;
+        position: relative;
+
+        .container {
+            width: 598px;
+            height: calc(100vh - 128px);
+            position: fixed;
+            overflow-y: auto;
+            top: 112px;
+            left: calc(50% + 16px);
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            width: calc(100% - 32px);
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            h3 {
+                font-size: 5.052rem;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 110%; /* 55.572px */
+                color: var(--purple-700);
+            }
+        }
+
+        .product-tags {
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+
+            > * {
+                display: flex;
+                height: 36px;
+                padding: 0 10px;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                border-radius: 40px;
+                font-family: "Fjalla One";
+                font-size: 1.5rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; /* 21px */
+                letter-spacing: -0.15px;
+                color: white;
+
+                &.purple {
+                    background: var(--purple-300);
+                }
+
+                &.orange {
+                    background: var(--orange-400);
+                }
+
+                &.blue {
+                    background: var(--blue);
+                }
+
+                &.grey {
+                    background: var(--gray-200);
+                }
+            }
+        }
+    }
+
+    .description {
+        p {
+            font-family: "elza-text", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%; /* 22.4px */
+            color: var(--Color-Purple-900, #1A0C32);
+        }
+    }
+
+    footer {
+        h4, p, span {
+            font-family: "Fjalla One";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%; /* 22.4px */
+            color: var(--purple-800);
+        }
+
+        .price {
+            margin-bottom: 16px;
+        }
+
+        h4 {
+            margin-bottom: 16px;
+        }
+    }
+}
