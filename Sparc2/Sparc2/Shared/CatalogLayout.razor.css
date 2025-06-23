@@ -6,9 +6,19 @@
   margin-top: 80px;
   padding-top: 16px;
   font-family: "elza-text", sans-serif;
+  animation: fadeIn 2s ease-in-out;
 }
 main .grid {
   display: grid;
   grid-template-columns: repeat(12, 80px);
   column-gap: 20px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

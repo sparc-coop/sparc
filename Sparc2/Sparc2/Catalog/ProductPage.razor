@@ -4,61 +4,51 @@
 <article class="product-page">
     <div class="page-container">
         <div class="left">
-            <div id="img-1" class="product-img span-1"></div>
-            <div id="img-2" class="product-img span-1"></div>
-            <div class="img-container span-2">
-                <div id="img-3" class="product-img"></div>
-                <div id="img-4" class="product-img"></div>
-            </div>
-            <div id="img-5" class="product-img img-5 span-1"></div>
-        </div>
-        <div class="right">
-            @if (activeProduct != null)
+            @if (ActiveProduct.FileUrls.Count > 1)
             {
-                <div class="container">
-                    <div class="product-info">
-                        <header>
-                            <h3>@activeProduct.Title</h3>
-                            <div class="subheader product-tags">
-                                @foreach (var tag in activeProduct.Tags)
-                                {
-                                    var color = TagColor(tag.Type);
-                                    <div class="tag product-tag @color">@tag.Name</div>
-                                }
-                            </div>
-                        </header>
-                        <section class="description">
-                            <p>@activeProduct.Description</p>
-                        </section>
-                        <footer>
-                            <div class="price">
-                                <span>Price: $@activeProduct.Price.ToString()</span>
-                            </div>
-                            <div class="credits">
-                                <h4>Credit +</h4>
-                                <div>
-                                    <p>Vitae pellentesque | Position Title</p>
-                                    <p>Sem placerat | Position Title</p>
-                                    <p>Accumsan maecenas | Position Title</p>
-                                    <p>Vestibulum fusce | Position Title</p>
-                                    <p>Dictum risus | Position Title</p>
-                                    <p>Suspendisse aliquet | Position Title</p>
-                                </div>
-                            </div>
-                        </footer>
-                    </div>
+                <div id="img-1" class="product-img span-1"></div>
+                <div id="img-2" class="product-img span-1"></div>
+                <div class="img-container span-2">
+                    <div id="img-3" class="product-img"></div>
+                    <div id="img-4" class="product-img"></div>
                 </div>
+                <div id="img-5" class="product-img img-5 span-1"></div>
+
+            } else if (ActiveProduct.FileUrls.Count == 5)
+            {
+                <div id="img-1" class="product-img span-1"></div>
+                <div id="img-2" class="product-img span-1"></div>
+                <div class="img-container span-2">
+                    <div id="img-3" class="product-img"></div>
+                    <div id="img-4" class="product-img"></div>
+                </div>
+                <div id="img-5" class="product-img img-5 span-1"></div>
             } else
             {
-                <div class="container">
+                foreach (var file in ActiveProduct.FileUrls)
+                {
+                    <div id="img-@file"class="product-img span-1"></div>
+                }
+            }
+        </div>
+        <div class="right">
+            <div class="container">
+                <div class="right-header">
+                    <button @onclick='() => Nav.NavigateTo("/catalog")'><ArrowLeftIcon /></button>
+                </div>
+                @if (ActiveProduct != null)
+                {
+                    <ProductInfo ActiveProduct="ActiveProduct" />
+                } else
+                {
                     <div class="product-info">
                         <header>
                             <h3>Select a product</h3>
                             <p>Hover over each product image to view more details</p>
                         </header>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </article>
@@ -67,7 +57,7 @@
     [Parameter] public string? ProductId { get; set; }
 
     IEnumerable<Product> Products = new List<Product>();
-    Product? activeProduct;
+    Product? ActiveProduct;
 
     protected override async Task OnInitializedAsync()
     {
@@ -77,11 +67,11 @@
         Products = allProducts;
         if (Products != null)
         {
-            activeProduct = Products.FirstOrDefault(x => x.Id == ProductId);
+            ActiveProduct = Products.FirstOrDefault(x => x.Id == ProductId);
 
-            if (activeProduct == null)
+            if (ActiveProduct == null)
             {
-                activeProduct = Products.FirstOrDefault();
+                ActiveProduct = Products.FirstOrDefault();
             }
         }
     }
@@ -104,20 +94,5 @@
         //     Products = allProducts;
         // }
         StateHasChanged();
-    }
-
-    string TagColor(string tag)
-    {
-        var color = tag switch
-        {
-            "development" => "purple",
-            "testing" => "orange",
-            "gift" => "gradient",
-            "archived" => "grey",
-            "owned" => "blue",
-            _ => "default"
-        };
-
-        return color;
     }
 }

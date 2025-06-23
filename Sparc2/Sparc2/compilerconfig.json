@@ -94,5 +94,9 @@
   {
     "outputFile": "Catalog/ProductPage.razor.css",
     "inputFile": "Catalog/ProductPage.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductInfo.razor.css",
+    "inputFile": "Catalog/ProductInfo.razor.scss"
   }
 ]

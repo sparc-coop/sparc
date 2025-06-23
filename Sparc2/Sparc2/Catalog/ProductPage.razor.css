@@ -42,6 +42,23 @@ article .right {
   padding: 16px;
   position: relative;
 }
+article .right-header button {
+  background: none;
+}
+article .right-header button ::deep svg {
+  width: 22px;
+  height: auto;
+}
+article .right-header button ::deep svg path {
+  stroke: black;
+  transition: 0.2s ease-in-out;
+}
+article .right-header button:hover ::deep svg path {
+  stroke: var(--purple-500);
+}
+article .right-header button:active ::deep svg path {
+  stroke: var(--purple-700);
+}
 article .right .container {
   width: 598px;
   height: calc(100vh - 128px);
@@ -49,6 +66,9 @@ article .right .container {
   overflow-y: auto;
   top: 112px;
   left: calc(50% + 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 article .right .product-info {
   display: flex;

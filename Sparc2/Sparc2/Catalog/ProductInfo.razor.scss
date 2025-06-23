@@ -1,0 +1,183 @@
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: calc(100% - 32px);
+
+    header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        div:first-child {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        h3 {
+            font-size: 5.052rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 110%; /* 55.572px */
+            color: var(--purple-700);
+        }
+
+        .price {
+            width: fit-content;
+            font-family: "elza-text", sans-serif;
+            font-size: 21.33px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 110%; /* 23.463px */
+            color: var(--purple-400);
+        }
+    }
+
+    .product-tags {
+        display: flex;
+        flex-direction: row;
+        gap: 4px;
+
+        > * {
+            display: flex;
+            height: 36px;
+            padding: 0 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 40px;
+            font-family: "Fjalla One";
+            font-size: 1.5rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%; /* 21px */
+            letter-spacing: -0.15px;
+            color: white;
+
+            &.purple {
+                background: var(--purple-300);
+            }
+
+            &.orange {
+                background: var(--orange-400);
+            }
+
+            &.blue {
+                background: var(--blue);
+            }
+
+            &.grey {
+                background: var(--gray-200);
+            }
+        }
+    }
+
+
+    .description {
+        p {
+            font-family: "elza-text", sans-serif;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%; /* 22.4px */
+            color: var(--Color-Purple-900, #1A0C32);
+        }
+    }
+
+    footer {
+        .credits {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            h4, p, span {
+                font-family: "Fjalla One";
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; /* 22.4px */
+                color: var(--purple-800);
+            }
+
+            h4 {
+                display: flex;
+                flex-direction: row;
+                justify-content: start;
+                align-items: center;
+            }
+
+            button {
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                background: none;
+
+                &.rotate {
+                    animation: rotateClockwise 1.5s ease-in-out;
+                }
+
+                &.rotateBack {
+                    animation: rotateCounterClockwise 1.5s ease-in-out;
+                }
+            }
+
+            div:last-child {
+                //overflow: hidden;
+                //max-height: 0;
+                //transition: max-height 2s ease-in-out;
+                opacity: 0;
+                animation: fadeOut 1.5s ease-out;
+
+                &.show {
+                    //max-height: 300px;
+                    //transition: max-height 2s ease-in-out;
+                    opacity: 1;
+                    animation: fadeIn 1.5s ease-in;
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes rotateClockwise {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes rotateCounterClockwise {
+    0% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}

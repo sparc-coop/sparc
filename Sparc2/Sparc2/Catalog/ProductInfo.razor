@@ -1,0 +1,68 @@
+﻿<div class="product-info">
+    <header>
+        <div>
+            <h3>@ActiveProduct.Title</h3>
+            <div class="price">
+                <span>$@ActiveProduct.Price.ToString()</span>
+            </div>
+        </div>
+        <div class="subheader product-tags">
+            @foreach (var tag in ActiveProduct.Tags)
+            {
+                var color = TagColor(tag.Type);
+                <div class="tag product-tag @color">@tag.Name</div>
+            }
+        </div>
+    </header>
+    <section class="description">
+        <p>@ActiveProduct.Description</p>
+    </section>
+    <footer>
+        <div class="credits">
+            <h4>Credits <button class="@creditsClass" @onclick=ToggleCredits>+</button></h4>
+            <div class="creditsClass">
+                <p>Vitae pellentesque | Position Title</p>
+                <p>Sem placerat | Position Title</p>
+                <p>Accumsan maecenas | Position Title</p>
+                <p>Vestibulum fusce | Position Title</p>
+                <p>Dictum risus | Position Title</p>
+                <p>Suspendisse aliquet | Position Title</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+@code {
+    [Parameter] public Product? ActiveProduct { get; set; }
+
+    bool showCredits; 
+    string creditsClass = "";
+
+    string TagColor(string tag)
+    {
+        var color = tag switch
+        {
+            "development" => "purple",
+            "testing" => "orange",
+            "gift" => "gradient",
+            "archived" => "grey",
+            "owned" => "blue",
+            _ => "default"
+        };
+
+        return color;
+    }
+
+    void ToggleCredits()
+    {
+        showCredits = !showCredits;
+
+        if (showCredits == true)
+        {
+            creditsClass = "rotate";
+        } else
+        {
+            creditsClass = "rotateBack";
+        }
+    }
+}

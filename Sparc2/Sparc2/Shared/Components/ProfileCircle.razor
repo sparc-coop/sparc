@@ -143,7 +143,7 @@
 
     private async Task VerifyCode()
     {
-        var success = await BlossomCloud.VerifyEmailOrPhoneCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        var success = await BlossomCloud.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
 
         if (success)
         {
