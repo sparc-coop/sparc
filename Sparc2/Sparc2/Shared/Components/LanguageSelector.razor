@@ -3,8 +3,67 @@
 @using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Content
 @using Sparc.Blossom.Content.Icons
+@using Microsoft.AspNetCore.Components.Forms
 
-<div class="language-selector">
+<div class="language-select">
+    @if (Languages is not null && SelectedLanguageId is not null)
+    {
+        <InputSelect @bind-Value="SelectedLanguageId">
+            @foreach (var language in Languages)
+            {
+                <option value="@language.Id">@language.DisplayName (@language.NativeName)</option>
+            }
+        </InputSelect>
+    }
+</div>
+
+@inject IBlossomCloud Cloud
+
+@code {
+    [Parameter] public BlossomUser? CurrentUser { get; set; }
+    // [Parameter] public string? SelectedLanguageId { get; set; }
+    [Parameter] public EventCallback<string?> SelectedLanguageIdChanged { get; set; }
+    private string? internalSelectedLanguageId;
+
+    [Parameter]
+    public string? SelectedLanguageId
+    {
+        get => internalSelectedLanguageId;
+        set
+        {
+            if (internalSelectedLanguageId != value)
+            {
+                internalSelectedLanguageId = value;
+                SelectedLanguageIdChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    private IEnumerable<Sparc.Blossom.Content.Language>? Languages { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Languages = await Cloud.GetLanguages();
+
+        if (string.IsNullOrWhiteSpace(SelectedLanguageId))
+        {
+            var inferred = CurrentUser?.PrimaryLanguage?.Id
+                ?? Languages.FirstOrDefault(l => l.Id == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)?.Id;
+
+            if (!string.IsNullOrWhiteSpace(inferred))
+            {
+                SelectedLanguageId = inferred;
+                await SelectedLanguageIdChanged.InvokeAsync(SelectedLanguageId);
+            }
+        }
+    }
+}
+
+
+
+@* Fernando's code: *@
+
+@* <div class="language-selector">
     <button @onclick=ToggleLanguageList>
         <Sparc2.Shared.Icons.Language />
         @SelectedLanguage?.DisplayName
@@ -39,7 +98,6 @@
 </div>
 
 @inject IBlossomCloud Cloud
-@* @inject IBlossomAuthenticator Auth *@
 
 @code {
     [Parameter] public BlossomUser? CurrentUser { get; set; }
@@ -68,4 +126,4 @@
         ToggleLanguageList();
         StateHasChanged();
     }
-}
+} *@

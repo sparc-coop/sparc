@@ -14,13 +14,16 @@
         <button title="Phone Number" class="bottom" @onclick="@(() => OnShowModal("Phone"))">
             <img src="images/phone.png" alt="Phone Icon" />
         </button>
+        <button title="Language" class="top-left" @onclick="@(() => OnShowModal("Language"))">
+            <img src="images/language.png" alt="Language Icon" />
+        </button>
     }
 </div>
 
 @if (ShowModal)
 {
     <div class="modal-overlay">
-        <div class="modal">
+        <div class="modal @(InfoType == "Language" ? "language-modal" : "")">
             @if (InfoType == "Email")
             {
                 <header>
@@ -28,10 +31,10 @@
                 </header>
                 <div>
                     <InputText @bind-Value="Email" />
-                    <label>
+                    @* <label>
                         <InputCheckbox @bind-Value="VerifyEmail" />
                         <span>Verify this email</span>
-                    </label>
+                    </label> *@
                 </div>
             }
             else if (InfoType == "Phone")
@@ -41,10 +44,21 @@
                 </header>
                 <div>
                     <InputText @bind-Value="PhoneNumber" />
-                    <label>
+                    @* <label>
                         <InputCheckbox @bind-Value="VerifyPhone" />
                         <span>Verify this phone number</span>
-                    </label>
+                    </label> *@
+                </div>
+            }
+            else if (InfoType == "Language")
+            {
+                <header>
+                    <h3>Language:</h3>
+                </header>
+                <div>
+                    <LanguageSelector CurrentUser="CurrentUser"
+                                      SelectedLanguageId="@SelectedLanguageId"
+                                      SelectedLanguageIdChanged="OnLanguageChanged" />
                 </div>
             }
             <footer>
@@ -81,6 +95,7 @@
 @code {
     [Parameter] public string ProfileImageUrl { get; set; } = "images/puppy.jpg";
     BlossomUser? CurrentUser;
+    private string? SelectedLanguageId { get; set; }
 
     private bool IsHovered = false;
     private bool ShowModal = false;
@@ -150,6 +165,21 @@
             request = request with { PhoneNumber = PhoneNumber, RequirePhoneVerification = VerifyPhone };
             CurrentVerificationDestination = PhoneNumber;
         }
+        else if (InfoType == "Language")
+        {
+            Console.WriteLine($"SelectedLanguageId: {SelectedLanguageId}");
+
+            if (SelectedLanguageId is not null)
+            {
+                var languages = await BlossomCloud.GetLanguages();
+                var language = languages.FirstOrDefault(l => l.Id == SelectedLanguageId);
+
+                if (language is not null)
+                {
+                    await BlossomCloud.AddUserLanguage(language);
+                }
+            }
+        }
 
         await BlossomCloud.UpdateUser(request);
 
@@ -192,6 +222,12 @@
         ShowVerificationModal = false;
         VerificationCode = "";
         VerificationError = "";
+    }
+
+    private void OnLanguageChanged(string? languageId)
+    {
+        Console.WriteLine($"Selected language: {languageId}");
+        SelectedLanguageId = languageId;
     }
 }
 

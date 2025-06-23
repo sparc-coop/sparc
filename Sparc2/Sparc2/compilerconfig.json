@@ -86,5 +86,9 @@
   {
     "outputFile": "Shared/Components/ProfileCircle.razor.css",
     "inputFile": "Shared/Components/ProfileCircle.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/LanguageSelector.razor.css",
+    "inputFile": "Shared/Components/LanguageSelector.razor.scss"
   }
 ]

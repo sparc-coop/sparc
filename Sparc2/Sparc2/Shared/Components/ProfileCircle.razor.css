@@ -46,13 +46,18 @@
   filter: brightness(0) invert(1);
 }
 .user-profile-container button.top {
-  top: 30px;
+  top: 50px;
   left: -5%;
   transform: translateX(-50%);
 }
 .user-profile-container button.bottom {
   bottom: -20px;
   left: 50%;
+  transform: translateX(-50%);
+}
+.user-profile-container button.top-left {
+  top: 10px;
+  left: -5%;
   transform: translateX(-50%);
 }
 
@@ -66,6 +71,9 @@
   border-radius: 16px;
   background: var(--yellow-50);
   animation: fadeIn 1s ease-in-out;
+}
+.modal.language-modal {
+  top: 44%;
 }
 .modal header {
   margin-bottom: 16px;
