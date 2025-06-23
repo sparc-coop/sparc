@@ -12,9 +12,37 @@ article {
     }
 
     .left {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
         gap: 16px;
+        padding-bottom: 32px;
+
+        > * {
+            width: 100%;
+        }
+
+        .product-img {
+            width: 100%;
+            height: auto;
+            background: var(--yellow-200);
+            border-radius: 16px;
+
+            &.span-1 {
+                aspect-ratio: 4 / 3;
+            }
+        }
+
+        .span-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+
+            .product-img {
+                aspect-ratio: 1 / 1;
+            }
+        }
     }
 
     .right {

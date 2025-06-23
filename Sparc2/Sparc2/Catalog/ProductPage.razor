@@ -4,13 +4,13 @@
 <article class="product-page">
     <div class="page-container">
         <div class="left">
-            @* @foreach (var app in Products)
-            {
-                <div class=" product-card" data-id="@app.Id">
-                    <div class="card-overlay" data-id="@app.Id"></div>
-                    <div class="title">@app.Title</div>
-                </div>
-            } *@
+            <div id="img-1" class="product-img span-1"></div>
+            <div id="img-2" class="product-img span-1"></div>
+            <div class="img-container span-2">
+                <div id="img-3" class="product-img"></div>
+                <div id="img-4" class="product-img"></div>
+            </div>
+            <div id="img-5" class="product-img img-5 span-1"></div>
         </div>
         <div class="right">
             @if (activeProduct != null)
