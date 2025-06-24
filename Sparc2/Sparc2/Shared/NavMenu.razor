@@ -24,7 +24,7 @@
             </div>
             <div class="right">
                 @* <Auth /> *@
-                <ProfileCircle />
+                <UserProfile />
                 @if (CurrentUser is not null)
                 {
                     <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
@@ -49,7 +49,7 @@
         }
     </div>
 </nav>
-<Auth />
+@* <Auth /> *@
 
 @inject IJSRuntime Js
 

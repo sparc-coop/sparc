@@ -1,0 +1,12 @@
+﻿@using Sparc.Blossom.Authentication
+
+<LanguageSelector CurrentUser="CurrentUser"
+                  SelectedLanguageId="SelectedLanguageId"
+                  SelectedLanguageIdChanged="SelectedLanguageIdChanged" />
+
+@code {
+    [Parameter] public BlossomUser? CurrentUser { get; set; }
+    [Parameter] public string? SelectedLanguageId { get; set; }
+    [Parameter] public EventCallback<string?> SelectedLanguageIdChanged { get; set; }
+}
+

@@ -90,5 +90,37 @@
   {
     "outputFile": "Shared/Components/LanguageSelector.razor.css",
     "inputFile": "Shared/Components/LanguageSelector.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/Modal.razor.css",
+    "inputFile": "Shared/Components/Modal.razor.scss"
+  },
+  {
+    "outputFile": "Profile/EditEmail.razor.css",
+    "inputFile": "Profile/EditEmail.razor.scss"
+  },
+  {
+    "outputFile": "Profile/EditLanguage.razor.css",
+    "inputFile": "Profile/EditLanguage.razor.scss"
+  },
+  {
+    "outputFile": "Profile/EditPhoneNumber.razor.css",
+    "inputFile": "Profile/EditPhoneNumber.razor.scss"
+  },
+  {
+    "outputFile": "Profile/Avatar/EditAvatar.razor.css",
+    "inputFile": "Profile/Avatar/EditAvatar.razor.scss"
+  },
+  {
+    "outputFile": "Profile/Avatar/ColorSelector.razor.css",
+    "inputFile": "Profile/Avatar/ColorSelector.razor.scss"
+  },
+  {
+    "outputFile": "Profile/Avatar/EmojiSelector.razor.css",
+    "inputFile": "Profile/Avatar/EmojiSelector.razor.scss"
+  },
+  {
+    "outputFile": "Profile/Verification.razor.css",
+    "inputFile": "Profile/Verification.razor.scss"
   }
 ]

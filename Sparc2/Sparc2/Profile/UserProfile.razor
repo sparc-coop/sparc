@@ -1,0 +1,260 @@
+﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
+
+<div class="user-profile-container" @onmouseover="() => IsHovered = true" @onmouseout="() => IsHovered = false">
+    <div class="profile-picture-wrapper @(IsOnline ? "online" : "")">
+        @if (!string.IsNullOrEmpty(CurrentUser?.Avatar.Emoji))
+        {
+            <div class="user-avatar">@CurrentUser.Avatar.Emoji</div>
+        }
+        else
+        {
+            <div class="user-avatar"
+                 style="background-color:@CurrentUser?.Avatar.BackgroundColor; color:@CurrentUser?.Avatar.ForegroundColor;">
+                @CurrentUser?.Avatar.Initials
+            </div>
+        }
+    </div>
+
+    @if (IsHovered)
+    {
+        @foreach (var action in ModalActions)
+        {
+            <button title="@action.Title" class="@action.CssClass" @onclick="@(() => OnShowModal(action.Type))">
+                <img src="@action.Icon" alt="@action.Title Icon" />
+            </button>
+        }
+    }
+</div>
+
+@if (ShowModal)
+{
+    @switch (InfoType)
+    {
+        case "Email":
+            <Modal Title="Please enter your email:" OnClose="OnCancel" OnSave="OnSaveEmail">
+                <EditEmail @bind-Email="Email" @bind-VerifyEmail="VerifyEmail" />
+            </Modal>
+            break;
+        case "Phone":
+            <Modal Title="Please enter your phone number:" OnClose="OnCancel" OnSave="OnSavePhone">
+                <EditPhoneNumber @bind-PhoneNumber="PhoneNumber" @bind-VerifyPhone="VerifyPhone" />
+            </Modal>
+            break;
+        case "Language":
+            <Modal Title="Language:" CssClass="language-modal" OnClose="OnCancel" OnSave="OnSaveLanguage">
+                <EditLanguage CurrentUser="CurrentUser"
+                              SelectedLanguageId="SelectedLanguageId"
+                              SelectedLanguageIdChanged="OnLanguageChanged" />
+            </Modal>
+            break;
+        case "Avatar":
+            <Modal Title="Avatar:" OnClose="OnCancel" OnSave="OnSaveAvatar">
+                <Sparc2.Profile.Avatar.EditAvatar User="@EditableAvatar" OnEmojiChanged="OnAvatarChanged" />
+            </Modal>
+            break;
+    }
+}
+
+@if (ShowVerificationModal)
+{
+    <Verification CurrentVerificationDestination="@CurrentVerificationDestination"
+                  OnCancel="OnCancelVerification"
+                  OnVerify="VerifyCode" />
+}
+
+
+@code {
+    BlossomUser? CurrentUser;
+    private string? SelectedLanguageId { get; set; }
+
+    private bool IsHovered = false;
+    private bool ShowModal = false;
+    private string InfoType = string.Empty;
+
+    private string Email { get; set; }
+    private string PhoneNumber { get; set; }
+
+    private bool VerifyEmail = false;
+    private bool VerifyPhone = false;
+
+    private string VerificationCode { get; set; } = "";
+    private bool ShowVerificationModal = false;
+    private string CurrentVerificationDestination = "";
+    private string VerificationError = "";
+
+    private UserAvatar EditableAvatar = new("", "");
+
+    public bool IsOnline => CurrentUser is not null == true;
+    private record ModalAction(string Type, string Title, string Icon, string CssClass);
+    private List<ModalAction> ModalActions = new()
+    {
+        new("Email", "Email", "images/email.png", "top"),
+        new("Phone", "Phone Number", "images/phone.png", "bottom"),
+        new("Language", "Language", "images/language.png", "top-left"),
+        new("Avatar", "Avatar", "images/user.png", "bottom-right")
+    };
+
+
+    protected override async Task OnInitializedAsync() => await GetUserInfo();
+
+    private async Task GetUserInfo()
+    {
+        CurrentUser = await BlossomCloud.UserInfo();
+        Email = CurrentUser?.Email ?? "";
+        PhoneNumber = CurrentUser?.PhoneNumber ?? "";
+    }
+
+    private void OnShowModal(string type)
+    {
+        InfoType = type;
+
+        if (CurrentUser is not null)
+        {
+            if (type == "Email")
+            {
+                Email = CurrentUser.Email ?? "";
+                VerifyEmail = false;
+            }
+            else if (type == "Phone")
+            {
+                PhoneNumber = CurrentUser.PhoneNumber ?? "";
+                VerifyPhone = false;
+            }
+            else if (type == "Avatar" && CurrentUser is not null)
+            {
+                if (EditableAvatar is null)
+                    EditableAvatar = new("", "");
+
+                EditableAvatar.Name = CurrentUser.Avatar.Name;
+                EditableAvatar.BackgroundColor = CurrentUser.Avatar.BackgroundColor;
+                EditableAvatar.Pronouns = CurrentUser.Avatar.Pronouns;
+                EditableAvatar.Description = CurrentUser.Avatar.Description;
+                EditableAvatar.SkinTone = CurrentUser.Avatar.SkinTone;
+                EditableAvatar.Emoji = CurrentUser.Avatar.Emoji;
+                EditableAvatar.Gender = CurrentUser.Avatar.Gender;
+            }
+        }
+
+        ShowModal = true;
+    }
+
+    private void OnCancel()
+    {
+        ShowModal = false;
+        InfoType = string.Empty;
+        VerificationError = "";
+    }
+
+    private async Task OnSaveEmail()
+    {
+        var request = new UpdateUserRequest
+        {
+            Email = Email,
+            RequireEmailVerification = VerifyEmail
+        };
+        CurrentVerificationDestination = Email;
+        await BlossomCloud.UpdateUser(request);
+        ShowModal = false;
+        InfoType = string.Empty;
+        if (VerifyEmail)
+        {
+            VerificationCode = "";
+            VerificationError = "";
+            ShowVerificationModal = true;
+        }
+        await GetUserInfo();
+    }
+
+    private async Task OnSavePhone()
+    {
+        var request = new UpdateUserRequest
+        {
+            PhoneNumber = PhoneNumber,
+            RequirePhoneVerification = VerifyPhone
+        };
+        CurrentVerificationDestination = PhoneNumber;
+        await BlossomCloud.UpdateUser(request);
+        ShowModal = false;
+        InfoType = string.Empty;
+        if (VerifyPhone)
+        {
+            VerificationCode = "";
+            VerificationError = "";
+            ShowVerificationModal = true;
+        }
+        await GetUserInfo();
+    }
+
+    private async Task OnSaveLanguage()
+    {
+        if (SelectedLanguageId is not null)
+        {
+            var languages = await BlossomCloud.GetLanguages();
+            var language = languages.FirstOrDefault(l => l.Id == SelectedLanguageId);
+            if (language is not null)
+            {
+                await BlossomCloud.AddUserLanguage(language);
+            }
+        }
+        ShowModal = false;
+        InfoType = string.Empty;
+        await GetUserInfo();
+    }
+
+    private async Task OnSaveAvatar()
+    {
+        var avatarRequest = new UpdateAvatarRequest(
+             Name: EditableAvatar.Name,
+        BackgroundColor: EditableAvatar.BackgroundColor,
+        Pronouns: EditableAvatar.Pronouns,
+        Description: EditableAvatar.Description,
+        SkinTone: EditableAvatar.SkinTone,
+        Emoji: EditableAvatar.Emoji,
+        Gender: EditableAvatar.Gender
+        );
+        await BlossomCloud.UpdateAvatar(avatarRequest);
+
+        ShowModal = false;
+        InfoType = string.Empty;
+        await GetUserInfo();
+        Console.WriteLine("New Avatar (Editable): " + EditableAvatar.Emoji);
+        Console.WriteLine("Updated Avatar: " + CurrentUser?.Avatar?.Emoji + " - " + CurrentUser?.Avatar?.BackgroundColor);
+    }
+
+    private void OnAvatarChanged(string emoji)
+    {
+        EditableAvatar.Emoji = emoji;
+        Console.WriteLine("New Avatar (Editable): " + EditableAvatar.Emoji);
+    }
+
+    private async Task VerifyCode(string code)
+    {
+        VerificationCode = code;
+        var success = await BlossomCloud.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        if (success)
+        {
+            ShowVerificationModal = false;
+            VerificationError = "";
+            await GetUserInfo();
+            StateHasChanged();
+        }
+        else
+        {
+            VerificationError = "Invalid verification code. Please try again.";
+        }
+    }
+
+    private void OnLanguageChanged(string? languageId)
+    {
+        SelectedLanguageId = languageId;
+    }
+
+    private void OnCancelVerification()
+    {
+        ShowVerificationModal = false;
+        VerificationCode = "";
+        VerificationError = "";
+    }    
+}
+
