@@ -63,6 +63,7 @@
                   OnVerify="VerifyCode" />
 }
 
+@inject IJSRuntime Js
 
 @code {
     BlossomUser? CurrentUser;
@@ -105,9 +106,10 @@
         PhoneNumber = CurrentUser?.PhoneNumber ?? "";
     }
 
-    private void OnShowModal(string type)
+    private async Task OnShowModal(string type)
     {
         InfoType = type;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
 
         if (CurrentUser is not null)
         {
@@ -139,11 +141,12 @@
         ShowModal = true;
     }
 
-    private void OnCancel()
+    private async Task OnCancel()
     {
         ShowModal = false;
         InfoType = string.Empty;
         VerificationError = "";
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 
     private async Task OnSaveEmail()
@@ -250,11 +253,12 @@
         SelectedLanguageId = languageId;
     }
 
-    private void OnCancelVerification()
+    private async Task OnCancelVerification()
     {
         ShowVerificationModal = false;
         VerificationCode = "";
         VerificationError = "";
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }    
 }
 
