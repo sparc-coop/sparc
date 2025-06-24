@@ -36,6 +36,8 @@
 }
 .avatar-editor--container .account-details aside {
   color: var(--gray-600);
+  font-size: 1rem;
+  letter-spacing: 0.6px;
 }
 .avatar-editor--container .selector-wrapper {
   display: flex;

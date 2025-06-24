@@ -122,5 +122,9 @@
   {
     "outputFile": "Profile/Verification.razor.css",
     "inputFile": "Profile/Verification.razor.scss"
+  },
+  {
+    "outputFile": "Profile/UserProfile.razor.css",
+    "inputFile": "Profile/UserProfile.razor.scss"
   }
 ]

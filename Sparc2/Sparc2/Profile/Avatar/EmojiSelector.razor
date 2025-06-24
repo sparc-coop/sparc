@@ -35,8 +35,6 @@
     async Task SetEmoji(string emoji)
     {
         await EmojiChanged.InvokeAsync(emoji);
-        Console.WriteLine("Updated emoji: " + emoji);
-        Console.WriteLine("Emoji (local): " + Emoji);
     }
 
     async Task Leave(KeyboardEventArgs e)

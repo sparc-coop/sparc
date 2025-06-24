@@ -3,17 +3,17 @@
 
 <div class="user-profile-container" @onmouseover="() => IsHovered = true" @onmouseout="() => IsHovered = false">
     <div class="profile-picture-wrapper @(IsOnline ? "online" : "")">
-        @if (!string.IsNullOrEmpty(CurrentUser?.Avatar.Emoji))
-        {
-            <div class="user-avatar">@CurrentUser.Avatar.Emoji</div>
-        }
-        else
-        {
-            <div class="user-avatar"
-                 style="background-color:@CurrentUser?.Avatar.BackgroundColor; color:@CurrentUser?.Avatar.ForegroundColor;">
+        <div class="user-avatar"
+             style="background-color:@CurrentUser?.Avatar.BackgroundColor; color:@CurrentUser?.Avatar.ForegroundColor;">
+            @if (!string.IsNullOrEmpty(CurrentUser?.Avatar.Emoji))
+            {
+                @CurrentUser.Avatar.Emoji
+            }
+            else
+            {
                 @CurrentUser?.Avatar.Initials
-            </div>
-        }
+            }
+        </div>
     </div>
 
     @if (IsHovered)
@@ -104,6 +104,8 @@
         CurrentUser = await BlossomCloud.UserInfo();
         Email = CurrentUser?.Email ?? "";
         PhoneNumber = CurrentUser?.PhoneNumber ?? "";
+        Console.WriteLine("---------Current User Id: " + (CurrentUser?.Id ?? "No user loaded"));
+        Console.WriteLine("---------Current User Avatar Id: " + (CurrentUser?.Avatar.Id ?? "No user loaded"));
     }
 
     private async Task OnShowModal(string type)
@@ -132,7 +134,6 @@
                 EditableAvatar.BackgroundColor = CurrentUser.Avatar.BackgroundColor;
                 EditableAvatar.Pronouns = CurrentUser.Avatar.Pronouns;
                 EditableAvatar.Description = CurrentUser.Avatar.Description;
-                EditableAvatar.SkinTone = CurrentUser.Avatar.SkinTone;
                 EditableAvatar.Emoji = CurrentUser.Avatar.Emoji;
                 EditableAvatar.Gender = CurrentUser.Avatar.Gender;
             }
@@ -208,21 +209,31 @@
     private async Task OnSaveAvatar()
     {
         var avatarRequest = new UpdateAvatarRequest(
-             Name: EditableAvatar.Name,
-        BackgroundColor: EditableAvatar.BackgroundColor,
-        Pronouns: EditableAvatar.Pronouns,
-        Description: EditableAvatar.Description,
-        SkinTone: EditableAvatar.SkinTone,
-        Emoji: EditableAvatar.Emoji,
-        Gender: EditableAvatar.Gender
+            Name: EditableAvatar.Name,
+            BackgroundColor: EditableAvatar.BackgroundColor,
+            Pronouns: EditableAvatar.Pronouns,
+            Description: EditableAvatar.Description,
+            Emoji: EditableAvatar.Emoji,
+            Gender: EditableAvatar.Gender
         );
         await BlossomCloud.UpdateAvatar(avatarRequest);
 
         ShowModal = false;
         InfoType = string.Empty;
-        await GetUserInfo();
-        Console.WriteLine("New Avatar (Editable): " + EditableAvatar.Emoji);
-        Console.WriteLine("Updated Avatar: " + CurrentUser?.Avatar?.Emoji + " - " + CurrentUser?.Avatar?.BackgroundColor);
+
+        if (CurrentUser?.Avatar is not null)
+        {
+            CurrentUser.Avatar.Name = EditableAvatar.Name;
+            CurrentUser.Avatar.BackgroundColor = EditableAvatar.BackgroundColor;
+            CurrentUser.Avatar.Pronouns = EditableAvatar.Pronouns;
+            CurrentUser.Avatar.Description = EditableAvatar.Description;
+            CurrentUser.Avatar.Emoji = EditableAvatar.Emoji;
+            CurrentUser.Avatar.Gender = EditableAvatar.Gender;
+        }
+
+        StateHasChanged();
+
+        // await GetUserInfo();
     }
 
     private void OnAvatarChanged(string emoji)
@@ -259,6 +270,6 @@
         VerificationCode = "";
         VerificationError = "";
         await Js.InvokeVoidAsync("disableBodyScrolling", false);
-    }    
+    }
 }
 

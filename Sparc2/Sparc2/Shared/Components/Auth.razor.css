@@ -1,7 +1,7 @@
 ﻿.blossom-authenticator {
   position: relative;
-  display: inline-block;
-  /*display: none;*/
+  /*display: inline-block;*/
+  display: none;
 }
 .blossom-authenticator .auth-toggle {
   background: transparent;

@@ -28,7 +28,6 @@
     </div>
         <div class="selector-wrapper">
         <ColorSelector @bind-BackgroundColor="User.BackgroundColor" />
-        @* <EmojiSelector @bind-Emoji="User.Emoji" /> *@
         <EmojiSelector Emoji="@User.Emoji" EmojiChanged="HandleEmojiChanged" />
 
         </div>
