@@ -1,0 +1,171 @@
+﻿.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: calc(100% - 32px);
+  padding-bottom: 150px;
+  position: relative;
+}
+.product-info header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.product-info header div:first-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+}
+.product-info header h3 {
+  font-size: 5.052rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%; /* 55.572px */
+  color: var(--purple-700);
+}
+.product-info header .price {
+  width: fit-content;
+  font-family: "elza-text", sans-serif;
+  font-size: 21.33px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%; /* 23.463px */
+  color: var(--purple-400);
+}
+.product-info .product-tags {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+.product-info .product-tags > * {
+  display: flex;
+  height: 36px;
+  padding: 0 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 40px;
+  font-family: "Fjalla One";
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 21px */
+  letter-spacing: -0.15px;
+  color: white;
+}
+.product-info .product-tags > *.purple {
+  background: var(--purple-300);
+}
+.product-info .product-tags > *.orange {
+  background: var(--orange-400);
+}
+.product-info .product-tags > *.blue {
+  background: var(--blue);
+}
+.product-info .product-tags > *.grey {
+  background: var(--gray-200);
+}
+.product-info .description p {
+  font-family: "elza-text", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 22.4px */
+  color: var(--Color-Purple-900, #1A0C32);
+}
+.product-info footer .credits {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.product-info footer .credits h4, .product-info footer .credits p, .product-info footer .credits span, .product-info footer .credits button {
+  font-family: "Fjalla One";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 22.4px */
+  color: var(--purple-800);
+}
+.product-info footer .credits h4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+.product-info footer .credits button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  transition: 0.2s ease-in-out;
+}
+.product-info footer .credits button:hover {
+  color: var(--purple-500);
+}
+.product-info footer .credits button:active {
+  color: var(--purple-800);
+}
+.product-info footer .credits button span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.product-info footer .credits button span.rotate {
+  color: var(--purple-500);
+  animation: rotateClockwise 1.5s ease-in-out;
+}
+.product-info footer .credits button span.rotateBack {
+  animation: rotateCounterClockwise 1.5s ease-in-out;
+}
+.product-info footer .credits div:last-child {
+  height: 0;
+  opacity: 0;
+}
+.product-info footer .credits div:last-child.rotate {
+  height: fit-content;
+  opacity: 1;
+  animation: fadeIn 1.5s ease-in;
+}
+.product-info footer .credits div:last-child.rotateBack {
+  opacity: 0;
+  animation: fadeOut 1.5s ease-in;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes rotateClockwise {
+  0% {
+    transform: rotate(0deg);
+    color: var(--purple-800);
+  }
+  100% {
+    transform: rotate(180deg);
+    color: var(--purple-500);
+  }
+}
+@keyframes rotateCounterClockwise {
+  0% {
+    transform: rotate(180deg);
+    color: var(--purple-500);
+  }
+  100% {
+    transform: rotate(0deg);
+    color: var(--purple-800);
+  }
+}

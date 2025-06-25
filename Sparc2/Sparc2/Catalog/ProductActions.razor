@@ -1,0 +1,53 @@
+﻿<div class="product-actions">
+    <div class="tabs">
+        <button id="help-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Need Help ?</h6></button>
+        <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
+            <h6>Purchase</h6>
+            <div>
+                <span>$@ActiveProduct.Price</span>
+                <aside>one-time purchase</aside>
+            </div>
+        </button>
+        <button id="download-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Download</h6></button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Product ActiveProduct { get; set; } = new Product();
+    [Parameter] public EventCallback OnClickHelp { get; set; }
+    [Parameter] public EventCallback OnClickPurchase { get; set; }
+    [Parameter] public EventCallback OnClickDownload { get; set; }
+    [Parameter] public EventCallback OnClickSurvey { get; set; }
+    [Parameter] public EventCallback OnClickTryDemo { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("initProductActions", DotNetObjectReference.Create(this));
+        }
+    }
+
+    [JSInvokable("OnClickTab")]
+    public void OnClickTab (string tab)
+    {
+        switch (tab)
+        {
+            case "help-tab":
+                OnClickHelp.InvokeAsync();
+                break;
+            case "purchase-tab":
+                OnClickPurchase.InvokeAsync();
+                break;
+            case "download-tab":
+                OnClickDownload.InvokeAsync();
+                break;
+            case "survey-tab":
+                OnClickSurvey.InvokeAsync();
+                break;
+            case "demo-tab":
+                OnClickTryDemo.InvokeAsync();
+                break;
+        }
+    }
+}

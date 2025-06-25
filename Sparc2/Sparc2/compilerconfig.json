@@ -16,8 +16,8 @@
     "inputFile": "Shared/MainLayout.razor.scss"
   },
   {
-    "outputFile": "Shared/PageLayout.razor.css",
-    "inputFile": "Shared/PageLayout.razor.scss"
+    "outputFile": "Shared/IdeasLayout.razor.css",
+    "inputFile": "Shared/IdeasLayout.razor.scss"
   },
   {
     "outputFile": "Shared/NavMenu.razor.css",
@@ -86,6 +86,30 @@
   {
     "outputFile": "Shared/Components/ProfileCircle.razor.css",
     "inputFile": "Shared/Components/ProfileCircle.razor.scss"
+  },
+  {
+    "outputFile": "Shared/CatalogLayout.razor.css",
+    "inputFile": "Shared/CatalogLayout.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Catalog.razor.css",
+    "inputFile": "Catalog/Catalog.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPage.razor.css",
+    "inputFile": "Catalog/ProductPage.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductInfo.razor.css",
+    "inputFile": "Catalog/ProductInfo.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductActions.razor.css",
+    "inputFile": "Catalog/ProductActions.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchase.razor.css",
+    "inputFile": "Catalog/ProductPurchase.razor.scss"
   },
   {
     "outputFile": "Shared/Components/LanguageSelector.razor.css",

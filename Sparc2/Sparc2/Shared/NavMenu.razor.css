@@ -1,13 +1,21 @@
 ﻿nav {
-  width: calc(100% - 200px);
+  width: calc(100% - 64px);
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
   margin: 32px 100px;
-  background: linear-gradient(to bottom, white 0%, white 84%, transparent 84%, transparent 100%);
+}
+nav.home-nav {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  margin: 0;
+  padding: 16px 32px;
+  background: var(--yellow-50);
 }
 nav .container {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,35 +23,41 @@ nav .container {
 }
 nav .right {
   display: flex;
-  gap: 4px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
 }
-nav .right div {
+nav .right .account-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px 8px 4px;
 }
-nav .right div ::deep svg path {
+nav .right .account-btn ::deep svg path {
   stroke: var(--purple-800);
 }
-nav .right div input {
+nav .right .account-btn input {
   padding: 4px 8px;
   border-radius: 12px;
   border: 1px solid var(--gray-200);
   color: var(--purple-800);
   letter-spacing: 0.5px;
 }
-nav .right div span {
+nav .right .account-btn span {
   font-size: 14px;
   color: var(--purple-800);
   cursor: pointer;
   letter-spacing: 0.5px;
 }
-nav .right div span:hover {
+nav .right .account-btn span:hover {
+  color: var(--purple-500);
   text-decoration: underline;
 }
-nav button {
-  padding: 8px 16px 8px 14px;
+nav .right .account-btn span:active {
+  color: var(--purple-800);
+}
+
+button {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 20px;
@@ -55,8 +69,19 @@ nav button {
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 }
-nav button ::deep svg path {
+button ::deep svg path {
   stroke: #FFFCF6;
+}
+button.secondary-btn {
+  padding: 0 !important;
+  border: 1px solid transparent;
+}
+button.secondary-btn:hover {
+  color: var(--purple-500);
+  text-decoration: underline;
+}
+button.secondary-btn:active {
+  color: var(--purple-800);
 }
 
 .other-nav {
@@ -68,6 +93,11 @@ nav button ::deep svg path {
   box-shadow: 4px 4px 16px 0px rgba(63, 24, 5, 0.15);
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
+}
+.other-nav .left button {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px 8px 14px;
 }
 .other-nav .left button > svg {
   width: 14px;
@@ -156,8 +186,7 @@ nav button ::deep svg path {
 
 .home-nav {
   margin: 0;
-  /*padding: 32px 100px;*/
-  padding: 16px 100px;
+  padding: 32px 100px;
 }
 
 @media only screen and (max-width: 1024px), (orientation: portrait) {

@@ -1,0 +1,103 @@
+﻿<div class="product-info">
+    <header>
+        <div>
+            <h3>@ActiveProduct.Title</h3>
+            <div class="price">
+                <span>$@ActiveProduct.Price.ToString()</span>
+            </div>
+        </div>
+        <div class="subheader product-tags">
+            @foreach (var tag in ActiveProduct.Tags)
+            {
+                var color = TagColor(tag.Type);
+                <div class="tag product-tag @color">@tag.Name</div>
+            }
+        </div>
+    </header>
+    <section class="description">
+        <p>@ActiveProduct.Description</p>
+    </section>
+    <footer>
+        <div class="credits">
+            <h4><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h4>
+            <div class="@creditsClass">
+                <p>Vitae pellentesque | Position Title</p>
+                <p>Sem placerat | Position Title</p>
+                <p>Accumsan maecenas | Position Title</p>
+                <p>Vestibulum fusce | Position Title</p>
+                <p>Dictum risus | Position Title</p>
+                <p>Suspendisse aliquet | Position Title</p>
+            </div>
+        </div>
+        @if (PageType == "Product")
+        {
+            <ProductActions ActiveProduct=ActiveProduct OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+        }
+    </footer>
+</div>
+
+@code {
+    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public string? PageType { get; set; }
+    [Parameter] public EventCallback OnClickHelp { get; set; }
+    [Parameter] public EventCallback OnClickPurchase { get; set; }
+    [Parameter] public EventCallback OnClickDownload { get; set; }
+    [Parameter] public EventCallback OnClickSurvey { get; set; }
+    [Parameter] public EventCallback OnClickTryDemo { get; set; }
+
+    bool showCredits; 
+    string creditsClass = "";
+
+    string TagColor(string tag)
+    {
+        var color = tag switch
+        {
+            "development" => "purple",
+            "testing" => "orange",
+            "gift" => "gradient",
+            "archived" => "grey",
+            "owned" => "blue",
+            _ => "default"
+        };
+
+        return color;
+    }
+
+    void ToggleCredits()
+    {
+        showCredits = !showCredits;
+
+        if (showCredits == true)
+        {
+            creditsClass = "rotate";
+        } else
+        {
+            creditsClass = "rotateBack";
+        }
+    }
+
+    void ClickHelp()
+    {
+        OnClickHelp.InvokeAsync();
+    }
+
+    void ClickPurchase()
+    {
+        OnClickPurchase.InvokeAsync();
+    }
+
+    void ClickDownload()
+    {
+        OnClickDownload.InvokeAsync();
+    }
+
+    void ClickSurvey()
+    {
+        OnClickSurvey.InvokeAsync();
+    }
+
+    void ClickTryDemo()
+    {
+        OnClickTryDemo.InvokeAsync();
+    }
+}

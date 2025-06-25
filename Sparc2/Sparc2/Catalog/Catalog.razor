@@ -1,0 +1,102 @@
+﻿@page "/catalog"
+@layout CatalogLayout
+
+<article id="catalog" class="catalog">
+    <div class="page-container">
+        <div class="left">
+            @foreach (var app in Products)
+            {
+                <div class="product product-card" data-id="@app.Id">
+                    <div class="product card-overlay" data-id="@app.Id"></div>
+                    <div class="product title" data-id="@app.Id">@app.Title</div>
+                </div>
+            }
+        </div>
+        <div class="right">
+            <div class="container">
+                @if (ActiveProduct != null)
+                {
+                    <ProductInfo PageType="Catalog" ActiveProduct="ActiveProduct" />
+                } else
+                {
+                    <div class="product-info">
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</article>
+
+@code {
+    IEnumerable<Product> Products = new List<Product>();
+    Product? ActiveProduct;
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProductService.OnProductsChanged += UpdateProducts;
+        var allProducts = await Api.Products.GetAllProducts();
+
+        Products = allProducts;
+        if (Products != null)
+        {
+            ActiveProduct = Products.FirstOrDefault();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Js.InvokeVoidAsync("initCatalog", DotNetObjectReference.Create(this));
+        }
+    }
+
+    private async Task UpdateProducts()
+    {
+        var allProducts = await Api.Products.GetAllProducts();
+        var latest = allProducts.OrderByDescending(i => i.DateCreated).FirstOrDefault();
+
+        // if (latest != null)
+        // {
+        //     var list = allProducts.Where(i => i.Id != latest.Id).ToList();
+        //     int middleIndex = list.Count / 2;
+        //     list.Insert(middleIndex, latest);
+        //     Products = list;
+        //     LatestProduct = latest;
+        // }
+        // else
+        // {
+        //     Products = allProducts;
+        // }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ProductService.OnProductsChanged -= UpdateProducts;
+    }
+
+
+
+    [JSInvokable("OnHoverProduct")]
+    public void OnHoverProduct(string id)
+    {
+        if (Products != null && Products.Any())
+        {
+            ActiveProduct = Products.FirstOrDefault(p => p.Id == id);
+            StateHasChanged();
+        }
+    }
+
+    [JSInvokable("OnSelectProduct")]
+    public void OnSelectProduct(string id)
+    {
+        if (Products != null && Products.Any())
+        {
+            ActiveProduct = Products.FirstOrDefault(p => p.Id == id);
+            StateHasChanged();
+        }
+
+        Nav.NavigateTo($"/catalog/{id}");
+    }
+}

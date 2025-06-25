@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background: var(--yellow-50);
 }
 section .hero {
   width: calc(100% - 200px);

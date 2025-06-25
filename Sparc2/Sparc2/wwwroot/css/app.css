@@ -22,7 +22,7 @@
   --purple-200: #C596FB;
   --purple-300: #B274FA;
   --purple-400: #8B46DB;
-  --purple-500: #3F256B;
+  --purple-500: #6A2FD0;
   --purple-600: #52289C;
   --purple-700: #3F256B;
   --purple-800: #2B1C45;
@@ -37,6 +37,7 @@
   --orange-700: #B0420B;
   --orange-800: #6B2908;
   --orange-900: #3F1805;
+  --blue: #0090F8;
 }
 
 html, body {
@@ -253,6 +254,15 @@ ul li {
   z-index: 200;
 }
 
+/*font-family: elza-text, sans-serif;
+font-weight: 400;
+font-style: normal;
+font-family: elza-text, sans-serif;
+font-weight: 500;
+font-style: normal;
+font-family: elza-text, sans-serif;
+font-weight: 700;
+font-style: normal;*/
 /*
 Fonts Added:
 

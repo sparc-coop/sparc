@@ -1,4 +1,5 @@
 ﻿@using Sparc.Blossom.Authentication
+@inject IBlossomCloud BlossomCloud
 
 <nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
     <div class="container">
@@ -11,7 +12,6 @@
                 <input type="text" placeholder="Search" class="input-text" />
             </div>
             <div class="right">
-                <button class="tertiary-btn" @onclick="() => OpenAddCard(2)"><LightbulbIcon /> <span>Buy Product</span></button>
                 <button class="tertiary-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></button>
                 <button class="tertiary-btn donate-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></button>
             </div>
@@ -19,31 +19,35 @@
         else
         {
             <div class="left" @onclick='() => Navigate("/")'>
-                <SparcLogo />
+                <SparcLogo TextOnly=true />
             </div>
             <div class="right">
-                @* <Auth /> *@
-                <UserProfile />
-                @if (CurrentUser is not null)
-                {
-                    <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
-                        @if (IsEditingUsername)
-                        {
-                            <input type="text" @bind="Username"
-                                   @ref="UsernameInput"
-                                   @bind:event="oninput"
-                                   @onblur="SaveUsername"
-                                   @onkeypress="HandleKeyPress" />
-                        }
-                        else
-                        {
-                            <span @onclick="StartEditing">
-                                @CurrentUser.Username
-                            </span>
-                        }
-                    </div>
-                }
+                <button id="about-btn" class="secondary-btn" @onclick='() => Nav.NavigateTo("/about")'>About Us</button>
+                <button id="catalog-btn" class="secondary-btn" @onclick='() => Nav.NavigateTo("/catalog")'>Catalog</button>
                 <button id="ideas-btn" class="secondary-btn">Ideas</button>
+                @* <Auth /> *@
+                <div class="account-btn">
+                    <ProfileCircle />
+                    @if (CurrentUser is not null)
+                    {
+                        <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
+                            @if (IsEditingUsername)
+                            {
+                                <input type="text" @bind="Username"
+                                       @ref="UsernameInput"
+                                       @bind:event="oninput"
+                                       @onblur="SaveUsername"
+                                       @onkeypress="HandleKeyPress" />
+                            }
+                            else
+                            {
+                                <span @onclick="StartEditing">
+                                    @CurrentUser.Username
+                                </span>
+                            }
+                        </div>
+                    }
+                </div>
             </div>            
         }
     </div>
@@ -72,7 +76,7 @@
 
     private async Task GetUserInfo()
     {
-        CurrentUser = await SparcEngine.UserInfo();
+        CurrentUser = await BlossomCloud.UserInfo();
     }
 
     private void Navigate(string path)
@@ -121,7 +125,7 @@
         if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
         {
             CurrentUser.Username = newUsername;
-            await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
+            await BlossomCloud.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
         }
 
         await Js.InvokeVoidAsync("setEditingUsername", false);
