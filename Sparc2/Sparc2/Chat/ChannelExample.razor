@@ -45,9 +45,9 @@ else
 }
 
 @code {
-    private List<Conversation> Channels;
-    private string SelectedChannelId;
-    private List<MessageEvent> Messages;
+    private List<Conversation> Channels = [];
+    private string? SelectedChannelId;
+    private List<MessageEvent> Messages = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,6 +67,6 @@ else
 
     private async Task LoadMessages()
     {
-        Messages = (await SlackService.GetMessagesAsync(new[] { SelectedChannelId })).ToList();
+        Messages = (await SlackService.GetMessagesAsync(new[] { SelectedChannelId! })).ToList();
     }
 }

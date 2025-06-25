@@ -88,12 +88,9 @@
 @code {
     BlossomUser? CurrentUser;
     bool IsOpen = true;
-    bool HasError;
     bool IsAnonymous = true;
-    string Message;
+    string? Message;
     const string ApiKey = "blossomcloud:public:3a16c78de07641e5b82f270d278ace2b";
-    string Email;
-    string Token;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -116,7 +113,7 @@
         if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed: {start.StatusCode}"; return; }
 
         var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
-        if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
+        if (!doc!.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
         var challenge = tok.GetString();
 
         // 2) browser WebAuthn
@@ -184,12 +181,12 @@
         }
     }
 
-    async Task ChangeUsername()
+    void ChangeUsername()
     {
         // TODO: open a prompt/modal and POST to your profile endpoint
     }
 
-    async Task AddBackupContact()
+    void AddBackupContact()
     {
         // TODO: open backup-email/phone flow
     }

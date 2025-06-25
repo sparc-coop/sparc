@@ -60,14 +60,14 @@
                 <hr />
                 <h4>Comment</h4>
                 <div>
-                    <input type="text" placeholder="Leave a comment" autofocus=@(currentFocus == "comments" ? true : false)/>
+                    <input type="text" placeholder="Leave a comment" autofocus="@(currentFocus == "comments" ? true : false)"/>
                     <button class="secondary-btn">Send</button>
                 </div>
             </section>
         </div>
     }
 
-    @if (currentFocus == "files")
+    @if (currentFocus == "files" && Idea?.FileUrls != null)
     {
         <header class="files-header">
             <div class="left">
@@ -118,7 +118,7 @@
     List<string> comments = new List<string>();
     List<string> likes = new List<string>();
 
-    string currentFile;
+    string currentFile = "";
     string currentFocus = "main";
 
     protected override void OnInitialized()

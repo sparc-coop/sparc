@@ -67,8 +67,8 @@ else if (CurrentStep == 1)
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
-    [Parameter] public EditContext EditContext { get; set; }
-    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; }
+    [Parameter] public required EditContext EditContext { get; set; }
+    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; } = [];
     [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
     [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 

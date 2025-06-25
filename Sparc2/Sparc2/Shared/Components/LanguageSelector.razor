@@ -19,24 +19,8 @@
 
 @code {
     [Parameter] public BlossomUser? CurrentUser { get; set; }
-    // [Parameter] public string? SelectedLanguageId { get; set; }
+    [Parameter] public string? SelectedLanguageId { get; set; }
     [Parameter] public EventCallback<string?> SelectedLanguageIdChanged { get; set; }
-    private string? internalSelectedLanguageId;
-
-    [Parameter]
-    public string? SelectedLanguageId
-    {
-        get => internalSelectedLanguageId;
-        set
-        {
-            if (internalSelectedLanguageId != value)
-            {
-                internalSelectedLanguageId = value;
-                SelectedLanguageIdChanged.InvokeAsync(value);
-            }
-        }
-    }
-
     private IEnumerable<Sparc.Engine.Language>? Languages { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -56,72 +40,3 @@
         }
     }
 }
-
-
-
-@* Fernando's code: *@
-
-@* <div class="language-selector">
-    <button @onclick=ToggleLanguageList>
-        <Sparc2.Shared.Icons.Language />
-        @SelectedLanguage?.DisplayName
-        <Sparc2.Shared.Icons.Expand IsExpanded="ShowLanguageSettings" />
-    </button>
-
-    @if (ShowLanguageSettings && Languages != null)
-    {
-        <ul>
-            @foreach (var language in Languages)
-            {
-                <li>
-                    <button @onclick=@(() => ChangeLanguage(language))>
-                        @language.DisplayName
-
-                        @if (language.DisplayName != language.NativeName)
-                        {
-                            <aside>@language.NativeName</aside>
-                        }
-
-                        @if (SelectedLanguage?.Id == language.Id)
-                        {
-                            <div class="right">
-                                <Sparc2.Shared.Icons.Check />
-                            </div>
-                        }
-                    </button>
-                </li>
-            }
-        </ul>
-    }
-</div>
-
-@inject IBlossomCloud Cloud
-
-@code {
-    [Parameter] public BlossomUser? CurrentUser { get; set; }
-    Sparc.Blossom.Content.Language? SelectedLanguage;
-    IEnumerable<Sparc.Blossom.Content.Language>? Languages { get; set; }
-
-    bool ShowLanguageSettings = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Languages = await Cloud.GetLanguages();
-        // SelectedLanguage = CurrentUser.PrimaryLanguage
-        //     ?? Languages.FirstOrDefault(x => x.Id == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-    }
-    void ToggleLanguageList()
-    {
-        ShowLanguageSettings = !ShowLanguageSettings;
-    }
-
-    async Task ChangeLanguage(Sparc.Blossom.Content.Language language)
-    {
-        // await LanguageChanged.InvokeAsync(language);
-
-        var updatedUser = await Cloud.AddUserLanguage(language);
-        SelectedLanguage = updatedUser.PrimaryLanguage;
-        ToggleLanguageList();
-        StateHasChanged();
-    }
-} *@

@@ -252,13 +252,16 @@
 
         try
         {
-            if (CurrentUser.Token == null)
+            if (CurrentUser?.Token == null)
             {
                 // 1. Sign up with passkey
                 var start = await Http.PostAsync("auth/login", null);
                 if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed."; return; }
 
                 var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
+                if (doc == null)
+                    return;
+
                 if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
                 var challenge = tok.GetString();
 

@@ -2,6 +2,6 @@
 {
     public class SlackIntegrationOptions
     {
-        public string BotToken { get; set; }
+        public required string BotToken { get; set; }
     }
 }

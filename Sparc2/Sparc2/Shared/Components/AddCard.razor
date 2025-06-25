@@ -39,7 +39,7 @@
     private bool IsUploading;
 
     private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
-    private EditContext editContext;
+    private EditContext editContext = null!;
     private List<Sparc2.Files.FileUpload> UploadedFiles = new();
 
     protected override void OnInitialized()
@@ -98,7 +98,7 @@
     private async Task SubmitIdea()
     {
         await Api.ProjectIdeas.Create(Idea.Title, Idea.Author, Idea.Description, Idea.FileUrls);
-        IdeaService.AddIdea();
+        await IdeaService.AddIdea();
         await OnClose.InvokeAsync(true);
     }
 

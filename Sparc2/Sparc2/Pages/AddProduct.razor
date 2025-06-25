@@ -133,10 +133,10 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
               }
           })
           .Where(ri => ri != null)
-          .GroupBy(ri => ri.ISOCurrencySymbol, StringComparer.OrdinalIgnoreCase)
+          .GroupBy(ri => ri!.ISOCurrencySymbol, StringComparer.OrdinalIgnoreCase)
           .ToDictionary(
             g => g.Key.ToLower(),                     // “usd”, “eur”, etc
-            g => g.First().CurrencySymbol,             // “$”, “€” …
+            g => g.First()!.CurrencySymbol,             // “$”, “€” …
             StringComparer.OrdinalIgnoreCase
           );
 
@@ -148,7 +148,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
     BlossomUser? CurrentUser;
     private GetProductResponse? Product;
     private string SelectedCurrency = "USD";
-    private decimal DisplayPrice = 0m;
     List<string> CurrencyOptions = new List<string> { };
 
     private string? _clientSecret;
@@ -338,7 +337,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
             var metadata = new Dictionary<string, string> {
                 { "DonationFrequency", Donation.Frequency },
                 { "DonationAmount", Donation.Amount.ToString() },
-                { "product_id", Product.Id }
+                { "product_id", Product!.Id }
             };
 
             string? customerId = null;

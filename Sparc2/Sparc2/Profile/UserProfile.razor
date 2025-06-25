@@ -72,8 +72,8 @@
     private bool ShowModal = false;
     private string InfoType = string.Empty;
 
-    private string Email { get; set; }
-    private string PhoneNumber { get; set; }
+    private string? Email { get; set; }
+    private string? PhoneNumber { get; set; }
 
     private bool VerifyEmail = false;
     private bool VerifyPhone = false;
@@ -81,7 +81,6 @@
     private string VerificationCode { get; set; } = "";
     private bool ShowVerificationModal = false;
     private string CurrentVerificationDestination = "";
-    private string VerificationError = "";
 
     private UserAvatar EditableAvatar = new("", "");
 
@@ -145,7 +144,6 @@
     {
         ShowModal = false;
         InfoType = string.Empty;
-        VerificationError = "";
         await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 
@@ -156,14 +154,13 @@
             Email = Email,
             RequireEmailVerification = VerifyEmail
         };
-        CurrentVerificationDestination = Email;
+        CurrentVerificationDestination = Email!;
         await SparcEngine.UpdateUser(request);
         ShowModal = false;
         InfoType = string.Empty;
         if (VerifyEmail)
         {
             VerificationCode = "";
-            VerificationError = "";
             ShowVerificationModal = true;
         }
         await GetUserInfo();
@@ -176,14 +173,13 @@
             PhoneNumber = PhoneNumber,
             RequirePhoneVerification = VerifyPhone
         };
-        CurrentVerificationDestination = PhoneNumber;
+        CurrentVerificationDestination = PhoneNumber!;
         await SparcEngine.UpdateUser(request);
         ShowModal = false;
         InfoType = string.Empty;
         if (VerifyPhone)
         {
             VerificationCode = "";
-            VerificationError = "";
             ShowVerificationModal = true;
         }
         await GetUserInfo();
@@ -248,13 +244,12 @@
         if (success)
         {
             ShowVerificationModal = false;
-            VerificationError = "";
             await GetUserInfo();
             StateHasChanged();
         }
         else
         {
-            VerificationError = "Invalid verification code. Please try again.";
+            // VerificationError = "Invalid verification code. Please try again.";
         }
     }
 
@@ -267,7 +262,6 @@
     {
         ShowVerificationModal = false;
         VerificationCode = "";
-        VerificationError = "";
         await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 }
