@@ -1,5 +1,4 @@
 ﻿@using Sparc.Blossom.Authentication
-@inject IBlossomCloud BlossomCloud
 @inject HttpClient Http
 @inject IJSRuntime JS
 @using System.Net.Http.Json
@@ -229,7 +228,7 @@
         IsCheckingUser = true;
         try
         {
-            CurrentUser = await BlossomCloud.UserInfo();
+            CurrentUser = await SparcEngine.UserInfo();
         }
         finally
         {
@@ -239,7 +238,7 @@
 
     private async Task AddKoriProduct()
     {
-        await BlossomCloud.AddUserProduct(new AddProductRequest("Kori"));
+        await SparcEngine.AddUserProduct(new AddProductRequest("Kori"));
         await GetUserInfo();
     }
 
@@ -311,7 +310,7 @@
         try
         {
             // 4. Modal: save email
-            var patchResp = await BlossomCloud.UpdateUser(
+            var patchResp = await SparcEngine.UpdateUser(
                 new UpdateUserRequest(Email: Email, RequireEmailVerification: true)
             );
 
@@ -345,7 +344,7 @@
         try
         {
             // 5. Verify code
-            var success = await BlossomCloud.VerifyCode(
+            var success = await SparcEngine.VerifyCode(
                 new VerificationRequest(CurrentVerificationDestination, VerificationCode)
             );
 

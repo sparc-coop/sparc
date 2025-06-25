@@ -1,5 +1,4 @@
 ﻿@using Sparc.Blossom.Authentication
-@inject IBlossomCloud BlossomCloud
 
 <div class="user-profile-container" @onmouseover="() => IsHovered = true" @onmouseout="() => IsHovered = false">
     <div class="profile-picture-wrapper @(IsOnline ? "online" : "")">
@@ -101,7 +100,7 @@
 
     private async Task GetUserInfo()
     {
-        CurrentUser = await BlossomCloud.UserInfo();
+        CurrentUser = await SparcEngine.UserInfo();
         Email = CurrentUser?.Email ?? "";
         PhoneNumber = CurrentUser?.PhoneNumber ?? "";
         Console.WriteLine("---------Current User Id: " + (CurrentUser?.Id ?? "No user loaded"));
@@ -158,7 +157,7 @@
             RequireEmailVerification = VerifyEmail
         };
         CurrentVerificationDestination = Email;
-        await BlossomCloud.UpdateUser(request);
+        await SparcEngine.UpdateUser(request);
         ShowModal = false;
         InfoType = string.Empty;
         if (VerifyEmail)
@@ -178,7 +177,7 @@
             RequirePhoneVerification = VerifyPhone
         };
         CurrentVerificationDestination = PhoneNumber;
-        await BlossomCloud.UpdateUser(request);
+        await SparcEngine.UpdateUser(request);
         ShowModal = false;
         InfoType = string.Empty;
         if (VerifyPhone)
@@ -194,11 +193,11 @@
     {
         if (SelectedLanguageId is not null)
         {
-            var languages = await BlossomCloud.GetLanguages();
+            var languages = await SparcEngine.GetLanguages();
             var language = languages.FirstOrDefault(l => l.Id == SelectedLanguageId);
             if (language is not null)
             {
-                await BlossomCloud.AddUserLanguage(language);
+                await SparcEngine.AddUserLanguage(language);
             }
         }
         ShowModal = false;
@@ -216,7 +215,7 @@
             Emoji: EditableAvatar.Emoji,
             Gender: EditableAvatar.Gender
         );
-        await BlossomCloud.UpdateAvatar(avatarRequest);
+        await SparcEngine.UpdateAvatar(avatarRequest);
 
         ShowModal = false;
         InfoType = string.Empty;
@@ -245,7 +244,7 @@
     private async Task VerifyCode(string code)
     {
         VerificationCode = code;
-        var success = await BlossomCloud.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
         if (success)
         {
             ShowVerificationModal = false;

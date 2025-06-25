@@ -79,7 +79,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
     <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button>
 }
 
-@inject IBlossomCloud Cloud
 @code {
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public EventCallback OnNext { get; set; }
@@ -260,7 +259,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 setupFutureUsage
             );
 
-            var intent = await Cloud.CreateOrderPaymentAsync(request);
+            var intent = await SparcEngine.CreateOrderPaymentAsync(request);
 
             _clientSecret = intent.ClientSecret;
             Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");

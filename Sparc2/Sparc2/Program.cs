@@ -1,6 +1,4 @@
-﻿using Refit;
-using Sparc.Blossom;
-using Sparc2;
+﻿using Sparc2;
 using Sparc2.Databases.AzureBlob;
 using Sparc2.Ideas;
 using Sparc2.Services;
@@ -8,7 +6,7 @@ using System.Net;
 
 var builder  = BlossomApplication.CreateBuilder<Html>(args);
 
-builder.Services.AddSingleton<AzureBlob>(sp =>
+builder.Services.AddSingleton(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
     var connectionString = configuration.GetConnectionString("Storage");
@@ -34,7 +32,7 @@ builder.Services.AddScoped(sp =>
     sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
 );
 
-builder.AddBlossomCloud();
+builder.AddSparcEngine();
 
 builder.Services.AddSingleton<IdeaService>();
 

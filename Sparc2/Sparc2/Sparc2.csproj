@@ -8,32 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Auth\**" />
-    <Content Remove="Auth\**" />
-    <EmbeddedResource Remove="Auth\**" />
-    <None Remove="Auth\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="compilerconfig.json" />
-    <Content Remove="Shared\Icons\Language.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageReference Include="Bogus" Version="35.6.3" />
     <PackageReference Include="SlackNet" Version="0.16.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="compilerconfig.json" />
-    <None Include="Shared\Icons\Language.razor" />
-    <None Include="wwwroot\images\puppy.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Core\Sparc.Blossom.Core.csproj" />
     <ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
   </ItemGroup>
 

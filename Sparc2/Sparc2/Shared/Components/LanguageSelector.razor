@@ -17,8 +17,6 @@
     }
 </div>
 
-@inject IBlossomCloud Cloud
-
 @code {
     [Parameter] public BlossomUser? CurrentUser { get; set; }
     // [Parameter] public string? SelectedLanguageId { get; set; }
@@ -39,11 +37,11 @@
         }
     }
 
-    private IEnumerable<Sparc.Blossom.Content.Language>? Languages { get; set; }
+    private IEnumerable<Sparc.Engine.Language>? Languages { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Languages = await Cloud.GetLanguages();
+        Languages = await SparcEngine.GetLanguages();
 
         if (string.IsNullOrWhiteSpace(SelectedLanguageId))
         {
