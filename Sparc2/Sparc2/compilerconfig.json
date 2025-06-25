@@ -1,15 +1,7 @@
 ﻿[
   {
     "outputFile": "wwwroot/css/app.css",
-    "inputFile": "_variables.scss"
-  },
-  {
-    "outputFile": "wwwroot/css/app.css",
-    "inputFile": "Html.razor.scss"
-  },
-  {
-    "outputFile": "Shared/Auth.razor.css",
-    "inputFile": "Shared/Auth.razor.scss"
+    "inputFile": "Html.scss"
   },
   {
     "outputFile": "Shared/MainLayout.razor.css",
@@ -44,16 +36,12 @@
     "inputFile": "Ideas/IdeasPage.razor.scss"
   },
   {
-    "outputFile": "Ideas/AddIdeaCard.razor.css",
-    "inputFile": "Ideas/AddIdeaCard.razor.scss"
+    "outputFile": "Ideas/AddIdea.razor.css",
+    "inputFile": "Ideas/AddIdea.razor.scss"
   },
   {
     "outputFile": "Shared/Components/AddCard.razor.css",
     "inputFile": "Shared/Components/AddCard.razor.scss"
-  },
-  {
-    "outputFile": "Ideas/AddIdea.razor.css",
-    "inputFile": "Ideas/AddIdea.razor.scss"
   },
   {
     "outputFile": "Donations/AddDonation.razor.css",
@@ -78,14 +66,6 @@
   {
     "outputFile": "Shared/Components/Auth.razor.css",
     "inputFile": "Shared/Components/Auth.razor.scss"
-  },
-  {
-    "outputFile": "Shared/Components/AddEmailModal.razor.css",
-    "inputFile": "Shared/Components/AddEmailModal.razor.scss"
-  },
-  {
-    "outputFile": "Shared/Components/ProfileCircle.razor.css",
-    "inputFile": "Shared/Components/ProfileCircle.razor.scss"
   },
   {
     "outputFile": "Shared/CatalogLayout.razor.css",
