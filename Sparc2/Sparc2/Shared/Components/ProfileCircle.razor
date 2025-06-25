@@ -1,5 +1,4 @@
 ﻿@using Sparc.Blossom.Authentication
-@inject IBlossomCloud BlossomCloud
 
 <div class="user-profile-container" @onmouseover="() => IsHovered = true" @onmouseout="() => IsHovered = false">
     <div class="profile-picture-wrapper @(IsOnline ? "online" : "")">
@@ -78,8 +77,8 @@
     private bool ShowModal = false;
     private string InfoType = string.Empty;
 
-    private string Email { get; set; }
-    private string PhoneNumber { get; set; }
+    private string? Email { get; set; }
+    private string? PhoneNumber { get; set; }
 
     private string VerificationCode { get; set; } = "";
     private bool ShowVerificationModal = false;
@@ -92,7 +91,7 @@
 
     private async Task GetUserInfo()
     {
-        CurrentUser = await BlossomCloud.UserInfo();
+        CurrentUser = await SparcEngine.UserInfo();
     }
 
     private void OnShowModal(string type)
@@ -122,13 +121,13 @@
     {
         if (InfoType == "Email")
         {
-            await BlossomCloud.UpdateUser(new UpdateUserRequest(Email: Email));            
-            CurrentVerificationDestination = CurrentUser?.Email ?? Email;
+            await SparcEngine.UpdateUser(new UpdateUserRequest(Email: Email));
+            CurrentVerificationDestination = CurrentUser?.Email ?? Email!;
         }
         else if (InfoType == "Phone")
         {
-            await BlossomCloud.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
-            CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber;
+            await SparcEngine.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
+            CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber!;
         }
 
         ShowModal = false;
@@ -143,7 +142,7 @@
 
     private async Task VerifyCode()
     {
-        var success = await BlossomCloud.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
 
         if (success)
         {

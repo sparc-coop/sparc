@@ -1,5 +1,4 @@
 ﻿@using Sparc.Blossom.Authentication
-@inject IBlossomCloud BlossomCloud
 
 <nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
     <div class="container">
@@ -76,7 +75,7 @@
 
     private async Task GetUserInfo()
     {
-        CurrentUser = await BlossomCloud.UserInfo();
+        CurrentUser = await SparcEngine.UserInfo();
     }
 
     private void Navigate(string path)
@@ -125,7 +124,7 @@
         if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
         {
             CurrentUser.Username = newUsername;
-            await BlossomCloud.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
+            await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
         }
 
         await Js.InvokeVoidAsync("setEditingUsername", false);

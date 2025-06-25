@@ -4,7 +4,7 @@
 <article class="product-page">
     <div class="page-container">
         <div class="left">
-            @if (showPurchaseTab == false)
+            @if (ActiveProduct != null && showPurchaseTab == false)
             {
                 @if (ActiveProduct.FileUrls.Count > 1)
                 {
@@ -64,11 +64,11 @@
 
     IEnumerable<Product> Products = new List<Product>();
     Product? ActiveProduct;
-    bool showHelpTab;
+    // bool showHelpTab;
     bool showPurchaseTab;
-    bool showDownloadTab;
-    bool showSurveyTab;
-    bool showDemoTab;
+    // bool showDownloadTab;
+    // bool showSurveyTab;
+    // bool showDemoTab;
 
     protected override async Task OnInitializedAsync()
     {

@@ -37,7 +37,7 @@
 </div>
 
 @code {
-    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string? PageType { get; set; }
     [Parameter] public EventCallback OnClickHelp { get; set; }
     [Parameter] public EventCallback OnClickPurchase { get; set; }
