@@ -38,8 +38,9 @@ article .left .span-2 .product-img {
   aspect-ratio: 1/1;
 }
 article .right {
-  height: calc(100vh - 128px);
+  height: calc(100vh - 112px);
   padding: 16px;
+  padding-bottom: 0;
   position: relative;
 }
 article .right-header button {
@@ -61,7 +62,7 @@ article .right-header button:active ::deep svg path {
 }
 article .right .container {
   width: 598px;
-  height: calc(100vh - 128px);
+  height: calc(100vh - 112px);
   position: fixed;
   overflow-y: auto;
   top: 112px;

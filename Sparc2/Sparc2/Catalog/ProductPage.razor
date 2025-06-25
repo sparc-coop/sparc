@@ -4,31 +4,37 @@
 <article class="product-page">
     <div class="page-container">
         <div class="left">
-            @if (ActiveProduct.FileUrls.Count > 1)
+            @if (showPurchaseTab == false)
             {
-                <div id="img-1" class="product-img span-1"></div>
-                <div id="img-2" class="product-img span-1"></div>
-                <div class="img-container span-2">
-                    <div id="img-3" class="product-img"></div>
-                    <div id="img-4" class="product-img"></div>
-                </div>
-                <div id="img-5" class="product-img img-5 span-1"></div>
+                @if (ActiveProduct.FileUrls.Count > 1)
+                {
+                    <div id="img-1" class="product-img span-1"></div>
+                    <div id="img-2" class="product-img span-1"></div>
+                    <div class="img-container span-2">
+                        <div id="img-3" class="product-img"></div>
+                        <div id="img-4" class="product-img"></div>
+                    </div>
+                    <div id="img-5" class="product-img img-5 span-1"></div>
 
-            } else if (ActiveProduct.FileUrls.Count == 5)
-            {
-                <div id="img-1" class="product-img span-1"></div>
-                <div id="img-2" class="product-img span-1"></div>
-                <div class="img-container span-2">
-                    <div id="img-3" class="product-img"></div>
-                    <div id="img-4" class="product-img"></div>
-                </div>
-                <div id="img-5" class="product-img img-5 span-1"></div>
+                } else if (ActiveProduct.FileUrls.Count == 5)
+                {
+                    <div id="img-1" class="product-img span-1"></div>
+                    <div id="img-2" class="product-img span-1"></div>
+                    <div class="img-container span-2">
+                        <div id="img-3" class="product-img"></div>
+                        <div id="img-4" class="product-img"></div>
+                    </div>
+                    <div id="img-5" class="product-img img-5 span-1"></div>
+                } else
+                {
+                    foreach (var file in ActiveProduct.FileUrls)
+                    {
+                        <div id="img-@file"class="product-img span-1"></div>
+                    }
+                }
             } else
             {
-                foreach (var file in ActiveProduct.FileUrls)
-                {
-                    <div id="img-@file"class="product-img span-1"></div>
-                }
+                <ProductPurchase ActiveProduct="ActiveProduct" />
             }
         </div>
         <div class="right">
@@ -38,7 +44,7 @@
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <ProductInfo ActiveProduct="ActiveProduct" />
+                    <ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickHelp=ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
                 } else
                 {
                     <div class="product-info">
@@ -58,6 +64,11 @@
 
     IEnumerable<Product> Products = new List<Product>();
     Product? ActiveProduct;
+    bool showHelpTab;
+    bool showPurchaseTab;
+    bool showDownloadTab;
+    bool showSurveyTab;
+    bool showDemoTab;
 
     protected override async Task OnInitializedAsync()
     {
@@ -94,5 +105,31 @@
         //     Products = allProducts;
         // }
         StateHasChanged();
+    }
+
+    void ToggleHelp()
+    {
+        Console.WriteLine("Help toggled for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+    }
+
+    void TogglePurchaseTab()
+    {
+        Console.WriteLine("Toggling purchase tab for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+        showPurchaseTab = !showPurchaseTab;
+    }
+
+    void ToggleDownload()
+    {
+        Console.WriteLine("Toggling download for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+    }
+
+    void ToggleSurvey()
+    {
+        Console.WriteLine("Toggling survey for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+    }
+
+    void ToggleDemo()
+    {
+        Console.WriteLine("Toggling demo for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
     }
 }

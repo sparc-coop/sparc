@@ -3,6 +3,8 @@
   flex-direction: column;
   gap: 32px;
   width: calc(100% - 32px);
+  padding-bottom: 150px;
+  position: relative;
 }
 .product-info header {
   display: flex;
@@ -78,7 +80,7 @@
   flex-direction: column;
   gap: 16px;
 }
-.product-info footer .credits h4, .product-info footer .credits p, .product-info footer .credits span {
+.product-info footer .credits h4, .product-info footer .credits p, .product-info footer .credits span, .product-info footer .credits button {
   font-family: "Fjalla One";
   font-size: 16px;
   font-style: normal;
@@ -93,24 +95,42 @@
   align-items: center;
 }
 .product-info footer .credits button {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   background: none;
+  transition: 0.2s ease-in-out;
 }
-.product-info footer .credits button.rotate {
+.product-info footer .credits button:hover {
+  color: var(--purple-500);
+}
+.product-info footer .credits button:active {
+  color: var(--purple-800);
+}
+.product-info footer .credits button span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.product-info footer .credits button span.rotate {
+  color: var(--purple-500);
   animation: rotateClockwise 1.5s ease-in-out;
 }
-.product-info footer .credits button.rotateBack {
+.product-info footer .credits button span.rotateBack {
   animation: rotateCounterClockwise 1.5s ease-in-out;
 }
 .product-info footer .credits div:last-child {
+  height: 0;
   opacity: 0;
-  animation: fadeOut 1.5s ease-out;
 }
-.product-info footer .credits div:last-child.show {
+.product-info footer .credits div:last-child.rotate {
+  height: fit-content;
   opacity: 1;
   animation: fadeIn 1.5s ease-in;
+}
+.product-info footer .credits div:last-child.rotateBack {
+  opacity: 0;
+  animation: fadeOut 1.5s ease-in;
 }
 
 @keyframes fadeIn {
@@ -132,16 +152,20 @@
 @keyframes rotateClockwise {
   0% {
     transform: rotate(0deg);
+    color: var(--purple-800);
   }
   100% {
     transform: rotate(180deg);
+    color: var(--purple-500);
   }
 }
 @keyframes rotateCounterClockwise {
   0% {
     transform: rotate(180deg);
+    color: var(--purple-500);
   }
   100% {
     transform: rotate(0deg);
+    color: var(--purple-800);
   }
 }

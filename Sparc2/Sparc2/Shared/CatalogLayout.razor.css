@@ -6,12 +6,13 @@
   margin-top: 80px;
   padding-top: 16px;
   font-family: "elza-text", sans-serif;
-  animation: fadeIn 2s ease-in-out;
+  background: var(--yellow-50);
 }
 main .grid {
   display: grid;
   grid-template-columns: repeat(12, 80px);
   column-gap: 20px;
+  animation: fadeIn 2s ease-in-out;
 }
 
 @keyframes fadeIn {

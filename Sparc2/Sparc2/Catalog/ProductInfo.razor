@@ -19,8 +19,8 @@
     </section>
     <footer>
         <div class="credits">
-            <h4>Credits <button class="@creditsClass" @onclick=ToggleCredits>+</button></h4>
-            <div class="creditsClass">
+            <h4><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h4>
+            <div class="@creditsClass">
                 <p>Vitae pellentesque | Position Title</p>
                 <p>Sem placerat | Position Title</p>
                 <p>Accumsan maecenas | Position Title</p>
@@ -29,11 +29,21 @@
                 <p>Suspendisse aliquet | Position Title</p>
             </div>
         </div>
+        @if (PageType == "Product")
+        {
+            <ProductActions ActiveProduct=ActiveProduct OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+        }
     </footer>
 </div>
 
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public string? PageType { get; set; }
+    [Parameter] public EventCallback OnClickHelp { get; set; }
+    [Parameter] public EventCallback OnClickPurchase { get; set; }
+    [Parameter] public EventCallback OnClickDownload { get; set; }
+    [Parameter] public EventCallback OnClickSurvey { get; set; }
+    [Parameter] public EventCallback OnClickTryDemo { get; set; }
 
     bool showCredits; 
     string creditsClass = "";
@@ -64,5 +74,30 @@
         {
             creditsClass = "rotateBack";
         }
+    }
+
+    void ClickHelp()
+    {
+        OnClickHelp.InvokeAsync();
+    }
+
+    void ClickPurchase()
+    {
+        OnClickPurchase.InvokeAsync();
+    }
+
+    void ClickDownload()
+    {
+        OnClickDownload.InvokeAsync();
+    }
+
+    void ClickSurvey()
+    {
+        OnClickSurvey.InvokeAsync();
+    }
+
+    void ClickTryDemo()
+    {
+        OnClickTryDemo.InvokeAsync();
     }
 }

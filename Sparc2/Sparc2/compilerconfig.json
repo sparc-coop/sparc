@@ -98,5 +98,13 @@
   {
     "outputFile": "Catalog/ProductInfo.razor.css",
     "inputFile": "Catalog/ProductInfo.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductActions.razor.css",
+    "inputFile": "Catalog/ProductActions.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchase.razor.css",
+    "inputFile": "Catalog/ProductPurchase.razor.scss"
   }
 ]

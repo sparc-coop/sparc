@@ -46,8 +46,9 @@ article {
     }
 
     .right {
-        height: calc(100vh - 128px);
+        height: calc(100vh - 112px);
         padding: 16px;
+        padding-bottom: 0;
         position: relative;
 
         &-header {
@@ -84,7 +85,7 @@ article {
 
         .container {
             width: 598px;
-            height: calc(100vh - 128px);
+            height: calc(100vh - 112px);
             position: fixed;
             overflow-y: auto;
             top: 112px;
