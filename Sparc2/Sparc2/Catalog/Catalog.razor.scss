@@ -1,6 +1,10 @@
 article {
     grid-column: 1 / span 12;
 
+    @media only screen and (max-width: 500px) {
+        
+    }
+
     .page-container {
         display: flex;
         flex-direction: row;
@@ -19,9 +23,9 @@ article {
         padding-bottom: 32px;
 
         .product-card {
+            aspect-ratio: 3 / 4;
             width: calc(100% - 32px);
-            min-height: 400px;
-            max-height: 507px;
+            height: auto;
             padding: 16px;
             display: flex;
             justify-content: center;

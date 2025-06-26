@@ -15,6 +15,13 @@ main .grid {
   animation: fadeIn 2s ease-in-out;
 }
 
+@media only screen and (max-width: 500px) {
+  main .grid {
+    margin: 0 32px;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 16px;
+  }
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;

@@ -6,7 +6,7 @@ function initCatalog(dotnetReference) {
         var t = e.target;
 
         if (t.closest(".product")) {
-            console.log("hovered on product card: " + t.getAttribute("data-id"));
+            //console.log("hovered on product card: " + t.getAttribute("data-id"));
             productId = t.getAttribute("data-id");
             hoverProduct(dotnetReference);
         }
@@ -89,5 +89,6 @@ function clickProductTab(dotnetReference) {
 }
 
 function replaceURL(obj, url) {
-    history.replaceState(obj, "", url);
+    //history.replaceState(obj, "", url);
+    window.history.back();
 }

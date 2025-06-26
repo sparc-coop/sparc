@@ -17,9 +17,9 @@ article .left {
   padding-bottom: 32px;
 }
 article .left .product-card {
+  aspect-ratio: 3/4;
   width: calc(100% - 32px);
-  min-height: 400px;
-  max-height: 507px;
+  height: auto;
   padding: 16px;
   display: flex;
   justify-content: center;

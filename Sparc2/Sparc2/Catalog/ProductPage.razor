@@ -117,7 +117,8 @@
         {
             var url = "/catalog";
             //var obj = new { ProductId = ActiveProduct?.Id };
-            Nav.NavigateTo(url);
+            //Nav.NavigateTo(url);
+            Js.InvokeVoidAsync("replaceURL", url);
             //var url = "/catalog" + (ActiveProduct != null ? $"/#{ActiveProduct.Id}" : "");
             // Js.InvokeVoidAsync("replaceURL", obj, url);
             // Nav.NavigateTo(url, new NavigationOptions()
