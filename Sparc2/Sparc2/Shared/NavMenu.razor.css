@@ -260,7 +260,7 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
   }
   .home-nav .right.mobile-menu.show {
     transform: translateX(0);
-    transition: transform 1.5s ease-out;
+    transition: transform 1.5s ease-in-out;
   }
   .home-nav .right .menu {
     background: var(--yellow-50);

@@ -309,7 +309,7 @@ button, .button, a {
             &.mobile-menu {
                 &.show {
                     transform: translateX(0);
-                    transition: transform 1.5s ease-out;
+                    transition: transform 1.5s ease-in-out;
                 }
             }
 
