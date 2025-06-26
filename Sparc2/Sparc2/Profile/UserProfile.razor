@@ -41,10 +41,8 @@
             </Modal>
             break;
         case "Language":
-            <Modal Title="Language:" CssClass="language-modal" OnClose="OnCancel" OnSave="OnSaveLanguage">
-                <EditLanguage CurrentUser="CurrentUser"
-                              SelectedLanguageId="SelectedLanguageId"
-                              SelectedLanguageIdChanged="OnLanguageChanged" />
+            <Modal Title="Select Language" CssClass="language-modal" OnClose="OnCancel" ShowDefaultButtons="true" ShowSaveButton="false">
+                <kori-langselect></kori-langselect>
             </Modal>
             break;
         case "Avatar":
@@ -180,22 +178,6 @@
             VerificationCode = "";
             ShowVerificationModal = true;
         }
-        await GetUserInfo();
-    }
-
-    private async Task OnSaveLanguage()
-    {
-        if (SelectedLanguageId is not null)
-        {
-            var languages = await SparcEngine.GetLanguages();
-            var language = languages.FirstOrDefault(l => l.Id == SelectedLanguageId);
-            if (language is not null)
-            {
-                await SparcEngine.AddUserLanguage(language);
-            }
-        }
-        ShowModal = false;
-        InfoType = string.Empty;
         await GetUserInfo();
     }
 

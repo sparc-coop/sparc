@@ -10,7 +10,10 @@
             @if (ShowDefaultButtons)
             {
                 <button class="secondary-btn" @onclick="Close">Cancel</button>
-                <button class="primary-btn" @onclick="OnSave">Save</button>
+                @if (ShowSaveButton)
+                {
+                    <button class="primary-btn" @onclick="OnSave">Save</button>
+                }
             }
         </footer>
     </div>
@@ -22,6 +25,7 @@
     [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public EventCallback OnSave { get; set; }
     [Parameter] public bool ShowDefaultButtons { get; set; } = true;
+    [Parameter] public bool ShowSaveButton { get; set; } = true;
     [Parameter] public string CssClass { get; set; } = "";
 
     private async Task Close() => await OnClose.InvokeAsync();
