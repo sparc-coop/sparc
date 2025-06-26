@@ -1,5 +1,9 @@
 .product-purchase {
+    width: 100%;
+    padding: 16px;
+
     form {
+        width: 100%;
         display: flex;
         flex-direction: column;
         gap: 32px;
@@ -32,8 +36,13 @@
                 gap: 16px;
             }
 
+            label {
+                width: 100%;
+            }
+
             &:nth-child(1) {
                 label {
+                    width: calc(100% - 64px);
                     display: flex;
                     padding: 32px;
                     align-items: center;

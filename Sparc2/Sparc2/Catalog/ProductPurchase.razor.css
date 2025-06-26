@@ -1,4 +1,9 @@
-﻿.product-purchase form {
+﻿.product-purchase {
+  width: 100%;
+  padding: 16px;
+}
+.product-purchase form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -27,7 +32,11 @@
   align-items: center;
   gap: 16px;
 }
+.product-purchase form section label {
+  width: 100%;
+}
 .product-purchase form section:nth-child(1) label {
+  width: calc(100% - 64px);
   display: flex;
   padding: 32px;
   align-items: center;

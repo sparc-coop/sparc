@@ -87,3 +87,7 @@ function initProductActions(dotnetReference) {
 function clickProductTab(dotnetReference) {
     dotnetReference.invokeMethodAsync('OnClickTab', tabId);
 }
+
+function replaceURL(obj, url) {
+    history.replaceState(obj, "", url);
+}
