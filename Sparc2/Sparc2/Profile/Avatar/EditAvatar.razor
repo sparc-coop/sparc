@@ -54,7 +54,6 @@
     private async Task HandleEmojiChanged(string emoji)
     {
         User.Emoji = emoji;
-        Console.WriteLine("Novo emoji no User: " + User.Emoji);
         await OnEmojiChanged.InvokeAsync(emoji);
     }
 }
