@@ -248,18 +248,22 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     padding: 42px 16px 16px 16px;
   }
   .home-nav .right {
-    display: none;
     background: var(--yellow-50);
-  }
-  .home-nav .right.mobile-menu.show {
     display: block;
     position: fixed;
     top: 80px;
-    left: 0;
+    right: 0;
     width: 100vw;
     height: calc(100vh - 80px);
+    transform: translateX(100vw);
+    transition: transform 1.5s ease-in;
+  }
+  .home-nav .right.mobile-menu.show {
+    transform: translateX(0);
+    transition: transform 1.5s ease-out;
   }
   .home-nav .right .menu {
+    background: var(--yellow-50);
     height: calc(100% - 64px);
     padding: 32px;
     flex-direction: column;
