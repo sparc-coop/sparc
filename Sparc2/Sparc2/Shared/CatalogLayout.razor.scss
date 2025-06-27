@@ -1,10 +1,10 @@
 main {
     width: 100vw;
     height: calc(100vh - 80px);
-    display: flex;
-    justify-content: center;
     margin-top: 80px;
     padding-top: 16px;
+    display: flex;
+    justify-content: center;
     font-family: 'elza-text', sans-serif;
     background: var(--yellow-50);
 
@@ -18,11 +18,15 @@ main {
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 766px) {
     main {
+        height: calc(100vh - 64px);
+        margin-top: 64px;
+        padding: 0;
+
         .grid {
-            margin: 0 32px;
-            grid-template-columns: repeat(12, 1fr);
+            width: 100%;
+            grid-template-columns: repeat(4, 1fr);
             column-gap: 16px;
         }
     }

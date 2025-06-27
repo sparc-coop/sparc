@@ -1,7 +1,7 @@
-﻿<div class="product-info">
+﻿<div class="product-info @PageClass(PageType)">
     <header>
         <div>
-            <h3>@ActiveProduct.Title</h3>
+            <h2>@ActiveProduct.Title</h2>
             <div class="price">
                 <span>$@ActiveProduct.Price.ToString()</span>
             </div>
@@ -19,7 +19,7 @@
     </section>
     <footer>
         <div class="credits">
-            <h4><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h4>
+            <h3><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h3>
             <div class="@creditsClass">
                 <p>Vitae pellentesque | Position Title</p>
                 <p>Sem placerat | Position Title</p>
@@ -47,6 +47,18 @@
 
     bool showCredits; 
     string creditsClass = "";
+
+    string PageClass (string page)
+    {
+        var pageClass = page switch
+        {
+            "Catalog" => "catalog-page",
+            "Product" => "product-page",
+            _ => ""
+        };
+
+        return pageClass;
+    }
 
     string TagColor(string tag)
     {

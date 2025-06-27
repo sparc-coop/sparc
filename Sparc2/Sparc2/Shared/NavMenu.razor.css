@@ -14,6 +14,9 @@ nav.home-nav {
   padding: 16px 32px;
   background: var(--yellow-50);
 }
+nav.home-nav .menu-toggle {
+  display: none;
+}
 nav .container {
   width: 100%;
   display: flex;
@@ -242,12 +245,33 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     padding: 32px 32px 12px 32px;
   }
 }
-@media (min-width: 375px) and (max-width: 766px) {
-  .home-nav {
+@media only screen and (max-width: 766px) {
+  nav.home-nav {
+    height: 32px;
     width: calc(100vw - 64px);
-    padding: 42px 16px 16px 16px;
+    margin: 0;
+    padding: 16px 32px;
+    position: fixed;
+    top: 0;
+    left: 0;
   }
-  .home-nav .right {
+  nav.home-nav .left ::deep svg {
+    height: 22px;
+    width: auto;
+  }
+  nav.home-nav .menu-toggle {
+    display: block;
+  }
+  nav.home-nav .menu-toggle button {
+    height: 32px;
+    width: fit-content;
+    padding: 0;
+  }
+  nav.home-nav .menu-toggle button ::deep svg {
+    height: 32px;
+    width: auto;
+  }
+  nav.home-nav .right {
     background: var(--yellow-50);
     display: block;
     position: fixed;
@@ -258,11 +282,11 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     transform: translateX(100vw);
     transition: transform 1.5s ease-in;
   }
-  .home-nav .right.mobile-menu.show {
+  nav.home-nav .right.mobile-menu.show {
     transform: translateX(0);
     transition: transform 1.5s ease-in-out;
   }
-  .home-nav .right .menu {
+  nav.home-nav .right .menu {
     background: var(--yellow-50);
     height: calc(100% - 64px);
     padding: 32px;
@@ -271,19 +295,19 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     align-items: start;
     gap: 48px;
   }
-  .home-nav .right .menu > * {
+  nav.home-nav .right .menu > * {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 32px;
   }
-  .home-nav .right .menu hr {
+  nav.home-nav .right .menu hr {
     width: 100%;
     height: 1px;
     background: var(--yellow-200);
     border: none;
   }
-  .home-nav .right .menu h5 {
+  nav.home-nav .right .menu h5 {
     display: block;
     padding: 8px;
     color: var(--purple-500);
@@ -295,24 +319,24 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     letter-spacing: -0.14px;
     text-transform: uppercase;
   }
-  .home-nav .right .menu button, .home-nav .right .menu .button, .home-nav .right .menu a {
+  nav.home-nav .right .menu button, nav.home-nav .right .menu .button, nav.home-nav .right .menu a {
     padding: 8px 16px !important;
     text-align: left;
   }
-  .home-nav .right .menu-pages a {
+  nav.home-nav .right .menu-pages a {
     font-size: 2.133rem;
     color: var(--purple-800);
     text-decoration: none;
     letter-spacing: -0.14px;
   }
-  .home-nav .right .menu-pages a:hover {
+  nav.home-nav .right .menu-pages a:hover {
     color: var(--purple-500);
     text-decoration: underline;
   }
-  .home-nav .right .menu-pages a:active {
+  nav.home-nav .right .menu-pages a:active {
     color: var(--purple-800);
   }
-  .home-nav .right .menu-profile .account-btn {
+  nav.home-nav .right .menu-profile .account-btn {
     margin-left: 16px;
   }
 }
