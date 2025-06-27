@@ -272,13 +272,13 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     width: auto;
   }
   nav.home-nav .right {
-    background: var(--yellow-50);
-    display: block;
-    position: fixed;
-    top: 80px;
-    right: 0;
     width: 100vw;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    right: 0;
+    display: block;
+    background: var(--yellow-50);
     transform: translateX(100vw);
     transition: transform 1.5s ease-in;
   }
@@ -294,6 +294,7 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     justify-content: start;
     align-items: start;
     gap: 48px;
+    overflow-y: auto;
   }
   nav.home-nav .right .menu > * {
     display: flex;

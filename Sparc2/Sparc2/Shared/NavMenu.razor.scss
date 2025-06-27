@@ -314,6 +314,7 @@ button, .button, a {
 
             .menu-toggle {
                 display: block;
+
                 button {
                     height: 32px;
                     width: fit-content;
@@ -327,13 +328,13 @@ button, .button, a {
             }
 
             .right {
-                background: var(--yellow-50);
-                display: block;
-                position: fixed;
-                top: 80px;
-                right: 0;
                 width: 100vw;
-                height: calc(100vh - 80px);
+                height: calc(100vh - 64px);
+                position: fixed;
+                top: 64px;
+                right: 0;
+                display: block;
+                background: var(--yellow-50);
                 transform: translateX(100vw);
                 transition: transform 1.5s ease-in;
 
@@ -352,6 +353,7 @@ button, .button, a {
                     justify-content: start;
                     align-items: start;
                     gap: 48px;
+                    overflow-y: auto;
 
                     > * {
                         display: flex;
