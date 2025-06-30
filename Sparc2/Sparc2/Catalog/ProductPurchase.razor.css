@@ -27,7 +27,7 @@
   align-items: center;
   gap: 16px;
 }
-.product-purchase form section:nth-child(1) label {
+.product-purchase form section.license-section label {
   display: flex;
   padding: 32px;
   align-items: center;
@@ -38,25 +38,48 @@
   /* Shadow */
   box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.1), 0px 0px 4px 0px rgba(26, 12, 50, 0.2);
 }
-.product-purchase form section:nth-child(1) label span {
+.product-purchase form section.license-section label span {
   font-size: 2.133rem;
   font-style: normal;
   font-weight: 500;
   line-height: 110%; /* 23.463px */
 }
-.product-purchase form section:nth-child(2) label {
+.product-purchase form section.billing-section label {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.product-purchase form section:nth-child(2) label span {
+.product-purchase form section.billing-section label span {
   font-size: 1.2rem;
   font-style: normal;
   font-weight: 500;
   line-height: 140%; /* 16.8px */
   letter-spacing: -0.12px;
 }
-.product-purchase form section:nth-child(2) label input {
+.product-purchase form section.billing-section label input {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 26px;
+  border: 1px solid var(--purple-100);
+  opacity: 0.5;
+}
+.product-purchase form section.payment-section label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.product-purchase form section.payment-section label span {
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 16.8px */
+  letter-spacing: -0.12px;
+}
+.product-purchase form section.payment-section label input {
   display: flex;
   padding: 16px;
   flex-direction: column;

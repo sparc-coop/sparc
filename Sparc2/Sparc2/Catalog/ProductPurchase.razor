@@ -21,44 +21,44 @@
                 <div class="form-group">
                     <label>
                         <span>First Name *</span>
-                        <input @bind="CurrentUserBilling.FirstName" placeholder="First Name" />
+                        <input @bind="Order.FirstName" placeholder="First Name" />
                     </label>
                     <label>
                         <span>Last Name *</span>
-                        <input @bind="CurrentUserBilling.LastName" placeholder="Last Name" />
+                        <input @bind="Order.LastName" placeholder="Last Name" />
                     </label>
                 </div>
                 <label>
                     <span>Address *</span>
-                    <input @bind="CurrentUserBilling.Address" placeholder="Address" />
+                    <input @bind="Order.Address" placeholder="Address" />
                 </label>
                 <label>
                     <span>Address 2</span>
-                    <input @bind="CurrentUserBilling.Address2" placeholder="Additional Address" />
+                    <input @bind="Order.Address2" placeholder="Additional Address" />
                 </label>
                 <div class="form-group">
                     <label>
                         <span>City *</span>
-                        <input @bind="CurrentUserBilling.City" placeholder="City" />
+                        <input @bind="Order.City" placeholder="City" />
                     </label>
                     <label>
                         <span>State/Province *</span>
-                        <input @bind="CurrentUserBilling.State" placeholder="State/Province" />
+                        <input @bind="Order.State" placeholder="State/Province" />
                     </label>
                 </div>
                 <div class="form-group">
                     <label>
                         <span>Country *</span>
-                        <input @bind="CurrentUserBilling.Country" placeholder="Country" />
+                        <input @bind="Order.Country" placeholder="Country" />
                     </label>
                     <label>
                         <span>ZIP *</span>
-                        <input @bind="CurrentUserBilling.Zip" placeholder="ZIP Code" />
+                        <input @bind="Order.Zip" placeholder="ZIP Code" />
                     </label>
                 </div>
                 <label>
                     <span>Phone number (optional)</span>
-                    <input @bind="CurrentUserBilling.Phone"placeholder="Phone Number" />
+                    <input @bind="Order.Phone" placeholder="Phone Number" />
                 </label>
             </div>
         </section>
@@ -68,30 +68,30 @@
                 <div class="form-group">
                     <label>
                         <span>Discount Code</span>
-                        <input @bind="CurrentUserBilling.FirstName" placeholder="First Name" />
+                        <input @bind="Order.FirstName" placeholder="First Name" />
                     </label>
                 </div>
                 <label>
                     <span>Address *</span>
-                    <input @bind="CurrentUserBilling.Address" placeholder="Address" />
+                    <input @bind="Order.Address" placeholder="Address" />
                 </label>
                 <label>
                     <span>Address 2</span>
-                    <input @bind="CurrentUserBilling.Address2" placeholder="Additional Address" />
+                    <input @bind="Order.Address2" placeholder="Additional Address" />
                 </label>
                 <div class="form-group">
                     <label>
                         <span>Country *</span>
-                        <input @bind="CurrentUserBilling.Country" placeholder="Country" />
+                        <input @bind="Order.Country" placeholder="Country" />
                     </label>
                     <label>
                         <span>ZIP *</span>
-                        <input @bind="CurrentUserBilling.Zip" placeholder="ZIP Code" />
+                        <input @bind="Order.Zip" placeholder="ZIP Code" />
                     </label>
                 </div>
                 <label>
                     <span>Phone number (optional)</span>
-                    <input @bind="CurrentUserBilling.Phone" placeholder="Phone Number" />
+                    <input @bind="Order.Phone" placeholder="Phone Number" />
                 </label>
             </div>
         </section>
@@ -108,7 +108,7 @@
     [Parameter] public Product? ActiveProduct { get; set; }
 
     BlossomUser? CurrentUser;
-    UserBilling CurrentUserBilling = new UserBilling();
+    CreateOrderRequest Order = new CreateOrderRequest();
 
     protected override async Task OnInitializedAsync()
     {
