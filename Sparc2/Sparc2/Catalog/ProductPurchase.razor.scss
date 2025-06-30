@@ -62,7 +62,7 @@
                 }
             }
 
-            &:nth-child(2) {
+            &.billing-section {
                 label {
                     display: flex;
                     flex-direction: column;
@@ -76,7 +76,35 @@
                         letter-spacing: -0.12px;
                     }
 
-                    input[type=text], input[type=email], input[type=tel], input[type=password] {
+                    input {
+                        display: flex;
+                        padding: 16px;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        gap: 10px;
+                        border-radius: 26px;
+                        border: 1px solid var(--purple-100);
+                        opacity: 0.5;
+                    }
+                }
+            }
+
+            &.payment-section {
+                label {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+
+                    span {
+                        font-size: 1.2rem;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 140%; /* 16.8px */
+                        letter-spacing: -0.12px;
+                    }
+
+                    input {
                         display: flex;
                         padding: 16px;
                         flex-direction: column;

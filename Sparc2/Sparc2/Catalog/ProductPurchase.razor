@@ -1,74 +1,131 @@
-﻿<div class="product-purchase">
-    <form>
-        <section>
+﻿@using Sparc.Blossom.Authentication
+@using Sparc.Blossom.Billing
+<div class="product-purchase">
+    <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
+        <section class="license-section">
             <h5>Select License</h5>
-            <div class="form-container">
-                <label>
-                    <input type="radio" name="license-input" />
-                    <span>For yourself</span>
-                </label>
-                <label>
-                    <input type="radio" name="license-input" />
-                    <span>Gift</span>
-                </label>
-            </div>
+                <div class="form-container">
+                    <label>
+                        <input type="radio" name="license-input" />
+                        <span>For yourself</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="license-input" />
+                        <span>Gift</span>
+                    </label>
+                </div>
         </section>
-        <section>
+        <section class="billing-section">
             <h5>Billing Information</h5>
             <div class="form-container">
                 <div class="form-group">
                     <label>
                         <span>First Name *</span>
-                        <input type="text" placeholder="First Name" required/>
+                        <input @bind="Order.FirstName" placeholder="First Name" />
                     </label>
                     <label>
                         <span>Last Name *</span>
-                        <input type="text" placeholder="Last Name" />
+                        <input @bind="Order.LastName" placeholder="Last Name" />
                     </label>
                 </div>
                 <label>
                     <span>Address *</span>
-                    <input type="text" placeholder="Address" required />
+                    <input @bind="Order.Address" placeholder="Address" />
                 </label>
                 <label>
                     <span>Address 2</span>
-                    <input type="text" placeholder="Additional Address" />
+                    <input @bind="Order.Address2" placeholder="Additional Address" />
                 </label>
                 <div class="form-group">
                     <label>
                         <span>City *</span>
-                        <input type="text" placeholder="City" required />
+                        <input @bind="Order.City" placeholder="City" />
                     </label>
                     <label>
                         <span>State/Province *</span>
-                        <input type="text" placeholder="State/Province" required />
+                        <input @bind="Order.State" placeholder="State/Province" />
                     </label>
                 </div>
                 <div class="form-group">
                     <label>
                         <span>Country *</span>
-                        <input type="text" placeholder="Country" required />
+                        <input @bind="Order.Country" placeholder="Country" />
                     </label>
                     <label>
                         <span>ZIP *</span>
-                        <input type="text" placeholder="ZIP Code" required />
+                        <input @bind="Order.Zip" placeholder="ZIP Code" />
                     </label>
                 </div>
                 <label>
                     <span>Phone number (optional)</span>
-                    <input type="tel" placeholder="Phone Number" />
+                    <input @bind="Order.Phone" placeholder="Phone Number" />
                 </label>
             </div>
         </section>
+        <section class="payment-section">
+            <h5>Payment Information</h5>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>
+                        <span>Discount Code</span>
+                        <input @bind="Order.FirstName" placeholder="First Name" />
+                    </label>
+                </div>
+                <label>
+                    <span>Address *</span>
+                    <input @bind="Order.Address" placeholder="Address" />
+                </label>
+                <label>
+                    <span>Address 2</span>
+                    <input @bind="Order.Address2" placeholder="Additional Address" />
+                </label>
+                <div class="form-group">
+                    <label>
+                        <span>Country *</span>
+                        <input @bind="Order.Country" placeholder="Country" />
+                    </label>
+                    <label>
+                        <span>ZIP *</span>
+                        <input @bind="Order.Zip" placeholder="ZIP Code" />
+                    </label>
+                </div>
+                <label>
+                    <span>Phone number (optional)</span>
+                    <input @bind="Order.Phone" placeholder="Phone Number" />
+                </label>
+            </div>
+        </section>
+        <section class="summary-section">
+
+        </section>
+        <button type="submit" class="btn btn-primary">
+            Purchase
+        </button>
     </form>
 </div>
 
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
-    // if any input is updated, show confirm modal before user navigates away
-    // blank value passed into purchase component
-    // pass binded value back to parent component
-    // when user clicks back arrow on ProductPage.razor, checks if values have been changed
-    // if yes, show confirm modal before navigating away
+    BlossomUser? CurrentUser;
+    CreateOrderRequest Order = new CreateOrderRequest();
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentUser = await SparcEngine.UserInfo();
+        var stripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        var test = ActiveProduct;
+
+        var bpoint = "";
+    }
+
+    public Task<string> SubmitUserBilling()
+    {
+        if (CurrentUser == null)
+        {
+            throw new InvalidOperationException("User is not authenticated.");
+        }
+
+        return Task.FromResult("Billing information submitted successfully.");
+    }
 }
