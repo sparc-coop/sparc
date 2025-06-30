@@ -96,7 +96,7 @@
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("initSparcEngineAuthenticator", ApiKey);
+            await JS.InvokeVoidAsync("initSparcAuthenticator", ApiKey);
             await FetchUserInfo();
         }
     }
