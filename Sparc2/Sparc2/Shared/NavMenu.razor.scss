@@ -180,9 +180,10 @@ button, .button, a {
         justify-content: center;
         gap: 4px;
         color: var(--yellow-50);
+        align-items: center;
 
         ::deep svg {
-            margin-top: 1px;
+            /*margin-top: 1px;*/
         }
 
         &:hover {
