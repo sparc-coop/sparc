@@ -56,8 +56,8 @@
     "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
   },
   {
-    "outputFile": "Pages/KoriReferral.razor.css",
-    "inputFile": "Pages/KoriReferral.razor.scss"
+    "outputFile": "Pages/TovikReferral.razor.css",
+    "inputFile": "Pages/TovikReferral.razor.scss"
   },
   {
     "outputFile": "Shared/Components/FaqItem.razor.css",

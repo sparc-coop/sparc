@@ -169,7 +169,7 @@ section .how-it-works .articles article div h5 {
 section .how-it-works .articles article div p {
   font-size: 20px;
 }
-section .kori-updates {
+section .tovik-updates {
   position: relative;
   z-index: 1;
   display: flex;
@@ -177,7 +177,7 @@ section .kori-updates {
   gap: 72px;
   padding: 100px 105px;
 }
-section .kori-updates::before {
+section .tovik-updates::before {
   content: "";
   position: absolute;
   top: 0;
@@ -188,23 +188,23 @@ section .kori-updates::before {
   background: #F9FAFF;
   z-index: -1;
 }
-section .kori-updates div {
+section .tovik-updates div {
   display: flex;
   flex-direction: column;
   gap: 28px;
 }
-section .kori-updates div h3 {
+section .tovik-updates div h3 {
   font-size: 36px;
 }
-section .kori-updates div p {
+section .tovik-updates div p {
   font-size: 20px;
 }
-section .kori-updates div a {
+section .tovik-updates div a {
   font-size: 20px;
   color: var(--orange-500);
   padding-top: 6px;
 }
-section .kori-updates div a:hover {
+section .tovik-updates div a:hover {
   text-decoration: underline;
 }
 section .faq {
@@ -318,7 +318,7 @@ section .terms a:hover {
     align-items: center;
     gap: 20px;
   }
-  section .kori-updates {
+  section .tovik-updates {
     padding: 100px 0;
   }
   section .terms {
@@ -397,13 +397,13 @@ section .terms a:hover {
   section .how-it-works .articles article div {
     width: 100%;
   }
-  section .kori-updates {
+  section .tovik-updates {
     padding: 50px 0;
   }
-  section .kori-updates div h3 {
+  section .tovik-updates div h3 {
     font-size: 22px;
   }
-  section .kori-updates div p, section .kori-updates div a {
+  section .tovik-updates div p, section .tovik-updates div a {
     font-size: 16px;
   }
   section .faq {
@@ -498,13 +498,13 @@ section .terms a:hover {
   section .how-it-works .articles article div {
     width: 100%;
   }
-  section .kori-updates {
+  section .tovik-updates {
     padding: 50px 0;
   }
-  section .kori-updates div h3 {
+  section .tovik-updates div h3 {
     font-size: 22px;
   }
-  section .kori-updates div p, section .kori-updates div a {
+  section .tovik-updates div p, section .tovik-updates div a {
     font-size: 16px;
   }
   section .faq {
