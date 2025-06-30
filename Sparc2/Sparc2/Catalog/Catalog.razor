@@ -6,9 +6,9 @@
         <div class="left">
             @foreach (var app in Products)
             {
-                <div class="product product-card" data-id="@app.Id">
+                <div id="@app.Id" class="product product-card" data-id="@app.Id">
                     <div class="product card-overlay" data-id="@app.Id"></div>
-                    <div class="product title" data-id="@app.Id">@app.Title</div>
+                    <div class="product title" data-id="@app.Id"><h4 class="product" data-id="@app.Id">@app.Title</h4></div>
                 </div>
             }
         </div>
@@ -75,8 +75,6 @@
     {
         ProductService.OnProductsChanged -= UpdateProducts;
     }
-
-
 
     [JSInvokable("OnHoverProduct")]
     public void OnHoverProduct(string id)

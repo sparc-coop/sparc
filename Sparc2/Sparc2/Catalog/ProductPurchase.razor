@@ -65,4 +65,10 @@
 
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
+
+    // if any input is updated, show confirm modal before user navigates away
+    // blank value passed into purchase component
+    // pass binded value back to parent component
+    // when user clicks back arrow on ProductPage.razor, checks if values have been changed
+    // if yes, show confirm modal before navigating away
 }

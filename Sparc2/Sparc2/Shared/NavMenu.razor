@@ -1,18 +1,18 @@
 ﻿@using Sparc.Blossom.Authentication
 
-<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav")">
+<nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav") @(showMobileMenu ? "nav-mobile" : "")">
     <div class="container">
         @if (IsIdeasPage)
         {
             <div class="left">
-                <button @onclick='() => Navigate("/")'><ArrowLeftIcon /> <span>Exit</span></button>
+                <a @onclick='() => Navigate("/")' class="button"><ArrowLeftIcon /> <span>Exit</span></a>
             </div>
             <div class="center">
                 <input type="text" placeholder="Search" class="input-text" />
             </div>
             <div class="right">
-                <button class="tertiary-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></button>
-                <button class="tertiary-btn donate-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></button>
+                <a class="button tertiary-btn" @onclick="() => OpenAddCard(0)"><LightbulbIcon /> <span>Share Idea</span></a>
+                <a class="button tertiary-btn donate-btn" @onclick="() => OpenAddCard(1)"><DollarIcon />  <span>Donate</span></a>
             </div>
         }
         else
@@ -20,34 +20,56 @@
             <div class="left" @onclick='() => Navigate("/")'>
                 <SparcLogo TextOnly=true />
             </div>
-            <div class="right">
-                <button id="about-btn" class="secondary-btn" @onclick='() => Nav.NavigateTo("/about")'>About Us</button>
-                <button id="catalog-btn" class="secondary-btn" @onclick='() => Nav.NavigateTo("/catalog")'>Catalog</button>
-                <button id="ideas-btn" class="secondary-btn">Ideas</button>
-                @* <Auth /> *@
-                <div class="account-btn">
-                    <UserProfile />
-                    @if (CurrentUser is not null)
-                    {
-                        <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
-                            @if (IsEditingUsername)
+            <div class="right @(showMobileMenu ? "mobile-menu show" : "")">
+                <div class="menu">
+                    <div class="menu-pages">
+                        <h5>Pages</h5>
+                        <a id="about-btn" class="button secondary-btn" @onclick='() => Nav.NavigateTo("/about")'>About Us</a>
+                        <a id="catalog-btn" class="button secondary-btn" @onclick='() => Nav.NavigateTo("/catalog")'>Catalog</a>
+                        <a id="ideas-btn" class="button secondary-btn" @onclick='() => Nav.NavigateTo("/ideas")'>Ideas</a>
+                        @* <Auth /> *@
+                    </div>
+                    <hr />
+                    <div class="menu-profile">
+                        <h5>Profile</h5>
+                        <div class="account-btn">
+                            <UserProfile />
+                            @if (CurrentUser is not null)
                             {
-                                <input type="text" @bind="Username"
-                                       @ref="UsernameInput"
-                                       @bind:event="oninput"
-                                       @onblur="SaveUsername"
-                                       @onkeypress="HandleKeyPress" />
-                            }
-                            else
-                            {
-                                <span @onclick="StartEditing">
-                                    @CurrentUser.Username
-                                </span>
+                                <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
+                                    @if (IsEditingUsername)
+                                    {
+                                        <input type="text" @bind="Username"
+                                                @ref="UsernameInput"
+                                                @bind:event="oninput"
+                                                @onblur="SaveUsername"
+                                                @onkeypress="HandleKeyPress" />
+                                    }
+                                    else
+                                    {
+                                        <span @onclick="StartEditing">
+                                            @CurrentUser.Username
+                                        </span>
+                                    }
+                                </div>
                             }
                         </div>
-                    }
+                    </div>
                 </div>
-            </div>            
+            </div>
+            <div id="menu-toggle" class="menu-toggle">
+                @if (!showMobileMenu)
+                {
+                    <button id="open-menu" @onclick=ToggleMobileMenu>
+                        <SparcMenuIcon />
+                    </button>
+                } else
+                {
+                    <button id="close-menu" @onclick=ToggleMobileMenu>
+                        <SparcCloseIcon />
+                    </button>
+                }
+            </div>
         }
     </div>
 </nav>
@@ -70,6 +92,7 @@
     private bool IsEditingUsername = false;
     private string Username = string.Empty;
     private ElementReference UsernameInput;
+    bool showMobileMenu;
 
     protected override async Task OnInitializedAsync() => await GetUserInfo();
 
@@ -129,5 +152,20 @@
 
         await Js.InvokeVoidAsync("setEditingUsername", false);
     }
-}
 
+    async Task ToggleMobileMenu()
+    {
+        Console.WriteLine($"ToggleMobileMenu: {showMobileMenu}");
+        showMobileMenu = !showMobileMenu;
+
+        if (showMobileMenu)
+        {
+            await Js.InvokeVoidAsync("disableBodyScrolling", true);
+        } else
+        {
+            await Js.InvokeVoidAsync("disableBodyScrolling", false);
+        }
+
+        StateHasChanged();
+    }
+}
