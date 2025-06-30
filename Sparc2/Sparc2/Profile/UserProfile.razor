@@ -80,7 +80,7 @@
     private bool ShowVerificationModal = false;
     private string CurrentVerificationDestination = "";
 
-    private UserAvatar EditableAvatar = new("", "");
+    private BlossomAvatar EditableAvatar = new("", "");
 
     public bool IsOnline => CurrentUser is not null == true;
     private record ModalAction(string Type, string Title, string Icon, string CssClass);

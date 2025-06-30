@@ -3,7 +3,7 @@
 <div class="color-selector">
     <h3>Color</h3>
     <ul class="colors">
-        @foreach (var color in UserAvatar.BackgroundColors())
+        @foreach (var color in BlossomAvatar.BackgroundColors())
         {
             <li @onclick="() => SetColor(color)" class="@(BackgroundColor == color ? "selected" : "")">
                 <span style="background: @color">&nbsp;</span>
