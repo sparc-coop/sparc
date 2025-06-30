@@ -102,8 +102,6 @@
         CurrentUser = await SparcEngine.UserInfo();
         Email = CurrentUser?.Email ?? "";
         PhoneNumber = CurrentUser?.PhoneNumber ?? "";
-        Console.WriteLine("---------Current User Id: " + (CurrentUser?.Id ?? "No user loaded"));
-        Console.WriteLine("---------Current User Avatar Id: " + (CurrentUser?.Avatar.Id ?? "No user loaded"));
     }
 
     private async Task OnShowModal(string type)
@@ -234,7 +232,6 @@
     private void OnAvatarChanged(string emoji)
     {
         EditableAvatar.Emoji = emoji;
-        Console.WriteLine("New Avatar (Editable): " + EditableAvatar.Emoji);
     }
 
     private async Task VerifyCode(string code)

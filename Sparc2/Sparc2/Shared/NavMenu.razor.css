@@ -31,7 +31,7 @@ nav .right {
 nav .right .account-btn {
   display: flex;
   align-items: center;
-  gap: 8px;
+  /*gap: 8px;*/
 }
 nav .right .account-btn ::deep svg path {
   stroke: var(--purple-800);
