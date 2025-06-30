@@ -213,7 +213,7 @@
     private string VerificationError = "";
     private bool ShowVerificationModal = false;
 
-    private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductName == "Kori") == true;
+    private bool HasKoriAccess => CurrentUser?.Products?.Any(p => p.ProductId == "Kori") == true;
 
     private readonly List<(string, string)> BreadcrumbItems = new()
     {
