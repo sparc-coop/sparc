@@ -67,7 +67,7 @@
                         letter-spacing: -0.12px;
                     }
 
-                    input[type=text], input[type=email], input[type=tel], input[type=password] {
+                    input {
                         display: flex;
                         padding: 16px;
                         flex-direction: column;
