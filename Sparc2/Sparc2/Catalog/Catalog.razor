@@ -48,6 +48,11 @@
         if (firstRender)
         {
             await Js.InvokeVoidAsync("initCatalog", DotNetObjectReference.Create(this));
+
+            foreach (var product in Products)
+            {
+                await Js.InvokeVoidAsync("hoverProductInView", DotNetObjectReference.Create(this), product.Id);
+            }
         }
     }
 
@@ -96,5 +101,10 @@
         }
 
         Nav.NavigateTo($"/catalog/{id}");
+    }
+
+    void ViewProductInfo(string id)
+    {
+        Js.InvokeVoidAsync("hoverProductInView", DotNetObjectReference.Create(this), id);
     }
 }

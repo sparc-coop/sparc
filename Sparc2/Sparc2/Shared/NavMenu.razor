@@ -32,7 +32,7 @@
                     <hr />
                     <div class="menu-profile">
                         <h5>Profile</h5>
-                        <div class="account-btn">
+                        @* <div class="account-btn">
                             <UserProfile />
                             @if (CurrentUser is not null)
                             {
@@ -53,22 +53,26 @@
                                     }
                                 </div>
                             }
-                        </div>
+                        </div> *@
                     </div>
                 </div>
             </div>
             <div id="menu-toggle" class="menu-toggle">
-                @if (!showMobileMenu)
+                <button id="menu-btn" class="@(showMobileMenu ? "close" : "")" @onclick=ToggleMobileMenu>
+                    <MenuMorphIcon />
+                </button>
+                @* @if (!showMobileMenu)
                 {
                     <button id="open-menu" @onclick=ToggleMobileMenu>
                         <SparcMenuIcon />
                     </button>
+
                 } else
                 {
                     <button id="close-menu" @onclick=ToggleMobileMenu>
                         <SparcCloseIcon />
                     </button>
-                }
+                } *@
             </div>
         }
     </div>
@@ -94,12 +98,12 @@
     private ElementReference UsernameInput;
     bool showMobileMenu;
 
-    protected override async Task OnInitializedAsync() => await GetUserInfo();
+    // protected override async Task OnInitializedAsync() => await GetUserInfo();
 
-    private async Task GetUserInfo()
-    {
-        CurrentUser = await SparcEngine.UserInfo();
-    }
+    // private async Task GetUserInfo()
+    // {
+    //     CurrentUser = await SparcEngine.UserInfo();
+    // }
 
     private void Navigate(string path)
     {
@@ -160,9 +164,11 @@
 
         if (showMobileMenu)
         {
+            await Js.InvokeVoidAsync("morphMenuSvg", true);
             await Js.InvokeVoidAsync("disableBodyScrolling", true);
         } else
         {
+            await Js.InvokeVoidAsync("morphMenuSvg", false);
             await Js.InvokeVoidAsync("disableBodyScrolling", false);
         }
 

@@ -97,10 +97,6 @@ button, .button, a {
     cursor: pointer;
     transition: .2s all ease-in-out;
 
-    ::deep svg path {
-        stroke: #FFFCF6;
-    }
-
     &.secondary-btn {
         padding: 0 !important;
         padding: 0 !important;
@@ -183,6 +179,10 @@ button, .button, a {
 
         ::deep svg {
             margin-top: 1px;
+
+            path {
+                stroke: #FFFCF6;
+            }
         }
 
         &:hover {
@@ -316,14 +316,24 @@ button, .button, a {
                 display: block;
 
                 button {
-                    height: 32px;
+                    height: 18px;
                     width: fit-content;
                     padding: 0;
 
                     ::deep svg {
-                        height: 32px;
+                        height: 18px;
                         width: auto;
                     }
+
+                    /*&.close {
+                        ::deep svg g#menu1 {
+                            visibility: hidden !important;
+                        }
+
+                        ::deep svg g#menu4 {
+                            visibility: visible !important;
+                        }
+                    }*/
                 }
             }
 

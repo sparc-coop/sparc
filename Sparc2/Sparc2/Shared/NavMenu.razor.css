@@ -82,9 +82,6 @@ button, .button, a {
   cursor: pointer;
   transition: 0.2s all ease-in-out;
 }
-button ::deep svg path, .button ::deep svg path, a ::deep svg path {
-  stroke: #FFFCF6;
-}
 button.secondary-btn, .button.secondary-btn, a.secondary-btn {
   padding: 0 !important;
   padding: 0 !important;
@@ -155,6 +152,9 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
 }
 .other-nav button ::deep svg, .other-nav .button ::deep svg, .other-nav a ::deep svg {
   margin-top: 1px;
+}
+.other-nav button ::deep svg path, .other-nav .button ::deep svg path, .other-nav a ::deep svg path {
+  stroke: #FFFCF6;
 }
 .other-nav button:hover, .other-nav .button:hover, .other-nav a:hover {
   border: 1px solid var(--yellow-50);
@@ -263,12 +263,21 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     display: block;
   }
   nav.home-nav .menu-toggle button {
-    height: 32px;
+    height: 18px;
     width: fit-content;
     padding: 0;
+    /*&.close {
+        ::deep svg g#menu1 {
+            visibility: hidden !important;
+        }
+
+        ::deep svg g#menu4 {
+            visibility: visible !important;
+        }
+    }*/
   }
   nav.home-nav .menu-toggle button ::deep svg {
-    height: 32px;
+    height: 18px;
     width: auto;
   }
   nav.home-nav .right {

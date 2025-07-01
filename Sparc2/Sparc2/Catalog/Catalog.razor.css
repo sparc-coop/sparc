@@ -92,8 +92,9 @@ article .right .container {
   }
   article .left {
     width: calc(100% - 32px);
-    height: calc(60vh - 80px);
+    height: calc(60vh - 96px);
     padding: 0 16px;
+    padding-bottom: 16px;
     position: fixed;
     top: calc(40vh + 80px);
     display: flex;
