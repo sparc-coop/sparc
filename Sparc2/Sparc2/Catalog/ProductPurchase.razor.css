@@ -79,7 +79,7 @@
   line-height: 140%; /* 16.8px */
   letter-spacing: -0.12px;
 }
-.product-purchase form section.payment-section label input {
+.product-purchase form section.payment-section label input, .product-purchase form section.payment-section label select {
   display: flex;
   padding: 16px;
   flex-direction: column;

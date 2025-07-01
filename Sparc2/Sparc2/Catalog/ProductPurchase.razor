@@ -1,5 +1,6 @@
 ﻿@using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Billing
+@using System.Globalization
 <div class="product-purchase">
     <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
@@ -65,34 +66,14 @@
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
+                <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
                 <div class="form-group">
                     <label>
                         <span>Discount Code</span>
                         <input @bind="Order.FirstName" placeholder="First Name" />
                     </label>
                 </div>
-                <label>
-                    <span>Address *</span>
-                    <input @bind="Order.Address" placeholder="Address" />
-                </label>
-                <label>
-                    <span>Address 2</span>
-                    <input @bind="Order.Address2" placeholder="Additional Address" />
-                </label>
-                <div class="form-group">
-                    <label>
-                        <span>Country *</span>
-                        <input @bind="Order.Country" placeholder="Country" />
-                    </label>
-                    <label>
-                        <span>ZIP *</span>
-                        <input @bind="Order.Zip" placeholder="ZIP Code" />
-                    </label>
-                </div>
-                <label>
-                    <span>Phone number (optional)</span>
-                    <input @bind="Order.Phone" placeholder="Phone Number" />
-                </label>
+                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
             </div>
         </section>
         <section class="summary-section">
@@ -107,17 +88,26 @@
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
+    private GetProductResponse? StripeProduct;
     BlossomUser? CurrentUser;
     CreateOrderRequest Order = new CreateOrderRequest();
+    
 
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
-        var stripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+
+        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        
+        
         var test = ActiveProduct;
 
         var bpoint = "";
     }
+
+
+
+
 
     public Task<string> SubmitUserBilling()
     {
