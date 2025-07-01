@@ -1,5 +1,6 @@
 ﻿@using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Billing
+@using System.Globalization
 <div class="product-purchase">
     <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
@@ -92,6 +93,9 @@
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
+                <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
+                <div class="form-group">
+                    <label>
                 <label>
                     <span>Currency</span>
                     <select id="currency" @bind="Order.Currency">
@@ -105,6 +109,7 @@
                     </label>
                     <button>Apply</button>
                 </div>
+                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
                 <label>
                     <span>Card Number *</span>
                     <input @bind="Order.Address" placeholder="Card number" />
@@ -132,8 +137,11 @@
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
+    private GetProductResponse? StripeProduct;
     BlossomUser? CurrentUser;
     CreateOrderRequest Order = new CreateOrderRequest();
+    
+
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
@@ -143,11 +151,18 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
-        var stripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+
+        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        
+        
         var test = ActiveProduct;
 
         var bpoint = "";
     }
+
+
+
+
 
     public Task<string> SubmitUserBilling()
     {

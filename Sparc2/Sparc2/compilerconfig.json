@@ -130,5 +130,13 @@
   {
     "outputFile": "Profile/UserProfile.razor.css",
     "inputFile": "Profile/UserProfile.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchasePrices.css",
+    "inputFile": "Catalog/ProductPurchasePrices.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchasePrices.razor.css",
+    "inputFile": "Catalog/ProductPurchasePrices.razor.scss"
   }
 ]
