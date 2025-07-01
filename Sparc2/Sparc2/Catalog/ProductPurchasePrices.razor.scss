@@ -23,6 +23,16 @@
             border: 1px solid var(--purple-100);
             opacity: 0.5;
         }
+
+        select {
+            width: 50%;
+        }
+    }
+
+    &.amount {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
     .amount-grid {
@@ -36,6 +46,10 @@
             border-radius: 26px;
             border: 1px solid var(--purple-100);
             opacity: 1;
+
+            &:hover {
+                background: var(--gray-200);
+            }
 
             &.selected {
                 background-color: white;

@@ -20,7 +20,7 @@
                         {
                             <div class="right">
                                 <span>
-                                    @GiftEmail                                    
+                                    @GiftEmail
                                 </span>
                                 <button type="button" class="btn btn-link" @onclick="EditGiftEmail">Edit</button>
                             </div>
@@ -94,14 +94,6 @@
             <h5>Payment Information</h5>
             <div class="form-container">
                 <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
-                <div class="form-group">
-                    <label>
-                <label>
-                    <span>Currency</span>
-                    <select id="currency" @bind="Order.Currency">
-                    <option value="dol">$ USD</option>
-                    </select>
-                </label>
                 <div class="form-group discount">
                     <label>
                         <span>Discount Code</span>
@@ -109,21 +101,7 @@
                     </label>
                     <button>Apply</button>
                 </div>
-                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
-                <label>
-                    <span>Card Number *</span>
-                    <input @bind="Order.Address" placeholder="Card number" />
-                </label>
-                <div class="form-group">
-                    <label>
-                        <span>Expiration Date *</span>
-                        <input @bind="Order.Country" placeholder="MM/YY" />
-                    </label>
-                    <label>
-                        <span>CVC *</span>
-                        <input @bind="Order.Zip" placeholder="3-digit code" />
-                    </label>
-                </div>
+                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>                
             </div>
         </section>
         <section class="summary-section">
@@ -140,8 +118,6 @@
     private GetProductResponse? StripeProduct;
     BlossomUser? CurrentUser;
     CreateOrderRequest Order = new CreateOrderRequest();
-    
-
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
@@ -153,16 +129,12 @@
         CurrentUser = await SparcEngine.UserInfo();
 
         StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
-        
-        
+
+
         var test = ActiveProduct;
 
         var bpoint = "";
     }
-
-
-
-
 
     public Task<string> SubmitUserBilling()
     {

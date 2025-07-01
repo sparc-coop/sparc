@@ -10,9 +10,9 @@
         </select>
     </label>
 </div>
-<div class="form-group">
+<div class="form-group amount">
     <label>
-        <span>Amount (USD)</span>
+        <span>Amount (@($"{GetCurrencySymbol(Order.Currency)}"))</span>
     </label>
     <div class="amount-grid">
         @foreach (var amount in ConvertedPrices.OrderBy(x => x))

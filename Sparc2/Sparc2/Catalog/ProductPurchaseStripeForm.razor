@@ -6,6 +6,21 @@
         @* @(Donation.Frequency == "Monthly" ? "Setup Monthly Donation" : $"Pay {Donation.Amount:C}") *@
     </button>
     <div id="error-message" style="color:red; margin-top: 10px;"></div>
+
+    @* <label>
+        <span>Card Number *</span>
+        <input @bind="Order.Address" placeholder="Card number" />
+    </label>
+    <div class="form-group">
+        <label>
+            <span>Expiration Date *</span>
+            <input @bind="Order.Country" placeholder="MM/YY" />
+        </label>
+        <label>
+            <span>CVC *</span>
+            <input @bind="Order.Zip" placeholder="3-digit code" />
+        </label>
+    </div> *@
 </form>
 @* <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button> *@
 

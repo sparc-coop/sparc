@@ -21,6 +21,14 @@
   border: 1px solid var(--purple-100);
   opacity: 0.5;
 }
+.form-group label select {
+  width: 50%;
+}
+.form-group.amount {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .form-group .amount-grid button {
   padding: 16px;
   margin-right: 5px;
@@ -31,6 +39,9 @@
   border-radius: 26px;
   border: 1px solid var(--purple-100);
   opacity: 1;
+}
+.form-group .amount-grid button:hover {
+  background: var(--gray-200);
 }
 .form-group .amount-grid button.selected {
   background-color: white;

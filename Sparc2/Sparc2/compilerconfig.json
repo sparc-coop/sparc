@@ -138,5 +138,9 @@
   {
     "outputFile": "Catalog/ProductPurchasePrices.razor.css",
     "inputFile": "Catalog/ProductPurchasePrices.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchaseStripeForm.razor.css",
+    "inputFile": "Catalog/ProductPurchaseStripeForm.razor.scss"
   }
 ]
