@@ -248,6 +248,13 @@
                     }
                 }
             }
+
+            &.summary-section {
+                padding: 32px;
+                border-radius: 32px;
+                background: var(--yellow-50);
+                box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.10), 0px 0px 4px 0px rgba(26, 12, 50, 0.20);                
+            }
         }
 
         .btn {

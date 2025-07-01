@@ -1,0 +1,85 @@
+﻿<h5>Select License</h5>
+<div class="form-container">
+    <label>
+        <input type="radio" name="license-input" checked="@("personal" == SelectedLicense)" @onchange="@(() => UpdateLicense("personal"))" />
+        <span>For yourself</span>
+    </label>
+
+    <label class="gift">
+        <div class="gift-email">
+            <div>
+                <input type="radio" name="license-input" checked="@("gift" == SelectedLicense)" @onchange="@(() => UpdateLicense("gift"))" />
+                <span>Gift</span>
+            </div>
+            @if (SelectedLicense == "gift" && IsGiftConfirmed)
+            {
+                <div class="right">
+                    <span>@GiftEmail</span>
+                    <button type="button" class="btn btn-link" @onclick="EditGiftEmail">Edit</button>
+                </div>
+            }
+        </div>
+
+        @if (SelectedLicense == "gift" && !IsGiftConfirmed)
+        {
+            <div class="gift-form">
+                <label>
+                    <span>Gift recipient's email *</span>
+                    <input @bind="GiftEmailInput" placeholder="Recipient's email" />
+                </label>
+                <label>
+                    <span>Confirm gift recipient's email *</span>
+                    <input @bind="GiftEmailConfirmationInput" placeholder="Confirm Recipient's email" />
+                </label>
+                <button type="button" class="btn" @onclick="ConfirmGiftEmail">Confirm</button>
+            </div>
+        }
+    </label>
+</div>
+
+@code {
+    [Parameter] public string SelectedLicense { get; set; } = "personal";
+    [Parameter] public EventCallback<string> SelectedLicenseChanged { get; set; }
+
+    [Parameter] public string GiftEmail { get; set; } = "";
+    [Parameter] public EventCallback<string> GiftEmailChanged { get; set; }
+
+    [Parameter] public string GiftEmailConfirmation { get; set; } = "";
+    [Parameter] public EventCallback<string> GiftEmailConfirmationChanged { get; set; }
+
+    [Parameter] public bool IsGiftConfirmed { get; set; }
+    [Parameter] public EventCallback<bool> IsGiftConfirmedChanged { get; set; }
+
+    private string GiftEmailInput = "";
+    private string GiftEmailConfirmationInput = "";
+
+    void UpdateLicense(string type)
+    {
+        SelectedLicenseChanged.InvokeAsync(type);
+
+        if (type == "gift")
+        {
+            IsGiftConfirmedChanged.InvokeAsync(false);
+        }
+    }
+
+    async Task ConfirmGiftEmail()
+    {
+        if (GiftEmailInput != GiftEmailConfirmationInput)
+        {
+            Console.WriteLine("Gift recipient emails do not match.");
+            return;
+        }
+
+        await GiftEmailChanged.InvokeAsync(GiftEmailInput);
+        await GiftEmailConfirmationChanged.InvokeAsync(GiftEmailConfirmationInput);
+        await IsGiftConfirmedChanged.InvokeAsync(true);
+
+        Console.WriteLine($"Gift email confirmed: {GiftEmailInput}");
+    }
+
+    Task EditGiftEmail()
+    {
+        return IsGiftConfirmedChanged.InvokeAsync(false);
+    }
+}

@@ -1,0 +1,49 @@
+﻿<h5>Billing Information</h5>
+<div class="form-container">
+    <div class="form-group">
+        <label>
+            <span>First Name *</span>
+            <input @bind="Order.FirstName" placeholder="First Name" />
+        </label>
+        <label>
+            <span>Last Name *</span>
+            <input @bind="Order.LastName" placeholder="Last Name" />
+        </label>
+    </div>
+    <label>
+        <span>Address *</span>
+        <input @bind="Order.Address" placeholder="Address" />
+    </label>
+    <label>
+        <span>Address 2</span>
+        <input @bind="Order.Address2" placeholder="Additional Address" />
+    </label>
+    <div class="form-group">
+        <label>
+            <span>City *</span>
+            <input @bind="Order.City" placeholder="City" />
+        </label>
+        <label>
+            <span>State/Province *</span>
+            <input @bind="Order.State" placeholder="State/Province" />
+        </label>
+    </div>
+    <div class="form-group">
+        <label>
+            <span>Country *</span>
+            <input @bind="Order.Country" placeholder="Country" />
+        </label>
+        <label>
+            <span>ZIP *</span>
+            <input @bind="Order.Zip" placeholder="ZIP Code" />
+        </label>
+    </div>
+    <label>
+        <span>Phone number (optional)</span>
+        <input @bind="Order.Phone" placeholder="Phone Number" />
+    </label>
+</div>
+
+@code {
+    [Parameter] public CreateOrderRequest Order { get; set; } = default!;
+}

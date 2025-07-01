@@ -4,91 +4,17 @@
 <div class="product-purchase">
     <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
-            <h5>Select License</h5>
-            <div class="form-container">
-                <label>
-                    <input type="radio" name="license-input" checked="@("personal" == SelectedLicense)" @onchange="@(() => SelectedLicense = "personal")" />
-                    <span>For yourself</span>
-                </label>
-                <label class="gift">
-                    <div class="gift-email">
-                        <div>
-                            <input type="radio" name="license-input" checked="@("gift" == SelectedLicense)" @onchange="@(() => { SelectedLicense = "gift"; IsGiftConfirmed = false; })" />
-                            <span>Gift</span>
-                        </div>
-                        @if (SelectedLicense == "gift" && IsGiftConfirmed)
-                        {
-                            <div class="right">
-                                <span>
-                                    @GiftEmail
-                                </span>
-                                <button type="button" class="btn btn-link" @onclick="EditGiftEmail">Edit</button>
-                            </div>
-                        }
-                    </div>
-                    @if (SelectedLicense == "gift" && !IsGiftConfirmed)
-                    {
-                        <div class="gift-form">
-                            <label>
-                                <span>Gift recipient's email *</span>
-                                <input @bind="GiftEmail" placeholder="Recipient's email" />
-                            </label>
-                            <label>
-                                <span>Confirm gift recipient's email *</span>
-                                <input @bind="GiftEmailConfirmation" placeholder="Confirm Recipient's' email" />
-                            </label>
-                            <button type="button" class="btn" @onclick="ConfirmGiftEmail">Confirm</button>
-                        </div>
-                    }
-                </label>
-            </div>
+            <PurchaseLicenseType SelectedLicense="SelectedLicense"
+                                 SelectedLicenseChanged="(value) => SelectedLicense = value"
+                                 GiftEmail="GiftEmail"
+                                 GiftEmailChanged="(value) => GiftEmail = value"
+                                 GiftEmailConfirmation="GiftEmailConfirmation"
+                                 GiftEmailConfirmationChanged="(value) => GiftEmailConfirmation = value"
+                                 IsGiftConfirmed="IsGiftConfirmed"
+                                 IsGiftConfirmedChanged="(value) => IsGiftConfirmed = value"></PurchaseLicenseType>
         </section>
         <section class="billing-section">
-            <h5>Billing Information</h5>
-            <div class="form-container">
-                <div class="form-group">
-                    <label>
-                        <span>First Name *</span>
-                        <input @bind="Order.FirstName" placeholder="First Name" />
-                    </label>
-                    <label>
-                        <span>Last Name *</span>
-                        <input @bind="Order.LastName" placeholder="Last Name" />
-                    </label>
-                </div>
-                <label>
-                    <span>Address *</span>
-                    <input @bind="Order.Address" placeholder="Address" />
-                </label>
-                <label>
-                    <span>Address 2</span>
-                    <input @bind="Order.Address2" placeholder="Additional Address" />
-                </label>
-                <div class="form-group">
-                    <label>
-                        <span>City *</span>
-                        <input @bind="Order.City" placeholder="City" />
-                    </label>
-                    <label>
-                        <span>State/Province *</span>
-                        <input @bind="Order.State" placeholder="State/Province" />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span>Country *</span>
-                        <input @bind="Order.Country" placeholder="Country" />
-                    </label>
-                    <label>
-                        <span>ZIP *</span>
-                        <input @bind="Order.Zip" placeholder="ZIP Code" />
-                    </label>
-                </div>
-                <label>
-                    <span>Phone number (optional)</span>
-                    <input @bind="Order.Phone" placeholder="Phone Number" />
-                </label>
-            </div>
+            <PurchaseBilling Order="Order"></PurchaseBilling>
         </section>
         <section class="payment-section">
             <h5>Payment Information</h5>
@@ -101,10 +27,11 @@
                     </label>
                     <button>Apply</button>
                 </div>
-                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>                
+                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
             </div>
         </section>
         <section class="summary-section">
+            <PurchaseSummary></PurchaseSummary>
         </section>
         <button type="submit" class="btn primary-btn">
             Purchase
