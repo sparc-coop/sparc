@@ -32,6 +32,26 @@
   align-items: center;
   gap: 16px;
 }
+.product-purchase form section .form-group.discount {
+  justify-content: normal;
+  align-items: flex-end;
+}
+.product-purchase form section .form-group.discount label {
+  width: 50%;
+}
+.product-purchase form section .form-group.discount button {
+  background: transparent;
+  display: flex;
+  height: 48px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--purple-700);
+}
+.product-purchase form section .form-group.discount button:hover {
+  border-radius: 32px;
+  border: 1px solid var(--purple-700);
+}
 .product-purchase form section label {
   width: 100%;
 }
@@ -47,11 +67,97 @@
   /* Shadow */
   box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.1), 0px 0px 4px 0px rgba(26, 12, 50, 0.2);
 }
-.product-purchase form section.license-section label span {
+.product-purchase form section:nth-child(1) label span {
   font-size: 2.133rem;
   font-style: normal;
   font-weight: 500;
   line-height: 110%; /* 23.463px */
+}
+.product-purchase form section:nth-child(1) label.gift {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+.product-purchase form section:nth-child(1) label.gift .gift-email {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+.product-purchase form section:nth-child(1) label.gift .gift-email div {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.product-purchase form section:nth-child(1) label.gift .right span {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 22.4px */
+  color: var(--black);
+  margin-right: 4px;
+}
+.product-purchase form section:nth-child(1) label.gift .right button {
+  width: fit-content;
+  background: var(--yellow-50);
+  border-radius: 20px;
+  border: 1px solid var(--purple-800);
+}
+.product-purchase form section:nth-child(1) label.gift .right button:hover {
+  background: var(--gray-100);
+}
+.product-purchase form section:nth-child(1) label.gift .right button:active {
+  background: var(--gray-600);
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form {
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form label {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  align-items: flex-start;
+  gap: 8px;
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form label span {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 16.8px */
+  color: var(--gray-900);
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form label input {
+  width: 100%;
+  border: 1px solid var(--gray-100);
+  border-radius: 16px;
+  padding: 8px 16px;
+  background: var(--yellow-50);
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form button {
+  height: 40px;
+  width: fit-content;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid var(--purple-800);
+  opacity: 0.5;
+  background: var(--yellow-50);
+  margin-top: 16px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%; /* 22.4px */
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form button:hover {
+  background: var(--gray-100);
+}
+.product-purchase form section:nth-child(1) label.gift .gift-form button:active {
+  background: var(--gray-600);
 }
 .product-purchase form section.billing-section label {
   display: flex;
@@ -88,7 +194,7 @@
   line-height: 140%; /* 16.8px */
   letter-spacing: -0.12px;
 }
-.product-purchase form section.payment-section label input {
+.product-purchase form section.payment-section label input, .product-purchase form section.payment-section label select {
   display: flex;
   padding: 16px;
   flex-direction: column;
@@ -98,4 +204,13 @@
   border-radius: 26px;
   border: 1px solid var(--purple-100);
   opacity: 0.5;
+}
+.product-purchase form section.payment-section label select {
+  width: 50%;
+}
+.product-purchase form .btn {
+  padding: 8px 16px;
+  border-radius: 100px;
+  width: 256px;
+  font-weight: 500;
 }

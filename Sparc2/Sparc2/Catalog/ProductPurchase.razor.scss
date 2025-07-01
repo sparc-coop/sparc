@@ -34,6 +34,30 @@
                 justify-content: space-between;
                 align-items: center;
                 gap: 16px;
+
+                &.discount {
+                    justify-content: normal;
+                    align-items: flex-end;
+
+                    label {
+                        width: 50%;
+                    }
+
+                    button {
+                        background: transparent;
+                        display: flex;
+                        height: 48px;
+                        padding: 10px 20px;
+                        justify-content: center;
+                        align-items: center;
+                        color: var(--purple-700);
+
+                        &:hover {
+                            border-radius: 32px;
+                            border: 1px solid var(--purple-700);
+                        }
+                    }
+                }
             }
 
             label {
@@ -58,6 +82,109 @@
                         font-style: normal;
                         font-weight: 500;
                         line-height: 110%; /* 23.463px */
+                    }
+
+                    &.gift {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        gap: 32px;
+
+                        .gift-email {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            width: 100%;
+                            gap: 12px;
+
+                            div {
+                                display: flex;
+                                gap: 12px;
+                                align-items: center;
+                            }
+                        }
+
+                        .right {
+
+                            span {
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: 140%; /* 22.4px */
+                                color: var(--black);
+                                margin-right: 4px;
+                            }
+
+                            button {
+                                width: fit-content;
+                                background: var(--yellow-50);
+                                border-radius: 20px;
+                                border: 1px solid var(--purple-800);
+
+                                &:hover {
+                                    background: var(--gray-100);
+                                }
+
+                                &:active {
+                                    background: var(--gray-600);
+                                }
+                            }
+                        }
+
+                        .gift-form {
+                            gap: 16px;
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+
+                            label {
+                                display: flex;
+                                flex-direction: column;
+                                border: none;
+                                box-shadow: none;
+                                padding: 0;
+                                align-items: flex-start;
+                                gap: 8px;
+
+                                span {
+                                    font-size: 12px;
+                                    font-style: normal;
+                                    font-weight: 500;
+                                    line-height: 140%; /* 16.8px */
+                                    color: var(--gray-900);
+                                }
+
+                                input {
+                                    width: 100%;
+                                    border: 1px solid var(--gray-100);
+                                    border-radius: 16px;
+                                    padding: 8px 16px;
+                                    background: var(--yellow-50);
+                                }
+                            }
+
+                            button {
+                                height: 40px;
+                                width: fit-content;
+                                padding: 10px 20px;
+                                border-radius: 20px;
+                                border: 1px solid var(--purple-800);
+                                opacity: 0.5;
+                                background: var(--yellow-50);
+                                margin-top: 16px;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 140%; /* 22.4px */
+
+                                &:hover {
+                                    background: var(--gray-100);
+                                }
+
+                                &:active {
+                                    background: var(--gray-600);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -104,7 +231,7 @@
                         letter-spacing: -0.12px;
                     }
 
-                    input {
+                    input, select {
                         display: flex;
                         padding: 16px;
                         flex-direction: column;
@@ -115,8 +242,19 @@
                         border: 1px solid var(--purple-100);
                         opacity: 0.5;
                     }
+
+                    select {
+                        width: 50%;
+                    }
                 }
             }
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 100px;
+            width: 256px;
+            font-weight: 500;
         }
     }
 }

@@ -4,16 +4,43 @@
     <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
             <h5>Select License</h5>
-                <div class="form-container">
-                    <label>
-                        <input type="radio" name="license-input" />
-                        <span>For yourself</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="license-input" />
-                        <span>Gift</span>
-                    </label>
-                </div>
+            <div class="form-container">
+                <label>
+                    <input type="radio" name="license-input" checked="@("personal" == SelectedLicense)" @onchange="@(() => SelectedLicense = "personal")" />
+                    <span>For yourself</span>
+                </label>
+                <label class="gift">
+                    <div class="gift-email">
+                        <div>
+                            <input type="radio" name="license-input" checked="@("gift" == SelectedLicense)" @onchange="@(() => { SelectedLicense = "gift"; IsGiftConfirmed = false; })" />
+                            <span>Gift</span>
+                        </div>
+                        @if (SelectedLicense == "gift" && IsGiftConfirmed)
+                        {
+                            <div class="right">
+                                <span>
+                                    @GiftEmail                                    
+                                </span>
+                                <button type="button" class="btn btn-link" @onclick="EditGiftEmail">Edit</button>
+                            </div>
+                        }
+                    </div>
+                    @if (SelectedLicense == "gift" && !IsGiftConfirmed)
+                    {
+                        <div class="gift-form">
+                            <label>
+                                <span>Gift recipient's email *</span>
+                                <input @bind="GiftEmail" placeholder="Recipient's email" />
+                            </label>
+                            <label>
+                                <span>Confirm gift recipient's email *</span>
+                                <input @bind="GiftEmailConfirmation" placeholder="Confirm Recipient's' email" />
+                            </label>
+                            <button type="button" class="btn" @onclick="ConfirmGiftEmail">Confirm</button>
+                        </div>
+                    }
+                </label>
+            </div>
         </section>
         <section class="billing-section">
             <h5>Billing Information</h5>
@@ -65,40 +92,38 @@
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <div class="form-group">
+                <label>
+                    <span>Currency</span>
+                    <select id="currency" @bind="Order.Currency">
+                    <option value="dol">$ USD</option>
+                    </select>
+                </label>
+                <div class="form-group discount">
                     <label>
                         <span>Discount Code</span>
-                        <input @bind="Order.FirstName" placeholder="First Name" />
+                        <input @bind="Order.FirstName" placeholder="Discount code" />
                     </label>
+                    <button>Apply</button>
                 </div>
                 <label>
-                    <span>Address *</span>
-                    <input @bind="Order.Address" placeholder="Address" />
-                </label>
-                <label>
-                    <span>Address 2</span>
-                    <input @bind="Order.Address2" placeholder="Additional Address" />
+                    <span>Card Number *</span>
+                    <input @bind="Order.Address" placeholder="Card number" />
                 </label>
                 <div class="form-group">
                     <label>
-                        <span>Country *</span>
-                        <input @bind="Order.Country" placeholder="Country" />
+                        <span>Expiration Date *</span>
+                        <input @bind="Order.Country" placeholder="MM/YY" />
                     </label>
                     <label>
-                        <span>ZIP *</span>
-                        <input @bind="Order.Zip" placeholder="ZIP Code" />
+                        <span>CVC *</span>
+                        <input @bind="Order.Zip" placeholder="3-digit code" />
                     </label>
                 </div>
-                <label>
-                    <span>Phone number (optional)</span>
-                    <input @bind="Order.Phone" placeholder="Phone Number" />
-                </label>
             </div>
         </section>
         <section class="summary-section">
-
         </section>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn primary-btn">
             Purchase
         </button>
     </form>
@@ -109,6 +134,11 @@
 
     BlossomUser? CurrentUser;
     CreateOrderRequest Order = new CreateOrderRequest();
+
+    string SelectedLicense = "personal";
+    string GiftEmail = "";
+    string GiftEmailConfirmation = "";
+    bool IsGiftConfirmed = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -127,5 +157,24 @@
         }
 
         return Task.FromResult("Billing information submitted successfully.");
+    }
+
+    void ConfirmGiftEmail()
+    {
+        if (GiftEmail != GiftEmailConfirmation)
+        {
+            Console.WriteLine("Gift recipient emails do not match.");
+            return;
+        }
+        else
+        {
+            IsGiftConfirmed = true;
+            Console.WriteLine($"Gift email confirmed: {GiftEmail}");
+        }
+    }
+
+    void EditGiftEmail()
+    {
+        IsGiftConfirmed = false;
     }
 }
