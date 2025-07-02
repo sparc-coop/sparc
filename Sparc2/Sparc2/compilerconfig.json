@@ -48,16 +48,16 @@
     "inputFile": "Donations/AddDonation.razor.scss"
   },
   {
-    "outputFile": "Pages/AddProduct.razor.css",
-    "inputFile": "Pages/AddProduct.razor.scss"
+    "outputFile": "Catalog/AddProduct.razor.css",
+    "inputFile": "Catalog/AddProduct.razor.scss"
   },
   {
     "outputFile": "Shared/Components/Breadcrumbs.razor.css",
     "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
   },
   {
-    "outputFile": "Pages/TovikReferral.razor.css",
-    "inputFile": "Pages/TovikReferral.razor.scss"
+    "outputFile": "Catalog/TovikReferral.razor.css",
+    "inputFile": "Catalog/TovikReferral.razor.scss"
   },
   {
     "outputFile": "Shared/Components/FaqItem.razor.css",
@@ -104,10 +104,6 @@
     "inputFile": "Profile/EditEmail.razor.scss"
   },
   {
-    "outputFile": "Profile/EditLanguage.razor.css",
-    "inputFile": "Profile/EditLanguage.razor.scss"
-  },
-  {
     "outputFile": "Profile/EditPhoneNumber.razor.css",
     "inputFile": "Profile/EditPhoneNumber.razor.scss"
   },
@@ -132,20 +128,8 @@
     "inputFile": "Profile/UserProfile.razor.scss"
   },
   {
-    "outputFile": "Catalog/ProductPurchasePrices.css",
-    "inputFile": "Catalog/ProductPurchasePrices.scss"
-  },
-  {
-    "outputFile": "Catalog/ProductPurchasePrices.razor.css",
-    "inputFile": "Catalog/ProductPurchasePrices.razor.scss"
-  },
-  {
-    "outputFile": "Catalog/ProductPurchaseStripeForm.razor.css",
-    "inputFile": "Catalog/ProductPurchaseStripeForm.razor.scss"
-  },
-  {
-    "outputFile": "Catalog/PurchaseSummary.razor.css",
-    "inputFile": "Catalog/PurchaseSummary.razor.scss"
+    "outputFile": "Catalog/Purchase/ProductPurchasePrices.razor.css",
+    "inputFile": "Catalog/Purchase/ProductPurchasePrices.razor.scss"
   },
   {
     "outputFile": "Catalog/Purchase/PurchaseLicenseType.razor.css",
