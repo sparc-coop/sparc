@@ -103,10 +103,6 @@ tovik-language ::deep select {
   font-family: sans-serif;
 }
 
-.user-profile-container:hover .profile-picture-wrapper {
-  background: linear-gradient(135deg, #f093fb, #f5576c);
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;

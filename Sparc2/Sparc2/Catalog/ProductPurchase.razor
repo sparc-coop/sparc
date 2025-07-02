@@ -1,74 +1,67 @@
-﻿<div class="product-purchase">
-    <form>
-        <section>
-            <h5>Select License</h5>
+﻿@using Sparc.Blossom.Authentication
+@using Sparc.Blossom.Billing
+@using System.Globalization
+
+<div class="product-purchase">
+    <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
+        <section class="license-section">
+            <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
+        </section>
+        <section class="billing-section">
+            <PurchaseBilling Order="Order"></PurchaseBilling>
+        </section>
+        <section class="payment-section">
+            <h5>Payment Information</h5>
             <div class="form-container">
-                <label>
-                    <input type="radio" name="license-input" />
-                    <span>For yourself</span>
-                </label>
-                <label>
-                    <input type="radio" name="license-input" />
-                    <span>Gift</span>
-                </label>
+                <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
+                <div class="form-group discount">
+                    <label>
+                        <span>Discount Code</span>
+                        <input @bind="Order.FirstName" placeholder="Discount code" />
+                    </label>
+                    <button>Apply</button>
+                </div>
+                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
             </div>
         </section>
-        <section>
-            <h5>Billing Information</h5>
-            <div class="form-container">
-                <div class="form-group">
-                    <label>
-                        <span>First Name *</span>
-                        <input type="text" placeholder="First Name" required/>
-                    </label>
-                    <label>
-                        <span>Last Name *</span>
-                        <input type="text" placeholder="Last Name" />
-                    </label>
-                </div>
-                <label>
-                    <span>Address *</span>
-                    <input type="text" placeholder="Address" required />
-                </label>
-                <label>
-                    <span>Address 2</span>
-                    <input type="text" placeholder="Additional Address" />
-                </label>
-                <div class="form-group">
-                    <label>
-                        <span>City *</span>
-                        <input type="text" placeholder="City" required />
-                    </label>
-                    <label>
-                        <span>State/Province *</span>
-                        <input type="text" placeholder="State/Province" required />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <span>Country *</span>
-                        <input type="text" placeholder="Country" required />
-                    </label>
-                    <label>
-                        <span>ZIP *</span>
-                        <input type="text" placeholder="ZIP Code" required />
-                    </label>
-                </div>
-                <label>
-                    <span>Phone number (optional)</span>
-                    <input type="tel" placeholder="Phone Number" />
-                </label>
-            </div>
+        <section class="summary-section">
+            <PurchaseSummary></PurchaseSummary>
         </section>
+        <button type="submit" class="btn primary-btn">
+            Purchase
+        </button>
     </form>
 </div>
 
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
-    // if any input is updated, show confirm modal before user navigates away
-    // blank value passed into purchase component
-    // pass binded value back to parent component
-    // when user clicks back arrow on ProductPage.razor, checks if values have been changed
-    // if yes, show confirm modal before navigating away
+    private GetProductResponse? StripeProduct;
+    BlossomUser? CurrentUser;
+    CreateOrderRequest Order = new CreateOrderRequest();
+
+    string SelectedLicense = "personal";
+    string GiftEmail = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        CurrentUser = await SparcEngine.UserInfo();
+
+        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+
+
+        var test = ActiveProduct;
+
+        var bpoint = "";
+    }
+
+    public Task<string> SubmitUserBilling()
+    {
+        if (CurrentUser == null)
+        {
+            throw new InvalidOperationException("User is not authenticated.");
+        }
+
+        return Task.FromResult("Billing information submitted successfully.");
+    }   
 }

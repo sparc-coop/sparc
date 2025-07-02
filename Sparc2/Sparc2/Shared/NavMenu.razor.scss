@@ -52,7 +52,7 @@
         .account-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
+            /*gap: 8px;*/
 
             ::deep svg path {
                 stroke: var(--purple-800);
@@ -180,9 +180,10 @@ button, .button, a {
         justify-content: center;
         gap: 4px;
         color: var(--yellow-50);
+        align-items: center;
 
         ::deep svg {
-            margin-top: 1px;
+            /*margin-top: 1px;*/
         }
 
         &:hover {

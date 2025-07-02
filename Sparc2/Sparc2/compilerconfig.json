@@ -130,5 +130,37 @@
   {
     "outputFile": "Profile/UserProfile.razor.css",
     "inputFile": "Profile/UserProfile.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchasePrices.css",
+    "inputFile": "Catalog/ProductPurchasePrices.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchasePrices.razor.css",
+    "inputFile": "Catalog/ProductPurchasePrices.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchaseStripeForm.razor.css",
+    "inputFile": "Catalog/ProductPurchaseStripeForm.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/PurchaseSummary.razor.css",
+    "inputFile": "Catalog/PurchaseSummary.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseLicenseType.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseLicenseType.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseBilling.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseBilling.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseSummary.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseSummary.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.css",
+    "inputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.scss"
   }
 ]

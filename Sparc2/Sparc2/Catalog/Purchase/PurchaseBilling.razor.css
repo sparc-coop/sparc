@@ -1,0 +1,64 @@
+﻿h5 {
+  font-size: 2.1323rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.form-group.discount {
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+.form-group.discount label {
+  width: 50%;
+}
+.form-group.discount button {
+  background: transparent;
+  display: flex;
+  height: 48px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--purple-700);
+}
+.form-group.discount button:hover {
+  border-radius: 32px;
+  border: 1px solid var(--purple-700);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+label span {
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: -0.12px;
+}
+label input {
+  display: flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 26px;
+  border: 1px solid var(--purple-100);
+  opacity: 0.5;
+}

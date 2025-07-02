@@ -11,84 +11,87 @@
 
         h5 {
             font-size: 2.133rem;
-            font-style: normal;
             font-weight: 500;
-            line-height: 110%; /* 23.463px */
+            line-height: 110%;
         }
-
 
         section {
             display: flex;
             flex-direction: column;
             gap: 32px;
 
+            &.summary-section {
+                padding: 32px;
+                border-radius: 32px;
+                background: var(--yellow-50);
+                box-shadow: 0px 0px 2px rgba(26, 12, 50, 0.10), 0px 0px 4px rgba(26, 12, 50, 0.20);
+            }
+
             .form-container {
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
             }
+        }
 
-            .form-group {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                gap: 16px;
-            }
+        .form-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
 
-            label {
-                width: 100%;
-            }
+            &.discount {
+                justify-content: flex-start;
+                align-items: flex-end;
 
-            &:nth-child(1) {
                 label {
-                    width: calc(100% - 64px);
+                    width: 50%;
+                }
+
+                button {
+                    height: 48px;
+                    padding: 10px 20px;
+                    background: transparent;
                     display: flex;
-                    padding: 32px;
                     align-items: center;
-                    gap: 12px;
-                    align-self: stretch;
-                    border-radius: 16px;
-                    border: 1px solid var(--Color-Purple-500, #6A2FD0);
-                    /* Shadow */
-                    box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.10), 0px 0px 4px 0px rgba(26, 12, 50, 0.20);
+                    justify-content: center;
+                    color: var(--purple-700);
 
-                    span {
-                        font-size: 2.133rem;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: 110%; /* 23.463px */
+                    &:hover {
+                        border-radius: 32px;
+                        border: 1px solid var(--purple-700);
                     }
                 }
             }
+        }
 
-            &:nth-child(2) {
-                label {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
 
-                    span {
-                        font-size: 1.2rem;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: 140%; /* 16.8px */
-                        letter-spacing: -0.12px;
-                    }
-
-                    input[type=text], input[type=email], input[type=tel], input[type=password] {
-                        display: flex;
-                        padding: 16px;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: flex-start;
-                        gap: 10px;
-                        border-radius: 26px;
-                        border: 1px solid var(--purple-100);
-                        opacity: 0.5;
-                    }
-                }
+            span {
+                font-size: 1.2rem;
+                font-weight: 500;
+                line-height: 140%;
+                letter-spacing: -0.12px;
             }
+
+            input {
+                padding: 16px;
+                border-radius: 26px;
+                border: 1px solid var(--purple-100);
+                opacity: 0.5;
+            }
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 100px;
+            width: 256px;
+            font-weight: 500;
         }
     }
 }
