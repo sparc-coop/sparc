@@ -120,9 +120,9 @@
 
     private async void StartEditing()
     {
-        if (CurrentUser?.Username is not null)
+        if (CurrentUser?.Avatar.Username is not null)
         {
-            Username = CurrentUser.Username;
+            Username = CurrentUser.Avatar.Username;
         }
         IsEditingUsername = true;
         await Js.InvokeVoidAsync("setEditingUsername", true);
@@ -146,8 +146,8 @@
 
         if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
         {
-            CurrentUser.Username = newUsername;
-            await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Username });
+            CurrentUser.Avatar.Username = newUsername;
+            await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Avatar.Username });
         }
 
         await Js.InvokeVoidAsync("setEditingUsername", false);

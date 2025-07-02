@@ -29,7 +29,7 @@
 
         if (string.IsNullOrWhiteSpace(SelectedLanguageId))
         {
-            var inferred = CurrentUser?.PrimaryLanguage?.Id
+            var inferred = CurrentUser?.Avatar.Language?.Id
                 ?? Languages.FirstOrDefault(l => l.Id == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)?.Id;
 
             if (!string.IsNullOrWhiteSpace(inferred))

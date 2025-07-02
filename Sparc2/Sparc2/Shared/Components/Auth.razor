@@ -127,7 +127,7 @@
             CurrentUser = await finish.Content.ReadFromJsonAsync<BlossomUser>();
             Message = "✅ Signed up & logged in!";
 
-            if (CurrentUser != null && CurrentUser.ExternalId != null)
+            if (CurrentUser != null)
             {
                 IsAnonymous = false;
                 StateHasChanged();
@@ -156,7 +156,7 @@
             CurrentUser = await resp.Content.ReadFromJsonAsync<BlossomUser>();
             Message = "✅ Logged in!";
 
-            if (CurrentUser != null && CurrentUser.ExternalId != null)
+            if (CurrentUser != null)
             {
                 IsAnonymous = false;
                 StateHasChanged();
