@@ -146,5 +146,21 @@
   {
     "outputFile": "Catalog/PurchaseSummary.razor.css",
     "inputFile": "Catalog/PurchaseSummary.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseLicenseType.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseLicenseType.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseBilling.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseBilling.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/PurchaseSummary.razor.css",
+    "inputFile": "Catalog/Purchase/PurchaseSummary.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.css",
+    "inputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.scss"
   }
 ]

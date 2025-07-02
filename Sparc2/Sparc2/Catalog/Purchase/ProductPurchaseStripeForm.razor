@@ -7,7 +7,12 @@
     </button>
     <div id="error-message" style="color:red; margin-top: 10px;"></div>
 
-    @* <label>
+    @* If it's possible to integrate our custom elements into the Stripe form *@
+    <label>
+        <span>Name on Card *</span>
+        <input @bind="Order.Address" placeholder="Card number" />
+    </label>
+    <label>
         <span>Card Number *</span>
         <input @bind="Order.Address" placeholder="Card number" />
     </label>
@@ -20,7 +25,7 @@
             <span>CVC *</span>
             <input @bind="Order.Zip" placeholder="3-digit code" />
         </label>
-    </div> *@
+    </div>
 </form>
 @* <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button> *@
 

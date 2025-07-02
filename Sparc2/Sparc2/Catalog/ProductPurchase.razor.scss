@@ -11,249 +11,79 @@
 
         h5 {
             font-size: 2.133rem;
-            font-style: normal;
             font-weight: 500;
-            line-height: 110%; /* 23.463px */
+            line-height: 110%;
         }
-
 
         section {
             display: flex;
             flex-direction: column;
             gap: 32px;
 
+            &.summary-section {
+                padding: 32px;
+                border-radius: 32px;
+                background: var(--yellow-50);
+                box-shadow: 0px 0px 2px rgba(26, 12, 50, 0.10), 0px 0px 4px rgba(26, 12, 50, 0.20);
+            }
+
             .form-container {
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
             }
+        }
 
-            .form-group {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                gap: 16px;
+        .form-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
 
-                &.discount {
-                    justify-content: normal;
-                    align-items: flex-end;
+            &.discount {
+                justify-content: flex-start;
+                align-items: flex-end;
 
-                    label {
-                        width: 50%;
-                    }
-
-                    button {
-                        background: transparent;
-                        display: flex;
-                        height: 48px;
-                        padding: 10px 20px;
-                        justify-content: center;
-                        align-items: center;
-                        color: var(--purple-700);
-
-                        &:hover {
-                            border-radius: 32px;
-                            border: 1px solid var(--purple-700);
-                        }
-                    }
-                }
-            }
-
-            label {
-                width: 100%;
-            }
-
-            &:nth-child(1) {
                 label {
-                    width: calc(100% - 64px);
+                    width: 50%;
+                }
+
+                button {
+                    height: 48px;
+                    padding: 10px 20px;
+                    background: transparent;
                     display: flex;
-                    padding: 32px;
                     align-items: center;
-                    gap: 12px;
-                    align-self: stretch;
-                    border-radius: 16px;
-                    border: 1px solid var(--Color-Purple-500, #6A2FD0);
-                    /* Shadow */
-                    box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.10), 0px 0px 4px 0px rgba(26, 12, 50, 0.20);
+                    justify-content: center;
+                    color: var(--purple-700);
 
-                    span {
-                        font-size: 2.133rem;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: 110%; /* 23.463px */
-                    }
-
-                    &.gift {
-                        flex-direction: column;
-                        align-items: flex-start;
-                        gap: 32px;
-
-                        .gift-email {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            width: 100%;
-                            gap: 12px;
-
-                            div {
-                                display: flex;
-                                gap: 12px;
-                                align-items: center;
-                            }
-                        }
-
-                        .right {
-
-                            span {
-                                font-size: 16px;
-                                font-style: normal;
-                                font-weight: 400;
-                                line-height: 140%; /* 22.4px */
-                                color: var(--black);
-                                margin-right: 4px;
-                            }
-
-                            button {
-                                width: fit-content;
-                                background: var(--yellow-50);
-                                border-radius: 20px;
-                                border: 1px solid var(--purple-800);
-
-                                &:hover {
-                                    background: var(--gray-100);
-                                }
-
-                                &:active {
-                                    background: var(--gray-600);
-                                }
-                            }
-                        }
-
-                        .gift-form {
-                            gap: 16px;
-                            display: flex;
-                            flex-direction: column;
-                            width: 100%;
-
-                            label {
-                                display: flex;
-                                flex-direction: column;
-                                border: none;
-                                box-shadow: none;
-                                padding: 0;
-                                align-items: flex-start;
-                                gap: 8px;
-
-                                span {
-                                    font-size: 12px;
-                                    font-style: normal;
-                                    font-weight: 500;
-                                    line-height: 140%; /* 16.8px */
-                                    color: var(--gray-900);
-                                }
-
-                                input {
-                                    width: 100%;
-                                    border: 1px solid var(--gray-100);
-                                    border-radius: 16px;
-                                    padding: 8px 16px;
-                                    background: var(--yellow-50);
-                                }
-                            }
-
-                            button {
-                                height: 40px;
-                                width: fit-content;
-                                padding: 10px 20px;
-                                border-radius: 20px;
-                                border: 1px solid var(--purple-800);
-                                opacity: 0.5;
-                                background: var(--yellow-50);
-                                margin-top: 16px;
-                                font-size: 16px;
-                                font-style: normal;
-                                font-weight: 500;
-                                line-height: 140%; /* 22.4px */
-
-                                &:hover {
-                                    background: var(--gray-100);
-                                }
-
-                                &:active {
-                                    background: var(--gray-600);
-                                }
-                            }
-                        }
+                    &:hover {
+                        border-radius: 32px;
+                        border: 1px solid var(--purple-700);
                     }
                 }
             }
+        }
 
-            &.billing-section {
-                label {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
 
-                    span {
-                        font-size: 1.2rem;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: 140%; /* 16.8px */
-                        letter-spacing: -0.12px;
-                    }
-
-                    input {
-                        display: flex;
-                        padding: 16px;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: flex-start;
-                        gap: 10px;
-                        border-radius: 26px;
-                        border: 1px solid var(--purple-100);
-                        opacity: 0.5;
-                    }
-                }
+            span {
+                font-size: 1.2rem;
+                font-weight: 500;
+                line-height: 140%;
+                letter-spacing: -0.12px;
             }
 
-            &.payment-section {
-                label {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-
-                    span {
-                        font-size: 1.2rem;
-                        font-style: normal;
-                        font-weight: 500;
-                        line-height: 140%; /* 16.8px */
-                        letter-spacing: -0.12px;
-                    }
-
-                    input, select {
-                        display: flex;
-                        padding: 16px;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: flex-start;
-                        gap: 10px;
-                        border-radius: 26px;
-                        border: 1px solid var(--purple-100);
-                        opacity: 0.5;
-                    }
-
-                    select {
-                        width: 50%;
-                    }
-                }
-            }
-
-            &.summary-section {
-                padding: 32px;
-                border-radius: 32px;
-                background: var(--yellow-50);
-                box-shadow: 0px 0px 2px 0px rgba(26, 12, 50, 0.10), 0px 0px 4px 0px rgba(26, 12, 50, 0.20);                
+            input {
+                padding: 16px;
+                border-radius: 26px;
+                border: 1px solid var(--purple-100);
+                opacity: 0.5;
             }
         }
 

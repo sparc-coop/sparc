@@ -15,7 +15,7 @@
             {
                 <div class="right">
                     <span>@GiftEmail</span>
-                    <button type="button" class="btn btn-link" @onclick="EditGiftEmail">Edit</button>
+                    <button type="button" class="btn" @onclick="EditGiftEmail">Edit</button>
                 </div>
             }
         </div>
@@ -44,26 +44,23 @@
     [Parameter] public string GiftEmail { get; set; } = "";
     [Parameter] public EventCallback<string> GiftEmailChanged { get; set; }
 
-    [Parameter] public string GiftEmailConfirmation { get; set; } = "";
-    [Parameter] public EventCallback<string> GiftEmailConfirmationChanged { get; set; }
-
-    [Parameter] public bool IsGiftConfirmed { get; set; }
-    [Parameter] public EventCallback<bool> IsGiftConfirmedChanged { get; set; }
-
+    private bool IsGiftConfirmed = false;
     private string GiftEmailInput = "";
     private string GiftEmailConfirmationInput = "";
 
-    void UpdateLicense(string type)
+    private async Task UpdateLicense(string type)
     {
-        SelectedLicenseChanged.InvokeAsync(type);
+        await SelectedLicenseChanged.InvokeAsync(type);
 
         if (type == "gift")
         {
-            IsGiftConfirmedChanged.InvokeAsync(false);
+            IsGiftConfirmed = false;
+            GiftEmailInput = "";
+            GiftEmailConfirmationInput = "";
         }
     }
 
-    async Task ConfirmGiftEmail()
+    private async Task ConfirmGiftEmail()
     {
         if (GiftEmailInput != GiftEmailConfirmationInput)
         {
@@ -72,14 +69,13 @@
         }
 
         await GiftEmailChanged.InvokeAsync(GiftEmailInput);
-        await GiftEmailConfirmationChanged.InvokeAsync(GiftEmailConfirmationInput);
-        await IsGiftConfirmedChanged.InvokeAsync(true);
+        IsGiftConfirmed = true;
 
         Console.WriteLine($"Gift email confirmed: {GiftEmailInput}");
     }
 
-    Task EditGiftEmail()
+    private void EditGiftEmail()
     {
-        return IsGiftConfirmedChanged.InvokeAsync(false);
+        IsGiftConfirmed = false;
     }
 }

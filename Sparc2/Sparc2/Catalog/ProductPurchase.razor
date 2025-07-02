@@ -1,17 +1,11 @@
 ﻿@using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Billing
 @using System.Globalization
+
 <div class="product-purchase">
     <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
-            <PurchaseLicenseType SelectedLicense="SelectedLicense"
-                                 SelectedLicenseChanged="(value) => SelectedLicense = value"
-                                 GiftEmail="GiftEmail"
-                                 GiftEmailChanged="(value) => GiftEmail = value"
-                                 GiftEmailConfirmation="GiftEmailConfirmation"
-                                 GiftEmailConfirmationChanged="(value) => GiftEmailConfirmation = value"
-                                 IsGiftConfirmed="IsGiftConfirmed"
-                                 IsGiftConfirmedChanged="(value) => IsGiftConfirmed = value"></PurchaseLicenseType>
+            <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
         </section>
         <section class="billing-section">
             <PurchaseBilling Order="Order"></PurchaseBilling>
@@ -48,8 +42,6 @@
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
-    string GiftEmailConfirmation = "";
-    bool IsGiftConfirmed = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -71,24 +63,5 @@
         }
 
         return Task.FromResult("Billing information submitted successfully.");
-    }
-
-    void ConfirmGiftEmail()
-    {
-        if (GiftEmail != GiftEmailConfirmation)
-        {
-            Console.WriteLine("Gift recipient emails do not match.");
-            return;
-        }
-        else
-        {
-            IsGiftConfirmed = true;
-            Console.WriteLine($"Gift email confirmed: {GiftEmail}");
-        }
-    }
-
-    void EditGiftEmail()
-    {
-        IsGiftConfirmed = false;
-    }
+    }   
 }

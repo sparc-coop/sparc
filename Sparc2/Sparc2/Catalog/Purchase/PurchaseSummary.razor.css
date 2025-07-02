@@ -1,4 +1,11 @@
-﻿dl {
+﻿h5 {
+  font-size: 2.133rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 110%; /* 23.463px */
+}
+
+dl {
   display: flex;
   flex-direction: column;
   gap: 11px;

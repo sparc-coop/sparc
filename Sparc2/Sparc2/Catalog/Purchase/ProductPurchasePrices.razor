@@ -5,7 +5,6 @@
         <select value="@Order.Currency" @onchange="OnCurrencyChanged">
             @foreach (var cur in CurrencyOptions ?? Enumerable.Empty<string>())
             {
-                @* <option value="@cur">@cur.ToUpper()</option> *@
                 <option value="@cur" selected="@(Order.Currency == cur ? "selected" : null)">@cur.ToUpper()</option>
             }                            
         </select>

@@ -1,36 +1,70 @@
-dl {
+h5 {
+    font-size: 2.1323rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%;
+}
+
+.form-container {
     display: flex;
     flex-direction: column;
-    gap: 11px;
-    margin: 0;
+    gap: 16px;
+}
 
-    .row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6.5px;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 140%; /* 25.2px */
-        color: var(--purple-700);
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
 
-        &.discount {
-            opacity: 0.6;
+    &.discount {
+        justify-content: flex-start;
+        align-items: flex-end;
+
+        label {
+            width: 50%;
         }
 
-        &.total {
-            font-size: 2.133rem;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 110%; /* 23.463px */
+        button {
+            background: transparent;
+            display: flex;
+            height: 48px;
+            padding: 10px 20px;
+            justify-content: center;
+            align-items: center;
+            color: var(--purple-700);
+
+            &:hover {
+                border-radius: 32px;
+                border: 1px solid var(--purple-700);
+            }
         }
     }
+}
 
-    .divider {
-        height: 1px;
-        background: var(--purple-700);
-        margin: 13px 0;
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+
+    span {
+        font-size: 1.2rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
+        letter-spacing: -0.12px;
+    }
+
+    input {
+        display: flex;
+        padding: 16px;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+        border-radius: 26px;
+        border: 1px solid var(--purple-100);
+        opacity: 0.5;
     }
 }
