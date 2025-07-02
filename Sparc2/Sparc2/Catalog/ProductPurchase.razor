@@ -66,14 +66,13 @@
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
+                <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
                 <div class="form-group">
                     <label>
                         <span>Discount Code</span>
                         <input @bind="Order.FirstName" placeholder="First Name" />
                     </label>
-                </div>
-                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
+                </div>                
             </div>
         </section>
         <section class="summary-section">
@@ -92,7 +91,7 @@
     BlossomUser? CurrentUser;
     CreateOrderRequest Order = new CreateOrderRequest();
     
-
+    
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
@@ -104,10 +103,6 @@
 
         var bpoint = "";
     }
-
-
-
-
 
     public Task<string> SubmitUserBilling()
     {

@@ -25,10 +25,13 @@
         }
     </div>
 </div>
+<ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
 
 @code {
     [Parameter] public GetProductResponse? StripeProduct { get; set; }
     [Parameter] public CreateOrderRequest Order { get; set; } = default!;
+    private ProductPurchaseStripeForm? StripeFormRef;
+
     public List<string> CurrencyOptions { get; set; } = new();
     private List<decimal> ConvertedPrices = new List<decimal>();
     private Dictionary<string, string> CurrencySymbols;
@@ -107,11 +110,14 @@
         return isoCode.ToUpper();
     }
 
-    private Task OnCurrencyChanged(ChangeEventArgs e)
+    private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
         Order.Currency = e.Value?.ToString()?.ToLower() ?? Order.Currency;
         UpdatePriceForCurrency();
-        return InvokeAsync(StateHasChanged);
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+            await StripeFormRef.InitiateStripePayment();
+        StateHasChanged();
     }
 
     private void UpdatePriceForCurrency()
@@ -134,13 +140,18 @@
         }
         ConvertedPrices.OrderBy(c => c);
 
+        Order.Amount = (long)ConvertedPrices.FirstOrDefault();
+
         StateHasChanged();
     }
 
-    private void SetAmount(decimal predefinedAmount)
+    private async Task SetAmount(decimal predefinedAmount)
     {
         Order.Amount = (long)predefinedAmount;
         _selectedPredefinedAmount = predefinedAmount;
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+            await StripeFormRef.InitiateStripePayment();
         StateHasChanged();
     }
 
