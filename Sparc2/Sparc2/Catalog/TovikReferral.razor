@@ -224,7 +224,7 @@
 
     private async Task AddTovikProduct()
     {
-        await SparcEngine.AddUserProduct(new AddProductRequest("Tovik"));
+        // await SparcEngine.AddUserProduct(new AddProductRequest("Tovik"));
     }
 
     private async Task TryAuthAndJoinBeta()
@@ -235,56 +235,56 @@
         IsAddingProduct = true;
         Message = null;
 
-        try
-        {
-            if (CurrentUser?.Token == null)
-            {
-                // 1. Sign up with passkey
-                var start = await Http.PostAsync("auth/login", null);
-                if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed."; return; }
+        // try
+        // {
+        //     if (CurrentUser?.Token == null)
+        //     {
+        //         // 1. Sign up with passkey
+        //         var start = await Http.PostAsync("auth/login", null);
+        //         if (!start.IsSuccessStatusCode) { Message = $"⚠️ Signup start failed."; return; }
 
-                var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
-                if (doc == null)
-                    return;
+        //         var doc = await start.Content.ReadFromJsonAsync<JsonDocument>();
+        //         if (doc == null)
+        //             return;
 
-                if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
-                var challenge = tok.GetString();
+        //         if (!doc.RootElement.TryGetProperty("token", out var tok)) { Message = "⚠️ No registration token."; return; }
+        //         var challenge = tok.GetString();
 
-                var passkey = await JS.InvokeAsync<string>("signUpWithPasskey", challenge);
-                if (string.IsNullOrWhiteSpace(passkey)) { Message = "⚠️ Passkey signup aborted."; return; }
+        //         var passkey = await JS.InvokeAsync<string>("signUpWithPasskey", challenge);
+        //         if (string.IsNullOrWhiteSpace(passkey)) { Message = "⚠️ Passkey signup aborted."; return; }
 
-                var finish = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(passkey)}", null);
-                if (finish.IsSuccessStatusCode)
-                {
-                    CurrentUser = await finish.Content.ReadFromJsonAsync<BlossomUser>();
-                    Message = "✅ Signed up & logged in!";
-                }
-                else
-                {
-                    var err = await finish.Content.ReadAsStringAsync();
-                    Message = $"❌ Signup failed: {finish.StatusCode} – {err}";
-                }
-            }            
+        //         var finish = await Http.PostAsync($"auth/login?emailOrToken={Uri.EscapeDataString(passkey)}", null);
+        //         if (finish.IsSuccessStatusCode)
+        //         {
+        //             CurrentUser = await finish.Content.ReadFromJsonAsync<BlossomUser>();
+        //             Message = "✅ Signed up & logged in!";
+        //         }
+        //         else
+        //         {
+        //             var err = await finish.Content.ReadAsStringAsync();
+        //             Message = $"❌ Signup failed: {finish.StatusCode} – {err}";
+        //         }
+        //     }            
 
-            // 2. Retrieve authenticated user
-            await GetUserInfo();
-            if (CurrentUser is null)
-            {
-                Message = "⚠️ Could not fetch user after login."; return;
-            }
+        //     // 2. Retrieve authenticated user
+        //     await GetUserInfo();
+        //     if (CurrentUser is null)
+        //     {
+        //         Message = "⚠️ Could not fetch user after login."; return;
+        //     }
 
-            // 3. Modal: request
-            if (string.IsNullOrWhiteSpace(CurrentUser.Email))
-            {
-                ShowEmailModal = true;
-                StateHasChanged();
-                return;
-            }
-        }
-        catch (Exception ex)
-        {            
-            Message = $"❌ Unexpected error: {ex.Message}";
-        }
+        //     // 3. Modal: request
+        //     if (string.IsNullOrWhiteSpace(CurrentUser.Email))
+        //     {
+        //         ShowEmailModal = true;
+        //         StateHasChanged();
+        //         return;
+        //     }
+        // }
+        // catch (Exception ex)
+        // {            
+        //     Message = $"❌ Unexpected error: {ex.Message}";
+        // }
     }
 
     private async Task OnEmailEntered()
@@ -298,15 +298,15 @@
         try
         {
             // 4. Modal: save email
-            var patchResp = await SparcEngine.UpdateUser(
-                new UpdateUserRequest(Email: Email, RequireEmailVerification: true)
-            );
+            // var patchResp = await SparcEngine.UpdateUser(
+            //     new UpdateUserRequest(Email: Email, RequireEmailVerification: true)
+            // );
 
-            if (patchResp is null)
-            {
-                Message = "⚠️ Failed to save email.";
-                return;
-            }
+            // if (patchResp is null)
+            // {
+            //     Message = "⚠️ Failed to save email.";
+            //     return;
+            // }
 
             CurrentVerificationDestination = Email;
             VerificationCode = "";
@@ -332,20 +332,20 @@
         try
         {
             // 5. Verify code
-            var success = await SparcEngine.VerifyCode(
-                new VerificationRequest(CurrentVerificationDestination, VerificationCode)
-            );
+            // var success = await SparcEngine.VerifyCode(
+            //     new VerificationRequest(CurrentVerificationDestination, VerificationCode)
+            // );
 
-            if (success)
-            {
-                // 6. Add Tovik product
-                await AddTovikProduct();
-            }
-            else
-            {
-                VerificationError = "Invalid verification code. Please try again.";
-                ShowVerificationModal = true;
-            }
+            // if (success)
+            // {
+            //     // 6. Add Tovik product
+            //     await AddTovikProduct();
+            // }
+            // else
+            // {
+            //     VerificationError = "Invalid verification code. Please try again.";
+            //     ShowVerificationModal = true;
+            // }
         }
         catch (Exception ex)
         {

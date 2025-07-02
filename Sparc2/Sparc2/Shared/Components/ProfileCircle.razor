@@ -100,11 +100,11 @@
 
         if (CurrentUser is not null)
         {
-            if (type == "Email")
-                Email = CurrentUser.Email ?? string.Empty;
+            // if (type == "Email")
+            //     Email = CurrentUser.Email ?? string.Empty;
 
-            else if (type == "Phone")
-                PhoneNumber = CurrentUser.PhoneNumber ?? string.Empty;
+            // else if (type == "Phone")
+            //     PhoneNumber = CurrentUser.PhoneNumber ?? string.Empty;
         }
 
         ShowModal = true;
@@ -119,16 +119,16 @@
 
     private async Task OnInfoEntered()
     {
-        if (InfoType == "Email")
-        {
-            await SparcEngine.UpdateUser(new UpdateUserRequest(Email: Email));
-            CurrentVerificationDestination = CurrentUser?.Email ?? Email!;
-        }
-        else if (InfoType == "Phone")
-        {
-            await SparcEngine.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
-            CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber!;
-        }
+        // if (InfoType == "Email")
+        // {
+        //     await SparcEngine.UpdateUser(new UpdateUserRequest(Email: Email));
+        //     CurrentVerificationDestination = CurrentUser?.Email ?? Email!;
+        // }
+        // else if (InfoType == "Phone")
+        // {
+        //     await SparcEngine.UpdateUser(new UpdateUserRequest(PhoneNumber: PhoneNumber));
+        //     CurrentVerificationDestination = CurrentUser?.PhoneNumber ?? PhoneNumber!;
+        // }
 
         ShowModal = false;
         ShowVerificationModal = true;
@@ -142,18 +142,18 @@
 
     private async Task VerifyCode()
     {
-        var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        // var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
 
-        if (success)
-        {
-            ShowVerificationModal = false;
-            await GetUserInfo();
-            StateHasChanged();
-        }
-        else
-        {
-            VerificationError = "Invalid verification code. Please try again.";
-        }
+        // if (success)
+        // {
+        //     ShowVerificationModal = false;
+        //     await GetUserInfo();
+        //     StateHasChanged();
+        // }
+        // else
+        // {
+        //     VerificationError = "Invalid verification code. Please try again.";
+        // }
     }
 
     private void OnCancelVerification()

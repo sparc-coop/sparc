@@ -72,7 +72,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ProductService.OnProductsChanged += UpdateProducts;
         var allProducts = await Api.Products.GetAllProducts();
 
         Products = allProducts;

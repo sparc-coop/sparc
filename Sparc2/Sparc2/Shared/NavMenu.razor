@@ -147,7 +147,7 @@
         if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
         {
             CurrentUser.Avatar.Username = newUsername;
-            await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Avatar.Username });
+            // await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Avatar.Username });
         }
 
         await Js.InvokeVoidAsync("setEditingUsername", false);
