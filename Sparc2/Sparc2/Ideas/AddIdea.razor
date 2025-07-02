@@ -47,13 +47,9 @@ else if (CurrentStep == 1)
                                 <img src="images/image-03.png" alt="File Icon" />
                                 <div>
                                     <h2>@file.FileName</h2>
-                                    <p>@(file.FileSize / (1024 * 1024)) MB</p>
                                 </div>
                                 <button @onclick="() => Remove(file)">x</button>
                             </article>
-                            <div class="progress-bar">
-                                <div class="progress" style="width: @file.Progress%"></div>
-                            </div>
                         </li>
                     }
                 </ul>
@@ -68,8 +64,8 @@ else if (CurrentStep == 1)
     [Parameter] public int CurrentStep { get; set; }
     [Parameter] public ProjectIdea Idea { get; set; } = new("", "", "", new());
     [Parameter] public required EditContext EditContext { get; set; }
-    [Parameter] public List<Sparc2.Files.FileUpload> UploadedFiles { get; set; } = [];
-    [Parameter] public EventCallback<List<Sparc2.Files.FileUpload>> OnFilesChanged { get; set; }
+    [Parameter] public List<BlossomFile> UploadedFiles { get; set; } = [];
+    [Parameter] public EventCallback<List<BlossomFile>> OnFilesChanged { get; set; }
     [Parameter] public EventCallback<bool> OnUploadStatusChanged { get; set; }
 
     public async Task HandleFileSelection(InputFileChangeEventArgs e)
@@ -78,36 +74,22 @@ else if (CurrentStep == 1)
 
         foreach (var file in e.GetMultipleFiles())
         {
-            var uploaded = new Sparc2.Files.FileUpload(
-                file.Name,
-                url: "",
-                fileFormat: Path.GetExtension(file.Name)?.TrimStart('.') ?? "unknown",
-                fileSize: (int)file.Size
-            );
-
-            UploadedFiles.Add(uploaded);
-            StateHasChanged();
-
-            var progress = new Progress<int>(percent =>
-            {
-                uploaded.Progress = percent;
-                InvokeAsync(StateHasChanged);
-            });
-
             using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
             var item = new BlossomFile("uploads", file.Name, AccessTypes.Public, stream);
+            UploadedFiles.Add(item);
+            StateHasChanged();
+
             await Blobs.AddAsync(item);
-            uploaded.Url = item.Url!;
-            Idea.FileUrls.Add(uploaded.Url);
+            Idea.FileUrls.Add(item.Url!);
         }
 
         await OnFilesChanged.InvokeAsync(UploadedFiles);
         await OnUploadStatusChanged.InvokeAsync(false);
     }
 
-    private void Remove(Sparc2.Files.FileUpload file)
+    private void Remove(BlossomFile file)
     {
         UploadedFiles.Remove(file);
-        Idea.FileUrls.Remove(file.Url);
+        Idea.FileUrls.Remove(file.Url!);
     }
 }
