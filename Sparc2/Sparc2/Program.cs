@@ -1,5 +1,5 @@
 ﻿using Sparc2;
-using Sparc2.Databases.AzureBlob;
+using Sparc.Blossom.Data;
 using Sparc2.Ideas;
 using Sparc2.Products;
 using Sparc2.Services;
@@ -7,19 +7,7 @@ using System.Net;
 
 var builder  = BlossomApplication.CreateBuilder<Html>(args);
 
-builder.Services.AddSingleton(sp =>
-{
-    var configuration = sp.GetRequiredService<IConfiguration>();
-    var connectionString = configuration.GetConnectionString("Storage");
-
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        throw new InvalidOperationException("Azure Blob Storage connection string is not configured.");
-    }
-
-    return new AzureBlob(connectionString);
-});
-
+builder.Services.AddAzureStorage(builder.Configuration);
 builder.Services.AddHttpClient("AuthService", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7185/");

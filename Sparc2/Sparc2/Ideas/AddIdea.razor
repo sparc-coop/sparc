@@ -62,7 +62,7 @@ else if (CurrentStep == 1)
     </div>
 }
 
-@inject Sparc2.Databases.AzureBlob.AzureBlob AzureBlob
+@inject Sparc.Blossom.Data.AzureBlobRepository Blobs
 
 @code {
     [Parameter] public int CurrentStep { get; set; }
@@ -95,7 +95,9 @@ else if (CurrentStep == 1)
             });
 
             using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
-            uploaded.Url = await AzureBlob.UploadFileAsync("uploads", file.Name, stream, file.ContentType, progress);
+            var item = new BlossomFile("uploads", file.Name, AccessTypes.Public, stream);
+            await Blobs.AddAsync(item);
+            uploaded.Url = item.Url!;
             Idea.FileUrls.Add(uploaded.Url);
         }
 
