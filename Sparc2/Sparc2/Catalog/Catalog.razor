@@ -33,7 +33,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ProductService.OnProductsChanged += UpdateProducts;
         var allProducts = await Api.Products.GetAllProducts();
 
         Products = allProducts;
@@ -69,11 +68,6 @@
         //     Products = allProducts;
         // }
         StateHasChanged();
-    }
-
-    public void Dispose()
-    {
-        ProductService.OnProductsChanged -= UpdateProducts;
     }
 
     [JSInvokable("OnHoverProduct")]

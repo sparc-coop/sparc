@@ -2,7 +2,6 @@
 using Sparc.Blossom.Data;
 using Sparc2.Ideas;
 using Sparc2.Products;
-using Sparc2.Services;
 using System.Net;
 
 var builder  = BlossomApplication.CreateBuilder<Html>(args);
@@ -24,9 +23,6 @@ builder.Services.AddScoped(sp =>
 builder.AddSparcEngine();
 
 builder.Services.AddSingleton<IdeaService>();
-builder.Services.AddSingleton<ProductService>();
-
-builder.Services.AddSlackIntegration(builder.Configuration);
 
 var app = builder.Build();
 
