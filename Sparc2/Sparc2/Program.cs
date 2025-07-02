@@ -2,24 +2,10 @@
 using Sparc.Blossom.Data;
 using Sparc2.Ideas;
 using Sparc2.Products;
-using System.Net;
 
 var builder  = BlossomApplication.CreateBuilder<Html>(args);
 
 builder.Services.AddAzureStorage(builder.Configuration);
-builder.Services.AddHttpClient("AuthService", client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7185/");
-}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-{
-    UseCookies = true,
-    CookieContainer = new CookieContainer()
-});
-
-builder.Services.AddScoped(sp =>
-    sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
-);
-
 builder.AddSparcEngine();
 
 builder.Services.AddSingleton<IdeaService>();
