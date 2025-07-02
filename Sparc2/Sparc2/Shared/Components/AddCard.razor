@@ -40,7 +40,7 @@
 
     private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
     private EditContext editContext = null!;
-    private List<Sparc2.Files.FileUpload> UploadedFiles = new();
+    private List<BlossomFile> UploadedFiles = new();
 
     protected override void OnInitialized()
     {
@@ -112,7 +112,7 @@
         return Task.CompletedTask;
     }
 
-    private void OnFilesChanged(List<Sparc2.Files.FileUpload> files)
+    private void OnFilesChanged(List<BlossomFile> files)
     {
         UploadedFiles = files;
     }
