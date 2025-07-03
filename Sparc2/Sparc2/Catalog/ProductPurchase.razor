@@ -7,25 +7,16 @@
         <section class="license-section">
             <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
         </section>
-        <section class="billing-section">
-            <PurchaseBilling Order="Order"></PurchaseBilling>
+        <section class="billing-section" style="@(string.IsNullOrWhiteSpace(CurrentUser?.Email) ? "" : "display:none;")">
+            <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@CurrentUser?.Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
         </section>
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
                 <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
-                <div class="form-group">
-                    <label>
-                        <span>Discount Code</span>
-                        <input @bind="Order.FirstName" placeholder="Discount code" />
-                    </label>
-                </div>                
             </div>
         </section>
-        <section class="summary-section">
-            <PurchaseSummary></PurchaseSummary>
-        </section>
-        <button id="submit-button" type="submit" class="btn primary-btn">
+        <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">           
             Purchase
         </button>
     </form>
@@ -40,18 +31,36 @@
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
+    private bool isEmailVerified = false;
+
+    private bool CanPurchase => isEmailVerified;
 
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
         StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+
+        if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(CurrentUser?.Email))
+        {
+            Order.ReceiptEmail = CurrentUser.Email;
+        }
     }
 
-    public async void SubmitUserBilling()
+    private void HandleEmailVerified(bool verified)
+    {
+        isEmailVerified = verified;
+        StateHasChanged();
+    }
+
+    public async Task SubmitUserBilling()
     {
         var result = await JS.InvokeAsync<PaymentResult>(
             "stripeIntegration.confirmPayment"
         );
+
+        Order.ReceiptEmail = string.Empty;
+        CurrentUser = await SparcEngine.UserInfo();
+        StateHasChanged();
     }
     public class PaymentResult
     {

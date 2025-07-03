@@ -1,49 +1,172 @@
-﻿<h5>Billing Information</h5>
-<div class="form-container">
-    <div class="form-group">
+﻿@using Sparc.Blossom.Authentication
+
+@if (!IsVerified)
+{
+    <h5>Billing Information</h5>
+    <p>To continue your purchase, please enter your email. We'll send a code to verify it.</p>
+
+    <div class="form-container">
         <label>
-            <span>First Name *</span>
-            <input @bind="Order.FirstName" placeholder="First Name" />
-        </label>
-        <label>
-            <span>Last Name *</span>
-            <input @bind="Order.LastName" placeholder="Last Name" />
-        </label>
-    </div>
-    <label>
-        <span>Address *</span>
-        <input @bind="Order.Address" placeholder="Address" />
-    </label>
-    <label>
-        <span>Address 2</span>
-        <input @bind="Order.Address2" placeholder="Additional Address" />
-    </label>
-    <div class="form-group">
-        <label>
-            <span>City *</span>
-            <input @bind="Order.City" placeholder="City" />
-        </label>
-        <label>
-            <span>State/Province *</span>
-            <input @bind="Order.State" placeholder="State/Province" />
+            <span>Email *</span>
+            <input @bind="Order.ReceiptEmail" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
+            @if (!string.IsNullOrWhiteSpace(VerificationError))
+            {
+                <p class="error-text">@VerificationError</p>
+            }
         </label>
     </div>
-    <div class="form-group">
-        <label>
-            <span>Country *</span>
-            <input @bind="Order.Country" placeholder="Country" />
-        </label>
-        <label>
-            <span>ZIP *</span>
-            <input @bind="Order.Zip" placeholder="ZIP Code" />
-        </label>
-    </div>
-    <label>
-        <span>Phone number (optional)</span>
-        <input @bind="Order.Phone" placeholder="Phone Number" />
-    </label>
-</div>
+
+    @if (IsSendingCode)
+    {
+        <div class="loader"></div>
+    }
+
+    @if (ShowVerification)
+    {
+        <div class="form-container">
+            <label>
+                <span>Enter the code sent to @CurrentVerificationDestination *</span>
+                <input @bind="VerificationCode" />
+                @if (!string.IsNullOrWhiteSpace(VerificationError))
+                {
+                    <p class="error-text">@VerificationError</p>
+                }
+            </label>
+        </div>
+        <footer>
+            <button type="button" class="primary-btn" @onclick="VerifyCode" disabled="@IsVerifyingCode">
+                Verify
+            </button>
+        </footer>
+    }
+
+    @if (IsVerifyingCode)
+    {
+        <div class="loader2"></div>
+    }
+
+    @if (ShowSuccessMessage)
+    {
+        <p class="success-text">✅ Email verified successfully!</p>
+    }
+}
 
 @code {
     [Parameter] public CreateOrderRequest Order { get; set; } = default!;
+    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public string? UserEmail { get; set; }
+    [Parameter] public EventCallback<bool> OnEmailVerified { get; set; }
+
+    private string? LastVerifiedEmail;
+    private string? VerificationCode;
+    private string VerificationError = "";
+    private string? CurrentVerificationDestination;
+    private bool IsVerifyingCode = false;
+    private bool IsSendingCode = false;
+    private bool ShowSuccessMessage = false;
+
+    private bool IsVerified =>
+        !string.IsNullOrWhiteSpace(UserEmail) &&
+        UserEmail == Order.ReceiptEmail;
+
+    private bool ShowVerification =>
+        !string.IsNullOrWhiteSpace(CurrentVerificationDestination) &&
+        !IsVerified &&
+        !ShowSuccessMessage;
+
+    private bool IsValidEmail(string email)
+    {
+        return System.Text.RegularExpressions.Regex.IsMatch(
+            email,
+            @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase
+        );
+    }
+
+    private async Task HandleEmailBlur()
+    {
+        var email = Order.ReceiptEmail?.Trim();
+
+        if (string.IsNullOrWhiteSpace(email) || email == LastVerifiedEmail)
+            return;
+
+        if (!IsValidEmail(email))
+        {
+            VerificationError = "Please enter a valid email address.";
+            StateHasChanged();
+            return;
+        }
+
+        IsSendingCode = true;
+        VerificationError = "";
+        StateHasChanged();
+
+        try
+        {
+            var resp = await SparcEngine.UpdateUser(
+                new UpdateUserRequest(Email: email, RequireEmailVerification: true)
+            );
+
+            if (resp is not null)
+            {
+                CurrentVerificationDestination = email;
+                LastVerifiedEmail = email;
+                VerificationCode = "";
+                ShowSuccessMessage = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error sending verification code: " + ex.Message);
+            VerificationError = "Something went wrong. Please try again.";
+        }
+        finally
+        {
+            IsSendingCode = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task VerifyCode()
+    {
+        if (string.IsNullOrWhiteSpace(VerificationCode)) return;
+
+        IsVerifyingCode = true;
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            var success = await SparcEngine.VerifyCode(
+                new VerificationRequest(CurrentVerificationDestination!, VerificationCode)
+            );
+
+            IsVerifyingCode = false;
+            await InvokeAsync(StateHasChanged);
+
+            if (success)
+            {
+                VerificationError = "";
+                ShowSuccessMessage = true;
+                CurrentVerificationDestination = null;
+                VerificationCode = "";
+
+                await OnEmailVerified.InvokeAsync(true);
+
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(10000);
+                    ShowSuccessMessage = false;
+                    await InvokeAsync(StateHasChanged);
+                });
+            }
+            else
+            {
+                VerificationError = "Invalid code. Please try again.";
+            }
+        }
+        catch (Exception ex)
+        {
+            VerificationError = $"Error verifying code: {ex.Message}";
+        }
+    }
 }
