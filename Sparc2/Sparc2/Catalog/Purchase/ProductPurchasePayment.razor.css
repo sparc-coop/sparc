@@ -45,5 +45,5 @@
 }
 .form-group .amount-grid button.selected {
   background-color: white;
-  border-color: red;
+  border-color: darkblue;
 }

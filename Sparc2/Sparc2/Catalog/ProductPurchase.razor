@@ -3,7 +3,7 @@
 @using System.Globalization
 
 <div class="product-purchase">
-    <form @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
+    <form id="payment-form" @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
         <section class="license-section">
             <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
         </section>
@@ -13,26 +13,24 @@
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <ProductPurchasePrices Order="Order" StripeProduct="StripeProduct"></ProductPurchasePrices>
-                <div class="form-group discount">
+                <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
+                <div class="form-group">
                     <label>
                         <span>Discount Code</span>
                         <input @bind="Order.FirstName" placeholder="Discount code" />
                     </label>
-                    <button>Apply</button>
-                </div>
-                <ProductPurchaseStripeForm Order="Order"></ProductPurchaseStripeForm>
+                </div>                
             </div>
         </section>
         <section class="summary-section">
             <PurchaseSummary></PurchaseSummary>
         </section>
-        <button type="submit" class="btn primary-btn">
+        <button id="submit-button" type="submit" class="btn primary-btn">
             Purchase
         </button>
     </form>
 </div>
-
+@inject IJSRuntime JS
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
@@ -46,22 +44,19 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
-
         StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
-
-
-        var test = ActiveProduct;
-
-        var bpoint = "";
     }
 
-    public Task<string> SubmitUserBilling()
+    public async void SubmitUserBilling()
     {
-        if (CurrentUser == null)
-        {
-            throw new InvalidOperationException("User is not authenticated.");
-        }
-
-        return Task.FromResult("Billing information submitted successfully.");
-    }   
+        var result = await JS.InvokeAsync<PaymentResult>(
+            "stripeIntegration.confirmPayment"
+        );
+    }
+    public class PaymentResult
+    {
+        public bool Succeeded { get; set; }
+        public string? Message { get; set; }
+        public string? Status { get; set; }
+    }
 }

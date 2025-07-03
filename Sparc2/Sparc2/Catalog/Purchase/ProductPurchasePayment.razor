@@ -12,7 +12,7 @@
 </div>
 <div class="form-group amount">
     <label>
-        <span>Amount (@($"{GetCurrencySymbol(Order.Currency)}"))</span>
+        <span>Amount</span>
     </label>
     <div class="amount-grid">
         @foreach (var amount in ConvertedPrices.OrderBy(x => x))
@@ -25,17 +25,20 @@
         }
     </div>
 </div>
+<ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
 
 @code {
     [Parameter] public GetProductResponse? StripeProduct { get; set; }
     [Parameter] public CreateOrderRequest Order { get; set; } = default!;
+    private ProductPurchaseStripeForm? StripeFormRef;
+
     public List<string> CurrencyOptions { get; set; } = new();
     private List<decimal> ConvertedPrices = new List<decimal>();
     private Dictionary<string, string> CurrencySymbols;
     private decimal? _selectedPredefinedAmount = null;
 
 
-    protected override void OnParametersSet()
+    protected async override void OnParametersSet()
     {
         if (StripeProduct is null || StripeProduct.Prices.Count == 0)
             return;
@@ -51,6 +54,11 @@
         CurrencyOptions = orderedCurrencies;
 
         UpdatePriceForCurrency();
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+        {
+            await StripeFormRef.InitiateStripePayment();
+        }
     }
 
     public void GetUserCurrency()
@@ -107,11 +115,25 @@
         return isoCode.ToUpper();
     }
 
-    private Task OnCurrencyChanged(ChangeEventArgs e)
+    private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
         Order.Currency = e.Value?.ToString()?.ToLower() ?? Order.Currency;
         UpdatePriceForCurrency();
-        return InvokeAsync(StateHasChanged);
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+            await StripeFormRef.InitiateStripePayment();
+        StateHasChanged();
+    }
+
+    private async Task SetAmount(decimal predefinedAmount)
+    {
+        Order.Amount = (long)predefinedAmount;
+        _selectedPredefinedAmount = predefinedAmount;
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+            await StripeFormRef.InitiateStripePayment();
+
+        StateHasChanged();
     }
 
     private void UpdatePriceForCurrency()
@@ -134,13 +156,9 @@
         }
         ConvertedPrices.OrderBy(c => c);
 
-        StateHasChanged();
-    }
+        Order.Amount = (long)ConvertedPrices.FirstOrDefault();
+        _selectedPredefinedAmount = Order.Amount;
 
-    private void SetAmount(decimal predefinedAmount)
-    {
-        Order.Amount = (long)predefinedAmount;
-        _selectedPredefinedAmount = predefinedAmount;
         StateHasChanged();
     }
 

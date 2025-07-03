@@ -1,33 +1,9 @@
-﻿<form id="payment-form">
-    <div id="payment-element">
-        <p>Loading payment form...</p>
-    </div>
-    <button id="submit-button" type="submit" class="btn btn-success">
-        @* @(Donation.Frequency == "Monthly" ? "Setup Monthly Donation" : $"Pay {Donation.Amount:C}") *@
-    </button>
-    <div id="error-message" style="color:red; margin-top: 10px;"></div>
-
-    @* If it's possible to integrate our custom elements into the Stripe form *@
-    <label>
-        <span>Name on Card *</span>
-        <input @bind="Order.Address" placeholder="Card number" />
-    </label>
-    <label>
-        <span>Card Number *</span>
-        <input @bind="Order.Address" placeholder="Card number" />
-    </label>
-    <div class="form-group">
-        <label>
-            <span>Expiration Date *</span>
-            <input @bind="Order.Country" placeholder="MM/YY" />
-        </label>
-        <label>
-            <span>CVC *</span>
-            <input @bind="Order.Zip" placeholder="3-digit code" />
-        </label>
-    </div>
-</form>
-@* <button type="button" class="btn btn-secondary" @onclick="GoBack">Back</button> *@
+﻿<div id="payment-element">
+    <p style="font-size: 16px">Loading payment form...</p>
+</div>
+<button id="submit-button" type="submit" class="btn btn-success">
+</button>
+<div id="error-message" style="color:red; margin-top: 10px;"></div>
 
 @inject IConfiguration Configuration
 @inject IJSRuntime JS
@@ -53,81 +29,35 @@
 
         _baseUrl = NavManager.BaseUri;
 
-        // CurrentUser = await SparcEngine.UserInfo();
-
         dotNetHelper = DotNetObjectReference.Create(this);
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    public async Task InitiateStripePayment()
     {
-        if (!_paymentSuccessful && !string.IsNullOrEmpty(_clientSecret) && !string.IsNullOrEmpty(_publishableKey) && !_stripeInitialized)
-        {
-            Console.WriteLine("ClientSecret received, initializing Stripe Payment Element via JS interop.");
-            _stripeInitialized = true;
-            try
-            {
-                await JS.InvokeVoidAsync(
-                    "stripeIntegration.initPaymentForm",
-                    _clientSecret,
-                    _publishableKey,
-                    dotNetHelper,
-                    _baseUrl
-                );
-                Console.WriteLine("Stripe JS initialization invoked.");
-            }
-            catch (JSException jsEx)
-            {
-                Console.Error.WriteLine($"Error invoking JS function: {jsEx.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"General error during Stripe init: {ex.Message}");
-            }
-        }
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        _stripeInitialized = false;
-        _clientSecret = null;
-        await InitiateStripePayment();
-    }
-
-    private async Task InitiateStripePayment()
-    {
-        if (Order.Amount <= 0)
-        {
-            Console.Error.WriteLine("Invalid amount for payment intent.");
-            return;
-        }
-
         try
         {
-            long amountInCents = (long)(Order.Amount * 100);
-            string? setupFutureUsage = null;
-
-            var metadata = new Dictionary<string, string> {
-            };
-
-            string? customerId = null;
-            // if (CurrentUser != null)
-            // {
-            //     customerId = CurrentUser.Id;
-            // }
-
             CreateOrderPaymentRequest request = new(
-                amountInCents,
+                (long)(Order.Amount * 100),
                 Order.Currency,
-                customerId,
                 null,
-                metadata,
-                setupFutureUsage
+                null,
+                new Dictionary<string, string>(),
+                null
             );
 
             var intent = await SparcEngine.CreateOrderPaymentAsync(request);
 
             _clientSecret = intent.ClientSecret;
-            Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");
+            _stripeInitialized = true;    
+            StateHasChanged();
+
+            await JS.InvokeVoidAsync(
+              "stripeIntegration.initPaymentForm",
+              _clientSecret,
+              _publishableKey,
+              dotNetHelper,
+              _baseUrl
+            );
             StateHasChanged();
         }
         catch (Exception ex)
