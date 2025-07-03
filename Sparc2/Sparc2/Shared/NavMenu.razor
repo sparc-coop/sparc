@@ -1,4 +1,5 @@
 ﻿@using Sparc.Blossom.Authentication
+@using System.Security.Claims
 
 <nav id="nav" class="@(IsIdeasPage ? "other-nav" : "home-nav") @(showMobileMenu ? "nav-mobile" : "")">
     <div class="container">
@@ -33,26 +34,7 @@
                     <div class="menu-profile">
                         <h5>Profile</h5>
                         <div class="account-btn">
-                            <UserProfile />
-                            @if (CurrentUser is not null)
-                            {
-                                <div @onclick:stopPropagation @onkeypress:stopPropagation>                        
-                                    @if (IsEditingUsername)
-                                    {
-                                        <input type="text" @bind="Username"
-                                                @ref="UsernameInput"
-                                                @bind:event="oninput"
-                                                @onblur="SaveUsername"
-                                                @onkeypress="HandleKeyPress" />
-                                    }
-                                    else
-                                    {
-                                        <span @onclick="StartEditing">
-                                            @CurrentUser.Avatar.Username
-                                        </span>
-                                    }
-                                </div>
-                            }
+                            Hi, @User.Identity?.Name.
                         </div>
                     </div>
                 </div>
@@ -84,22 +66,15 @@
     </div>
 }
 
-@code {
+@inject ClaimsPrincipal User
+@code { 
     private bool ShowAddCard = false;
     private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
     private int SelectedHeaderButton = 0;
-    BlossomUser? CurrentUser;
     private bool IsEditingUsername = false;
     private string Username = string.Empty;
     private ElementReference UsernameInput;
     bool showMobileMenu;
-
-    protected override async Task OnInitializedAsync() => await GetUserInfo();
-
-    private async Task GetUserInfo()
-    {
-        CurrentUser = await SparcEngine.UserInfo();
-    }
 
     private void Navigate(string path)
     {
@@ -120,10 +95,9 @@
 
     private async void StartEditing()
     {
-        if (CurrentUser?.Avatar.Username is not null)
-        {
-            Username = CurrentUser.Avatar.Username;
-        }
+        if (User.Identity?.Name is not null)
+            Username = User.Identity.Name;
+
         IsEditingUsername = true;
         await Js.InvokeVoidAsync("setEditingUsername", true);
         await UsernameInput.FocusAsync();
@@ -144,9 +118,9 @@
         IsEditingUsername = false;
         StateHasChanged();  
 
-        if (!string.IsNullOrWhiteSpace(newUsername) && CurrentUser is not null)
+        if (!string.IsNullOrWhiteSpace(newUsername) && User is not null)
         {
-            CurrentUser.Avatar.Username = newUsername;
+            // User.Identity.Name = newUsername;
             // await SparcEngine.UpdateUser(new UpdateUserRequest { Username = CurrentUser.Avatar.Username });
         }
 

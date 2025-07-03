@@ -201,9 +201,8 @@
     </div>
 }
 
-
+@inject ClaimsPrincipal CurrentUser
 @code {
-    [CascadingParameter] public required ClaimsPrincipal CurrentUser { get; set; }
     private bool IsCheckingUser = true;
     private bool IsAddingProduct = false;
     string? Message;
