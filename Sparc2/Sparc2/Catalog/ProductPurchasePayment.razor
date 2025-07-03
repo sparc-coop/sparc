@@ -157,6 +157,7 @@
         ConvertedPrices.OrderBy(c => c);
 
         Order.Amount = (long)ConvertedPrices.FirstOrDefault();
+        _selectedPredefinedAmount = Order.Amount;
 
         StateHasChanged();
     }
