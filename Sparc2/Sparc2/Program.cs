@@ -1,12 +1,13 @@
 ﻿using Sparc2;
 using Sparc.Blossom.Data;
+using Sparc.Engine;
 using Sparc2.Ideas;
 using Sparc2.Products;
 
-var builder  = BlossomApplication.CreateBuilder<Html>(args);
+var builder = BlossomApplication.CreateBuilder<Html>(args);
 
 builder.Services.AddAzureStorage(builder.Configuration);
-builder.AddSparcEngine();
+builder.Services.AddSparcEngine(new Uri("https://localhost:7185"));
 
 builder.Services.AddSingleton<IdeaService>();
 
