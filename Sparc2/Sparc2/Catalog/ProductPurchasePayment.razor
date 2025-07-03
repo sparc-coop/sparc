@@ -5,14 +5,14 @@
         <select value="Order.Currency" @onchange="OnCurrencyChanged">
             @foreach (var cur in CurrencyOptions ?? Enumerable.Empty<string>())
             {
-                <option value="@cur">@cur.ToUpper()</option>
+                <option value="@cur" selected="@(Order.Currency == cur ? "selected" : null)">@cur.ToUpper()</option>
             }                            
         </select>
     </label>
 </div>
 <div class="form-group">
     <label>
-        <span>Amount (USD)</span>
+        <span>Amount</span>
     </label>
     <div class="amount-grid">
         @foreach (var amount in ConvertedPrices.OrderBy(x => x))
@@ -38,7 +38,7 @@
     private decimal? _selectedPredefinedAmount = null;
 
 
-    protected override void OnParametersSet()
+    protected async override void OnParametersSet()
     {
         if (StripeProduct is null || StripeProduct.Prices.Count == 0)
             return;
@@ -54,6 +54,11 @@
         CurrencyOptions = orderedCurrencies;
 
         UpdatePriceForCurrency();
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+        {
+            await StripeFormRef.InitiateStripePayment();
+        }
     }
 
     public void GetUserCurrency()
@@ -120,6 +125,17 @@
         StateHasChanged();
     }
 
+    private async Task SetAmount(decimal predefinedAmount)
+    {
+        Order.Amount = (long)predefinedAmount;
+        _selectedPredefinedAmount = predefinedAmount;
+
+        if (Order.Amount > 0 && StripeFormRef is not null)
+            await StripeFormRef.InitiateStripePayment();
+
+        StateHasChanged();
+    }
+
     private void UpdatePriceForCurrency()
     {
         if (StripeProduct is null) return;
@@ -142,16 +158,6 @@
 
         Order.Amount = (long)ConvertedPrices.FirstOrDefault();
 
-        StateHasChanged();
-    }
-
-    private async Task SetAmount(decimal predefinedAmount)
-    {
-        Order.Amount = (long)predefinedAmount;
-        _selectedPredefinedAmount = predefinedAmount;
-
-        if (Order.Amount > 0 && StripeFormRef is not null)
-            await StripeFormRef.InitiateStripePayment();
         StateHasChanged();
     }
 

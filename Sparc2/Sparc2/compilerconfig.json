@@ -138,5 +138,9 @@
   {
     "outputFile": "Catalog/ProductPurchasePrices.razor.css",
     "inputFile": "Catalog/ProductPurchasePrices.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/ProductPurchasePayment.razor.css",
+    "inputFile": "Catalog/ProductPurchasePayment.razor.scss"
   }
 ]
