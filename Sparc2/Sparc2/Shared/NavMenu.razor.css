@@ -14,9 +14,6 @@ nav.home-nav {
   padding: 16px 32px;
   background: var(--yellow-50);
 }
-nav.home-nav .menu-toggle {
-  display: none;
-}
 nav .container {
   width: 100%;
   display: flex;

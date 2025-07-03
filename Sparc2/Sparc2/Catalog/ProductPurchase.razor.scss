@@ -91,4 +91,9 @@
             }
         }
     }
+
+    @media only screen and (max-width: 766px) {
+        padding: 0;
+        padding-bottom: 32px;
+    }
 }

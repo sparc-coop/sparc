@@ -1,50 +1,53 @@
 ﻿@page "/catalog/{ProductId}"
 @layout CatalogLayout
 
-<article class="product-page">
+<article class="product-page @(showPurchaseTab ? "left-only" : "")">
     <div class="page-container">
         <div class="left">
-            @if (ActiveProduct != null && showPurchaseTab == false)
-            {
-                @if (ActiveProduct.FileUrls.Count > 1)
+            <div class="left-container">
+                @if (ActiveProduct != null && showPurchaseTab == false)
                 {
-                    <div id="img-1" class="product-img span-1"></div>
-                    <div id="img-2" class="product-img span-1"></div>
-                    <div class="img-container span-2">
-                        <div id="img-3" class="product-img"></div>
-                        <div id="img-4" class="product-img"></div>
-                    </div>
-                    <div id="img-5" class="product-img img-5 span-1"></div>
+                    <div class="spacer mobile-only"></div>
+                    @if (ActiveProduct.FileUrls.Count > 1)
+                    {
+                        <div id="img-1" class="product-img span-1"></div>
+                        <div id="img-2" class="product-img span-1"></div>
+                        <div class="img-container span-2">
+                            <div id="img-3" class="product-img"></div>
+                            <div id="img-4" class="product-img"></div>
+                        </div>
+                        <div id="img-5" class="product-img img-5 span-1"></div>
 
-                } else if (ActiveProduct.FileUrls.Count == 5)
-                {
-                    <div id="img-1" class="product-img span-1"></div>
-                    <div id="img-2" class="product-img span-1"></div>
-                    <div class="img-container span-2">
-                        <div id="img-3" class="product-img"></div>
-                        <div id="img-4" class="product-img"></div>
-                    </div>
-                    <div id="img-5" class="product-img img-5 span-1"></div>
+                    } else if (ActiveProduct.FileUrls.Count == 5)
+                    {
+                        <div id="img-1" class="product-img span-1"></div>
+                        <div id="img-2" class="product-img span-1"></div>
+                        <div class="img-container span-2">
+                            <div id="img-3" class="product-img"></div>
+                            <div id="img-4" class="product-img"></div>
+                        </div>
+                        <div id="img-5" class="product-img img-5 span-1"></div>
+                    } else
+                    {
+                        foreach (var file in ActiveProduct.FileUrls)
+                        {
+                            <div id="img-@file"class="product-img span-1"></div>
+                        }
+                    }
                 } else
                 {
-                    foreach (var file in ActiveProduct.FileUrls)
-                    {
-                        <div id="img-@file"class="product-img span-1"></div>
-                    }
+                    <ProductPurchase ActiveProduct="ActiveProduct" />
                 }
-            } else
-            {
-                <ProductPurchase ActiveProduct="ActiveProduct" />
-            }
+            </div>
         </div>
-        <div class="right">
-            <div class="container">
+        <div class="right @((showFullDescription && !showPurchaseTab) ? "fullscreen" : "")">
+            <div class="right-container">
                 <div class="right-header">
                     <button @onclick=@ProductPageNav><ArrowLeftIcon /></button>
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickHelp=ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
+                    <ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickShowMore=ToggleFullDescription OnClickHelp =ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
                 } else
                 {
                     <div class="product-info">
@@ -64,6 +67,7 @@
 
     IEnumerable<Product> Products = new List<Product>();
     Product? ActiveProduct;
+    bool showFullDescription;
     // bool showHelpTab;
     bool showPurchaseTab;
     // bool showDownloadTab;
@@ -117,14 +121,26 @@
         {
             var url = "/catalog";
             //var obj = new { ProductId = ActiveProduct?.Id };
-            //Nav.NavigateTo(url);
-            Js.InvokeVoidAsync("replaceURL", url);
+            Nav.NavigateTo(url);
+            //Js.InvokeVoidAsync("replaceURL", url);
             //var url = "/catalog" + (ActiveProduct != null ? $"/#{ActiveProduct.Id}" : "");
             // Js.InvokeVoidAsync("replaceURL", obj, url);
             // Nav.NavigateTo(url, new NavigationOptions()
             // {
             //     HistoryEntryState = ActiveProduct?.Id
             // });
+        }
+    }
+
+    void ToggleFullDescription(bool showMore)
+    {
+        if (showMore)
+        {
+            showFullDescription = true;
+            Js.InvokeVoidAsync("disableBodyScrolling");
+        } else
+        {
+            showFullDescription = false;
         }
     }
 

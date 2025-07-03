@@ -76,3 +76,9 @@
   border: 1px solid var(--purple-100);
   opacity: 0.5;
 }
+@media only screen and (max-width: 766px) {
+  .product-purchase {
+    padding: 0;
+    padding-bottom: 32px;
+  }
+}

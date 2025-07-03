@@ -1,5 +1,5 @@
 ﻿function morphMenuSvg(morphForward) {
-    console.log('morphForward:', morphForward);
+    //console.log('morphForward:', morphForward);
     if (morphForward) {
         const morph1 = KUTE.fromTo('#menu1A',
             { path: '#menu1A' },

@@ -4,16 +4,19 @@
 <article id="catalog" class="catalog">
     <div class="page-container">
         <div class="left">
-            @foreach (var app in Products)
-            {
-                <div id="@app.Id" class="product product-card" data-id="@app.Id">
-                    <div class="product card-overlay" data-id="@app.Id"></div>
-                    <div class="product title" data-id="@app.Id"><h4 class="product" data-id="@app.Id">@app.Title</h4></div>
-                </div>
+            <div class="left-container">
+                <div class="spacer mobile-only"></div>
+                @foreach (var app in Products)
+                {
+                    <div id="@app.Id" class="product product-card" data-id="@app.Id">
+                        <div class="product card-overlay" data-id="@app.Id"></div>
+                        <div class="product title" data-id="@app.Id"><h4 class="product" data-id="@app.Id">@app.Title</h4></div>
+                    </div>
             }
+            </div>
         </div>
         <div class="right">
-            <div class="container">
+            <div class="right-container">
                 @if (ActiveProduct != null)
                 {
                     <ProductInfo PageType="Catalog" ActiveProduct="ActiveProduct" />
