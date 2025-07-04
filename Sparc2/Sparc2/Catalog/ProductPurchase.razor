@@ -67,12 +67,6 @@
             <h5>Payment Information</h5>
             <div class="form-container">
                 <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
-                <div class="form-group">
-                    <label>
-                        <span>Discount Code</span>
-                        <input @bind="Order.FirstName" placeholder="First Name" />
-                    </label>
-                </div>                
             </div>
         </section>
         <section class="summary-section">
@@ -103,6 +97,11 @@
         var result = await JS.InvokeAsync<PaymentResult>(
             "stripeIntegration.confirmPayment"
         );
+
+        if (result.Succeeded)
+        {
+            Nav.NavigateTo(Nav.Uri, forceLoad: false);
+        }
     }
     public class PaymentResult
     {
