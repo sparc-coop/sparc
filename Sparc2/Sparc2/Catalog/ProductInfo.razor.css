@@ -218,6 +218,12 @@
   .product-info.product-page.fullscreen .info-container {
     height: 100%;
   }
+  .product-info.product-page.fullscreen .credits {
+    display: flex !important;
+  }
+  .product-info.product-page.fullscreen ::deep .product-actions {
+    display: block;
+  }
   .product-info.product-page.fullscreen .gradient-overlay {
     display: none;
   }

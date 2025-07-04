@@ -265,13 +265,13 @@
             .spacer {
                 display: block;
                 width: 100%;
-                padding-bottom: 320px;
+                padding-bottom: 363px;
             }
         }
 
         .right {
             width: calc(100% - 32px);
-            height: 320px;
+            height: 363px;
             background: var(--yellow-50);
             transition: height .3s ease-out;
 

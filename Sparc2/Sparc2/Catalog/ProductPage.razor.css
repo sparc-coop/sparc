@@ -211,11 +211,11 @@
   .product-page .left .spacer {
     display: block;
     width: 100%;
-    padding-bottom: 320px;
+    padding-bottom: 363px;
   }
   .product-page .right {
     width: calc(100% - 32px);
-    height: 320px;
+    height: 363px;
     background: var(--yellow-50);
     transition: height 0.3s ease-out;
   }
