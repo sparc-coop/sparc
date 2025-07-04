@@ -119,9 +119,11 @@
         }
         else
         {
+            Console.WriteLine("go back");
             var url = "/catalog";
             //var obj = new { ProductId = ActiveProduct?.Id };
             Nav.NavigateTo(url);
+            //Js.InvokeVoidAsync("goBack");
             //Js.InvokeVoidAsync("replaceURL", url);
             //var url = "/catalog" + (ActiveProduct != null ? $"/#{ActiveProduct.Id}" : "");
             // Js.InvokeVoidAsync("replaceURL", obj, url);
@@ -147,6 +149,7 @@
     void ToggleHelp()
     {
         Console.WriteLine("Help toggled for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+        showPurchaseTab = false;
     }
 
     void TogglePurchaseTab()
@@ -158,15 +161,18 @@
     void ToggleDownload()
     {
         Console.WriteLine("Toggling download for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+        showPurchaseTab = false;
     }
 
     void ToggleSurvey()
     {
         Console.WriteLine("Toggling survey for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+        showPurchaseTab = false;
     }
 
     void ToggleDemo()
     {
         Console.WriteLine("Toggling demo for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
+        showPurchaseTab = false;
     }
 }

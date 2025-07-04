@@ -119,7 +119,7 @@
   .catalog .left .spacer {
     display: block;
     width: 100%;
-    padding-bottom: 40vh;
+    padding-bottom: 320px;
   }
   .catalog .left .product-card {
     aspect-ratio: 3/2;
@@ -129,7 +129,7 @@
   }
   .catalog .right {
     width: calc(100% - 16px);
-    height: 40vh;
+    height: 320px;
     padding: 0;
     padding-bottom: 16px;
     position: fixed;

@@ -186,10 +186,14 @@
     @media only screen and (max-width: 766px) {
         &.catalog-page {
             width: calc(100% - 48px);
-            height: calc(40vh - 64px);
+            height: calc(100% - 80px);
             padding: 32px;
             padding-right: 0;
             overflow: hidden;
+
+            .credits, ::deep .product-actions {
+                display: none;
+            }
 
             .view-btn {
                 display: block;

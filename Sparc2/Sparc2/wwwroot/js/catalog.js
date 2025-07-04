@@ -89,7 +89,10 @@ function clickProductTab(dotnetReference) {
 }
 
 function replaceURL(obj, url) {
-    //history.replaceState(obj, "", url);
+    history.replaceState(obj, url);
+}
+
+function goBack() {
     window.history.back();
 }
 
