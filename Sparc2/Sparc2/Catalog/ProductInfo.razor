@@ -39,7 +39,9 @@
 
     @* <div class="gradient-overlay mobile-only"></div> *@
     <button class="view-btn mobile-only" @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'><ArrowLeftIcon /></button>
-    <button class="more-btn mobile-only" @onclick='() => ToggleFullDescription(true)'>Show More</button>
+    <div class="show-more mobile-only">
+        <button class="more-btn" @onclick='() => ToggleFullDescription(true)'>Show More</button>
+    </div>
     <div class="show-less mobile-only">
         <button class="less-btn" @onclick='() => ToggleFullDescription(false)'>Show Less</button>
     </div>

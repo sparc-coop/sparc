@@ -206,6 +206,9 @@
     height: 40vh;
     padding-bottom: 16px;
   }
+  .product-info.product-page .credits, .product-info.product-page ::deep .product-actions {
+    display: none;
+  }
   .product-info.product-page footer {
     display: none;
   }
@@ -269,16 +272,19 @@
   .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(3).clicked {
     transform: translateY(-8px) rotate(1deg);
   }
+  .product-info.product-page .show-more {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 32px;
+    position: absolute;
+    bottom: 16px;
+  }
   .product-info.product-page .more-btn {
-    display: block;
     padding: 6px 10px;
     background: none;
     border: 1px solid transparent;
     border-radius: 16px;
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
     font-family: "Fjalla One";
     font-size: 1.4rem;
     font-style: normal;

@@ -263,6 +263,10 @@
             height: 40vh;
             padding-bottom: 16px;
 
+            .credits, ::deep .product-actions {
+                display: none;
+            }
+
             footer {
                 display: none;
             }
@@ -344,16 +348,22 @@
                 }
             }
 
+            .show-more {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: 32px;
+                position: absolute;
+                bottom: 16px;
+                
+            }
+
             .more-btn {
-                display: block;
+                //display: block;
                 padding: 6px 10px;
                 background: none;
                 border: 1px solid transparent;
                 border-radius: 16px;
-                position: absolute;
-                bottom: 16px;
-                left: 50%;
-                transform: translateX(-50%);
                 font-family: "Fjalla One";
                 font-size: 1.4rem;
                 font-style: normal;
