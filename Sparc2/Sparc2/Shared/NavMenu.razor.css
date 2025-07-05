@@ -44,6 +44,7 @@ nav .right .menu-pages {
 nav .right .account-btn {
   display: flex;
   align-items: center;
+  font-size: 18px;
   /*gap: 8px;*/
 }
 nav .right .account-btn ::deep svg path {
