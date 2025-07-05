@@ -17,7 +17,7 @@
     <script src="@Assets["js/stripeIntegration.js"]"></script>
     <ImportMap />
     
-    <HeadOutlet @rendermode="InteractiveServer" />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(false)" />
 </head>
 <body>
     <Sparc.Blossom.BlossomApp Program="Program" DefaultLayout="MainLayout" @rendermode="new InteractiveServerRenderMode(false)" />
