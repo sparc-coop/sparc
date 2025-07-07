@@ -41,8 +41,7 @@ nav .right .menu-pages {
 nav .right .account-btn {
   display: flex;
   align-items: center;
-  font-size: 18px;
-  /*gap: 8px;*/
+  gap: 8px;
 }
 nav .right .account-btn ::deep svg path {
   stroke: var(--purple-800);
@@ -147,10 +146,9 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
   justify-content: center;
   gap: 4px;
   color: var(--yellow-50);
-  align-items: center;
 }
 .other-nav button ::deep svg, .other-nav .button ::deep svg, .other-nav a ::deep svg {
-  /*margin-top: 1px;*/
+  margin-top: 1px;
 }
 .other-nav button ::deep svg path, .other-nav .button ::deep svg path, .other-nav a ::deep svg path {
   stroke: #FFFCF6;
