@@ -1,8 +1,8 @@
-﻿using Sparc2;
+﻿using Sparc.Store;
 using Sparc.Blossom.Data;
 using Sparc.Engine;
-using Sparc2.Ideas;
-using Sparc2.Products;
+using Sparc.Store.Ideas;
+using Sparc.Store.Products;
 
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 

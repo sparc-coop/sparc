@@ -1,4 +1,4 @@
-﻿namespace Sparc2.Donations;
+﻿namespace Sparc.Store.Donations;
 
 public class UserDonation : BlossomEntity<string>
 {

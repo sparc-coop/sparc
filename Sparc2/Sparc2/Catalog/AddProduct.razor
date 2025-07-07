@@ -346,7 +346,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 customerId = CurrentUser.Id;
             }
 
-            CreateOrderPaymentRequest request = new(
+            Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
                 amountInCents,
                 SelectedCurrency,
                 customerId,

@@ -36,7 +36,7 @@
     {
         try
         {
-            CreateOrderPaymentRequest request = new(
+            Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
                 (long)(Order.Amount * 100),
                 Order.Currency,
                 null,

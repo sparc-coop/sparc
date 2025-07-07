@@ -28,7 +28,7 @@ public class SparcStoreBillingService : StripePaymentService, IBlossomEndpoints
 
     public async Task<GetProductResponse> GetProductAsync(string productId)
     {
-        var product = await base.GetProductAsync(productId);
+        var product = await GetStripeProductAsync(productId);
         var priceList = await GetAllPricesForProductAsync(productId);
 
         var priceResultList = new List<Dictionary<string, long>>();

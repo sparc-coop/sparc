@@ -1,4 +1,4 @@
-﻿namespace Sparc2.Products;
+﻿namespace Sparc.Store.Products;
 
 public class Tag
 {

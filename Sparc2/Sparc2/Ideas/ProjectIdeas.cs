@@ -1,4 +1,4 @@
-﻿namespace Sparc2.Ideas;
+﻿namespace Sparc.Store.Ideas;
 
 public class ProjectIdeas(BlossomAggregateOptions<ProjectIdea> options) : BlossomAggregate<ProjectIdea>(options)
 {

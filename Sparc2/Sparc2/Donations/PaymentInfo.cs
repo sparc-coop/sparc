@@ -1,4 +1,4 @@
-﻿namespace Sparc2.Donations;
+﻿namespace Sparc.Store.Donations;
 
 public class PaymentInfo(string cardHolderName, string cardNumber, string expiryDate, string cvv, string emailAdress, string billingAddress, string city, string zipCode, string donationId)
 {

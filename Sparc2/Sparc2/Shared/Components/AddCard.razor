@@ -19,7 +19,7 @@
                 <AddDonation CurrentStep="@CurrentStep" OnComplete="@HandleComplete" />
                 break;
             case 2:
-                <Sparc2.Pages.AddProduct CurrentStep="@CurrentStep" ProductId="prod_SW5yY8O8KprzFu" OnComplete="@HandleComplete" />
+                <Sparc.Store.Catalog.AddProduct CurrentStep="@CurrentStep" ProductId="prod_SW5yY8O8KprzFu" OnComplete="@HandleComplete" />
                 break;
         }
     </section>
@@ -38,7 +38,7 @@
     private int StepProgress => CurrentStep == 0 ? 50 : 100;
     private bool IsUploading;
 
-    private Sparc2.Ideas.ProjectIdea Idea = new("", "", "", new());
+    private Sparc.Store.Ideas.ProjectIdea Idea = new("", "", "", new());
     private EditContext editContext = null!;
     private List<BlossomFile> UploadedFiles = new();
 

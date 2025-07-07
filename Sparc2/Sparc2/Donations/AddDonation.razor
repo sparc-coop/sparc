@@ -249,7 +249,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
             }
 
-            CreateOrderPaymentRequest request = new(
+            Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
 
                 amountInCents,
                 "usd",

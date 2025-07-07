@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sparc2.Ideas;
+namespace Sparc.Store.Ideas;
 
 public class ProjectIdea : BlossomEntity<string>
 {
