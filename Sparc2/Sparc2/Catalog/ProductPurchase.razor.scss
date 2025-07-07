@@ -20,13 +20,6 @@
             flex-direction: column;
             gap: 32px;
 
-            &.summary-section {
-                padding: 32px;
-                border-radius: 32px;
-                background: var(--yellow-50);
-                box-shadow: 0px 0px 2px rgba(26, 12, 50, 0.10), 0px 0px 4px rgba(26, 12, 50, 0.20);
-            }
-
             .form-container {
                 display: flex;
                 flex-direction: column;
@@ -40,30 +33,6 @@
             justify-content: space-between;
             align-items: center;
             gap: 16px;
-
-            &.discount {
-                justify-content: flex-start;
-                align-items: flex-end;
-
-                label {
-                    width: 50%;
-                }
-
-                button {
-                    height: 48px;
-                    padding: 10px 20px;
-                    background: transparent;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: var(--purple-700);
-
-                    &:hover {
-                        border-radius: 32px;
-                        border: 1px solid var(--purple-700);
-                    }
-                }
-            }
         }
 
         label {
