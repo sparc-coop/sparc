@@ -7,16 +7,19 @@
         <section class="license-section">
             <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
         </section>
-        <section class="billing-section" style="@(string.IsNullOrWhiteSpace(CurrentUser?.Email) ? "" : "display:none;")">
-            <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@CurrentUser?.Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
-        </section>
+        @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
+        {
+            <section class="billing-section">
+                <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
+            </section>
+        }
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
                 <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
             </div>
         </section>
-        <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">           
+        <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">
             Purchase
         </button>
     </form>
@@ -32,6 +35,7 @@
     string SelectedLicense = "personal";
     string GiftEmail = "";
     private bool isEmailVerified = false;
+    private string? Email => CurrentUser?.Identity("Email");
 
     private bool CanPurchase => isEmailVerified;
 
@@ -40,9 +44,9 @@
         CurrentUser = await SparcEngine.UserInfo();
         StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
 
-        if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(CurrentUser?.Email))
+        if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
         {
-            Order.ReceiptEmail = CurrentUser.Email;
+            Order.ReceiptEmail = Email;
         }
     }
 

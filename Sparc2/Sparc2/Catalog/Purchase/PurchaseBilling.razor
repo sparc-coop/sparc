@@ -103,9 +103,7 @@
 
         try
         {
-            var resp = await SparcEngine.UpdateUser(
-                new UpdateUserRequest(Email: email, RequireEmailVerification: true)
-            );
+            var resp = await SparcEngine.Login(email);
 
             if (resp is not null)
             {
@@ -136,14 +134,11 @@
 
         try
         {
-            var success = await SparcEngine.VerifyCode(
-                new VerificationRequest(CurrentVerificationDestination!, VerificationCode)
-            );
-
+            var success = await SparcEngine.Login(VerificationCode);
             IsVerifyingCode = false;
             await InvokeAsync(StateHasChanged);
 
-            if (success)
+            if (success is not null)
             {
                 VerificationError = "";
                 ShowSuccessMessage = true;
