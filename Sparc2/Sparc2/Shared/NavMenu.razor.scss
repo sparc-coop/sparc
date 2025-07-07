@@ -14,10 +14,6 @@
         margin: 0;
         padding: 16px 32px;
         background: var(--yellow-50);
-
-        .menu-toggle {
-            display: none;
-        }
     }
 
     .container {
@@ -52,8 +48,7 @@
         .account-btn {
             display: flex;
             align-items: center;
-            font-size: 18px;
-            /*gap: 8px;*/
+            gap: 8px;
 
             ::deep svg path {
                 stroke: var(--purple-800);
@@ -97,10 +92,6 @@ button, .button, a {
     letter-spacing: -0.14px;
     cursor: pointer;
     transition: .2s all ease-in-out;
-
-    ::deep svg path {
-        stroke: #FFFCF6;
-    }
 
     &.secondary-btn {
         padding: 0 !important;
@@ -181,10 +172,13 @@ button, .button, a {
         justify-content: center;
         gap: 4px;
         color: var(--yellow-50);
-        align-items: center;
 
         ::deep svg {
-            /*margin-top: 1px;*/
+            margin-top: 1px;
+
+            path {
+                stroke: #FFFCF6;
+            }
         }
 
         &:hover {
@@ -316,26 +310,37 @@ button, .button, a {
 
             .menu-toggle {
                 display: block;
+
                 button {
-                    height: 32px;
+                    height: 18px;
                     width: fit-content;
                     padding: 0;
 
                     ::deep svg {
-                        height: 32px;
+                        height: 18px;
                         width: auto;
                     }
+
+                    /*&.close {
+                        ::deep svg g#menu1 {
+                            visibility: hidden !important;
+                        }
+
+                        ::deep svg g#menu4 {
+                            visibility: visible !important;
+                        }
+                    }*/
                 }
             }
 
             .right {
-                background: var(--yellow-50);
-                display: block;
-                position: fixed;
-                top: 80px;
-                right: 0;
                 width: 100vw;
-                height: calc(100vh - 80px);
+                height: calc(100vh - 64px);
+                position: fixed;
+                top: 64px;
+                right: 0;
+                display: block;
+                background: var(--yellow-50);
                 transform: translateX(100vw);
                 transition: transform 1.5s ease-in;
 
@@ -354,6 +359,7 @@ button, .button, a {
                     justify-content: start;
                     align-items: start;
                     gap: 48px;
+                    overflow-y: auto;
 
                     > * {
                         display: flex;

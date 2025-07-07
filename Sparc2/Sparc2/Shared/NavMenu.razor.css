@@ -14,9 +14,6 @@ nav.home-nav {
   padding: 16px 32px;
   background: var(--yellow-50);
 }
-nav.home-nav .menu-toggle {
-  display: none;
-}
 nav .container {
   width: 100%;
   display: flex;
@@ -82,9 +79,6 @@ button, .button, a {
   letter-spacing: -0.14px;
   cursor: pointer;
   transition: 0.2s all ease-in-out;
-}
-button ::deep svg path, .button ::deep svg path, a ::deep svg path {
-  stroke: #FFFCF6;
 }
 button.secondary-btn, .button.secondary-btn, a.secondary-btn {
   padding: 0 !important;
@@ -157,6 +151,9 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
 }
 .other-nav button ::deep svg, .other-nav .button ::deep svg, .other-nav a ::deep svg {
   /*margin-top: 1px;*/
+}
+.other-nav button ::deep svg path, .other-nav .button ::deep svg path, .other-nav a ::deep svg path {
+  stroke: #FFFCF6;
 }
 .other-nav button:hover, .other-nav .button:hover, .other-nav a:hover {
   border: 1px solid var(--yellow-50);
@@ -265,22 +262,31 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     display: block;
   }
   nav.home-nav .menu-toggle button {
-    height: 32px;
+    height: 18px;
     width: fit-content;
     padding: 0;
+    /*&.close {
+        ::deep svg g#menu1 {
+            visibility: hidden !important;
+        }
+
+        ::deep svg g#menu4 {
+            visibility: visible !important;
+        }
+    }*/
   }
   nav.home-nav .menu-toggle button ::deep svg {
-    height: 32px;
+    height: 18px;
     width: auto;
   }
   nav.home-nav .right {
-    background: var(--yellow-50);
-    display: block;
-    position: fixed;
-    top: 80px;
-    right: 0;
     width: 100vw;
-    height: calc(100vh - 80px);
+    height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    right: 0;
+    display: block;
+    background: var(--yellow-50);
     transform: translateX(100vw);
     transition: transform 1.5s ease-in;
   }
@@ -296,6 +302,7 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     justify-content: start;
     align-items: start;
     gap: 48px;
+    overflow-y: auto;
   }
   nav.home-nav .right .menu > * {
     display: flex;

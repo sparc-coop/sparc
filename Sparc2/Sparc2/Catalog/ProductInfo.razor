@@ -1,24 +1,24 @@
-﻿<div class="product-info @PageClass(PageType)">
-    <header>
-        <div>
-            <h2>@ActiveProduct.Title</h2>
-            <div class="price">
-                <span>$@ActiveProduct.Price.ToString()</span>
+﻿<div class="product-info @PageClass(PageType) @(showFullDescription ? "fullscreen" : "")">
+    <div class="info-container">
+        <header>
+            <div>
+                <h2 @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'>@ActiveProduct.Title</h2>
+                <div class="price">
+                    <span>$@ActiveProduct.Price.ToString()</span>
+                </div>
             </div>
-        </div>
-        <div class="subheader product-tags">
-            @foreach (var tag in ActiveProduct.Tags)
-            {
-                var color = TagColor(tag.Type);
-                <div class="tag product-tag @color">@tag.Name</div>
-            }
-        </div>
-    </header>
-    <section class="description">
-        <p>@ActiveProduct.Description</p>
-    </section>
-    <footer>
-        <div class="credits">
+            <div class="subheader product-tags">
+                @foreach (var tag in ActiveProduct.Tags)
+                {
+                    var color = TagColor(tag.Type);
+                    <div class="tag product-tag @color">@tag.Name</div>
+                }
+            </div>
+        </header>
+        <section class="description">
+            <p>@ActiveProduct.Description</p>
+        </section>
+        <section class="credits">
             <h3><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h3>
             <div class="@creditsClass">
                 <p>Vitae pellentesque | Position Title</p>
@@ -28,17 +28,29 @@
                 <p>Dictum risus | Position Title</p>
                 <p>Suspendisse aliquet | Position Title</p>
             </div>
-        </div>
+        </section>
         @if (PageType == "Product")
         {
-            <ProductActions ActiveProduct=ActiveProduct OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+            <footer>
+                <ProductActions ActiveProduct=ActiveProduct OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+            </footer>
         }
-    </footer>
+    </div>
+
+    @* <div class="gradient-overlay mobile-only"></div> *@
+    <button class="view-btn mobile-only" @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'><ArrowLeftIcon /></button>
+    <div class="show-more mobile-only">
+        <button class="more-btn" @onclick='() => ToggleFullDescription(true)'>Show More</button>
+    </div>
+    <div class="show-less mobile-only">
+        <button class="less-btn" @onclick='() => ToggleFullDescription(false)'>Show Less</button>
+    </div>
 </div>
 
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string? PageType { get; set; }
+    [Parameter] public EventCallback<bool> OnClickShowMore { get; set; }
     [Parameter] public EventCallback OnClickHelp { get; set; }
     [Parameter] public EventCallback OnClickPurchase { get; set; }
     [Parameter] public EventCallback OnClickDownload { get; set; }
@@ -47,6 +59,7 @@
 
     bool showCredits; 
     string creditsClass = "";
+    bool showFullDescription;
 
     string PageClass (string page)
     {
@@ -85,6 +98,19 @@
         } else
         {
             creditsClass = "rotateBack";
+        }
+    }
+
+    void ToggleFullDescription(bool showMore)
+    {
+        if (showMore)
+        {
+            showFullDescription = true;
+            OnClickShowMore.InvokeAsync(true);
+        } else
+        {
+            showFullDescription = false;
+            OnClickShowMore.InvokeAsync(false);
         }
     }
 

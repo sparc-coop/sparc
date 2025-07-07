@@ -254,6 +254,10 @@ ul li {
   z-index: 200;
 }
 
+.mobile-only {
+  display: none;
+}
+
 /*font-family: elza-text, sans-serif;
 font-weight: 400;
 font-style: normal;

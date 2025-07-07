@@ -20,6 +20,7 @@ main .grid {
     height: calc(100vh - 64px);
     margin-top: 64px;
     padding: 0;
+    overflow-y: hidden;
   }
   main .grid {
     width: 100%;
