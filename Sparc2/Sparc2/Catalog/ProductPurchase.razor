@@ -58,9 +58,10 @@
             "stripeIntegration.confirmPayment"
         );
 
-        Order.ReceiptEmail = string.Empty;
-        CurrentUser = await SparcEngine.UserInfo();
-        StateHasChanged();
+        if (result.Succeeded)
+        {
+            Nav.NavigateTo(Nav.Uri, forceLoad: false);
+        }
     }
     public class PaymentResult
     {
