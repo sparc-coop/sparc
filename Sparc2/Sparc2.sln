@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.35906.104
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc2", "Sparc2\Sparc2.csproj", "{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Store", "Sparc2\Sparc.Store.csproj", "{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blossom", "Blossom", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -28,8 +28,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureStorage", "..\..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj", "{B83830BD-25BA-8391-B00F-9E91064B9D49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tovik", "..\..\sparcengine\Tovik\Tovik.csproj", "{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sparc", "Sparc", "{B783795B-D473-4D1A-A925-68891FDA2F7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,7 +84,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{77468FA8-B715-4C93-B9CD-6E4BB8B85CDB} = {B783795B-D473-4D1A-A925-68891FDA2F7B}
 		{43A6A67F-62F6-B1F4-B8B0-362B3AB4B2DE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{325F6838-D997-B057-028D-166902C585F6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9D293A5D-6B48-DB01-5C62-4FED86572FB0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
