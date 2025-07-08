@@ -8,32 +8,25 @@
                 @if (ActiveProduct != null && showPurchaseTab == false)
                 {
                     <div class="spacer mobile-only"></div>
-                    @if (ActiveProduct.Images.Count > 1)
+                    @if (!ActiveProduct.Images.Any())
                     {
-                        <div id="img-1" class="product-img span-1"></div>
-                        <div id="img-2" class="product-img span-1"></div>
+                        <figure id="img-1" class="product-img span-1"></figure>
+                        <figure id="img-2" class="product-img span-1"></figure>
                         <div class="img-container span-2">
-                            <div id="img-3" class="product-img"></div>
-                            <div id="img-4" class="product-img"></div>
+                            <figure id="img-3" class="product-img"></figure>
+                            <figure id="img-4" class="product-img"></figure>
                         </div>
-                        <div id="img-5" class="product-img img-5 span-1"></div>
+                        <figure id="img-5" class="product-img img-5 span-1"></figure>
 
-                    } 
-                    else if (ActiveProduct.Images.Count == 5)
-                    {
-                        <div id="img-1" class="product-img span-1"></div>
-                        <div id="img-2" class="product-img span-1"></div>
-                        <div class="img-container span-2">
-                            <div id="img-3" class="product-img"></div>
-                            <div id="img-4" class="product-img"></div>
-                        </div>
-                        <div id="img-5" class="product-img img-5 span-1"></div>
                     } 
                     else
                     {
+                        var i = 1;
                         foreach (var file in ActiveProduct.Images)
                         {
-                            <div id="img-@file"class="product-img span-1"></div>
+                            <figure id="img-@i"class="product-img span-1">
+                                <img src="@file" alt="@ActiveProduct.Title Product Image @i++" />
+                            </figure>
                         }
                     }
                 } else

@@ -106,5 +106,9 @@
   {
     "outputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.css",
     "inputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Components/ProfileCircle.razor.css",
+    "inputFile": "Shared/Components/ProfileCircle.razor.scss"
   }
 ]

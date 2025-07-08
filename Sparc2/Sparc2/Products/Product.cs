@@ -13,11 +13,11 @@ public class Product(string title, string status)
     public string? Description { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public string? StripeProductId { get; set; }
-    public double Price { get; set; } = 0.00;
+    public decimal Price { get; set; } = 0M;
     //public List<KeyValuePair<ProductTags, string>> Tags { get; set; } = new();
     public string Status { get; set; } = status;
     public List<ProductCredit> Credits { get; set; } = [];
-    public List<BlossomFile> Images { get; set; } = [];
+    public List<string> Images { get; set; } = [];
     public List<Tag> Tags { get; set; } =
     [
         new Tag("dev-in-progress", "Development In Progress", "development"),

@@ -258,6 +258,42 @@ ul li {
   display: none;
 }
 
+.description {
+  font-size: 16px;
+}
+.description h1, .description h2, .description h3 {
+  font-family: "Fjalla One";
+  font-weight: 600;
+  margin: 36px 0 24px;
+  color: var(--Color-Purple-900, #1A0C32);
+}
+.description h1 {
+  font-size: 36px;
+  margin-top: 16px;
+}
+.description h2 {
+  font-size: 30px;
+}
+.description h3 {
+  font-size: 24px;
+}
+.description li {
+  margin-bottom: 10px;
+}
+.description ul {
+  list-style-type: disc;
+  padding-left: 36px;
+}
+.description p {
+  font-family: "elza-text", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 22.4px */
+  color: var(--Color-Purple-900, #1A0C32);
+  margin-bottom: 24px;
+}
+
 /*font-family: elza-text, sans-serif;
 font-weight: 400;
 font-style: normal;
