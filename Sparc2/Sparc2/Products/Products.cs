@@ -10,7 +10,4 @@ public class Products(BlossomAggregateOptions<Product> options) : BlossomAggrega
 
     public BlossomQuery<Product> GetProductByTitle(string title)
         => Query().Where(x => x.Title.Contains(title));
-
-    public BlossomQuery<Product> GetProductsByAuthor(string author)
-        => Query().Where(x => x.Author == author);
 }

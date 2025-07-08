@@ -8,7 +8,7 @@
                 @if (ActiveProduct != null && showPurchaseTab == false)
                 {
                     <div class="spacer mobile-only"></div>
-                    @if (ActiveProduct.FileUrls.Count > 1)
+                    @if (ActiveProduct.Images.Count > 1)
                     {
                         <div id="img-1" class="product-img span-1"></div>
                         <div id="img-2" class="product-img span-1"></div>
@@ -18,7 +18,8 @@
                         </div>
                         <div id="img-5" class="product-img img-5 span-1"></div>
 
-                    } else if (ActiveProduct.FileUrls.Count == 5)
+                    } 
+                    else if (ActiveProduct.Images.Count == 5)
                     {
                         <div id="img-1" class="product-img span-1"></div>
                         <div id="img-2" class="product-img span-1"></div>
@@ -27,9 +28,10 @@
                             <div id="img-4" class="product-img"></div>
                         </div>
                         <div id="img-5" class="product-img img-5 span-1"></div>
-                    } else
+                    } 
+                    else
                     {
-                        foreach (var file in ActiveProduct.FileUrls)
+                        foreach (var file in ActiveProduct.Images)
                         {
                             <div id="img-@file"class="product-img span-1"></div>
                         }

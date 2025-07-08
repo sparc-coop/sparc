@@ -3,21 +3,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sparc.Store.Products;
 
-public class Product(string title, string author, string description, List<string> fileUrls, string status) 
+public record ProductCredit(string Name, string Title);
+
+public class Product(string title, string status) 
     : BlossomEntity<string>(Guid.NewGuid().ToString())
 {
     [Required(ErrorMessage = "Title is required")]
     public string Title { get; set; } = title;
-
-    [Required(ErrorMessage = "Author is required")]
-    public string Author { get; set; } = author;
-    public string Description { get; set; } = description;
+    public string? Description { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-    public List<string> FileUrls { get; set; } = fileUrls;
     public string? StripeProductId { get; set; }
     public double Price { get; set; } = 0.00;
     //public List<KeyValuePair<ProductTags, string>> Tags { get; set; } = new();
     public string Status { get; set; } = status;
+    public List<ProductCredit> Credits { get; set; } = [];
+    public List<BlossomFile> Images { get; set; } = [];
     public List<Tag> Tags { get; set; } =
     [
         new Tag("dev-in-progress", "Development In Progress", "development"),
@@ -35,9 +35,6 @@ public class Product(string title, string author, string description, List<strin
         var faker = new Faker<Product>()
             .CustomInstantiator(f => new Product(
                 f.Lorem.Sentence(3),
-                f.Person.FullName,
-                f.Lorem.Paragraph(),
-                f.Make(3, () => f.Image.PicsumUrl()).ToList(),
                 f.Lorem.Word() // Status
             ));
 
