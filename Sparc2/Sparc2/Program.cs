@@ -3,11 +3,15 @@ using Sparc.Blossom.Data;
 using Sparc.Engine;
 using Sparc.Store.Ideas;
 using Sparc.Store.Products;
+using Sparc.Store.Billing;
+using Sparc.Blossom.Payment.Stripe;
 
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 
 builder.Services.AddAzureStorage(builder.Configuration);
 builder.Services.AddSparcEngine();
+builder.Services.AddStripePayments(builder.Configuration);
+builder.Services.AddScoped<SparcStoreBillingService>();
 
 builder.Services.AddSingleton<IdeaService>();
 

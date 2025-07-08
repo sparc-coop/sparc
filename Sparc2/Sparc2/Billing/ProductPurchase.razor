@@ -7,24 +7,28 @@
         <section class="license-section">
             <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
         </section>
+
         @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
         {
             <section class="billing-section">
                 <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
             </section>
         }
+
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
                 <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
             </div>
         </section>
+        
         <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">
             Purchase
         </button>
     </form>
 </div>
-@inject IJSRuntime JS
+
+@inject SparcStoreBillingService Billing
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
@@ -42,7 +46,7 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
-        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        StripeProduct = await Billing.GetProductAsync("prod_SW5yY8O8KprzFu");
 
         if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
         {
@@ -58,7 +62,7 @@
 
     public async Task SubmitUserBilling()
     {
-        var result = await JS.InvokeAsync<PaymentResult>(
+        var result = await Js.InvokeAsync<PaymentResult>(
             "stripeIntegration.confirmPayment"
         );
 

@@ -8,6 +8,7 @@
 @inject IConfiguration Configuration
 @inject IJSRuntime JS
 @inject NavigationManager NavManager
+@inject SparcStoreBillingService Billing
 @code {
     [Parameter] public CreateOrderRequest Order { get; set; } = default!;
 
@@ -19,7 +20,7 @@
     private bool _paymentSuccessful = false;
     private DotNetObjectReference<ProductPurchaseStripeForm>? dotNetHelper;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _publishableKey = Configuration["Stripe:PublishableKey"];
         if (string.IsNullOrEmpty(_publishableKey))
@@ -36,18 +37,7 @@
     {
         try
         {
-            Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
-                (long)(Order.Amount * 100),
-                Order.Currency,
-                null,
-                null,
-                new Dictionary<string, string>(),
-                null
-            );
-
-            var intent = await SparcEngine.CreateOrderPaymentAsync(request);
-
-            _clientSecret = intent.ClientSecret;
+            _clientSecret = await Billing.CreateOrderPaymentAsync((long)Order.Amount * 100, Order.Currency);
             _stripeInitialized = true;    
             StateHasChanged();
 
