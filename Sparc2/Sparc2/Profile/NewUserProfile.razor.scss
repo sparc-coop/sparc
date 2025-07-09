@@ -6,6 +6,7 @@
     background: var(--yellow-50);
     width: 996px;
     height: auto;
+    min-height: 725px;
     border-radius: 20px;
     color: var(--purple-800);
 
@@ -46,16 +47,30 @@
     section {
         display: flex;
         gap: 8px;
-        flex-grow: 1;
-        align-items: flex-start;
+        flex: 1;
+        align-items: stretch;
+        height: 100%;
+        flex: 1 1 auto;
+        min-height: 0;
 
         .column {
             display: flex;
             flex-direction: column;
             gap: 8px;
             width: 320px;
+            min-height: 725px;
             height: 100%;
             flex: 1;
+
+            > section:first-of-type {
+                flex: 1;
+                min-height: 0;
+            }
+
+            > section:not(:first-of-type) {
+                margin-top: auto;
+            }
+
 
             > section {
                 display: flex;
@@ -99,7 +114,7 @@
 
                     textarea {
                         padding: 1.4rem 2rem 8rem 2rem;
-                        /*padding: 1.4rem 2rem 29.7rem 2rem;*/
+                        padding: 1.4rem 2rem 29.7rem 2rem;
                         resize: none;
                     }
 
@@ -120,7 +135,12 @@
 
                     figure {
                         height: 220px;
+                        border-radius: 200px;
                         margin: 0;
+
+                        svg {
+                            padding: 31px;
+                        }
                     }
                 }
 
@@ -136,7 +156,7 @@
                         padding: 0px 8px;
                         justify-content: space-between;
                         align-items: center;
-                        width: 100%;
+                        width: 97%;
 
                         div {
                             display: flex;
@@ -183,7 +203,6 @@
                 }
 
                 &.profile-customization {
-                    /*gap: 3.2rem;*/
 
                     > header {
                         gap: 0.4rem;
@@ -191,6 +210,11 @@
 
                     > div {
                         gap: 24px;
+
+                        &:first-of-type {
+                            width: 220px;
+                            align-self: center;
+                        }
                     }
                 }
 

@@ -12,8 +12,7 @@
 }
 .emoji-selector .emoji-container {
   flex: 1;
-  min-height: 162px;
-  max-height: 172px;
+  max-height: 206px;
   overflow-y: auto;
   border: 1px solid var(--purple-100);
   border-radius: 8px;
@@ -24,13 +23,15 @@
   font-family: "Noto Emoji", sans-serif;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 6px;
-  /*padding: 0 6px 0 18px;*/
 }
 .skintones li, .emojis li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
-  /*padding: 6px;*/
   font-size: 28px;
   border-radius: 8px;
   cursor: pointer;

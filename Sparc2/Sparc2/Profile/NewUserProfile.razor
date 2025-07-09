@@ -64,19 +64,24 @@
                         <p>Customize your profile!</p>
                     </header>
                     <div>
-                        <figure>
-                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle">
-                                    @*  @(!string.IsNullOrWhiteSpace(CurrentUser.Avatar?.Emoji) ? CurrentUser.Avatar.Emoji : CurrentUser.Avatar?.Initials) *@
+                        @if (UserAvatar == null)
+                        {
+                            <p>Loading...</p>
+                        }
+                        else
+                        {
+                            <figure class="avatar @(HasEmoji ? "emoji" : "")" style="background-color: @UserAvatar.BackgroundColor">
+                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle" style="fill: @UserAvatar.ForegroundColor">
+                                        @(!string.IsNullOrWhiteSpace(UserAvatar?.Emoji) ? UserAvatar.Emoji : (!string.IsNullOrWhiteSpace(UserAvatar?.Initials) ? UserAvatar.Initials : ""))
                                 </text>
                             </svg>
                         </figure>
+                        }
                     </div>
                     <div>
-                        @* <ColorSelector @bind-BackgroundColor="CurrentUser.Avatar.BackgroundColor" />
-                        <EmojiSelector Emoji="@CurrentUser.Avatar.Emoji" EmojiChanged="HandleEmojiChanged" /> *@
-                        <ColorSelector />
-                        <EmojiSelector EmojiChanged="HandleEmojiChanged" />
+                        <ColorSelector @bind-BackgroundColor="UserAvatar.BackgroundColor" />
+                        <EmojiSelector Emoji="@UserAvatar.Emoji" EmojiChanged="HandleEmojiChanged" />
                     </div>
                 </section>
             </div>
@@ -89,19 +94,20 @@
                     <div class="account-details">
                         <label>
                             Name
-                            @*  <input @bind="CurrentUser.Avatar.Username" @bind:event="oninput" placeholder="Your Name" /> *@
+                            @* <input @bind="UserAvatar.Username" @bind:event="oninput" placeholder="Your Name" @onblur=Save /> *@
                             <input type="text" placeholder="Your Name" />
                         </label>
                         <label>
                             Pronouns (Optional)
-                            @* <input @bind="CurrentUser.Avatar.Pronouns" @bind:event="oninput" placeholder="She/her, He/him, They/them" /> *@
+                            @* <input @bind="UserAvatar.Pronouns" @bind:event="oninput" placeholder="She/her, He/him, They/them" @onblur=Save /> *@
                             <input type="text" placeholder="She/her, He/him, They/them" />
                         </label>
 
                         <label>
                             About You (Optional)
-                            @* <textarea @bind="CurrentUser.Avatar.Description"
+                            @* <textarea @bind="UserAvatar.Description"
                               @bind:event="oninput"
+                              @onblur=Save
                               placeholder="Enter a little about yourself" /> *@
                             <textarea placeholder="Enter a little about yourself" />
                         </label>
@@ -120,15 +126,31 @@
 </div>
 
 @code {
-    [Parameter] public EventCallback OnClose { get; set; }
-    BlossomUser? CurrentUser;
+    [Parameter] public EventCallback OnClose { get; set; }   
+    [Parameter] public bool SpillBackground { get; set; }
+    [Parameter] public EventCallback<string> OnEmojiChanged { get; set; }    
+
+    public BlossomAvatar? UserAvatar { get; set; } = new BlossomAvatar();
+
+    bool HasEmoji => !string.IsNullOrWhiteSpace(UserAvatar?.Emoji);   
+
     private string VerificationCode { get; set; } = "";
     private bool IsVerified = true;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     CurrentUser = await SparcEngine.UserInfo();
-    // }
+    // BlossomUser? CurrentUser;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await SparcEngine.UserInfo();
+        UserAvatar = user?.Avatar;
+
+        Console.WriteLine($"DEBUG: UserAvatar {(UserAvatar == null ? "is NULL" : "is OK")}");
+
+        if (UserAvatar == null)
+            return;
+
+        StateHasChanged();
+    }
 
     private async Task HandleClose()
     {
@@ -138,12 +160,16 @@
         }
     }
 
+    async Task Save()
+    {
+        await SparcEngine.UpdateUserInfo(UserAvatar);
+    }  
+    
     private async Task HandleEmojiChanged(string emoji)
     {
-        CurrentUser.Avatar.Emoji = emoji;
-        // await OnEmojiChanged.InvokeAsync(emoji);
+        UserAvatar.Emoji = emoji;
+        await OnEmojiChanged.InvokeAsync(emoji);
     }
-
 
     private async Task VerifyCode(string code)
     {

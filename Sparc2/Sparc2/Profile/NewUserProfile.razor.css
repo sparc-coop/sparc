@@ -6,6 +6,7 @@
   background: var(--yellow-50);
   width: 996px;
   height: auto;
+  min-height: 725px;
   border-radius: 20px;
   color: var(--purple-800);
 }
@@ -39,16 +40,27 @@ article header button:hover ::deep svg path {
 article section {
   display: flex;
   gap: 8px;
-  flex-grow: 1;
-  align-items: flex-start;
+  flex: 1;
+  align-items: stretch;
+  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 article section .column {
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 320px;
+  min-height: 725px;
   height: 100%;
   flex: 1;
+}
+article section .column > section:first-of-type {
+  flex: 1;
+  min-height: 0;
+}
+article section .column > section:not(:first-of-type) {
+  margin-top: auto;
 }
 article section .column > section {
   display: flex;
@@ -88,7 +100,7 @@ article section .column > section > div input, article section .column > section
 }
 article section .column > section > div textarea {
   padding: 1.4rem 2rem 8rem 2rem;
-  /*padding: 1.4rem 2rem 29.7rem 2rem;*/
+  padding: 1.4rem 2rem 29.7rem 2rem;
   resize: none;
 }
 article section .column > section > div img {
@@ -106,7 +118,11 @@ article section .column > section > div label {
 }
 article section .column > section > div figure {
   height: 220px;
+  border-radius: 200px;
   margin: 0;
+}
+article section .column > section > div figure svg {
+  padding: 31px;
 }
 article section .column > section ul {
   display: flex;
@@ -120,7 +136,7 @@ article section .column > section ul li {
   padding: 0px 8px;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 97%;
 }
 article section .column > section ul li div {
   display: flex;
@@ -157,14 +173,15 @@ article section .column > section.app-links > div {
   align-self: stretch;
   flex-wrap: wrap;
 }
-article section .column > section.profile-customization {
-  /*gap: 3.2rem;*/
-}
 article section .column > section.profile-customization > header {
   gap: 0.4rem;
 }
 article section .column > section.profile-customization > div {
   gap: 24px;
+}
+article section .column > section.profile-customization > div:first-of-type {
+  width: 220px;
+  align-self: center;
 }
 article section .column > section.user-details {
   padding: 1.6rem;
