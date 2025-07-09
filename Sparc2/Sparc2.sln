@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Example.Payme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Payment.Stripe", "..\..\blossom\Sparc.Blossom.Payment.Stripe\Sparc.Blossom.Payment.Stripe.csproj", "{2BA4E806-4F26-FC7E-835B-95331B75F9F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine", "..\..\sparcengine\Sparc.Engine\Sparc.Engine.csproj", "{427122E8-F1DE-68E8-3AB6-5E8E0C932715}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Core", "..\..\blossom\Sparc.Core\Sparc.Core.csproj", "{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Examples", "_Examples", "{D418607C-487B-4A65-80A9-DED4881A913B}"
@@ -28,6 +26,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureStorage", "..\..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj", "{B83830BD-25BA-8391-B00F-9E91064B9D49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tovik", "..\..\sparcengine\Tovik\Tovik.csproj", "{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine", "..\..\sparcengine\Sparc.Engine\Sparc.Engine.csproj", "{427122E8-F1DE-68E8-3AB6-5E8E0C932715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Tovik.Razor", "..\..\sparcengine\Sparc.Tovik.Razor\Sparc.Tovik.Razor.csproj", "{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +61,6 @@ Global
 		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,6 +77,14 @@ Global
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
