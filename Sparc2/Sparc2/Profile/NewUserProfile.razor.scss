@@ -71,7 +71,6 @@
                 margin-top: auto;
             }
 
-
             > section {
                 display: flex;
                 flex-direction: column;
@@ -121,11 +120,7 @@
                         padding: 1.4rem 2rem 29.7rem 2rem;
                         resize: none;
                     }
-
-                    img {
-                        width: 51.2px;
-                        height: 51.2px;
-                    }
+                   
 
                     label {
                         display: flex;
@@ -203,6 +198,30 @@
                         align-content: flex-start;
                         align-self: stretch;
                         flex-wrap: wrap;
+
+                        > article {
+                            all: unset;
+                            display: flex;
+                            width: 51.2px;
+                            height: 51.2px;
+                            justify-content: center;
+                            align-items: center;
+                            box-sizing: border-box;
+                            border-radius: 8px;
+                            border: 1px solid transparent;
+                            overflow: hidden;
+
+                            ::deep svg {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                border-radius: 8px;
+                            }
+
+                            &:hover {
+                                border: 1px solid var(--purple-800);
+                            }
+                        }
                     }
                 }
 

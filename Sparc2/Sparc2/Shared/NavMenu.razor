@@ -156,14 +156,15 @@
 
     private bool showUserProfile = false;
 
-    private void OpenUserProfile()
+    private async Task OpenUserProfile()
     {
         showUserProfile = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
     }
 
-    private void CloseUserProfile()
+    private async Task CloseUserProfile()
     {
         showUserProfile = false;
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
-
 }
