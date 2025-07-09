@@ -42,4 +42,8 @@ ul.colors {
     }
 }
 
-
+@media (min-height: 633px) and (max-height: 810px) {
+    .color-selector {
+        gap: 4px;
+    }
+}
