@@ -1,0 +1,162 @@
+﻿@using Sparc.Blossom.Authentication
+
+<div class="modal-overlay">
+    <article>
+        <header>
+            <div>
+                <ProfileIcon />
+                <h3>Profile</h3>
+            </div>
+            <button type="button" aria-label="Close" onclick="@HandleClose"><XIcon /></button>
+        </header>
+        <section>
+            <div class="column">
+                <section class="verify-contact">
+                    <header>
+                        <h4>Verify Contact</h4>
+                        <p>To keep your account secure, help with recovery, and support cross-device access, please verify your contact. This setting is optional.</p>
+                    </header>
+                    <div>
+                        <input type="text" placeholder="Phone number or Email" />
+                        <button type="button" class="primary-btn">Verify</button>
+                    </div>
+                    <ul>
+                        <li>
+                            <div>
+                                <span>xxx-xxx-5678</span>
+                                @if (IsVerified)
+                                {
+                                    <Check />
+                                }
+                            </div>
+                            <button>Unlink</button>
+                        </li>
+                        <li>
+                            <div>
+                                <span>xxxxx@Kuviocreative.com</span>
+                                @if (IsVerified)
+                                {
+                                    <Check />
+                                }
+                            </div>
+                            <button>Unlink</button>
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="app-links">
+                    <header>
+                        <h4>Your Apps</h4>
+                        <p>Select app images to go to app page or store page</p>
+                    </header>
+                    <div>
+                        <img src="/images/LogoMosaic.png" alt="App 1" />
+                        <img src="/images/background-noise.png" alt="App 2" />
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="column">
+                <section class="profile-customization">
+                    <header>
+                        <h4>Profile</h4>
+                        <p>Customize your profile!</p>
+                    </header>
+                    <div>
+                        <figure>
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle">
+                                    @*  @(!string.IsNullOrWhiteSpace(CurrentUser.Avatar?.Emoji) ? CurrentUser.Avatar.Emoji : CurrentUser.Avatar?.Initials) *@
+                                </text>
+                            </svg>
+                        </figure>
+                    </div>
+                    <div>
+                        @* <ColorSelector @bind-BackgroundColor="CurrentUser.Avatar.BackgroundColor" />
+                        <EmojiSelector Emoji="@CurrentUser.Avatar.Emoji" EmojiChanged="HandleEmojiChanged" /> *@
+                        <ColorSelector />
+                        <EmojiSelector EmojiChanged="HandleEmojiChanged" />
+                    </div>
+                </section>
+            </div>
+
+            <div class="column">
+                <section class="user-details">
+                    <header>
+                        <h4>Tell us about you</h4>
+                    </header>
+                    <div class="account-details">
+                        <label>
+                            Name
+                            @*  <input @bind="CurrentUser.Avatar.Username" @bind:event="oninput" placeholder="Your Name" /> *@
+                            <input type="text" placeholder="Your Name" />
+                        </label>
+                        <label>
+                            Pronouns (Optional)
+                            @* <input @bind="CurrentUser.Avatar.Pronouns" @bind:event="oninput" placeholder="She/her, He/him, They/them" /> *@
+                            <input type="text" placeholder="She/her, He/him, They/them" />
+                        </label>
+
+                        <label>
+                            About You (Optional)
+                            @* <textarea @bind="CurrentUser.Avatar.Description"
+                              @bind:event="oninput"
+                              placeholder="Enter a little about yourself" /> *@
+                            <textarea placeholder="Enter a little about yourself" />
+                        </label>
+                    </div>
+                </section>
+
+                <section class="language-selector">
+                    <header>
+                        <h4>Language</h4>
+                    </header>
+                    <tovik-language></tovik-language>
+                </section>
+            </div>
+        </section>
+    </article>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+    BlossomUser? CurrentUser;
+    private string VerificationCode { get; set; } = "";
+    private bool IsVerified = true;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     CurrentUser = await SparcEngine.UserInfo();
+    // }
+
+    private async Task HandleClose()
+    {
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+
+    private async Task HandleEmojiChanged(string emoji)
+    {
+        CurrentUser.Avatar.Emoji = emoji;
+        // await OnEmojiChanged.InvokeAsync(emoji);
+    }
+
+
+    private async Task VerifyCode(string code)
+    {
+        VerificationCode = code;
+        // var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));
+        // if (success)
+        // {
+        //     await SparcEngine.UserInfo();
+        //     StateHasChanged();
+        // }
+        // else
+        // {
+        //     // VerificationError = "Invalid verification code. Please try again.";
+        // }
+    }
+}

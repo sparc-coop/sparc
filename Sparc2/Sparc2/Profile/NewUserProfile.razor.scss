@@ -1,0 +1,237 @@
+﻿article {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+    background: var(--yellow-50);
+    width: 996px;
+    height: auto;
+    border-radius: 20px;
+    color: var(--purple-800);
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+
+        div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            h3 {
+                font-size: 2.133rem;
+                font-weight: 500;
+                line-height: 110%;
+            }
+        }
+
+        button {
+            background: none;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            height: 32px;
+            padding: 8px 10px;
+
+            &:hover {
+                ::deep svg path {
+                    stroke: var(--purple-500);
+                }
+            }
+        }
+    }
+
+    section {
+        display: flex;
+        gap: 8px;
+        flex-grow: 1;
+        align-items: flex-start;
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 320px;
+            height: 100%;
+            flex: 1;
+
+            > section {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                border-radius: 20px;
+                border: 1px solid var(--purple-50);
+                padding: 20px;
+
+                > header {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+
+                    h4 {
+                        font-size: 1.6rem;
+                        font-weight: 500;
+                        line-height: 140%;
+                    }
+
+                    p {
+                        font-size: 1.4rem;
+                        font-weight: 400;
+                        line-height: 140%;
+                        color: rgba(43, 28, 69, 0.90);
+                    }
+                }
+
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    width: 100%;
+
+                    input, textarea {
+                        padding: 1rem 2rem;
+                        border-radius: 20px;
+                        border: 1px solid var(--purple-100);
+                        background: transparent;
+                    }
+
+                    textarea {
+                        padding: 1.4rem 2rem 8rem 2rem;
+                        /*padding: 1.4rem 2rem 29.7rem 2rem;*/
+                        resize: none;
+                    }
+
+                    img {
+                        width: 51.2px;
+                        height: 51.2px;
+                    }
+
+                    label {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                        font-size: 12px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 140%;
+                    }
+
+                    figure {
+                        height: 220px;
+                        margin: 0;
+                    }
+                }
+
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 8px;
+                    width: 100%;
+
+                    li {
+                        display: flex;
+                        padding: 0px 8px;
+                        justify-content: space-between;
+                        align-items: center;
+                        width: 100%;
+
+                        div {
+                            display: flex;
+                            align-items: center;
+                            gap: 0.2rem;
+
+                            span {
+                                font-size: 12px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 140%;
+                            }
+                        }
+
+                        button {
+                            font-size: 12px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 140%;
+                            color: var(--purple-500);
+                            background: none;
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+
+                &.app-links {
+                    padding: 1.6rem;
+                    gap: 1.6rem;
+
+                    > header {
+                        gap: 0.4rem;
+                    }
+
+                    > div {
+                        flex-direction: row;
+                        align-content: flex-start;
+                        align-self: stretch;
+                        flex-wrap: wrap;
+                    }
+                }
+
+                &.profile-customization {
+                    /*gap: 3.2rem;*/
+
+                    > header {
+                        gap: 0.4rem;
+                    }
+
+                    > div {
+                        gap: 24px;
+                    }
+                }
+
+                &.user-details {
+                    padding: 1.6rem;
+                    gap: 1.6rem;
+                }
+
+                tovik-language {
+                    width: 100%;
+                    position: relative;
+
+                    ::deep select {
+                        appearance: none;
+                        padding: 1rem 2rem;
+                        border-radius: 20px;
+                        border: 1px solid var(--purple-100);
+                        background: transparent;
+                        font-size: 16px;
+                        font-family: sans-serif;
+                        width: 100%;
+
+                        option {
+                            background: var(--yellow-50);
+                        }
+                    }
+
+                    &::after {
+                        content: '';
+                        position: absolute;
+                        right: 2.2rem;
+                        top: 50%;
+                        transform: translateY(-50%) rotate(45deg);
+                        pointer-events: none;
+                        width: 6px;
+                        height: 6px;
+                        border-right: 1.5px solid black;
+                        border-bottom: 1.5px solid black;
+                    }
+                }
+            }
+        }
+    }
+}

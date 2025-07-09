@@ -150,5 +150,21 @@
   {
     "outputFile": "Catalog/ProductPurchasePayment.razor.css",
     "inputFile": "Catalog/ProductPurchasePayment.razor.scss"
+  },
+  {
+    "outputFile": "Shared/Icons/ProfileIcon.razor.css",
+    "inputFile": "Shared/Icons/ProfileIcon.razor.scss"
+  },
+  {
+    "outputFile": "Profile/NewUserProfile.razor.css",
+    "inputFile": "Profile/NewUserProfile.razor.scss"
+  },
+  {
+    "outputFile": "Profile/EmojiSelector.razor.css",
+    "inputFile": "Profile/EmojiSelector.razor.scss"
+  },
+  {
+    "outputFile": "Profile/ColorSelector.razor.css",
+    "inputFile": "Profile/ColorSelector.razor.scss"
   }
 ]

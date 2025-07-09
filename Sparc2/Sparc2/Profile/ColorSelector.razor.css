@@ -1,18 +1,19 @@
 ﻿.color-selector {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 .color-selector h3 {
-  font-size: 1.2rem;
-  letter-spacing: 0.16px;
-  font-weight: normal;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
 }
 
 ul.colors {
   width: 264px;
   display: flex;
-  gap: 8px;
+  gap: 4px;
   flex-wrap: wrap;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -25,9 +26,10 @@ ul.colors li {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid transparent;
 }
 ul.colors li:hover, ul.colors li.selected {
-  border: 3px solid var(--purple-900);
+  border: 2px solid var(--purple-900);
 }
 ul.colors li span {
   display: block;

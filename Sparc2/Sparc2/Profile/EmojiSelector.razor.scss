@@ -1,23 +1,24 @@
 ﻿.emoji-selector {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
     height: 100%;
 
     h3 {
-        font-size: 1.2rem;
-        letter-spacing: 0.16px;
-        font-weight: normal;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%;
     }
 
     .emoji-container {
         flex: 1;
-        min-height: 200px;
-        max-height: 300px;
+        min-height: 162px;
+        max-height: 172px;
         overflow-y: auto;
-        border: 1px solid var(--gray-200);
+        border: 1px solid var(--purple-100);
         border-radius: 8px;
-        padding: 16px 0;
+        padding: 8px 4.338px 0px 4.273px;
     }
 }
 
@@ -26,11 +27,13 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    padding: 0 6px 0 18px;
+    /*padding: 0 6px 0 18px;*/
 
     li {
-        padding: 6px;
-        font-size: 18px;
+        width: 32px;
+        height: 32px;
+        /*padding: 6px;*/
+        font-size: 28px;
         border-radius: 8px;
         cursor: pointer;
         transition: 300ms ease-in-out;

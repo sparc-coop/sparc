@@ -33,9 +33,15 @@
                     <hr />
                     <div class="menu-profile">
                         <h5>Profile</h5>
-                        <div class="account-btn">
-                            Hi, @User.Identity?.Name.
+                        <div class="account-btn" @onclick="OpenUserProfile">
+                            @* Hi, @User.Identity?.Name. *@
+                           
+                            <ProfileIcon />
                         </div>
+                        @if (showUserProfile)
+                        {
+                            <NewUserProfile OnClose="CloseUserProfile" />
+                        }
                     </div>
                 </div>
             </div>
@@ -70,7 +76,7 @@
 }
 
 @inject ClaimsPrincipal User
-@code { 
+@code {
     private bool ShowAddCard = false;
     private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
     private int SelectedHeaderButton = 0;
@@ -147,4 +153,17 @@
 
         StateHasChanged();
     }
+
+    private bool showUserProfile = false;
+
+    private void OpenUserProfile()
+    {
+        showUserProfile = true;
+    }
+
+    private void CloseUserProfile()
+    {
+        showUserProfile = false;
+    }
+
 }
