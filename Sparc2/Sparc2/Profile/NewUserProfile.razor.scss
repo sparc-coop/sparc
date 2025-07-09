@@ -97,6 +97,10 @@
                         line-height: 140%;
                         color: rgba(43, 28, 69, 0.90);
                     }
+
+                    ::deep svg {
+                        align-self: center;
+                    }
                 }
 
                 > div {

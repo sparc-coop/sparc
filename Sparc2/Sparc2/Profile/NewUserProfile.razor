@@ -11,38 +11,66 @@
         </header>
         <section>
             <div class="column">
-                <section class="verify-contact">
-                    <header>
-                        <h4>Verify Contact</h4>
-                        <p>To keep your account secure, help with recovery, and support cross-device access, please verify your contact. This setting is optional.</p>
-                    </header>
-                    <div>
-                        <input type="text" placeholder="Phone number or Email" />
-                        <button type="button" class="primary-btn">Verify</button>
-                    </div>
-                    <ul>
-                        <li>
-                            <div>
-                                <span>xxx-xxx-5678</span>
-                                @if (IsVerified)
-                                {
-                                    <Check />
-                                }
-                            </div>
-                            <button>Unlink</button>
-                        </li>
-                        <li>
-                            <div>
-                                <span>xxxxx@Kuviocreative.com</span>
-                                @if (IsVerified)
-                                {
-                                    <Check />
-                                }
-                            </div>
-                            <button>Unlink</button>
-                        </li>
-                    </ul>
-                </section>
+                @if (VerifyContact)
+                {
+                    <section class="verify-contact">
+                        <header>
+                            <h4>Verify Contact</h4>
+                            <p>To keep your account secure, help with recovery, and support cross-device access, please verify your contact. This setting is optional.</p>
+                        </header>
+                        <div>
+                            <input type="text" placeholder="Phone number or Email" />
+                            <button type="button" class="primary-btn">Verify</button>
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <span>xxx-xxx-5678</span>
+                                    @if (IsVerified)
+                                    {
+                                        <Check />
+                                    }
+                                </div>
+                                <button>Unlink</button>
+                            </li>
+                            <li>
+                                <div>
+                                    <span>xxxxx@Kuviocreative.com</span>
+                                    @if (IsVerified)
+                                    {
+                                        <Check />
+                                    }
+                                </div>
+                                <button>Unlink</button>
+                            </li>
+                        </ul>
+                    </section>
+                }
+                else if (LoginWithPasskey)
+                {
+                    <section class="login">
+                        <header>
+                            <h4>Login</h4>
+                            <p>Use your passkey to sign in. If it’s your first time, you can create one along the way.</p>
+                        </header>
+                        <div>
+                            <button type="button" class="primary-btn">Continue with Passkey</button>
+                        </div>                        
+                    </section>
+                }
+                else if (RegisteringPasskey)
+                {
+                    <section class="registering">
+                        <header>
+                            <Key />
+                            <h4>Registering your passkey...</h4>
+                            <p>You may use your device’s fingerprint, face scan, or screen lock. Your passkey may be saved to your browser account so you can use it on other devices.</p>
+                        </header>
+                        <div>
+                            <button type="button" class="primary-btn" disabled>Continue with Passkey</button>
+                        </div>
+                    </section>
+                }
 
                 <section class="app-links">
                     <header>
@@ -74,9 +102,9 @@
                                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                     <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle" style="fill: @UserAvatar.ForegroundColor">
                                         @(!string.IsNullOrWhiteSpace(UserAvatar?.Emoji) ? UserAvatar.Emoji : (!string.IsNullOrWhiteSpace(UserAvatar?.Initials) ? UserAvatar.Initials : ""))
-                                </text>
-                            </svg>
-                        </figure>
+                                    </text>
+                                </svg>
+                            </figure>
                         }
                     </div>
                     <div>
@@ -126,16 +154,19 @@
 </div>
 
 @code {
-    [Parameter] public EventCallback OnClose { get; set; }   
+    [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public bool SpillBackground { get; set; }
-    [Parameter] public EventCallback<string> OnEmojiChanged { get; set; }    
+    [Parameter] public EventCallback<string> OnEmojiChanged { get; set; }
 
     public BlossomAvatar? UserAvatar { get; set; } = new BlossomAvatar();
 
-    bool HasEmoji => !string.IsNullOrWhiteSpace(UserAvatar?.Emoji);   
+    bool HasEmoji => !string.IsNullOrWhiteSpace(UserAvatar?.Emoji);
 
     private string VerificationCode { get; set; } = "";
     private bool IsVerified = true;
+    private bool VerifyContact = true;
+    private bool LoginWithPasskey;
+    private bool RegisteringPasskey;
 
     // BlossomUser? CurrentUser;
 
@@ -163,8 +194,8 @@
     async Task Save()
     {
         await SparcEngine.UpdateUserInfo(UserAvatar);
-    }  
-    
+    }
+
     private async Task HandleEmojiChanged(string emoji)
     {
         UserAvatar.Emoji = emoji;

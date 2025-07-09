@@ -86,6 +86,9 @@ article section .column > section > header p {
   line-height: 140%;
   color: rgba(43, 28, 69, 0.9);
 }
+article section .column > section > header ::deep svg {
+  align-self: center;
+}
 article section .column > section > div {
   display: flex;
   flex-direction: column;
