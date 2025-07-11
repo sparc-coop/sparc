@@ -1,13 +1,33 @@
-﻿namespace Sparc.Store.Products;
+﻿using Sparc.Blossom.Authentication;
+using Sparc.Blossom.Payment.Stripe;
 
-public class Products(BlossomAggregateOptions<Product> options) : BlossomAggregate<Product>(options)
+namespace Sparc.Store.Products;
+
+public class Products(BlossomAggregateOptions<Product> options, StripePaymentService stripe) 
+    : BlossomAggregate<Product>(options)
 {
     public BlossomQuery<Product> GetAllProducts()
         => Query().OrderByDescending(x => x.DateCreated);
 
-    public BlossomQuery<Product> GetProductById(string id)
-    => Query().Where(x => x.Id == id);
+    public async Task<Product> GetProductById(string id, string? currency = null)
+    {
+        var product = await Repository.FindAsync(id);
+        currency ??= User.Get("currency") ?? "USD";
+        
+        var price = await stripe.GetPriceAsync(product!.Id, currency);
+        if (price.HasValue)
+            product.SetUserPrice(price.Value, currency);
 
-    public BlossomQuery<Product> GetProductByTitle(string title)
-        => Query().Where(x => x.Title.Contains(title));
+        return product;
+    }
+
+    public async Task<string> StartCheckoutAsync(string email, string productId, string? currency = null)
+    {
+        var product = await GetProductById(productId, currency);
+        if (product.UserPrice == null)
+            throw new Exception("This product is not available in the selected currency.");
+
+        var paymentIntent = await stripe.CreatePaymentIntentAsync(email, product.UserPrice.Amount, product.UserPrice.Currency.Id);
+        return paymentIntent.ClientSecret;
+    }
 }

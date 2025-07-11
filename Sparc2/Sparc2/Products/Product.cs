@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using Sparc.Blossom.Authentication;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sparc.Store.Products;
@@ -14,7 +15,7 @@ public class Product(string title, string status)
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public string? StripeProductId { get; set; }
     public decimal Price { get; set; } = 0M;
-    //public List<KeyValuePair<ProductTags, string>> Tags { get; set; } = new();
+    public UserPrice? UserPrice { get; private set; }
     public string Status { get; set; } = status;
     public List<ProductCredit> Credits { get; set; } = [];
     public List<string> Images { get; set; } = [];
@@ -40,6 +41,8 @@ public class Product(string title, string status)
 
         return faker.Generate(qty);
     }
+
+    internal void SetUserPrice(decimal price, string currency) => UserPrice = new(price, currency);
 
     //public Dictionary<ProductTags, string> ProductTagsDictionary = new()
     //{

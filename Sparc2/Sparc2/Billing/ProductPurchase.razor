@@ -1,6 +1,7 @@
 ﻿@using Sparc.Blossom.Authentication
 @using Sparc.Blossom.Billing
 @using System.Globalization
+@using Sparc.Store.Products
 
 <div class="product-purchase">
     <form id="payment-form" @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
@@ -28,13 +29,9 @@
     </form>
 </div>
 
-@inject SparcStoreBillingService Billing
+
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
-
-    private GetProductResponse? StripeProduct;
-    BlossomUser? CurrentUser;
-    CreateOrderRequest Order = new CreateOrderRequest();
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
