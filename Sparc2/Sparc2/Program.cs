@@ -11,6 +11,15 @@ builder.Services.AddAzureStorage(builder.Configuration);
 builder.Services.AddSparcEngine(new Uri("https://localhost:7185"));
 builder.Services.AddStripePayments(builder.Configuration);
 
+builder.Services.AddHttpClient("AuthService", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7185/");
+}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler{});
+
+builder.Services.AddScoped(sp =>
+    sp.GetRequiredService<IHttpClientFactory>().CreateClient("AuthService")
+);
+
 builder.Services.AddSingleton<IdeaService>();
 
 var app = builder.Build();
@@ -75,4 +84,4 @@ var tovik = new Product("Tovik", "Early Access")
 var productRepository = scope.ServiceProvider.GetRequiredService<IRepository<Product>>();
 await productRepository.AddAsync(tovik);
 
-await app.RunAsync<Html>(); 
+await app.RunAsync<Html>();
