@@ -8,15 +8,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Include="Authentication\FriendlyId\words_alpha.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="Authentication\FriendlyId\words_officesafe.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Bogus" Version="35.6.3" />
 		<PackageReference Include="Markdig" Version="0.41.3" />
 		<PackageReference Include="Stripe.net" Version="48.2.0" />
