@@ -18,7 +18,6 @@
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj" />
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
-		<ProjectReference Include="../../../blossom/Sparc.Blossom.Payment.Stripe/Sparc.Blossom.Payment.Stripe.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
