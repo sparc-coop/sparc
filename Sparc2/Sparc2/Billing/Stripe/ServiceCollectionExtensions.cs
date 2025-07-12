@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Stripe;
+﻿using Stripe;
 
-namespace Sparc.Blossom.Payment.Stripe;
+namespace Sparc.Store.Billing.Stripe;
 
 public static class ServiceCollectionExtensions
 {

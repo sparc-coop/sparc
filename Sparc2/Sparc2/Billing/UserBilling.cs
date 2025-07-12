@@ -1,4 +1,4 @@
-﻿namespace Sparc.Blossom.Billing;
+﻿namespace Sparc.Store.Billing;
 
 public record CreateOrderPaymentRequest(
     long Amount,

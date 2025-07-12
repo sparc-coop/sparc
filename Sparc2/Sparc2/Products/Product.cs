@@ -1,5 +1,4 @@
 ﻿using Bogus;
-using Sparc.Blossom.Authentication;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sparc.Store.Products;

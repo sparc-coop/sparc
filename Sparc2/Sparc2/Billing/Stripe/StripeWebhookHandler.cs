@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Stripe;
+﻿using Stripe;
 
-namespace Sparc.Blossom.Payment.Stripe;
+namespace Sparc.Store.Billing.Stripe;
 
 public class StripeWebhookHandler(string webhookSecret, ILogger<StripeWebhookHandler> logger)
 {

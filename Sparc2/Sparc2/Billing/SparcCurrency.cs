@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Sparc.Blossom.Authentication;
+namespace Sparc.Store.Billing;
 
 public class SparcCurrency(RegionInfo region)
 {

@@ -1,4 +1,4 @@
-﻿namespace Sparc.Engine;
+﻿namespace Sparc.Store.Products;
 
 public class ProductLicense(string productId, string serialNumber, DateTime purchaseDate)
 {
