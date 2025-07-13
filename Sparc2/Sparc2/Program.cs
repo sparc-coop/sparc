@@ -8,7 +8,7 @@ using Sparc.Store.Products;
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 
 builder.Services.AddAzureStorage(builder.Configuration);
-builder.Services.AddSparcEngine(new Uri("https://localhost:7185"));
+builder.Services.AddSparcAura(new Uri("https://localhost:7185"));
 builder.Services.AddStripePayments(builder.Configuration);
 
 builder.Services.AddHttpClient("AuthService", client =>
