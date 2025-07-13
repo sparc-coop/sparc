@@ -13,7 +13,7 @@ public class Product : BlossomEntity<string>
     public string Description { get; set; }
     public DateTime DateCreated { get; set; }
     public List<string> FileUrls { get; set; } = new();
-    public string StripeProductId { get; set; }
+    public string? StripeProductId { get; set; }
     public double Price { get; set; } = 0.00;
     //public List<KeyValuePair<ProductTags, string>> Tags { get; set; } = new();
     public string Status { get; set; }

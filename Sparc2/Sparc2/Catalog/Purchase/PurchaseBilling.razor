@@ -1,4 +1,4 @@
-﻿@using Sparc.Blossom.Authentication
+﻿@using Sparc.Engine.Aura
 
 @if (!IsVerified)
 {
@@ -51,6 +51,7 @@
     }
 }
 
+@inject ISparcAura Aura
 @code {
     [Parameter] public CreateOrderRequest Order { get; set; } = default!;
     [Parameter] public Product? ActiveProduct { get; set; }
@@ -103,7 +104,7 @@
 
         try
         {
-            var resp = await SparcEngine.Login(email);
+            var resp = await Aura.Login(email);
 
             if (resp is not null)
             {
@@ -134,7 +135,7 @@
 
         try
         {
-            var success = await SparcEngine.Login(VerificationCode);
+            var success = await Aura.Login(VerificationCode);
             IsVerifyingCode = false;
             await InvokeAsync(StateHasChanged);
 

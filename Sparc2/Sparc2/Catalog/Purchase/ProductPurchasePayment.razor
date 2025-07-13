@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+
 <div class="form-group">
     <label>
         <span>Currency *</span>
@@ -34,7 +35,7 @@
 
     public List<string> CurrencyOptions { get; set; } = new();
     private List<decimal> ConvertedPrices = new List<decimal>();
-    private Dictionary<string, string> CurrencySymbols;
+    private Dictionary<string, string> CurrencySymbols = [];
     private decimal? _selectedPredefinedAmount = null;
 
 
@@ -48,12 +49,12 @@
         if (StripeProduct != null)
         {
             GetUserCurrency();
+
+            var orderedCurrencies = StripeProduct.Prices[0].Keys.OrderBy(c => c).ToList() ?? new List<string>();
+            CurrencyOptions = orderedCurrencies;
+
+            UpdatePriceForCurrency();
         }
-
-        var orderedCurrencies = StripeProduct.Prices[0].Keys.OrderBy(c => c).ToList() ?? new List<string>();
-        CurrencyOptions = orderedCurrencies;
-
-        UpdatePriceForCurrency();
 
         if (Order.Amount > 0 && StripeFormRef is not null)
         {
@@ -65,17 +66,17 @@
     {
         var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
         var currentCurrencyInfo = ri.ISOCurrencySymbol;
-        if (StripeProduct.Prices[0].ContainsKey(currentCurrencyInfo.ToLower()) == true)
+        if (StripeProduct?.Prices[0].ContainsKey(currentCurrencyInfo.ToLower()) == true)
         {
             Order.Currency = currentCurrencyInfo.ToLower();
         }
-        else if (StripeProduct.Prices[0].ContainsKey("usd") == true)
+        else if (StripeProduct?.Prices[0].ContainsKey("usd") == true)
         {
             Order.Currency = "usd";
         }
         else
         {
-            Order.Currency = StripeProduct.Prices[0].Keys.FirstOrDefault()?.ToLower() ?? "usd";
+            Order.Currency = StripeProduct?.Prices[0].Keys.FirstOrDefault()?.ToLower() ?? "usd";
         }
     }
 

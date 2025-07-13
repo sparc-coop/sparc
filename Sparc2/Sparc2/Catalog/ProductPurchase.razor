@@ -1,5 +1,6 @@
 ﻿@using Sparc.Blossom.Authentication
-@using Sparc.Blossom.Billing
+@using Sparc.Engine.Aura
+@using Sparc.Engine.Billing
 @using System.Globalization
 
 <div class="product-purchase">
@@ -24,7 +25,8 @@
         </button>
     </form>
 </div>
-@inject IJSRuntime JS
+
+@inject ISparcAura Aura
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
@@ -41,8 +43,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        CurrentUser = await SparcEngine.UserInfo();
-        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        CurrentUser = await Aura.UserInfo();
+        StripeProduct = await Billing.GetProductAsync("prod_SW5yY8O8KprzFu");
 
         if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
         {
@@ -58,7 +60,7 @@
 
     public async Task SubmitUserBilling()
     {
-        var result = await JS.InvokeAsync<PaymentResult>(
+        var result = await Js.InvokeAsync<PaymentResult>(
             "stripeIntegration.confirmPayment"
         );
 

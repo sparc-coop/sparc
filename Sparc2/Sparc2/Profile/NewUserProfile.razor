@@ -3,6 +3,7 @@
 @inject HttpClient Http
 @using System.Net.Http.Json
 @using System.Text.Json
+@using Sparc.Engine.Aura
 
 <div class="modal-overlay">
     <article>
@@ -133,20 +134,13 @@
                         <p>Customize your profile!</p>
                     </header>
                     <div>
-                        @if (UserAvatar == null)
-                        {
-                            <p>Loading...</p>
-                        }
-                        else
-                        {
-                            <figure class="avatar @(HasEmoji ? "emoji" : "")" style="background-color: @UserAvatar.BackgroundColor">
-                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                    <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle" style="fill: @UserAvatar.ForegroundColor">
-                                        @(!string.IsNullOrWhiteSpace(UserAvatar?.Emoji) ? UserAvatar.Emoji : (!string.IsNullOrWhiteSpace(UserAvatar?.Initials) ? UserAvatar.Initials : ""))
-                                    </text>
-                                </svg>
-                            </figure>
-                        }
+                        <figure class="avatar @(HasEmoji ? "emoji" : "")" style="background-color: @UserAvatar.BackgroundColor">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50%" y="60%" font-size="80" text-anchor="middle" dominant-baseline="middle" style="fill: @UserAvatar.ForegroundColor">
+                                    @(!string.IsNullOrWhiteSpace(UserAvatar.Emoji) ? UserAvatar.Emoji : (!string.IsNullOrWhiteSpace(UserAvatar.Initials) ? UserAvatar.Initials : ""))
+                                </text>
+                            </svg>
+                        </figure>
                     </div>
                     <div>
                         <ColorSelector @bind-BackgroundColor="UserAvatar.BackgroundColor" />
@@ -191,18 +185,19 @@
     </article>
 </div>
 
+@inject ISparcAura Aura
 @code {
     [Parameter] public EventCallback OnClose { get; set; }
     [Parameter] public bool SpillBackground { get; set; }
     [Parameter] public EventCallback<string> OnEmojiChanged { get; set; }
 
-    public BlossomAvatar? UserAvatar { get; set; } = new BlossomAvatar();
+    public BlossomAvatar UserAvatar { get; set; } = new BlossomAvatar();
     BlossomUser? BlossomUser;
 
     bool HasEmoji => !string.IsNullOrWhiteSpace(UserAvatar?.Emoji);
 
     private string VerificationCode { get; set; } = "";
-    private bool IsVerified;
+    private bool IsVerified = false;
     private bool ShowVerifyContact;
     private bool ShowLoginWithPasskey;
     private bool ShowRegisteringPasskey;
@@ -215,8 +210,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var user = await SparcEngine.UserInfo();
-        UserAvatar = user?.Avatar;
+        var user = await Aura.UserInfo();
+        if (user != null)
+            UserAvatar = user.Avatar;
 
         HasPasskey = user?.HasIdentity("Passwordless") ?? false;
         IsAuthenticated = user?.Identities.Any(i => i.Type == "Passwordless" && i.IsLoggedIn) ?? false;
@@ -321,7 +317,7 @@
 
     async Task Save()
     {
-        await SparcEngine.UpdateUserInfo(UserAvatar);
+        await Aura.UpdateUserInfo(UserAvatar);
     }
 
     private async Task HandleEmojiChanged(string emoji)
@@ -330,7 +326,7 @@
         await OnEmojiChanged.InvokeAsync(emoji);
     }
 
-    private async Task VerifyCode(string code)
+    private void VerifyCode(string code)
     {
         VerificationCode = code;
         // var success = await SparcEngine.VerifyCode(new VerificationRequest(CurrentVerificationDestination, VerificationCode));

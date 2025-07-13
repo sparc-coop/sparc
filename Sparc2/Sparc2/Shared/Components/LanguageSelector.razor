@@ -1,9 +1,8 @@
 @using System.Net.Http.Json
 @using System.Globalization
 @using Sparc.Blossom.Authentication
-@using Sparc.Blossom.Content
-@using Sparc.Blossom.Content.Icons
 @using Microsoft.AspNetCore.Components.Forms
+@using Sparc.Engine.Tovik
 
 <div class="language-select">
     @if (Languages is not null && SelectedLanguageId is not null)
@@ -17,6 +16,7 @@
     }
 </div>
 
+@inject ITovik Tovik
 @code {
     [Parameter] public BlossomUser? CurrentUser { get; set; }
     [Parameter] public string? SelectedLanguageId { get; set; }
@@ -25,7 +25,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Languages = await SparcEngine.GetLanguages();
+        Languages = await Tovik.GetLanguages();
 
         if (string.IsNullOrWhiteSpace(SelectedLanguageId))
         {

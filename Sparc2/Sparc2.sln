@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureSto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tovik", "..\..\sparcengine\Tovik\Tovik.csproj", "{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine.Client", "..\..\sparcengine\Sparc.Engine.Client\Sparc.Engine.Client.csproj", "{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
