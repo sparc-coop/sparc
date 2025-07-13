@@ -1,16 +1,20 @@
-﻿namespace Sparc2.Products;
+﻿using Sparc.Blossom.Authentication;
+using Sparc.Engine.Billing;
 
-public class Products(BlossomAggregateOptions<Product> options) : BlossomAggregate<Product>(options)
+namespace Sparc2.Products;
+
+public record ProductInfo(Product Product, UserPrice Price);
+public class Products(BlossomAggregateOptions<Product> options, ISparcBilling billing) : BlossomAggregate<Product>(options)
 {
     public BlossomQuery<Product> GetAllProducts()
         => Query().OrderByDescending(x => x.DateCreated);
 
-    public BlossomQuery<Product> GetProductById(string id)
-    => Query().Where(x => x.Id == id);
+    public async Task<ProductInfo> GetProductById(string id, string? currency = null)
+    {
+        var product = await Repository.FindAsync(id);
+        currency ??= User.Get("currency") ?? "USD";
 
-    public BlossomQuery<Product> GetProductByTitle(string title)
-        => Query().Where(x => x.Title.Contains(title));
-
-    public BlossomQuery<Product> GetProductsByAuthor(string author)
-        => Query().Where(x => x.Author == author);
+        var priceInfo = await billing.GetProductAsync(product!.StripeProductId!, currency);
+        return new(product, new(priceInfo.Price, priceInfo.Currency));
+    }
 }

@@ -12,13 +12,13 @@
         @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
         {
             <section class="billing-section">
-                <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
+                <PurchaseBilling Order="Order" Product="Product" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
             </section>
         }
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
+                <ProductPurchasePayment Order="Order" Product="Product"></ProductPurchasePayment>
             </div>
         </section>
         <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">
@@ -29,11 +29,10 @@
 
 @inject ISparcAura Aura
 @code {
-    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public Product? Product { get; set; }
 
-    private GetProductResponse? StripeProduct;
     BlossomUser? CurrentUser;
-    CreateOrderRequest Order = new CreateOrderRequest();
+    SparcOrder Order = new SparcOrder();
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
@@ -45,7 +44,6 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await Aura.UserInfo();
-        StripeProduct = await Billing.GetProductAsync("prod_SW5yY8O8KprzFu");
 
         if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
         {

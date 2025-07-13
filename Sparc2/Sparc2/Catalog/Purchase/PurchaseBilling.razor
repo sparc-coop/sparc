@@ -53,8 +53,8 @@
 
 @inject ISparcAura Aura
 @code {
-    [Parameter] public CreateOrderRequest Order { get; set; } = default!;
-    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public SparcOrder Order { get; set; } = default!;
+    [Parameter] public Product? Product { get; set; }
     [Parameter] public string? UserEmail { get; set; }
     [Parameter] public EventCallback<bool> OnEmailVerified { get; set; }
 

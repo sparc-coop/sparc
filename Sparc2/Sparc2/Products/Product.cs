@@ -1,37 +1,28 @@
 ﻿using Bogus;
+using Sparc.Engine.Billing;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sparc2.Products;
 
-public class Product : BlossomEntity<string>
+public record ProductCredit(string Name, string Title);
+
+public class Product(string title, string status)
+    : BlossomEntity<string>(Guid.NewGuid().ToString())
 {
     [Required(ErrorMessage = "Title is required")]
-    public string Title { get; set; }
-
-    [Required(ErrorMessage = "Author is required")]
-    public string Author { get; set; }
-    public string Description { get; set; }
-    public DateTime DateCreated { get; set; }
-    public List<string> FileUrls { get; set; } = new();
+    public string Title { get; set; } = title;
+    public string? Description { get; set; }
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public string? StripeProductId { get; set; }
-    public double Price { get; set; } = 0.00;
-    //public List<KeyValuePair<ProductTags, string>> Tags { get; set; } = new();
-    public string Status { get; set; }
-    public List<Tag> Tags { get; set; } = new()
-    {
+    public decimal Price { get; set; } = 0M;
+    public string Status { get; set; } = status;
+    public List<ProductCredit> Credits { get; set; } = [];
+    public List<string> Images { get; set; } = [];
+    public List<Tag> Tags { get; set; } =
+    [
         new Tag("dev-in-progress", "Development In Progress", "development"),
         new Tag("updating", "Actively Updating", "testing")
-    };
-
-    public Product(string title, string author, string description, List<string> fileUrls, string status) : base(Guid.NewGuid().ToString())
-    {
-        Title = title;
-        Author = author;
-        Description = description;
-        DateCreated = DateTime.UtcNow;
-        FileUrls = fileUrls;
-        Status = status;
-    }
+    ];
 
     public void Update(string title, string description)
     {
@@ -44,9 +35,6 @@ public class Product : BlossomEntity<string>
         var faker = new Faker<Product>()
             .CustomInstantiator(f => new Product(
                 f.Lorem.Sentence(3),
-                f.Person.FullName,
-                f.Lorem.Paragraph(),
-                f.Make(3, () => f.Image.PicsumUrl()).ToList(),
                 f.Lorem.Word() // Status
             ));
 
@@ -68,18 +56,3 @@ public class Product : BlossomEntity<string>
     //    { ProductTags.YouOwnThis, "You Own This" }
     //};
 }
-
-//public enum ProductTags
-//{
-//    ComingSoon,
-//    DevelopmentInProgress,
-//    AlphaTesting,
-//    BetaTesting,
-//    NowLive,
-//    Archived,
-//    ActivelyUpdating,
-//    AvailableForBetaTest,
-//    AvailableForPurchase,
-//    AvailableForGift,
-//    YouOwnThis
-//}

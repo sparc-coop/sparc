@@ -8,35 +8,31 @@
                 @if (ActiveProduct != null && showPurchaseTab == false)
                 {
                     <div class="spacer mobile-only"></div>
-                    @if (ActiveProduct.FileUrls.Count > 1)
+                    @if (!ActiveProduct.Images.Any())
                     {
-                        <div id="img-1" class="product-img span-1"></div>
-                        <div id="img-2" class="product-img span-1"></div>
+                        <figure id="img-1" class="product-img span-1"></figure>
+                        <figure id="img-2" class="product-img span-1"></figure>
                         <div class="img-container span-2">
-                            <div id="img-3" class="product-img"></div>
-                            <div id="img-4" class="product-img"></div>
+                            <figure id="img-3" class="product-img"></figure>
+                            <figure id="img-4" class="product-img"></figure>
                         </div>
-                        <div id="img-5" class="product-img img-5 span-1"></div>
+                        <figure id="img-5" class="product-img img-5 span-1"></figure>
 
-                    } else if (ActiveProduct.FileUrls.Count == 5)
+                    } 
+                    else
                     {
-                        <div id="img-1" class="product-img span-1"></div>
-                        <div id="img-2" class="product-img span-1"></div>
-                        <div class="img-container span-2">
-                            <div id="img-3" class="product-img"></div>
-                            <div id="img-4" class="product-img"></div>
-                        </div>
-                        <div id="img-5" class="product-img img-5 span-1"></div>
-                    } else
-                    {
-                        foreach (var file in ActiveProduct.FileUrls)
+                        var i = 1;
+                        foreach (var file in ActiveProduct.Images)
                         {
-                            <div id="img-@file"class="product-img span-1"></div>
+                            <figure id="img-@i"class="product-img span-1">
+                                <img src="@file" alt="@ActiveProduct.Title Product Image @i++" />
+                            </figure>
                         }
                     }
-                } else
+                } 
+                else
                 {
-                    <ProductPurchase ActiveProduct="ActiveProduct" />
+                    <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
                 }
             </div>
         </div>
@@ -47,7 +43,7 @@
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickShowMore=ToggleFullDescription OnClickHelp =ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
+                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickShowMore=ToggleFullDescription OnClickHelp =ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
                 } else
                 {
                     <div class="product-info">
@@ -62,52 +58,18 @@
     </div>
 </article>
 
+@inject BlossomApi Api 
 @code {
     [Parameter] public string? ProductId { get; set; }
 
-    IEnumerable<Product> Products = new List<Product>();
-    Product? ActiveProduct;
+    Sparc.Blossom.Api.ProductInfo? Info;
+    Sparc.Blossom.Api.Product? ActiveProduct => Info?.Product;
     bool showFullDescription;
-    // bool showHelpTab;
     bool showPurchaseTab;
-    // bool showDownloadTab;
-    // bool showSurveyTab;
-    // bool showDemoTab;
 
     protected override async Task OnInitializedAsync()
     {
-        var allProducts = await Api.Products.GetAllProducts();
-
-        Products = allProducts;
-        if (Products != null)
-        {
-            ActiveProduct = Products.FirstOrDefault(x => x.Id == ProductId);
-
-            if (ActiveProduct == null)
-            {
-                ActiveProduct = Products.FirstOrDefault();
-            }
-        }
-    }
-
-    private async Task UpdateProducts()
-    {
-        var allProducts = await Api.Products.GetAllProducts();
-        var latest = allProducts.OrderByDescending(i => i.DateCreated).FirstOrDefault();
-
-        // if (latest != null)
-        // {
-        //     var list = allProducts.Where(i => i.Id != latest.Id).ToList();
-        //     int middleIndex = list.Count / 2;
-        //     list.Insert(middleIndex, latest);
-        //     Products = list;
-        //     LatestProduct = latest;
-        // }
-        // else
-        // {
-        //     Products = allProducts;
-        // }
-        StateHasChanged();
+        Info = await Api.Products.GetProductById(ProductId, null);
     }
 
     void ProductPageNav()

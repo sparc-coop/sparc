@@ -27,6 +27,10 @@
   height: auto;
   background: var(--yellow-200);
 }
+.product-page .left .product-img img {
+  width: 100%;
+  object-fit: cover;
+}
 .product-page .left .product-img.span-1 {
   aspect-ratio: 4/3;
 }
@@ -126,6 +130,21 @@
 }
 .product-page .right .product-tags > *.grey {
   background: var(--gray-200);
+}
+.product-page .description h1, .product-page .description h2, .product-page .description h3 {
+  font-family: "Fjalla One";
+  font-weight: 600;
+  margin: 36px 0 24px;
+  color: var(--Color-Purple-900, #1A0C32);
+}
+.product-page .description h1 {
+  font-size: 36px;
+}
+.product-page .description h2 {
+  font-size: 30px;
+}
+.product-page .description h3 {
+  font-size: 24px;
 }
 .product-page .description p {
   font-family: "elza-text", sans-serif;
