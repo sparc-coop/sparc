@@ -1,6 +1,6 @@
 ﻿@using Sparc.Blossom.Authentication
-@using Sparc.Blossom.Billing
 @using System.Globalization
+@using Sparc.Store.Billing.Stripe
 @using Sparc.Store.Products
 
 <div class="product-purchase">
@@ -29,7 +29,7 @@
     </form>
 </div>
 
-
+@inject StripePaymentService Stripe
 @code {
     [Parameter] public Product? ActiveProduct { get; set; }
 
@@ -43,7 +43,7 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await SparcEngine.UserInfo();
-        StripeProduct = await Billing.GetProductAsync("prod_SW5yY8O8KprzFu");
+        StripeProduct = await Stripe.GetProductAsync("prod_SW5yY8O8KprzFu");
 
         if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
         {

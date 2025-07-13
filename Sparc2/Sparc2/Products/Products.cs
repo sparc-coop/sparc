@@ -1,5 +1,5 @@
 ﻿using Sparc.Blossom.Authentication;
-using Sparc.Blossom.Payment.Stripe;
+using Sparc.Store.Billing.Stripe;
 
 namespace Sparc.Store.Products;
 

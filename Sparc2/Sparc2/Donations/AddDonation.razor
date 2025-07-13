@@ -2,8 +2,6 @@
 @inject IJSRuntime JS
 @inject NavigationManager NavManager
 @using System.ComponentModel.DataAnnotations
-@using Sparc.Blossom.Billing
-
 
 @implements IDisposable
 
@@ -249,20 +247,20 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
             }
 
-            Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
+            // Sparc.Blossom.Billing.CreateOrderPaymentRequest request = new(
 
-                amountInCents,
-                "usd",
-                null,
-                null,
-                metadata,
-                setupFutureUsage
-            );
+            //     amountInCents,
+            //     "usd",
+            //     null,
+            //     null,
+            //     metadata,
+            //     setupFutureUsage
+            // );
 
-            var intent = await SparcEngine.CreateOrderPaymentAsync(request);
+            // var intent = await SparcEngine.CreateOrderPaymentAsync(request);
 
-            _clientSecret = intent.ClientSecret;
-            Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");
+            // _clientSecret = intent.ClientSecret;
+            // Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");
             StateHasChanged();
         }
         catch (Exception ex)
