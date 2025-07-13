@@ -1,9 +1,9 @@
-﻿using Sparc.Store;
-using Sparc.Blossom.Data;
+﻿using Sparc.Blossom.Data;
 using Sparc.Engine;
+using Sparc.Store;
+using Sparc.Store.Billing.Stripe;
 using Sparc.Store.Ideas;
 using Sparc.Store.Products;
-using Sparc.Blossom.Payment.Stripe;
 
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 
