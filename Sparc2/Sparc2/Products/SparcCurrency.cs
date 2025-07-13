@@ -8,16 +8,10 @@ public class SparcCurrency(RegionInfo region)
     {
     }
 
-    public SparcCurrency(string cultureId) : this(new RegionInfo(cultureId))
-    {
-        CultureId = cultureId;
-    }
-
     public string Id { get; set; } = region.ISOCurrencySymbol;
     public string Name { get; set; } = region.CurrencyEnglishName;
     public string Symbol { get; set; } = region.CurrencySymbol;
     public string NativeName { get; set; } = region.CurrencyNativeName;
-    public string CultureId { get; set; } = CultureInfo.CurrentCulture.Name;
 
     public static SparcCurrency From(string currency)
     {
@@ -39,5 +33,5 @@ public class SparcCurrency(RegionInfo region)
             .ToList();
     }
 
-    public string ToString(decimal amount) => amount.ToString("C", CultureInfo.CreateSpecificCulture(CultureId));
+    public string ToString(decimal amount, CultureInfo culture) => amount.ToString("C", culture);
 }

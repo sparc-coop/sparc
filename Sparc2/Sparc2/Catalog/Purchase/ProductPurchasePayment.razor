@@ -16,9 +16,15 @@
     <label>
         <span>Amount</span>
     </label>
-    <div class="amount-grid">
-        @StripeProduct?.Price.FormattedAmount
-    </div>
+
+    @if (SelectedCurrency != null && Price != null)
+    {
+        <div class="description">
+            <h3>
+                @SelectedCurrency.ToString(Price.Price, CultureInfo.CurrentUICulture)
+            </h3>
+        </div>
+    }
 </div>
 
 <ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
@@ -28,25 +34,35 @@
     [Parameter] public required Sparc.Blossom.Api.Product Product { get; set; }
     [Parameter] public SparcOrder Order { get; set; } = default!;
 
+    GetProductResponse? Price;
     ProductPurchaseStripeForm? StripeFormRef;
-    Sparc.Blossom.Api.ProductInfo? StripeProduct;
     List<Sparc2.Products.SparcCurrency> Currencies = Sparc2.Products.SparcCurrency.All();
+    Sparc2.Products.SparcCurrency? SelectedCurrency;
 
 
     protected override async Task OnParametersSetAsync()
     {
+        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == Order.Currency)
+            ?? Currencies.FirstOrDefault(c => c.Id == "USD");
+
         await UpdatePrice();
     }
 
     private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
-        Order.Currency = e.Value?.ToString() ?? Order.Currency;
+        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == e.Value?.ToString());
         await UpdatePrice();
     }
 
     private async Task UpdatePrice()
     {
-        StripeProduct = await Api.Products.GetProductById(Product.Id, Order.Currency);
+        if (Product.StripeProductId != null)
+            Price = await Billing.GetProductAsync(Product.StripeProductId, SelectedCurrency!.Id);
+
+        Order.Currency = SelectedCurrency.Id;
+        Order.Amount = Price?.Price ?? 0;
+
+
         if (Order.Amount > 0 && StripeFormRef is not null)
         {
             await StripeFormRef.InitiateStripePayment();

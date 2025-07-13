@@ -57,17 +57,24 @@
 
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
-    [Parameter] public string? PageType { get; set; }
+    [Parameter] public string PageType { get; set; } = "Product";
     [Parameter] public EventCallback<bool> OnClickShowMore { get; set; }
     [Parameter] public EventCallback OnClickHelp { get; set; }
     [Parameter] public EventCallback OnClickPurchase { get; set; }
     [Parameter] public EventCallback OnClickDownload { get; set; }
     [Parameter] public EventCallback OnClickSurvey { get; set; }
     [Parameter] public EventCallback OnClickTryDemo { get; set; }
+    Sparc.Engine.GetProductResponse? Price;
 
     bool showCredits;
     string creditsClass = "";
     bool showFullDescription;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ActiveProduct.StripeProductId != null)
+            Price = await Billing.GetProductAsync(ActiveProduct.StripeProductId);
+    }
 
     string PageClass(string page)
     {

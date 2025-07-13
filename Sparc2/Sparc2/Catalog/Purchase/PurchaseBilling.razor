@@ -8,7 +8,7 @@
     <div class="form-container">
         <label>
             <span>Email *</span>
-            <input @bind="Order.ReceiptEmail" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
+            <input @bind="Order.Email" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
             @if (!string.IsNullOrWhiteSpace(VerificationError))
             {
                 <p class="error-text">@VerificationError</p>
@@ -68,7 +68,7 @@
 
     private bool IsVerified =>
         !string.IsNullOrWhiteSpace(UserEmail) &&
-        UserEmail == Order.ReceiptEmail;
+        UserEmail == Order.Email;
 
     private bool ShowVerification =>
         !string.IsNullOrWhiteSpace(CurrentVerificationDestination) &&
@@ -86,7 +86,7 @@
 
     private async Task HandleEmailBlur()
     {
-        var email = Order.ReceiptEmail?.Trim();
+        var email = Order.Email?.Trim();
 
         if (string.IsNullOrWhiteSpace(email) || email == LastVerifiedEmail)
             return;

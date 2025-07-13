@@ -45,9 +45,9 @@
     {
         CurrentUser = await Aura.UserInfo();
 
-        if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
+        if (string.IsNullOrWhiteSpace(Order.Email) && !string.IsNullOrWhiteSpace(Email))
         {
-            Order.ReceiptEmail = Email;
+            Order.Email = Email;
         }
     }
 

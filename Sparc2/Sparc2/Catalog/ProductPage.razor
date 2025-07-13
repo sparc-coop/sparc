@@ -60,16 +60,15 @@
 
 @inject BlossomApi Api 
 @code {
-    [Parameter] public string? ProductId { get; set; }
+    [Parameter] public required string ProductId { get; set; }
 
-    Sparc.Blossom.Api.ProductInfo? Info;
-    Sparc.Blossom.Api.Product? ActiveProduct => Info?.Product;
+    Sparc.Blossom.Api.Product? ActiveProduct;
     bool showFullDescription;
     bool showPurchaseTab;
 
     protected override async Task OnInitializedAsync()
     {
-        Info = await Api.Products.GetProductById(ProductId, null);
+        ActiveProduct = await Api.Products.Get(ProductId);
     }
 
     void ProductPageNav()

@@ -233,7 +233,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
         try
         {
             long amountInCents = (long)(Donation.Amount * 100);
-            string? setupFutureUsage = null;
 
             var metadata = new Dictionary<string, string> {
                 { "DonationFrequency", Donation.Frequency },
@@ -242,7 +241,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
 
             if (Donation.Frequency == "Monthly")
             {
-                setupFutureUsage = "off_session";
                 Console.WriteLine("Creating PaymentIntent with SetupFutureUsage for monthly donation.");
             }
             else
@@ -250,17 +248,14 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
             }
 
-            CreateOrderPaymentRequest request = new(
+            SparcOrder order = new SparcOrder
+            {
+                Amount = amountInCents,
+                Currency = "usd",
+                Email = ""
+            };
 
-                amountInCents,
-                "usd",
-                null,
-                null,
-                metadata,
-                setupFutureUsage
-            );
-
-            var intent = await Billing.CreateOrderPaymentAsync(request);
+            var intent = await Billing.StartCheckoutAsync(order);
 
             _clientSecret = intent.ClientSecret;
             Console.WriteLine($"PaymentIntent created. ClientSecret obtained: {!string.IsNullOrEmpty(_clientSecret)}");

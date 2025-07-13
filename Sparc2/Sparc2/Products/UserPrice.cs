@@ -4,5 +4,4 @@ public class UserPrice(decimal amount, string currency)
 {
     public decimal Amount { get; set; } = amount;
     public SparcCurrency Currency { get; set; } = SparcCurrency.From(currency);
-    public string FormattedAmount => Currency.ToString(Amount);
 }

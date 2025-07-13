@@ -34,16 +34,7 @@
     {
         try
         {
-            CreateOrderPaymentRequest request = new(
-                (long)(Order.Amount * 100),
-                Order.Currency,
-                null,
-                null,
-                new Dictionary<string, string>(),
-                null
-            );
-
-            var intent = await Billing.CreateOrderPaymentAsync(request);
+            var intent = await Billing.StartCheckoutAsync(Order);
 
             _clientSecret = intent.ClientSecret;
             StateHasChanged();
