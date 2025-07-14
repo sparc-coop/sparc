@@ -1,4 +1,4 @@
-﻿@using Sparc.Blossom.Authentication
+﻿@using Sparc.Engine.Aura
 
 @if (!IsVerified)
 {
@@ -8,7 +8,7 @@
     <div class="form-container">
         <label>
             <span>Email *</span>
-            <input @bind="Order.ReceiptEmail" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
+            <input @bind="Order.Email" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
             @if (!string.IsNullOrWhiteSpace(VerificationError))
             {
                 <p class="error-text">@VerificationError</p>
@@ -51,9 +51,10 @@
     }
 }
 
+@inject ISparcAura Aura
 @code {
-    [Parameter] public CreateOrderRequest Order { get; set; } = default!;
-    [Parameter] public Product? ActiveProduct { get; set; }
+    [Parameter] public SparcOrder Order { get; set; } = default!;
+    [Parameter] public Product? Product { get; set; }
     [Parameter] public string? UserEmail { get; set; }
     [Parameter] public EventCallback<bool> OnEmailVerified { get; set; }
 
@@ -67,7 +68,7 @@
 
     private bool IsVerified =>
         !string.IsNullOrWhiteSpace(UserEmail) &&
-        UserEmail == Order.ReceiptEmail;
+        UserEmail == Order.Email;
 
     private bool ShowVerification =>
         !string.IsNullOrWhiteSpace(CurrentVerificationDestination) &&
@@ -85,7 +86,7 @@
 
     private async Task HandleEmailBlur()
     {
-        var email = Order.ReceiptEmail?.Trim();
+        var email = Order.Email?.Trim();
 
         if (string.IsNullOrWhiteSpace(email) || email == LastVerifiedEmail)
             return;
@@ -103,7 +104,7 @@
 
         try
         {
-            var resp = await SparcEngine.Login(email);
+            var resp = await Aura.Login(email);
 
             if (resp is not null)
             {
@@ -134,7 +135,7 @@
 
         try
         {
-            var success = await SparcEngine.Login(VerificationCode);
+            var success = await Aura.Login(VerificationCode);
             IsVerifyingCode = false;
             await InvokeAsync(StateHasChanged);
 

@@ -2,6 +2,7 @@
 @using System.Text.Json
 @using Sparc.Blossom.Authentication
 @using Sparc.Engine
+@using Sparc.Engine.Aura
 @inject HttpClient Http
 @inject IJSRuntime JS
 
@@ -86,7 +87,7 @@
     }
 </div>
 
-@inject ISparcEngine Sparc
+@inject ISparcAura Aura
 @code {
     BlossomUser? CurrentUser;
     bool IsOpen = true;

@@ -31,6 +31,11 @@
             height: auto;
             background: var(--yellow-200);
 
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+
             &.span-1 {
                 aspect-ratio: 4 / 3;
             }
@@ -163,6 +168,25 @@
     }
 
     .description {
+        h1, h2, h3 {
+            font-family: 'Fjalla One';
+            font-weight: 600;
+            margin: 36px 0 24px;
+            color: var(--Color-Purple-900, #1A0C32);
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
         p {
             font-family: "elza-text", sans-serif;
             font-size: 16px;

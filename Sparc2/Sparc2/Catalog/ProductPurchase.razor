@@ -1,5 +1,7 @@
 ﻿@using Sparc.Blossom.Authentication
-@using Sparc.Blossom.Billing
+@using Sparc.Engine
+@using Sparc.Engine.Aura
+@using Sparc.Engine.Billing
 @using System.Globalization
 
 <div class="product-purchase">
@@ -10,13 +12,13 @@
         @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
         {
             <section class="billing-section">
-                <PurchaseBilling Order="Order" ActiveProduct="ActiveProduct" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
+                <PurchaseBilling Order="Order" Product="Product" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
             </section>
         }
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <ProductPurchasePayment Order="Order" StripeProduct="StripeProduct"></ProductPurchasePayment>
+                <ProductPurchasePayment Order="Order" Product="Product"></ProductPurchasePayment>
             </div>
         </section>
         <button id="submit-button" type="submit" class="btn primary-btn" disabled="@(!CanPurchase)">
@@ -24,13 +26,13 @@
         </button>
     </form>
 </div>
-@inject IJSRuntime JS
-@code {
-    [Parameter] public Product? ActiveProduct { get; set; }
 
-    private GetProductResponse? StripeProduct;
+@inject ISparcAura Aura
+@code {
+    [Parameter] public Product? Product { get; set; }
+
     BlossomUser? CurrentUser;
-    CreateOrderRequest Order = new CreateOrderRequest();
+    SparcOrder Order = new SparcOrder();
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
@@ -41,12 +43,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        CurrentUser = await SparcEngine.UserInfo();
-        StripeProduct = await SparcEngine.GetProductAsync("prod_SW5yY8O8KprzFu");
+        CurrentUser = await Aura.UserInfo();
 
-        if (string.IsNullOrWhiteSpace(Order.ReceiptEmail) && !string.IsNullOrWhiteSpace(Email))
+        if (string.IsNullOrWhiteSpace(Order.Email) && !string.IsNullOrWhiteSpace(Email))
         {
-            Order.ReceiptEmail = Email;
+            Order.Email = Email;
         }
     }
 
@@ -58,7 +59,7 @@
 
     public async Task SubmitUserBilling()
     {
-        var result = await JS.InvokeAsync<PaymentResult>(
+        var result = await Js.InvokeAsync<PaymentResult>(
             "stripeIntegration.confirmPayment"
         );
 

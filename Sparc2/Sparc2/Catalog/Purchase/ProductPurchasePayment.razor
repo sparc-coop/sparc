@@ -1,12 +1,14 @@
 ﻿@using System.Globalization
+@using Sparc.Engine
+
 <div class="form-group">
     <label>
         <span>Currency *</span>
         <select value="@Order.Currency" @onchange="OnCurrencyChanged">
-            @foreach (var cur in CurrencyOptions ?? Enumerable.Empty<string>())
+            @foreach (var cur in Currencies)
             {
-                <option value="@cur" selected="@(Order.Currency == cur ? "selected" : null)">@cur.ToUpper()</option>
-            }                            
+                <option value="@cur.Id" selected="@(Order.Currency == cur.Id ? "selected" : null)">@cur.NativeName (@cur.Symbol)</option>
+            }
         </select>
     </label>
 </div>
@@ -14,156 +16,57 @@
     <label>
         <span>Amount</span>
     </label>
-    <div class="amount-grid">
-        @foreach (var amount in ConvertedPrices.OrderBy(x => x))
-        {
-            <button type="button"
-                    class="@GetAmountButtonClass(amount)"
-                    @onclick="() => SetAmount(amount)">
-                @($"{GetCurrencySymbol(Order.Currency)}{amount}")
-            </button>
-        }
-    </div>
+
+    @if (SelectedCurrency != null && Price != null)
+    {
+        <div class="description">
+            <h3>
+                @SelectedCurrency.ToString(Price.Price, CultureInfo.CurrentUICulture)
+            </h3>
+        </div>
+    }
 </div>
+
 <ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
 
+@inject BlossomApi Api
 @code {
-    [Parameter] public GetProductResponse? StripeProduct { get; set; }
-    [Parameter] public CreateOrderRequest Order { get; set; } = default!;
-    private ProductPurchaseStripeForm? StripeFormRef;
+    [Parameter] public required Sparc.Blossom.Api.Product Product { get; set; }
+    [Parameter] public SparcOrder Order { get; set; } = default!;
 
-    public List<string> CurrencyOptions { get; set; } = new();
-    private List<decimal> ConvertedPrices = new List<decimal>();
-    private Dictionary<string, string> CurrencySymbols;
-    private decimal? _selectedPredefinedAmount = null;
+    GetProductResponse? Price;
+    ProductPurchaseStripeForm? StripeFormRef;
+    List<Sparc2.Products.SparcCurrency> Currencies = Sparc2.Products.SparcCurrency.All();
+    Sparc2.Products.SparcCurrency? SelectedCurrency;
 
 
-    protected async override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
-        if (StripeProduct is null || StripeProduct.Prices.Count == 0)
-            return;
+        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == Order.Currency)
+            ?? Currencies.FirstOrDefault(c => c.Id == "USD");
 
-        GetAllCurrencySymbols();
-
-        if (StripeProduct != null)
-        {
-            GetUserCurrency();
-        }
-
-        var orderedCurrencies = StripeProduct.Prices[0].Keys.OrderBy(c => c).ToList() ?? new List<string>();
-        CurrencyOptions = orderedCurrencies;
-
-        UpdatePriceForCurrency();
-
-        if (Order.Amount > 0 && StripeFormRef is not null)
-        {
-            await StripeFormRef.InitiateStripePayment();
-        }
-    }
-
-    public void GetUserCurrency()
-    {
-        var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
-        var currentCurrencyInfo = ri.ISOCurrencySymbol;
-        if (StripeProduct.Prices[0].ContainsKey(currentCurrencyInfo.ToLower()) == true)
-        {
-            Order.Currency = currentCurrencyInfo.ToLower();
-        }
-        else if (StripeProduct.Prices[0].ContainsKey("usd") == true)
-        {
-            Order.Currency = "usd";
-        }
-        else
-        {
-            Order.Currency = StripeProduct.Prices[0].Keys.FirstOrDefault()?.ToLower() ?? "usd";
-        }
-    }
-
-    private void GetAllCurrencySymbols()
-    {
-        CurrencySymbols = CultureInfo
-          .GetCultures(CultureTypes.SpecificCultures)
-          .Select(ci => ci.Name)
-          .Where(name => !string.IsNullOrWhiteSpace(name))
-          .Select(name =>
-          {
-              try
-              {
-                  return new RegionInfo(name);
-              }
-              catch
-              {
-                  return null;
-              }
-          })
-          .Where(ri => ri != null)
-          .GroupBy(ri => ri!.ISOCurrencySymbol, StringComparer.OrdinalIgnoreCase)
-          .ToDictionary(
-            g => g.Key.ToLower(),
-            g => g.First()!.CurrencySymbol,
-            StringComparer.OrdinalIgnoreCase
-          );
-    }
-
-    private string GetCurrencySymbol(string isoCode)
-    {
-        if (isoCode == null) return string.Empty;
-        var key = isoCode.ToLower();
-        if (CurrencySymbols.TryGetValue(key, out var sym))
-            return sym;
-
-        return isoCode.ToUpper();
+        await UpdatePrice();
     }
 
     private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
-        Order.Currency = e.Value?.ToString()?.ToLower() ?? Order.Currency;
-        UpdatePriceForCurrency();
-
-        if (Order.Amount > 0 && StripeFormRef is not null)
-            await StripeFormRef.InitiateStripePayment();
-        StateHasChanged();
+        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == e.Value?.ToString());
+        await UpdatePrice();
     }
 
-    private async Task SetAmount(decimal predefinedAmount)
+    private async Task UpdatePrice()
     {
-        Order.Amount = (long)predefinedAmount;
-        _selectedPredefinedAmount = predefinedAmount;
+        if (Product.StripeProductId != null)
+            Price = await Billing.GetProductAsync(Product.StripeProductId, SelectedCurrency!.Id);
+
+        Order.Currency = SelectedCurrency.Id;
+        Order.Amount = Price?.Price ?? 0;
+
 
         if (Order.Amount > 0 && StripeFormRef is not null)
-            await StripeFormRef.InitiateStripePayment();
-
-        StateHasChanged();
-    }
-
-    private void UpdatePriceForCurrency()
-    {
-        if (StripeProduct is null) return;
-
-        var curValues = StripeProduct.Prices
-                .Where(dict => dict.ContainsKey(Order.Currency)).ToList();
-
-        List<long> selectedCurValues = curValues
-            .Select(d => d[Order.Currency])
-            .ToList();
-
-        ConvertedPrices.Clear();
-
-        ConvertedPrices.AddRange(selectedCurValues.Select(c => c / 100m));
-        if (!ConvertedPrices.Contains(0))
         {
-            ConvertedPrices.Add(0);
+            await StripeFormRef.InitiateStripePayment();
         }
-        ConvertedPrices.OrderBy(c => c);
 
-        Order.Amount = (long)ConvertedPrices.FirstOrDefault();
-        _selectedPredefinedAmount = Order.Amount;
-
-        StateHasChanged();
-    }
-
-    private string GetAmountButtonClass(decimal amount)
-    {
-        return _selectedPredefinedAmount == amount && Order.Amount == amount ? "btn selected" : "btn";
     }
 }

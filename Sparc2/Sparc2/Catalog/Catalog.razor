@@ -37,11 +37,15 @@
     protected override async Task OnInitializedAsync()
     {
         var allProducts = await Api.Products.GetAllProducts();
-
-        Products = allProducts;
-        if (Products != null)
+        if (allProducts.Count() == 1)
+            Nav.NavigateTo($"/catalog/{allProducts.First().Id}");
+        else
         {
-            ActiveProduct = Products.FirstOrDefault();
+            Products = allProducts;
+            if (Products != null)
+            {
+                ActiveProduct = Products.FirstOrDefault();
+            }
         }
     }
 

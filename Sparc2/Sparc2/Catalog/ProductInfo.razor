@@ -1,4 +1,6 @@
-﻿<div class="product-info @PageClass(PageType) @(showFullDescription ? "fullscreen" : "")">
+﻿@using Markdig
+
+<div class="product-info @PageClass(PageType) @(showFullDescription ? "fullscreen" : "")">
     <div class="info-container">
         <header>
             <div>
@@ -15,20 +17,26 @@
                 }
             </div>
         </header>
-        <section class="description">
-            <p>@ActiveProduct.Description</p>
-        </section>
-        <section class="credits">
-            <h3><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h3>
-            <div class="@creditsClass">
-                <p>Vitae pellentesque | Position Title</p>
-                <p>Sem placerat | Position Title</p>
-                <p>Accumsan maecenas | Position Title</p>
-                <p>Vestibulum fusce | Position Title</p>
-                <p>Dictum risus | Position Title</p>
-                <p>Suspendisse aliquet | Position Title</p>
-            </div>
-        </section>
+
+        @if (ActiveProduct.Description != null)
+        {
+            <section class="description">
+                @((MarkupString)(Markdown.ToHtml(ActiveProduct.Description)))
+            </section>
+        }
+
+        @if (ActiveProduct.Credits.Any())
+        {
+            <section class="credits">
+                <h3><button @onclick=ToggleCredits>Credits <span class="@creditsClass">+</span></button></h3>
+                <div class="@creditsClass">
+                    @foreach (var credit in ActiveProduct.Credits)
+                    {
+                        <p>@credit.Name | @credit.Title</p>
+                    }
+                </div>
+            </section>
+        }
         @if (PageType == "Product")
         {
             <footer>
@@ -49,19 +57,26 @@
 
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
-    [Parameter] public string? PageType { get; set; }
+    [Parameter] public string PageType { get; set; } = "Product";
     [Parameter] public EventCallback<bool> OnClickShowMore { get; set; }
     [Parameter] public EventCallback OnClickHelp { get; set; }
     [Parameter] public EventCallback OnClickPurchase { get; set; }
     [Parameter] public EventCallback OnClickDownload { get; set; }
     [Parameter] public EventCallback OnClickSurvey { get; set; }
     [Parameter] public EventCallback OnClickTryDemo { get; set; }
+    Sparc.Engine.GetProductResponse? Price;
 
-    bool showCredits; 
+    bool showCredits;
     string creditsClass = "";
     bool showFullDescription;
 
-    string PageClass (string page)
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ActiveProduct.StripeProductId != null)
+            Price = await Billing.GetProductAsync(ActiveProduct.StripeProductId);
+    }
+
+    string PageClass(string page)
     {
         var pageClass = page switch
         {
@@ -78,7 +93,7 @@
         var color = tag switch
         {
             "development" => "purple",
-            "testing" => "orange",
+            "category" => "orange",
             "gift" => "gradient",
             "archived" => "grey",
             "owned" => "blue",
@@ -95,7 +110,8 @@
         if (showCredits == true)
         {
             creditsClass = "rotate";
-        } else
+        }
+        else
         {
             creditsClass = "rotateBack";
         }
@@ -107,7 +123,8 @@
         {
             showFullDescription = true;
             OnClickShowMore.InvokeAsync(true);
-        } else
+        }
+        else
         {
             showFullDescription = false;
             OnClickShowMore.InvokeAsync(false);

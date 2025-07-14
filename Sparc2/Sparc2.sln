@@ -13,13 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom", "..\..\blos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.Cosmos", "..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj", "{9D293A5D-6B48-DB01-5C62-4FED86572FB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Example.Payment", "..\..\blossom\Sparc.Blossom.Example.Payment\Sparc.Blossom.Example.Payment.csproj", "{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Payment.Stripe", "..\..\blossom\Sparc.Blossom.Payment.Stripe\Sparc.Blossom.Payment.Stripe.csproj", "{2BA4E806-4F26-FC7E-835B-95331B75F9F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine", "..\..\sparcengine\Sparc.Engine\Sparc.Engine.csproj", "{427122E8-F1DE-68E8-3AB6-5E8E0C932715}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Core", "..\..\blossom\Sparc.Core\Sparc.Core.csproj", "{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Examples", "_Examples", "{D418607C-487B-4A65-80A9-DED4881A913B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Realtime.Twilio", "..\..\blossom\Sparc.Blossom.Realtime.Twilio\Sparc.Blossom.Realtime.Twilio.csproj", "{19C5F091-1947-2959-F0B1-CF6D54BA454D}"
 EndProject
@@ -27,9 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureSto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tovik", "..\..\sparcengine\Tovik\Tovik.csproj", "{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine", "..\..\sparcengine\Sparc.Engine\Sparc.Engine.csproj", "{427122E8-F1DE-68E8-3AB6-5E8E0C932715}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Tovik.Razor", "..\..\sparcengine\Sparc.Tovik.Razor\Sparc.Tovik.Razor.csproj", "{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine.Client", "..\..\sparcengine\Sparc.Engine.Client\Sparc.Engine.Client.csproj", "{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +47,10 @@ Global
 		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D293A5D-6B48-DB01-5C62-4FED86572FB0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F5BD402-88C3-3DAF-24D5-B310563F2FC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BA4E806-4F26-FC7E-835B-95331B75F9F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,14 +67,10 @@ Global
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC79A32B-B9EC-4C7B-B86B-3A8509FDEB2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{427122E8-F1DE-68E8-3AB6-5E8E0C932715}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B0E698D-3B1C-5503-6AD8-3501C410C0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,8 +79,6 @@ Global
 		{43A6A67F-62F6-B1F4-B8B0-362B3AB4B2DE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{325F6838-D997-B057-028D-166902C585F6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{9D293A5D-6B48-DB01-5C62-4FED86572FB0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{5F5BD402-88C3-3DAF-24D5-B310563F2FC3} = {D418607C-487B-4A65-80A9-DED4881A913B}
-		{2BA4E806-4F26-FC7E-835B-95331B75F9F1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{19C5F091-1947-2959-F0B1-CF6D54BA454D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{B83830BD-25BA-8391-B00F-9E91064B9D49} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}

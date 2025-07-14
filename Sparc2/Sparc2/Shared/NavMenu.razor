@@ -33,9 +33,15 @@
                     <hr />
                     <div class="menu-profile">
                         <h5>Profile</h5>
-                        <div class="account-btn">
-                            Hi, @User.Identity?.Name.
+                        <div class="account-btn" @onclick="OpenUserProfile">
+                            @* Hi, @User.Identity?.Name. *@
+                           
+                            <ProfileIcon />
                         </div>
+                        @if (showUserProfile)
+                        {
+                            <NewUserProfile OnClose="CloseUserProfile" />
+                        }
                     </div>
                 </div>
             </div>
@@ -70,13 +76,11 @@
 }
 
 @inject ClaimsPrincipal User
-@code { 
+@code {
     private bool ShowAddCard = false;
     private bool IsIdeasPage => Nav.Uri.EndsWith("/ideas");
     private int SelectedHeaderButton = 0;
-    private bool IsEditingUsername = false;
     private string Username = string.Empty;
-    private ElementReference UsernameInput;
     bool showMobileMenu;
 
     private void Navigate(string path)
@@ -101,9 +105,7 @@
         if (User.Identity?.Name is not null)
             Username = User.Identity.Name;
 
-        IsEditingUsername = true;
         await Js.InvokeVoidAsync("setEditingUsername", true);
-        await UsernameInput.FocusAsync();
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
@@ -118,7 +120,6 @@
     {
         var newUsername = Username?.Trim();
 
-        IsEditingUsername = false;
         StateHasChanged();  
 
         if (!string.IsNullOrWhiteSpace(newUsername) && User is not null)
@@ -146,5 +147,19 @@
         }
 
         StateHasChanged();
+    }
+
+    private bool showUserProfile = false;
+
+    private async Task OpenUserProfile()
+    {
+        showUserProfile = true;
+        await Js.InvokeVoidAsync("disableBodyScrolling", true);
+    }
+
+    private async Task CloseUserProfile()
+    {
+        showUserProfile = false;
+        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 }

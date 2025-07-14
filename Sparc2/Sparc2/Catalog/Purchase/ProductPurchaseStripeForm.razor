@@ -1,25 +1,23 @@
 ﻿<div id="payment-element">
     <p style="font-size: 16px">Loading payment form...</p>
 </div>
+
 <button id="submit-button" type="submit" class="btn btn-success">
 </button>
+
 <div id="error-message" style="color:red; margin-top: 10px;"></div>
 
 @inject IConfiguration Configuration
-@inject IJSRuntime JS
-@inject NavigationManager NavManager
 @code {
-    [Parameter] public CreateOrderRequest Order { get; set; } = default!;
+    [Parameter] public SparcOrder Order { get; set; } = default!;
 
     private string? _clientSecret;
     private string? _publishableKey;
-    private bool _stripeInitialized = false;
     private string? _baseUrl;
 
-    private bool _paymentSuccessful = false;
     private DotNetObjectReference<ProductPurchaseStripeForm>? dotNetHelper;
 
-    protected async override Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _publishableKey = Configuration["Stripe:PublishableKey"];
         if (string.IsNullOrEmpty(_publishableKey))
@@ -27,7 +25,7 @@
             Console.Error.WriteLine("Stripe Publishable Key not configured!");
         }
 
-        _baseUrl = NavManager.BaseUri;
+        _baseUrl = Nav.BaseUri;
 
         dotNetHelper = DotNetObjectReference.Create(this);
     }
@@ -36,22 +34,12 @@
     {
         try
         {
-            CreateOrderPaymentRequest request = new(
-                (long)(Order.Amount * 100),
-                Order.Currency,
-                null,
-                null,
-                new Dictionary<string, string>(),
-                null
-            );
-
-            var intent = await SparcEngine.CreateOrderPaymentAsync(request);
+            var intent = await Billing.StartCheckoutAsync(Order);
 
             _clientSecret = intent.ClientSecret;
-            _stripeInitialized = true;    
             StateHasChanged();
 
-            await JS.InvokeVoidAsync(
+            await Js.InvokeVoidAsync(
               "stripeIntegration.initPaymentForm",
               _clientSecret,
               _publishableKey,
@@ -71,9 +59,7 @@
     [JSInvokable]
     public Task HandlePaymentSuccess()
     {
-        _paymentSuccessful = true;
         _clientSecret = null;
-        _stripeInitialized = false;
         Console.WriteLine("Payment successful signal received from JavaScript.");
         return InvokeAsync(StateHasChanged);
     }
