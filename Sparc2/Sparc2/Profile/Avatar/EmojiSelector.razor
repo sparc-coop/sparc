@@ -5,7 +5,7 @@
     <div class="emoji-selector">
         <h3 @ref="EmojiList">Emoji</h3>
         <div class="emoji-container">
-            <ul @onkeypress="Leave" class="emojis">
+            <ul @onkeypress="Leave" class="emojis" translate="no">
                 @{ int tabIndex = 0; }
                 @foreach (var emoji in Emojis)
                 {
