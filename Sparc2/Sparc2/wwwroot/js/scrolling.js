@@ -51,7 +51,7 @@ function initScroll() {
             document.getElementById("hero-text").classList.add("faded");
 
             if (document.body.scrollTop == (document.body.scrollHeight - document.body.offsetHeight)) {
-                setTimeout(navigateToIdeas, 2000);
+                setTimeout(navigateToCatalog, 2000);
             }
         }
     });
@@ -60,8 +60,8 @@ function initScroll() {
     pressEnter();
 }
 
-function navigateToIdeas() {
-    window.location.href = "/ideas";
+function navigateToCatalog() {
+    window.location.href = "/catalog";
 }
 
 function mouseClickHandler() {
