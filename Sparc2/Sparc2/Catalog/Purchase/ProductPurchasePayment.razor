@@ -24,7 +24,7 @@
     List<SparcCurrency> Currencies = [];
     SparcCurrency? SelectedCurrency;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         if (!Currencies.Any())
             Currencies = await Billing.GetCurrenciesAsync();
