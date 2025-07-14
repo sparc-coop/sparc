@@ -33,5 +33,17 @@ public class SparcCurrency(RegionInfo region)
             .ToList();
     }
 
-    public string ToString(decimal amount, CultureInfo culture) => amount.ToString("C", culture);
+    public string ToString(decimal amount, CultureInfo culture)
+    {
+        var region = new RegionInfo(culture.Name);
+        if (region.ISOCurrencySymbol == Id)
+            return amount.ToString("C", culture);
+
+        var matchingCulture = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+            .FirstOrDefault(c => new RegionInfo(c.Name).ISOCurrencySymbol == Id);
+        if (matchingCulture != null)
+            return amount.ToString("C", matchingCulture);
+
+        return $"{Id} {amount:N0}";
+    }
 }

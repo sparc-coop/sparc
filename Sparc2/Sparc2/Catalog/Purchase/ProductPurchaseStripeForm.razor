@@ -26,6 +26,7 @@
         try
         {
             var intent = await Billing.StartCheckoutAsync(Order);
+            Order.PaymentIntentId = intent.PaymentIntentId;
 
             StateHasChanged();
 

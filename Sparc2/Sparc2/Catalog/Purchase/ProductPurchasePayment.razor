@@ -17,17 +17,24 @@
         <span>Amount</span>
     </label>
 
-    @if (SelectedCurrency != null && Price != null)
+    @if (SelectedCurrency != null)
     {
         <div class="description">
             <h3>
-                @SelectedCurrency.ToString(Price.Price, CultureInfo.CurrentUICulture)
+                
             </h3>
         </div>
     }
 </div>
 
 <ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
+
+@if (SelectedCurrency != null)
+{
+    <button id="submit-button" type="submit" class="btn primary-btn">
+        Pay @SelectedCurrency.ToString(Order.Amount, CultureInfo.CurrentUICulture)
+    </button>
+}
 
 @inject BlossomApi Api
 @code {
@@ -61,7 +68,6 @@
 
         Order.Currency = SelectedCurrency.Id;
         Order.Amount = Price?.Price ?? 0;
-
 
         if (Order.Amount > 0 && StripeFormRef is not null)
         {
