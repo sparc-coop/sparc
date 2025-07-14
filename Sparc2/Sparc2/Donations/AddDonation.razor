@@ -2,6 +2,7 @@
 @inject IJSRuntime JS
 @inject NavigationManager NavManager
 @using System.ComponentModel.DataAnnotations
+@using Sparc.Core.Billing
 @using Sparc.Engine.Billing
 
 
@@ -250,7 +251,6 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
 
             SparcOrder order = new SparcOrder
             {
-                Amount = amountInCents,
                 Currency = "usd",
                 Email = ""
             };

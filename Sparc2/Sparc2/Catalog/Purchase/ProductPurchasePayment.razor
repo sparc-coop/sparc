@@ -12,67 +12,40 @@
         </select>
     </label>
 </div>
-<div class="form-group amount">
-    <label>
-        <span>Amount</span>
-    </label>
-
-    @if (SelectedCurrency != null)
-    {
-        <div class="description">
-            <h3>
-                
-            </h3>
-        </div>
-    }
-</div>
 
 <ProductPurchaseStripeForm @ref="StripeFormRef" Order="Order"></ProductPurchaseStripeForm>
-
-@if (SelectedCurrency != null)
-{
-    <button id="submit-button" type="submit" class="btn primary-btn">
-        Pay @SelectedCurrency.ToString(Order.Amount, CultureInfo.CurrentUICulture)
-    </button>
-}
 
 @inject BlossomApi Api
 @code {
     [Parameter] public required Sparc.Blossom.Api.Product Product { get; set; }
     [Parameter] public SparcOrder Order { get; set; } = default!;
 
-    GetProductResponse? Price;
     ProductPurchaseStripeForm? StripeFormRef;
-    List<Sparc2.Products.SparcCurrency> Currencies = Sparc2.Products.SparcCurrency.All();
-    Sparc2.Products.SparcCurrency? SelectedCurrency;
-
+    List<SparcCurrency> Currencies = [];
+    SparcCurrency? SelectedCurrency;
 
     protected override async Task OnParametersSetAsync()
     {
-        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == Order.Currency)
-            ?? Currencies.FirstOrDefault(c => c.Id == "USD");
+        if (!Currencies.Any())
+            Currencies = await Billing.GetCurrenciesAsync();
 
-        await UpdatePrice();
+        await UpdateCurrency(Order.Currency);
     }
 
     private async Task OnCurrencyChanged(ChangeEventArgs e)
     {
-        SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == e.Value?.ToString());
-        await UpdatePrice();
+        await UpdateCurrency(e.Value?.ToString());
     }
 
-    private async Task UpdatePrice()
+    private async Task UpdateCurrency(string? currency)
     {
-        if (Product.StripeProductId != null)
-            Price = await Billing.GetProductAsync(Product.StripeProductId, SelectedCurrency!.Id);
+        if (currency is not null)
+            SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == currency);
 
-        Order.Currency = SelectedCurrency.Id;
-        Order.Amount = Price?.Price ?? 0;
+        if (SelectedCurrency is not null)
+            Order.Currency = SelectedCurrency.Id;
 
-        if (Order.Amount > 0 && StripeFormRef is not null)
-        {
+        if (StripeFormRef is not null)
             await StripeFormRef.InitiateStripePayment();
-        }
-
     }
 }

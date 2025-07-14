@@ -2,14 +2,19 @@
     <p style="font-size: 16px">Loading payment form...</p>
 </div>
 
-<button id="submit-button" type="submit" class="btn btn-success">
-</button>
+@if (Intent != null)
+{
+    <button id="submit-button" type="submit" class="btn primary-btn">
+        Pay @Intent.FormattedAmount
+    </button>
+}
 
 <div id="error-message" style="color:red; margin-top: 10px;"></div>
 
 @inject IConfiguration Configuration
 @code {
     [Parameter] public SparcOrder Order { get; set; } = default!;
+    SparcPaymentIntent? Intent;
 
     private string? _baseUrl;
 
@@ -25,15 +30,15 @@
     {
         try
         {
-            var intent = await Billing.StartCheckoutAsync(Order);
-            Order.PaymentIntentId = intent.PaymentIntentId;
+            Intent = await Billing.StartCheckoutAsync(Order);
+            Order.PaymentIntentId = Intent.PaymentIntentId;
 
             StateHasChanged();
 
             await Js.InvokeVoidAsync(
               "stripeIntegration.initPaymentForm",
-              intent.ClientSecret,
-              intent.PublishableKey,
+              Intent.ClientSecret,
+              Intent.PublishableKey,
               dotNetHelper,
               _baseUrl
             );
