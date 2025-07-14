@@ -96,40 +96,12 @@
     "inputFile": "Shared/Components/LanguageSelector.razor.scss"
   },
   {
-    "outputFile": "Shared/Components/Modal.razor.css",
-    "inputFile": "Shared/Components/Modal.razor.scss"
-  },
-  {
-    "outputFile": "Profile/EditEmail.razor.css",
-    "inputFile": "Profile/EditEmail.razor.scss"
-  },
-  {
-    "outputFile": "Profile/EditPhoneNumber.razor.css",
-    "inputFile": "Profile/EditPhoneNumber.razor.scss"
-  },
-  {
-    "outputFile": "Profile/Avatar/EditAvatar.razor.css",
-    "inputFile": "Profile/Avatar/EditAvatar.razor.scss"
-  },
-  {
     "outputFile": "Profile/Avatar/ColorSelector.razor.css",
     "inputFile": "Profile/Avatar/ColorSelector.razor.scss"
   },
   {
     "outputFile": "Profile/Avatar/EmojiSelector.razor.css",
     "inputFile": "Profile/Avatar/EmojiSelector.razor.scss"
-  },
-  {
-    "outputFile": "Profile/Verification.razor.css",
-    "inputFile": "Profile/Verification.razor.scss"
-  },
-  {
-    "outputFile": "Profile/UserProfile.razor.css",
-    "inputFile": "Profile/UserProfile.razor.scss"
-  },
-  {
-    "outputFile": "Catalog/Purchase/ProductPurchasePrices.razor.css",
-    "inputFile": "Catalog/Purchase/ProductPurchasePrices.razor.scss"
   },
   {
     "outputFile": "Catalog/Purchase/PurchaseLicenseType.razor.css",
@@ -140,16 +112,12 @@
     "inputFile": "Catalog/Purchase/PurchaseBilling.razor.scss"
   },
   {
-    "outputFile": "Catalog/Purchase/PurchaseSummary.razor.css",
-    "inputFile": "Catalog/Purchase/PurchaseSummary.razor.scss"
-  },
-  {
     "outputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.css",
     "inputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.scss"
   },
   {
-    "outputFile": "Catalog/ProductPurchasePayment.razor.css",
-    "inputFile": "Catalog/ProductPurchasePayment.razor.scss"
+    "outputFile": "Catalog/Purchase/ProductPurchasePayment.razor.css",
+    "inputFile": "Catalog/Purchase/ProductPurchasePayment.razor.scss"
   },
   {
     "outputFile": "Shared/Icons/ProfileIcon.razor.css",
@@ -158,13 +126,5 @@
   {
     "outputFile": "Profile/NewUserProfile.razor.css",
     "inputFile": "Profile/NewUserProfile.razor.scss"
-  },
-  {
-    "outputFile": "Profile/EmojiSelector.razor.css",
-    "inputFile": "Profile/EmojiSelector.razor.scss"
-  },
-  {
-    "outputFile": "Profile/ColorSelector.razor.css",
-    "inputFile": "Profile/ColorSelector.razor.scss"
   }
 ]
