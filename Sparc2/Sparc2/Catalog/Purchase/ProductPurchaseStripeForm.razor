@@ -11,22 +11,13 @@
 @code {
     [Parameter] public SparcOrder Order { get; set; } = default!;
 
-    private string? _clientSecret;
-    private string? _publishableKey;
     private string? _baseUrl;
 
     private DotNetObjectReference<ProductPurchaseStripeForm>? dotNetHelper;
 
     protected override void OnInitialized()
     {
-        _publishableKey = Configuration["Stripe:PublishableKey"];
-        if (string.IsNullOrEmpty(_publishableKey))
-        {
-            Console.Error.WriteLine("Stripe Publishable Key not configured!");
-        }
-
         _baseUrl = Nav.BaseUri;
-
         dotNetHelper = DotNetObjectReference.Create(this);
     }
 
@@ -36,13 +27,12 @@
         {
             var intent = await Billing.StartCheckoutAsync(Order);
 
-            _clientSecret = intent.ClientSecret;
             StateHasChanged();
 
             await Js.InvokeVoidAsync(
               "stripeIntegration.initPaymentForm",
-              _clientSecret,
-              _publishableKey,
+              intent.ClientSecret,
+              intent.PublishableKey,
               dotNetHelper,
               _baseUrl
             );
@@ -51,7 +41,6 @@
         catch (Exception ex)
         {
             Console.Error.WriteLine($"Error creating PaymentIntent: {ex.Message}");
-            _clientSecret = null;
             StateHasChanged();
         }
     }
@@ -59,7 +48,6 @@
     [JSInvokable]
     public Task HandlePaymentSuccess()
     {
-        _clientSecret = null;
         Console.WriteLine("Payment successful signal received from JavaScript.");
         return InvokeAsync(StateHasChanged);
     }

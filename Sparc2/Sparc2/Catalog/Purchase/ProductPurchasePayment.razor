@@ -7,7 +7,7 @@
         <select value="@Order.Currency" @onchange="OnCurrencyChanged">
             @foreach (var cur in Currencies)
             {
-                <option value="@cur.Id" selected="@(Order.Currency == cur.Id ? "selected" : null)">@cur.NativeName (@cur.Symbol)</option>
+                <option value="@cur.Id" selected="@(Order.Currency == cur.Id ? "selected" : null)">@cur.Name (@cur.Symbol)</option>
             }
         </select>
     </label>
