@@ -29,7 +29,9 @@
         if (!Currencies.Any())
             Currencies = await Billing.GetCurrenciesAsync();
 
-        await UpdateCurrency(Order.Currency);
+        SelectedCurrency = await Billing.GetUserCurrencyAsync();
+
+        await UpdateCurrency();
     }
 
     private async Task OnCurrencyChanged(ChangeEventArgs e)
@@ -37,10 +39,13 @@
         await UpdateCurrency(e.Value?.ToString());
     }
 
-    private async Task UpdateCurrency(string? currency)
+    private async Task UpdateCurrency(string? currency = null)
     {
         if (currency is not null)
+        {
             SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == currency);
+            await Billing.SetUserCurrencyAsync(SelectedCurrency!);
+        }
 
         if (SelectedCurrency is not null)
             Order.Currency = SelectedCurrency.Id;
