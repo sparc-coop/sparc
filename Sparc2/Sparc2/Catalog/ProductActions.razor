@@ -1,19 +1,24 @@
-﻿<div class="product-actions">
+﻿@using Sparc.Engine
+<div class="product-actions">
     <div class="tabs">
         <button id="help-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Need Help ?</h6></button>
-        <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
-            <h6>Purchase</h6>
-            <div>
-                <span>$@ActiveProduct.Price</span>
-                <aside>one-time purchase</aside>
-            </div>
-        </button>
-        <button id="download-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Download</h6></button>
+        @if (Price != null)
+        {
+            <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
+                <h6>Purchase</h6>
+                <div>
+                    <span>@Price.FormattedPrice</span>
+                    <aside>one-time purchase</aside>
+                </div>
+            </button>
+        }
+        <button id="download-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try</h6></button>
     </div>
 </div>
 
 @code {
     [Parameter] public Product ActiveProduct { get; set; } = new Product();
+    [Parameter] public GetProductResponse? Price { get; set; }
     [Parameter] public EventCallback OnClickHelp { get; set; }
     [Parameter] public EventCallback OnClickPurchase { get; set; }
     [Parameter] public EventCallback OnClickDownload { get; set; }
@@ -29,7 +34,7 @@
     }
 
     [JSInvokable("OnClickTab")]
-    public void OnClickTab (string tab)
+    public void OnClickTab(string tab)
     {
         switch (tab)
         {

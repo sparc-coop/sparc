@@ -5,9 +5,12 @@
         <header>
             <div>
                 <h2 @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'>@ActiveProduct.Title</h2>
-                <div class="price">
-                    <span>$@ActiveProduct.Price.ToString()</span>
-                </div>
+                @if (Price != null)
+                {
+                    <div class="price">
+                        <span>@Price.FormattedPrice</span>
+                    </div>
+                }
             </div>
             <div class="subheader product-tags">
                 @foreach (var tag in ActiveProduct.Tags)
@@ -40,7 +43,7 @@
         @if (PageType == "Product")
         {
             <footer>
-                <ProductActions ActiveProduct=ActiveProduct OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+                <ProductActions ActiveProduct=ActiveProduct Price=Price OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
             </footer>
         }
     </div>
