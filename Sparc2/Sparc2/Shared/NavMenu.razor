@@ -33,15 +33,7 @@
                     <hr />
                     <div class="menu-profile">
                         <h5>Profile</h5>
-                        <div class="account-btn" @onclick="OpenUserProfile">
-                            @* Hi, @User.Identity?.Name. *@
-                           
-                            <ProfileIcon />
-                        </div>
-                        @if (showUserProfile)
-                        {
-                            <Sparc.Engine.Client.Aura.SparcAura OnClose="CloseUserProfile" />
-                        }
+                        <Sparc.Engine.Client.Aura.SparcAura />
                     </div>
                 </div>
             </div>
@@ -147,19 +139,5 @@
         }
 
         StateHasChanged();
-    }
-
-    private bool showUserProfile = false;
-
-    private async Task OpenUserProfile()
-    {
-        showUserProfile = true;
-        await Js.InvokeVoidAsync("disableBodyScrolling", true);
-    }
-
-    private async Task CloseUserProfile()
-    {
-        showUserProfile = false;
-        await Js.InvokeVoidAsync("disableBodyScrolling", false);
     }
 }
