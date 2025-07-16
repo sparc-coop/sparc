@@ -96,14 +96,6 @@
     "inputFile": "Shared/Components/LanguageSelector.razor.scss"
   },
   {
-    "outputFile": "Profile/Avatar/ColorSelector.razor.css",
-    "inputFile": "Profile/Avatar/ColorSelector.razor.scss"
-  },
-  {
-    "outputFile": "Profile/Avatar/EmojiSelector.razor.css",
-    "inputFile": "Profile/Avatar/EmojiSelector.razor.scss"
-  },
-  {
     "outputFile": "Catalog/Purchase/PurchaseLicenseType.razor.css",
     "inputFile": "Catalog/Purchase/PurchaseLicenseType.razor.scss"
   },
@@ -122,9 +114,5 @@
   {
     "outputFile": "Shared/Icons/ProfileIcon.razor.css",
     "inputFile": "Shared/Icons/ProfileIcon.razor.scss"
-  },
-  {
-    "outputFile": "Profile/NewUserProfile.razor.css",
-    "inputFile": "Profile/NewUserProfile.razor.scss"
   }
 ]
