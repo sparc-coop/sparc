@@ -1,4 +1,6 @@
 ﻿<!DOCTYPE html>
+@inject IConfiguration Config
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,9 +29,11 @@
     <script src="js/scrolling.js"></script>
     <script src="js/catalog.js"></script>
     <script src="js/morph.js"></script>
+    <script src="@Config["SparcEngine"]/SparcAuthenticator.js"></script>
+    <script type="module" src="@Config["Tovik"]/tovik.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/kute.js/2.0.0/kute.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-    <script src="https://engine.sparc.coop/SparcAuthenticator.js"></script>
     <script>
         // use a script tag or an external JS file
         document.addEventListener("DOMContentLoaded", (event) => {
@@ -37,7 +41,5 @@
          // gsap code here!
         });
     </script>
-       <script type="module" src="https://tovik.app/tovik.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/kute.js/2.0.0/kute.min.js"></script>
 </body>
 </html>
