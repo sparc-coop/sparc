@@ -8,7 +8,7 @@
     <div class="form-container">
         <label>
             <span>Email *</span>
-            <input @bind="Order.Email" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
+            <input @bind="Email" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
             @if (!string.IsNullOrWhiteSpace(VerificationError))
             {
                 <p class="error-text">@VerificationError</p>
@@ -53,11 +53,10 @@
 
 @inject ISparcAura Aura
 @code {
-    [Parameter] public SparcOrder Order { get; set; } = default!;
-    [Parameter] public Product? Product { get; set; }
     [Parameter] public string? UserEmail { get; set; }
     [Parameter] public EventCallback<bool> OnEmailVerified { get; set; }
 
+    string Email = "";
     private string? LastVerifiedEmail;
     private string? VerificationCode;
     private string VerificationError = "";
@@ -68,7 +67,7 @@
 
     private bool IsVerified =>
         !string.IsNullOrWhiteSpace(UserEmail) &&
-        UserEmail == Order.Email;
+        UserEmail == Email;
 
     private bool ShowVerification =>
         !string.IsNullOrWhiteSpace(CurrentVerificationDestination) &&
@@ -86,7 +85,7 @@
 
     private async Task HandleEmailBlur()
     {
-        var email = Order.Email?.Trim();
+        var email = Email?.Trim();
 
         if (string.IsNullOrWhiteSpace(email) || email == LastVerifiedEmail)
             return;

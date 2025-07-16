@@ -1,4 +1,5 @@
 ﻿@using Markdig
+@implements IDisposable
 
 <div class="product-info @PageClass(PageType) @(showFullDescription ? "fullscreen" : "")">
     <div class="info-container">
@@ -58,6 +59,7 @@
     </div>
 </div>
 
+@inject Sparc.Engine.SparcEvents Events
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string PageType { get; set; } = "Product";
@@ -75,8 +77,18 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (ActiveProduct.StripeProductId != null)
-            Price = await Billing.GetProductAsync(ActiveProduct.StripeProductId);
+        await UpdatePrice();
+        Events.CurrencyChanged += UpdatePrice;
+    }
+
+    async Task UpdatePrice(SparcCurrency? currency = null)
+    {
+        if (ActiveProduct.StripeProductId == null)
+            Price = null;
+        else
+            Price = await Billing.GetProductAsync(ActiveProduct.StripeProductId, currency?.Id);
+        
+        StateHasChanged();
     }
 
     string PageClass(string page)
@@ -157,5 +169,10 @@
     void ClickTryDemo()
     {
         OnClickTryDemo.InvokeAsync();
+    }
+
+    public void Dispose()
+    {
+        Events.CurrencyChanged -= UpdatePrice;
     }
 }

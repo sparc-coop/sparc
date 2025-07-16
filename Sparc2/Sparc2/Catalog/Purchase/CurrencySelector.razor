@@ -1,0 +1,38 @@
+@using System.Globalization
+@using Sparc.Engine
+
+<div class="form-group">
+    <label>
+        <span>Currency *</span>
+        <select value="@SelectedCurrency?.Id" @onchange="OnCurrencyChanged">
+            @foreach (var cur in Currencies)
+            {
+                <option value="@cur.Id" selected="@(SelectedCurrency?.Id == cur.Id ? " selected" : null)">
+                    @cur.Name (@cur.Symbol)
+                </option>
+            }
+        </select>
+    </label>
+</div>
+
+@inject SparcEvents Events
+@code {
+    List<SparcCurrency> Currencies = [];
+    SparcCurrency? SelectedCurrency;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!Currencies.Any())
+            Currencies = await Billing.GetCurrenciesAsync();
+
+        SelectedCurrency = await Billing.GetUserCurrencyAsync();
+    }
+
+    private async Task OnCurrencyChanged(ChangeEventArgs e)
+    {
+        var currency = e.Value?.ToString();
+        SelectedCurrency = Currencies.First(c => c.Id == currency);
+        await Billing.SetUserCurrencyAsync(SelectedCurrency);
+        await Events.OnCurrencyChanged(SelectedCurrency);
+    }
+}

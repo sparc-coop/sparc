@@ -116,8 +116,8 @@
     "inputFile": "Catalog/Purchase/ProductPurchaseStripeForm.razor.scss"
   },
   {
-    "outputFile": "Catalog/Purchase/ProductPurchasePayment.razor.css",
-    "inputFile": "Catalog/Purchase/ProductPurchasePayment.razor.scss"
+    "outputFile": "Catalog/Purchase/CurrencySelector.razor.css",
+    "inputFile": "Catalog/Purchase/CurrencySelector.razor.scss"
   },
   {
     "outputFile": "Shared/Icons/ProfileIcon.razor.css",

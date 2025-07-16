@@ -12,13 +12,14 @@
         @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
         {
             <section class="billing-section">
-                <PurchaseBilling Order="Order" Product="Product" UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
+                <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
             </section>
         }
         <section class="payment-section">
             <h5>Payment Information</h5>
             <div class="form-container">
-                <ProductPurchasePayment Order="Order" Product="Product"></ProductPurchasePayment>
+                <CurrencySelector />
+                <ProductPurchaseStripeForm Product="Product"></ProductPurchaseStripeForm>
             </div>
         </section>
     </form>
@@ -29,7 +30,6 @@
     [Parameter] public required Product Product { get; set; }
 
     BlossomUser? CurrentUser;
-    SparcOrder Order = new SparcOrder();
 
     string SelectedLicense = "personal";
     string GiftEmail = "";
@@ -41,12 +41,6 @@
     protected override async Task OnInitializedAsync()
     {
         CurrentUser = await Aura.UserInfo();
-        Order.ProductId = Product.StripeProductId!;
-
-        if (string.IsNullOrWhiteSpace(Order.Email) && !string.IsNullOrWhiteSpace(Email))
-        {
-            Order.Email = Email;
-        }
     }
 
     private void HandleEmailVerified(bool verified)

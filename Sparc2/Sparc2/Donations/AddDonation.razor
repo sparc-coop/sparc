@@ -249,11 +249,7 @@ else if (CurrentStep == 1 && string.IsNullOrEmpty(_clientSecret))
                 Console.WriteLine("Creating standard PaymentIntent for one-time donation.");
             }
 
-            SparcOrder order = new SparcOrder
-            {
-                Currency = "usd",
-                Email = ""
-            };
+            SparcOrder order = new SparcOrder();
 
             var intent = await Billing.StartCheckoutAsync(order);
 
