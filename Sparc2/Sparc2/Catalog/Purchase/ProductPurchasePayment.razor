@@ -29,7 +29,7 @@
         if (!Currencies.Any())
             Currencies = await Billing.GetCurrenciesAsync();
 
-        SelectedCurrency = await Billing.GetUserCurrencyAsync();
+        //SelectedCurrency = await Billing.GetUserCurrencyAsync();
 
         await UpdateCurrency();
     }
@@ -44,7 +44,7 @@
         if (currency is not null)
         {
             SelectedCurrency = Currencies.FirstOrDefault(c => c.Id == currency);
-            await Billing.SetUserCurrencyAsync(SelectedCurrency!);
+            //await Billing.SetUserCurrencyAsync(SelectedCurrency!);
         }
 
         if (SelectedCurrency is not null)
