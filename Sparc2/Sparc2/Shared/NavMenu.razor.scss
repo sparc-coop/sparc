@@ -342,12 +342,12 @@ button, .button, a {
                 display: block;
                 background: var(--yellow-50);
                 transform: translateX(100vw);
-                transition: transform 1.5s ease-in;
+                transition: transform 0.8s ease-in;
 
                 &.mobile-menu {
                     &.show {
                         transform: translateX(0);
-                        transition: transform 1.5s ease-in-out;
+                        transition: transform 1s ease-in-out;
                     }
                 }
 

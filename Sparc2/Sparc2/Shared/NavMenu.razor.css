@@ -286,11 +286,11 @@ button.secondary-btn:active, .button.secondary-btn:active, a.secondary-btn:activ
     display: block;
     background: var(--yellow-50);
     transform: translateX(100vw);
-    transition: transform 1.5s ease-in;
+    transition: transform 0.8s ease-in;
   }
   nav.home-nav .right.mobile-menu.show {
     transform: translateX(0);
-    transition: transform 1.5s ease-in-out;
+    transition: transform 1s ease-in-out;
   }
   nav.home-nav .right .menu {
     background: var(--yellow-50);
