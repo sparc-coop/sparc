@@ -1,4 +1,6 @@
-﻿<div id="payment-element">
+﻿@implements IDisposable
+
+<div id="payment-element">
     <p style="font-size: 16px">Loading payment form...</p>
 </div>
 
@@ -12,18 +14,29 @@
 <div id="error-message" style="color:red; margin-top: 10px;"></div>
 
 @inject IConfiguration Configuration
+@inject Sparc.Engine.SparcEvents Events
 @code {
-    [Parameter] public SparcOrder Order { get; set; } = default!;
+    [Parameter] public required Product Product { get; set; } = default!;
+    SparcOrder Order = new();
     SparcPaymentIntent? Intent;
 
     private string? _baseUrl;
 
     private DotNetObjectReference<ProductPurchaseStripeForm>? dotNetHelper;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        Order.ProductId = Product.StripeProductId!;
         _baseUrl = Nav.BaseUri;
         dotNetHelper = DotNetObjectReference.Create(this);
+        Events.CurrencyChanged += OnCurrencyChanged;
+        await InitiateStripePayment();
+    }
+
+    private async Task OnCurrencyChanged(SparcCurrency currency)
+    {
+        Order.Currency = currency.Id;
+        await InitiateStripePayment();
     }
 
     public async Task InitiateStripePayment()
@@ -56,5 +69,10 @@
     {
         Console.WriteLine("Payment successful signal received from JavaScript.");
         return InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Events.CurrencyChanged -= OnCurrencyChanged;
     }
 }
