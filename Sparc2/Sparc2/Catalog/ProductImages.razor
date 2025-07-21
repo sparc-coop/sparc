@@ -1,0 +1,26 @@
+﻿<div class="spacer mobile-only"></div>
+@if (!Product.Images.Any())
+{
+    <figure id="img-1" class="product-img span-1"></figure>
+    <figure id="img-2" class="product-img span-1"></figure>
+    <div class="img-container span-2">
+        <figure id="img-3" class="product-img"></figure>
+        <figure id="img-4" class="product-img"></figure>
+    </div>
+    <figure id="img-5" class="product-img img-5 span-1"></figure>
+
+}
+else
+{
+    var i = 1;
+    foreach (var file in Product.Images)
+    {
+        <figure id="img-@i" class="product-img span-1">
+            <img src="@file" alt="@Product.Title Product Image @i++" />
+        </figure>
+    }
+}
+
+@code {
+    [Parameter] public required Sparc.Blossom.Api.Product Product { get; set; }
+}
