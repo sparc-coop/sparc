@@ -27,7 +27,9 @@ var tovik = new Product("Tovik", "Early Access")
         new("Fernando Rodrigues", "Product Engineer"),
         new("Laura Ferraz", " Product Engineer"),
         new("Joseph Young", "Product Architecture"),
-        new("Antonio Correia", "Data Architecture")
+        new("Antonio Correia", "Data Architecture"),
+        new("Kayla Dipilato", "Product Marketing"),
+        new ("Hannah Dipilato", "Copywriter")
         ],
     Images = [
         "/images/products/tovik_store-assets-02.jpg",
@@ -35,6 +37,7 @@ var tovik = new Product("Tovik", "Early Access")
         "/images/products/tovik_store-assets-03.jpg",
         "/images/products/tovik_store-assets-04.jpg"
         ],
+    Url = builder.Configuration["Tovik"]!,
     Price = 20,
     StripeProductId = "prod_SW5yY8O8KprzFu",
     Tags = [

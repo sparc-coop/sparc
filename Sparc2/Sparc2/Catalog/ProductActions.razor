@@ -1,11 +1,18 @@
 ﻿@using Sparc.Engine
 <div class="product-actions">
     <div class="tabs">
-        <button id="demo-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try It Out</h6></button>
+        @if (OwnsProduct)
+        {
+            <button id="download-tab" class="product-tab"><h6>Go to @ActiveProduct.Title &rarr;</h6></button>
+        }
+        else
+        {
+            <button id="demo-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try It Out</h6></button>
+        }
         @if (Price != null)
         {
             <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
-                <h6>Purchase</h6>
+                <h6>@(OwnsProduct ? "Purchase Again" : "Purchase")</h6>
                 <div>
                     <span>@Price.FormattedPrice</span>
                     <aside>one-time purchase</aside>
@@ -19,7 +26,9 @@
 @code {
     [Parameter] public Product ActiveProduct { get; set; } = new Product();
     [Parameter] public GetProductResponse? Price { get; set; }
+    [Parameter] public BlossomUser? User { get; set; }
     [Parameter] public EventCallback<string> OnTabChanged { get; set; }
+    bool OwnsProduct => User?.HasProduct(ActiveProduct.Id) == true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -42,6 +51,9 @@
                 break;
             case "demo-tab":
                 await OnTabChanged.InvokeAsync("Demo");
+                break;
+            case "download-tab":
+                Nav.NavigateTo(ActiveProduct.Url);
                 break;
         }
     }

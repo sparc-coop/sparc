@@ -1,27 +1,30 @@
 ﻿@page "/catalog/{ProductId}"
+@using Sparc.Engine.Aura
 @layout CatalogLayout
 
 <article class="product-page @(ActiveTab != null ? "left-only" : "")">
     <div class="page-container">
         <div class="left">
-            @if (ActiveProduct != null)
-            {
-                switch (ActiveTab)
+            <div class="left-container">
+                @if (ActiveProduct != null)
                 {
-                    case "Purchase":
-                        <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
-                        ;
-                        break;
-                    case "Download":
-                        <Sparc2.Catalog.ProductKey />
-                        break;
-                    case "Demo":
-                    case "Help":
-                    case null:
-                        <Sparc2.Catalog.ProductImages Product="ActiveProduct" />
-                        break;
+                    switch (ActiveTab)
+                    {
+                        case "Purchase":
+                            <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
+                            ;
+                            break;
+                        case "Download":
+                            <Sparc2.Catalog.ProductKey />
+                            break;
+                        case "Demo":
+                        case "Help":
+                        case null:
+                            <Sparc2.Catalog.ProductImages Product="ActiveProduct" />
+                            break;
+                    }
                 }
-            }
+            </div>
         </div>
         <div class="right @((showFullDescription && ActiveTab == null) ? "fullscreen" : "")">
             <div class="right-container">
@@ -30,7 +33,7 @@
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnTabChanged="ChangeTab" />
+                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" User="User" OnTabChanged="ChangeTab" />
                 } 
                 else
                 {
@@ -46,18 +49,22 @@
     </div>
 </article>
 
-@inject BlossomApi Api 
+@inject BlossomApi Api
+@inject ISparcAura Aura
 @code {
     [Parameter] public required string ProductId { get; set; }
     [SupplyParameterFromQuery(Name = "payment_intent_client_secret")] public string? PaymentIntentClientSecret { get; set; }
+    [SupplyParameterFromQuery(Name = "paymentIntentId")] public string? PaymentIntentId { get; set; }
 
     Sparc.Blossom.Api.Product? ActiveProduct;
+    BlossomUser User = null!; 
     bool showFullDescription;
     string? ActiveTab;
 
     protected override async Task OnInitializedAsync()
     {
         ActiveProduct = await Api.Products.Get(ProductId);
+        User = await Aura.UserInfo();
         // if (PaymentIntentClientSecret != null)
         //     ToggleDownload();
 

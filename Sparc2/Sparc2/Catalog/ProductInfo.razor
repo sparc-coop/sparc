@@ -19,6 +19,10 @@
                     var color = TagColor(tag.Type);
                     <div class="tag product-tag @color">@tag.Name</div>
                 }
+                @if (User?.HasProduct(ActiveProduct.Id) == true)
+                {
+                    <div class="tag product-tag @TagColor("owned")">You Own This!</div>
+                }
             </div>
         </header>
 
@@ -44,7 +48,7 @@
         @if (PageType == "Product")
         {
             <footer>
-                <ProductActions ActiveProduct=ActiveProduct Price=Price OnTabChanged=ChangeTab />
+                <ProductActions ActiveProduct=ActiveProduct Price=Price User=User OnTabChanged=ChangeTab />
             </footer>
         }
     </div>
@@ -63,6 +67,7 @@
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string PageType { get; set; } = "Product";
+    [Parameter] public BlossomUser User { get; set; }
     [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     Sparc.Engine.GetProductResponse? Price;
 
