@@ -29,7 +29,8 @@
     protected override async Task OnInitializedAsync()
     {
         Auth = Js.Import("./Catalog/Purchase/ProductPurchaseStripeForm.razor.js");
-        Order.ProductId = Product.StripeProductId!;
+        Order.ProductId = Product.Id;
+        Order.StripeProductId = Product.StripeProductId!;
         Events.CurrencyChanged += OnCurrencyChanged;
         await InitiateStripePayment();
     }
@@ -45,7 +46,7 @@
         try
         {
             Intent = await Billing.StartCheckoutAsync(Order);
-            Order.Id = Intent.PaymentIntentId;
+            Order.PaymentIntentId = Intent.PaymentIntentId;
 
             StateHasChanged();
 
