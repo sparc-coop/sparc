@@ -1,4 +1,5 @@
 ﻿@using Sparc.Engine
+@using Sparc.Engine.Aura
 <div class="product-actions">
     <div class="tabs">
         @if (OwnsProduct)
@@ -23,6 +24,7 @@
     </div>
 </div>
 
+@inject ISparcAura Aura
 @code {
     [Parameter] public Product ActiveProduct { get; set; } = new Product();
     [Parameter] public GetProductResponse? Price { get; set; }
@@ -53,7 +55,9 @@
                 await OnTabChanged.InvokeAsync("Demo");
                 break;
             case "download-tab":
-                Nav.NavigateTo(ActiveProduct.Url);
+                var totp = await Aura.GetSparcCode();
+                if (totp != null)
+                    Nav.NavigateTo($"{ActiveProduct.Url}?_totp={totp.Code}");
                 break;
         }
     }
