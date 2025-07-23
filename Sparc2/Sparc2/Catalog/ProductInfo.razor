@@ -75,10 +75,15 @@
     string creditsClass = "";
     bool showFullDescription;
 
+    protected override void OnInitialized()
+    {
+        Events.CurrencyChanged += UpdatePrice;
+    }
+
     protected override async Task OnParametersSetAsync()
     {
-        await UpdatePrice();
-        Events.CurrencyChanged += UpdatePrice;
+        if (User != null)
+            await UpdatePrice();
     }
 
     async Task ChangeTab(string? tab)
@@ -89,11 +94,13 @@
 
     async Task UpdatePrice(SparcCurrency? currency = null)
     {
+        currency ??= User?.Avatar?.Currency;
+
         if (ActiveProduct.StripeProductId == null)
             Price = null;
         else
             Price = await Billing.GetProductAsync(ActiveProduct.StripeProductId, currency?.Id);
-        
+
         StateHasChanged();
     }
 

@@ -19,6 +19,7 @@
 @inject Sparc.Engine.SparcEvents Events
 @code {
     [Parameter] public required Product Product { get; set; } = default!;
+    [Parameter] public required BlossomAvatar Avatar { get; set; } = default!;
     SparcOrder Order = new();
     SparcPaymentIntent? Intent;
     Lazy<Task<IJSObjectReference>> Auth = null!;
@@ -29,6 +30,7 @@
     protected override async Task OnInitializedAsync()
     {
         Auth = Js.Import("./Catalog/Purchase/ProductPurchaseStripeForm.razor.js");
+        Order.Currency = Avatar.Currency?.Id;
         Order.ProductId = Product.Id;
         Order.StripeProductId = Product.StripeProductId!;
         Events.CurrencyChanged += OnCurrencyChanged;

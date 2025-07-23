@@ -13,14 +13,15 @@
         <section class="billing-section">
             <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
         </section>
+
+        <section class="payment-section">
+            <h5>Payment Information</h5>
+            <div class="form-container">
+                <CurrencySelector Avatar="CurrentUser.Avatar" />
+                <ProductPurchaseStripeForm Product="Product" Avatar="CurrentUser.Avatar"></ProductPurchaseStripeForm>
+            </div>
+        </section>
     }
-    <section class="payment-section">
-        <h5>Payment Information</h5>
-        <div class="form-container">
-            <CurrencySelector />
-            <ProductPurchaseStripeForm Product="Product"></ProductPurchaseStripeForm>
-        </div>
-    </section>
 </div>
 
 @inject ISparcAura Aura
