@@ -96,8 +96,12 @@
             }
         }
 
-        &#demo-tab, &#download-tab {
+        &#demo-tab {
             background: var(--gray-600);
+        }
+
+        &#download-tab {
+            background: var(--blue);
         }
     }
 }

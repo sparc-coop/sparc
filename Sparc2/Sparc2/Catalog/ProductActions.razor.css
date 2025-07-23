@@ -80,8 +80,11 @@
   text-wrap: nowrap;
   line-height: 100%;
 }
-.product-actions button#demo-tab, .product-actions button#download-tab {
+.product-actions button#demo-tab {
   background: var(--gray-600);
+}
+.product-actions button#download-tab {
+  background: var(--blue);
 }
 
 @keyframes popUp1 {
