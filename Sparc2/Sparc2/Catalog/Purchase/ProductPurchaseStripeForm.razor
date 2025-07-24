@@ -1,17 +1,19 @@
 ﻿@implements IDisposable
 
-<div id="payment-element">
-    <p style="font-size: 16px">Loading payment form...</p>
-</div>
+<form id="payment-form" @onsubmit="Pay" @onsubmit:preventDefault="true">
+    <div id="@Id" @ref=PaymentForm>
+        <p style="font-size: 16px">Loading payment form...</p>
+    </div>
 
-@if (Intent != null)
-{
-    <button id="submit-button" type="submit" class="btn primary-btn">
-        Pay @Intent.FormattedAmount
-    </button>
-}
+    @if (Intent != null)
+    {
+        <button id="submit-button" type="submit" class="btn primary-btn">
+            Pay @Intent.FormattedAmount
+        </button>
+    }
 
-<div id="error-message" style="color:red; margin-top: 10px;"></div>
+    <div id="error-message" style="color:red; margin-top: 10px;"></div>
+</form>
 
 @inject IConfiguration Configuration
 @inject Sparc.Engine.SparcEvents Events
@@ -19,16 +21,16 @@
     [Parameter] public required Product Product { get; set; } = default!;
     SparcOrder Order = new();
     SparcPaymentIntent? Intent;
-
-    private string? _baseUrl;
-
-    private DotNetObjectReference<ProductPurchaseStripeForm>? dotNetHelper;
+    Lazy<Task<IJSObjectReference>> Auth = null!;
+    ElementReference PaymentForm;
+    string Id => $"payment-form-{Guid.NewGuid()}";
+    record PaymentResult(bool Succeeded, string? ErrorMessage = null);
 
     protected override async Task OnInitializedAsync()
     {
-        Order.ProductId = Product.StripeProductId!;
-        _baseUrl = Nav.BaseUri;
-        dotNetHelper = DotNetObjectReference.Create(this);
+        Auth = Js.Import("./Catalog/Purchase/ProductPurchaseStripeForm.razor.js");
+        Order.ProductId = Product.Id;
+        Order.StripeProductId = Product.StripeProductId!;
         Events.CurrencyChanged += OnCurrencyChanged;
         await InitiateStripePayment();
     }
@@ -48,20 +50,24 @@
 
             StateHasChanged();
 
-            await Js.InvokeVoidAsync(
-              "stripeIntegration.initPaymentForm",
-              Intent.ClientSecret,
-              Intent.PublishableKey,
-              dotNetHelper,
-              _baseUrl
-            );
-            StateHasChanged();
+            var stripe = await Auth.Value;
+            await stripe.InvokeVoidAsync("initialize", PaymentForm, Intent);
         }
         catch (Exception ex)
         {
             Console.Error.WriteLine($"Error creating PaymentIntent: {ex.Message}");
-            StateHasChanged();
         }
+    }
+
+    public async Task Pay()
+    {
+        var dotNetHelper = DotNetObjectReference.Create(this);
+        
+        var returnUrl = $"{Nav.Uri}?paymentIntentId={Intent!.PaymentIntentId}";
+        var stripe = await Auth.Value;
+        var result = await stripe.InvokeAsync<PaymentResult>("pay", returnUrl);
+        if (result.Succeeded)
+            Nav.NavigateTo(returnUrl, forceLoad: true);
     }
 
     [JSInvokable]

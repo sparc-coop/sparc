@@ -1,50 +1,41 @@
 ﻿@page "/catalog/{ProductId}"
+@using Sparc.Engine.Aura
 @layout CatalogLayout
 
-<article class="product-page @(showPurchaseTab ? "left-only" : "")">
+<article class="product-page @(ActiveTab != null ? "left-only" : "")">
     <div class="page-container">
         <div class="left">
             <div class="left-container">
-                @if (ActiveProduct != null && showPurchaseTab == false)
+                @if (ActiveProduct != null)
                 {
-                    <div class="spacer mobile-only"></div>
-                    @if (!ActiveProduct.Images.Any())
+                    switch (ActiveTab)
                     {
-                        <figure id="img-1" class="product-img span-1"></figure>
-                        <figure id="img-2" class="product-img span-1"></figure>
-                        <div class="img-container span-2">
-                            <figure id="img-3" class="product-img"></figure>
-                            <figure id="img-4" class="product-img"></figure>
-                        </div>
-                        <figure id="img-5" class="product-img img-5 span-1"></figure>
-
-                    } 
-                    else
-                    {
-                        var i = 1;
-                        foreach (var file in ActiveProduct.Images)
-                        {
-                            <figure id="img-@i"class="product-img span-1">
-                                <img src="@file" alt="@ActiveProduct.Title Product Image @i++" />
-                            </figure>
-                        }
+                        case "Purchase":
+                            <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
+                            ;
+                            break;
+                        case "Download":
+                            <Sparc2.Catalog.ProductKey />
+                            break;
+                        case "Demo":
+                        case "Help":
+                        case null:
+                            <Sparc2.Catalog.ProductImages Product="ActiveProduct" />
+                            break;
                     }
-                } 
-                else
-                {
-                    <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
                 }
             </div>
         </div>
-        <div class="right @((showFullDescription && !showPurchaseTab) ? "fullscreen" : "")">
+        <div class="right @((showFullDescription && ActiveTab == null) ? "fullscreen" : "")">
             <div class="right-container">
                 <div class="right-header">
-                    <button @onclick=@ProductPageNav><ArrowLeftIcon /></button>
+                    <button @onclick=@GoBack><ArrowLeftIcon /></button>
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" OnClickShowMore=ToggleFullDescription OnClickHelp =ToggleHelp OnClickPurchase=TogglePurchaseTab OnClickDownload=ToggleDownload OnClickSurvey=ToggleSurvey OnClickTryDemo=ToggleDemo />
-                } else
+                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" User="User" OnTabChanged="ChangeTab" />
+                } 
+                else
                 {
                     <div class="product-info">
                         <header>
@@ -58,39 +49,43 @@
     </div>
 </article>
 
-@inject BlossomApi Api 
+@inject BlossomApi Api
+@inject ISparcAura Aura
 @code {
     [Parameter] public required string ProductId { get; set; }
+    [SupplyParameterFromQuery(Name = "payment_intent_client_secret")] public string? PaymentIntentClientSecret { get; set; }
+    [SupplyParameterFromQuery(Name = "paymentIntentId")] public string? PaymentIntentId { get; set; }
 
     Sparc.Blossom.Api.Product? ActiveProduct;
+    BlossomUser User = null!; 
     bool showFullDescription;
-    bool showPurchaseTab;
+    string? ActiveTab;
 
     protected override async Task OnInitializedAsync()
     {
         ActiveProduct = await Api.Products.Get(ProductId);
+        User = await Aura.UserInfo();
+        // if (PaymentIntentClientSecret != null)
+        //     ToggleDownload();
+
     }
 
-    void ProductPageNav()
+    void ChangeTab(string? tab)
     {
-        if (showPurchaseTab)
+        ActiveTab = tab;
+        showFullDescription = false;
+    }
+
+    void GoBack()
+    {
+        if (ActiveTab != null)
         {
-            showPurchaseTab = false;
+            ActiveTab = null;
         }
         else
         {
-            Console.WriteLine("go back");
             var url = "/catalog";
-            //var obj = new { ProductId = ActiveProduct?.Id };
             Nav.NavigateTo(url);
-            //Js.InvokeVoidAsync("goBack");
-            //Js.InvokeVoidAsync("replaceURL", url);
-            //var url = "/catalog" + (ActiveProduct != null ? $"/#{ActiveProduct.Id}" : "");
-            // Js.InvokeVoidAsync("replaceURL", obj, url);
-            // Nav.NavigateTo(url, new NavigationOptions()
-            // {
-            //     HistoryEntryState = ActiveProduct?.Id
-            // });
         }
     }
 
@@ -104,35 +99,5 @@
         {
             showFullDescription = false;
         }
-    }
-
-    void ToggleHelp()
-    {
-        Console.WriteLine("Help toggled for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
-        showPurchaseTab = false;
-    }
-
-    void TogglePurchaseTab()
-    {
-        Console.WriteLine("Toggling purchase tab for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
-        showPurchaseTab = !showPurchaseTab;
-    }
-
-    void ToggleDownload()
-    {
-        Console.WriteLine("Toggling download for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
-        showPurchaseTab = false;
-    }
-
-    void ToggleSurvey()
-    {
-        Console.WriteLine("Toggling survey for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
-        showPurchaseTab = false;
-    }
-
-    void ToggleDemo()
-    {
-        Console.WriteLine("Toggling demo for product: " + (ActiveProduct?.Title ?? "Unknown Product"));
-        showPurchaseTab = false;
     }
 }

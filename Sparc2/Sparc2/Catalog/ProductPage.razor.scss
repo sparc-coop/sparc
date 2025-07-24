@@ -26,7 +26,7 @@
             width: 100%;
         }
 
-        .product-img {
+        ::deep .product-img {
             width: 100%;
             height: auto;
             background: var(--yellow-200);
@@ -49,7 +49,7 @@
             flex-direction: row;
             gap: 16px;
 
-            .product-img {
+            ::deep .product-img {
                 aspect-ratio: 1 / 1;
                 width: 50%;
             }
@@ -280,13 +280,13 @@
                 .span-2 {
                     flex-direction: column;
 
-                    .product-img {
+                    ::deep .product-img {
                         width: 100%;
                     }
                 }
             }
 
-            .spacer {
+            ::deep .spacer {
                 display: block;
                 width: 100%;
                 padding-bottom: 363px;

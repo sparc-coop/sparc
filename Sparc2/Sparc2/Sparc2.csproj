@@ -16,11 +16,10 @@
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom.ApiGenerator\Sparc.Blossom.ApiGenerator.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj" />
 		<ProjectReference Include="..\..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
-		<ProjectReference Include="..\..\..\sparcengine\Sparc.Engine.Client\Sparc.Engine.Client.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Collections.Immutable" Version="9.0.6" />
+		<PackageReference Include="System.Collections.Immutable" Version="9.0.7" />
 	</ItemGroup>
 
 </Project>

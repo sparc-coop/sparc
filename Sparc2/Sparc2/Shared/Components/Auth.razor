@@ -99,7 +99,7 @@
     {
         if (firstRender)
         {
-            await JS.InvokeVoidAsync("initSparcAuthenticator", ApiKey);
+            await JS.InvokeVoidAsync("initialize", ApiKey);
             await FetchUserInfo();
         }
     }

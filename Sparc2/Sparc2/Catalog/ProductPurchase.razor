@@ -5,30 +5,27 @@
 @using System.Globalization
 
 <div class="product-purchase">
-    <form id="payment-form" @onsubmit="SubmitUserBilling" @onsubmit:preventDefault="true">
-        <section class="license-section">
-            <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
+    <section class="license-section">
+        <PurchaseLicenseType @bind-SelectedLicense="SelectedLicense" @bind-GiftEmail="GiftEmail" />
+    </section>
+    @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
+    {
+        <section class="billing-section">
+            <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
         </section>
-        @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
-        {
-            <section class="billing-section">
-                <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
-            </section>
-        }
-        <section class="payment-section">
-            <h5>Payment Information</h5>
-            <div class="form-container">
-                <CurrencySelector />
-                <ProductPurchaseStripeForm Product="Product"></ProductPurchaseStripeForm>
-            </div>
-        </section>
-    </form>
+    }
+    <section class="payment-section">
+        <h5>Payment Information</h5>
+        <div class="form-container">
+            <CurrencySelector />
+            <ProductPurchaseStripeForm Product="Product"></ProductPurchaseStripeForm>
+        </div>
+    </section>
 </div>
 
 @inject ISparcAura Aura
 @code {
     [Parameter] public required Product Product { get; set; }
-
     BlossomUser? CurrentUser;
 
     string SelectedLicense = "personal";
@@ -47,23 +44,5 @@
     {
         isEmailVerified = verified;
         StateHasChanged();
-    }
-
-    public async Task SubmitUserBilling()
-    {
-        var result = await Js.InvokeAsync<PaymentResult>(
-            "stripeIntegration.confirmPayment"
-        );
-
-        if (result.Succeeded)
-        {
-            Nav.NavigateTo(Nav.Uri, forceLoad: false);
-        }
-    }
-    public class PaymentResult
-    {
-        public bool Succeeded { get; set; }
-        public string? Message { get; set; }
-        public string? Status { get; set; }
     }
 }

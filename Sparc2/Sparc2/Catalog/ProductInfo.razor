@@ -19,6 +19,10 @@
                     var color = TagColor(tag.Type);
                     <div class="tag product-tag @color">@tag.Name</div>
                 }
+                @if (User?.HasProduct(ActiveProduct.Id) == true)
+                {
+                    <div class="tag product-tag @TagColor("owned")">You Own This!</div>
+                }
             </div>
         </header>
 
@@ -44,7 +48,7 @@
         @if (PageType == "Product")
         {
             <footer>
-                <ProductActions ActiveProduct=ActiveProduct Price=Price OnClickHelp=ClickHelp OnClickPurchase=ClickPurchase OnClickDownload=ClickDownload OnClickSurvey=ClickSurvey OnClickTryDemo=ClickTryDemo />
+                <ProductActions ActiveProduct=ActiveProduct Price=Price User=User OnTabChanged=ChangeTab />
             </footer>
         }
     </div>
@@ -63,12 +67,8 @@
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string PageType { get; set; } = "Product";
-    [Parameter] public EventCallback<bool> OnClickShowMore { get; set; }
-    [Parameter] public EventCallback OnClickHelp { get; set; }
-    [Parameter] public EventCallback OnClickPurchase { get; set; }
-    [Parameter] public EventCallback OnClickDownload { get; set; }
-    [Parameter] public EventCallback OnClickSurvey { get; set; }
-    [Parameter] public EventCallback OnClickTryDemo { get; set; }
+    [Parameter] public BlossomUser User { get; set; }
+    [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     Sparc.Engine.GetProductResponse? Price;
 
     bool showCredits;
@@ -79,6 +79,12 @@
     {
         await UpdatePrice();
         Events.CurrencyChanged += UpdatePrice;
+    }
+
+    async Task ChangeTab(string? tab)
+    {
+        if (OnTabChanged.HasDelegate)
+            await OnTabChanged.InvokeAsync(tab);
     }
 
     async Task UpdatePrice(SparcCurrency? currency = null)
@@ -135,40 +141,9 @@
     void ToggleFullDescription(bool showMore)
     {
         if (showMore)
-        {
             showFullDescription = true;
-            OnClickShowMore.InvokeAsync(true);
-        }
         else
-        {
             showFullDescription = false;
-            OnClickShowMore.InvokeAsync(false);
-        }
-    }
-
-    void ClickHelp()
-    {
-        OnClickHelp.InvokeAsync();
-    }
-
-    void ClickPurchase()
-    {
-        OnClickPurchase.InvokeAsync();
-    }
-
-    void ClickDownload()
-    {
-        OnClickDownload.InvokeAsync();
-    }
-
-    void ClickSurvey()
-    {
-        OnClickSurvey.InvokeAsync();
-    }
-
-    void ClickTryDemo()
-    {
-        OnClickTryDemo.InvokeAsync();
     }
 
     public void Dispose()
