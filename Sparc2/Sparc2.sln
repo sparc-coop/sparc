@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tovik", "..\..\sparcengine\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Engine.Client", "..\..\sparcengine\Sparc.Engine.Client\Sparc.Engine.Client.csproj", "{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Chat.Example", "..\..\blossom\Sparc.Blossom.Chat.Example\Sparc.Blossom.Chat.Example.csproj", "{759BE696-4631-250A-801B-1FFAD5D2082D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F367ADE-69B8-4A1C-AF6B-FE490AB31CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{759BE696-4631-250A-801B-1FFAD5D2082D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{759BE696-4631-250A-801B-1FFAD5D2082D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{759BE696-4631-250A-801B-1FFAD5D2082D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{759BE696-4631-250A-801B-1FFAD5D2082D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{2AFC22D0-F874-302E-8D6A-0882D0C5F2B4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{19C5F091-1947-2959-F0B1-CF6D54BA454D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{B83830BD-25BA-8391-B00F-9E91064B9D49} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{759BE696-4631-250A-801B-1FFAD5D2082D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CBE37A5-99D0-4C05-A3CD-36A058394C96}
