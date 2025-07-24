@@ -57,7 +57,7 @@
             case "download-tab":
                 var totp = await Aura.GetSparcCode();
                 if (totp != null)
-                    Nav.NavigateTo($"{ActiveProduct.Url}?_totp={totp.Code}");
+                    Nav.NavigateTo($"{ActiveProduct.Url}?_auth=totp:{totp.Code}");
                 break;
         }
     }
