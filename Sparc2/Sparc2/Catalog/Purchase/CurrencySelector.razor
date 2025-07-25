@@ -2,19 +2,25 @@
 @using Sparc.Engine
 @using Sparc.Engine.Aura
 
-<div class="form-group">
-    <label>
-        <span>Currency *</span>
-        <select value="@Avatar.Currency?.Id" @onchange="OnCurrencyChanged" translate="no">
-            <option value="">Choose a currency...</option>
-            @foreach (var cur in Currencies.OrderBy(x => x.NativeName))
-            {
-                <option value="@cur.Id" selected="@(Avatar.Currency?.Id == cur.Id ? "selected" : null)">
-                    @cur.NativeName (@cur.Symbol@(cur.NativeName == cur.Name ? "" : (" " + cur.Name)))
-                </option>
-            }
-        </select>
-    </label>
+<div class="currency-selector-container">
+    <header>
+        <h4>Currency</h4>
+    </header>
+
+    <div class="currency-selector">
+        @if (Avatar != null)
+        {
+            <select value="@Avatar.Currency?.Id" @onchange="OnCurrencyChanged" translate="no">
+                <option value="">Choose a currency...</option>
+                @foreach (var cur in Currencies.OrderBy(x => x.NativeName))
+                {
+                    <option value="@cur.Id" selected="@(Avatar.Currency?.Id == cur.Id ? "selected" : null)">
+                        @cur.NativeName (@cur.Symbol@(cur.NativeName == cur.Name ? "" : (" " + cur.Name)))
+                    </option>
+                }
+            </select>
+        }
+    </div>
 </div>
 
 @inject SparcEvents Events

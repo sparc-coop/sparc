@@ -1,49 +1,24 @@
-﻿.form-group label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.form-group label span {
-  font-size: 1.2rem;
-  font-style: normal;
+﻿header h4 {
+  font-size: 1.6rem;
   font-weight: 500;
-  line-height: 140%; /* 16.8px */
-  letter-spacing: -0.12px;
+  line-height: 140%;
 }
-.form-group label input, .form-group label select, .form-group label button {
-  display: flex;
-  padding: 16px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-  border-radius: 26px;
+
+.currency-selector {
+  border-radius: 32px;
   border: 1px solid var(--purple-100);
-  opacity: 0.5;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  width: 100%;
 }
-.form-group label select {
-  width: 50%;
+.currency-selector ::deep select {
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  background: var(--yellow-50);
 }
-.form-group.amount {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.form-group .amount-grid button {
-  padding: 16px;
-  margin-right: 5px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-  border-radius: 26px;
-  border: 1px solid var(--purple-100);
-  opacity: 1;
-}
-.form-group .amount-grid button:hover {
-  background: var(--gray-200);
-}
-.form-group .amount-grid button.selected {
-  background-color: white;
-  border-color: darkblue;
+.currency-selector ::deep select:focus {
+  outline: none;
+  border-color: var(--purple-300);
 }
