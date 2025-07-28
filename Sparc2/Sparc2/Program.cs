@@ -17,7 +17,7 @@ using var scope = app.Services.CreateScope();
 var ideaRepository = scope.ServiceProvider.GetRequiredService<IRepository<ProjectIdea>>();
 await ideaRepository.AddAsync(ProjectIdea.Generate(20));
 
-var tovik = new Product("Tovik", "Early Access")
+var tovik = new Product(title: "Tovik", "Early Access")
 {
     Id = "Tovik",
     Title = "Tovik",
@@ -41,7 +41,7 @@ var tovik = new Product("Tovik", "Early Access")
         ],
     Url = builder.Configuration["Tovik"]!,
     Price = 20,
-    StripeProductId = "prod_SW5yY8O8KprzFu",
+    StripeProductId = builder.Configuration["Tovik"]!.Contains("localhost") ? "prod_SW5yY8O8KprzFu" : "prod_SlQhkHsXb7ZyXb",
     Tags = [
         new("early-access", "Early Access", "development"),
         new("translation", "Translation", "category"),

@@ -13,7 +13,7 @@
         @if (Price != null)
         {
             <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
-                <h6>@(OwnsProduct ? "Purchase Again" : "Purchase")</h6>
+                <h6>@(HasPurchasedProduct ? "Purchase Again" : "Purchase")</h6>
                 <div>
                     <span>@Price.FormattedPrice</span>
                     <aside>one-time purchase</aside>
@@ -31,6 +31,7 @@
     [Parameter] public BlossomUser? User { get; set; }
     [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     bool OwnsProduct => User?.HasProduct(ActiveProduct.Id) == true;
+    bool HasPurchasedProduct => User?.Product(ActiveProduct.Id)?.OrderIds.Any() == true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
