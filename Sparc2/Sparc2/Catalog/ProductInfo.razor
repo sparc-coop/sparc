@@ -28,7 +28,7 @@
                 @if (User?.HasProduct(ActiveProduct.Id) == true)
                 {
                     <div class="tag product-tag @TagColor("owned")">
-                        @(User.Product(ActiveProduct.Id)!.OrderIds.Any() ? "You Own This!" : "Free Trial In Progress"))
+                        @(User.Product(ActiveProduct.Id)!.OrderIds.Any() ? "You Own This!" : "Free Trial In Progress")
                     </div>
                 }
             </div>

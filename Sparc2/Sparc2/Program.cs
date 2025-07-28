@@ -61,9 +61,9 @@ var tovik = new Product("Tovik", "Early Access")
     "2. Let Tovik do the work. Your site’s text is translated instantly and accurately—-without breaking " +
     "your design or workflow.\r\n" +
     "\r\n" +
-    "## What I'm Purchasing:\r\n" +
+    "## What I'm purchasing:\r\n" +
     "\r\n" +
-    "This is a one-time purchase of Tovik, which includes an initial word pack of 100,000 words. You will never be charged a subscription or recurring fee to use Tovik." +
+    "This is a one-time purchase of Tovik, which includes an initial word pack of 100,000 words for you to use across as many websites as you like. You will never be charged a subscription or recurring fee to use Tovik." +
     "\r\n" + 
     "\r\n" +
     " If you ever need more words for your websites, just come back here and buy another word pack." +
