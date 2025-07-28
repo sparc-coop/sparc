@@ -81,7 +81,7 @@
   line-height: 100%;
 }
 .product-actions button#demo-tab {
-  background: var(--gray-600);
+  background: var(--blue);
 }
 .product-actions button#download-tab {
   background: var(--blue);

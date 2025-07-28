@@ -20,6 +20,8 @@ await ideaRepository.AddAsync(ProjectIdea.Generate(20));
 var tovik = new Product("Tovik", "Early Access")
 {
     Id = "Tovik",
+    Title = "Tovik",
+    Subtitle = "(100,000 Word Pack)",
     Credits = [
         new("Christine Antonio", "User Experience Implementation"),
         new("Yoojung Song", "User Experience Design"),
@@ -58,6 +60,13 @@ var tovik = new Product("Tovik", "Early Access")
     "1. Install Tovik once (takes just a few minutes).\r\n" +
     "2. Let Tovik do the work. Your site’s text is translated instantly and accurately—-without breaking " +
     "your design or workflow.\r\n" +
+    "\r\n" +
+    "## What I'm Purchasing:\r\n" +
+    "\r\n" +
+    "This is a one-time purchase of Tovik, which includes an initial word pack of 100,000 words. You will never be charged a subscription or recurring fee to use Tovik." +
+    "\r\n" + 
+    "\r\n" +
+    " If you ever need more words for your websites, just come back here and buy another word pack." +
     "\r\n" +
     "## Why Choose Tovik?\r\n" +
     "- Works with your existing site\r\n" +

@@ -30,6 +30,9 @@
   color: var(--purple-700);
   cursor: pointer;
 }
+.product-info header h2 aside {
+  font-size: 2.5rem;
+}
 .product-info header .price {
   width: fit-content;
   font-family: "elza-text", sans-serif;
@@ -118,10 +121,10 @@
 }
 .product-info .credits button span.rotate {
   color: var(--purple-500);
-  animation: rotateClockwise 1.5s ease-in-out;
+  animation: rotateClockwise 1.5s ease-in-out forwards;
 }
 .product-info .credits button span.rotateBack {
-  animation: rotateCounterClockwise 1.5s ease-in-out;
+  animation: rotateCounterClockwise 1.5s ease-in-out forwards;
 }
 .product-info .credits div:last-child {
   height: 0;
@@ -339,13 +342,13 @@
     color: var(--purple-800);
   }
   100% {
-    transform: rotate(180deg);
+    transform: rotate(45deg);
     color: var(--purple-500);
   }
 }
 @keyframes rotateCounterClockwise {
   0% {
-    transform: rotate(180deg);
+    transform: rotate(45deg);
     color: var(--purple-500);
   }
   100% {

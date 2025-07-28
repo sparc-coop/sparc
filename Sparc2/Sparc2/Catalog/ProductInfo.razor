@@ -5,7 +5,13 @@
     <div class="info-container">
         <header>
             <div>
-                <h2 @onclick='() => Nav.NavigateTo($"/store/{ActiveProduct.Id}")'>@ActiveProduct.Title</h2>
+                <h2 @onclick='() => Nav.NavigateTo($"/store/{ActiveProduct.Id}")'>
+                    @ActiveProduct.Title
+                    @if (ActiveProduct.Subtitle != null)
+                    {
+                        <aside>@ActiveProduct.Subtitle</aside>
+                    }
+                </h2>
                 @if (Price != null)
                 {
                     <div class="price">
@@ -21,7 +27,9 @@
                 }
                 @if (User?.HasProduct(ActiveProduct.Id) == true)
                 {
-                    <div class="tag product-tag @TagColor("owned")">You Own This!</div>
+                    <div class="tag product-tag @TagColor("owned")">
+                        @(User.Product(ActiveProduct.Id)!.OrderIds.Any() ? "You Own This!" : "Free Trial In Progress"))
+                    </div>
                 }
             </div>
         </header>
@@ -71,8 +79,8 @@
     [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     Sparc.Engine.GetProductResponse? Price;
 
-    bool showCredits;
-    string creditsClass = "";
+    bool showCredits = true;
+    string creditsClass = "rotate";
     bool showFullDescription;
 
     protected override void OnInitialized()

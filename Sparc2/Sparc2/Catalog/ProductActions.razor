@@ -4,11 +4,11 @@
     <div class="tabs">
         @if (OwnsProduct)
         {
-            <button id="download-tab" class="product-tab"><h6>Go to @ActiveProduct.Title &rarr;</h6></button>
+            <button id="download-tab" class="product-tab"><h6>Go to @ActiveProduct.Id &rarr;</h6></button>
         }
         else
         {
-            <button id="demo-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try It Out</h6></button>
+            <button id="demo-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try @ActiveProduct.Id &rarr;</h6></button>
         }
         @if (Price != null)
         {

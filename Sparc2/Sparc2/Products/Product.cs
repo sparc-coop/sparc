@@ -10,6 +10,7 @@ public class Product(string title, string status)
 {
     [Required(ErrorMessage = "Title is required")]
     public string Title { get; set; } = title;
+    public string? Subtitle { get; set; }
     public string? Description { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public string? StripeProductId { get; set; }

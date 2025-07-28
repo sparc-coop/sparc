@@ -32,6 +32,10 @@
             line-height: 110%; /* 55.572px */
             color: var(--purple-700);
             cursor: pointer;
+
+            aside {
+                font-size: 2.5rem;
+            }
         }
 
         .price {
@@ -138,11 +142,11 @@
 
                 &.rotate {
                     color: var(--purple-500);
-                    animation: rotateClockwise 1.5s ease-in-out;
+                    animation: rotateClockwise 1.5s ease-in-out forwards;
                 }
 
                 &.rotateBack {
-                    animation: rotateCounterClockwise 1.5s ease-in-out;
+                    animation: rotateCounterClockwise 1.5s ease-in-out forwards;
                 }
             }
         }
@@ -435,14 +439,14 @@
     }
 
     100% {
-        transform: rotate(180deg);
+        transform: rotate(45deg);
         color: var(--purple-500);
     }
 }
 
 @keyframes rotateCounterClockwise {
     0% {
-        transform: rotate(180deg);
+        transform: rotate(45deg);
         color: var(--purple-500);
     }
 
