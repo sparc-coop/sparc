@@ -1,4 +1,4 @@
-﻿@page "/catalog/{ProductId}"
+﻿@page "/store/{ProductId}"
 @using Sparc.Engine.Aura
 @layout CatalogLayout
 
@@ -84,7 +84,7 @@
         }
         else
         {
-            var url = "/catalog";
+            var url = "/store";
             Nav.NavigateTo(url);
         }
     }

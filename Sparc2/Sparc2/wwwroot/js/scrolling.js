@@ -61,7 +61,7 @@ function initScroll() {
 }
 
 function navigateToCatalog() {
-    window.location.href = "/catalog";
+    window.location.href = "/store";
 }
 
 function mouseClickHandler() {

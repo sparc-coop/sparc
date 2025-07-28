@@ -1,4 +1,4 @@
-﻿@page "/catalog"
+﻿@page "/store"
 @layout CatalogLayout
 
 <article id="catalog" class="catalog">
@@ -38,7 +38,7 @@
     {
         var allProducts = await Api.Products.GetAllProducts();
         if (allProducts.Count() == 1)
-            Nav.NavigateTo($"/catalog/{allProducts.First().Id}");
+            Nav.NavigateTo($"/store/{allProducts.First().Id}");
         else
         {
             Products = allProducts;
@@ -101,7 +101,7 @@
             StateHasChanged();
         }
 
-        Nav.NavigateTo($"/catalog/{id}");
+        Nav.NavigateTo($"/store/{id}");
     }
 
     void ViewProductInfo(string id)

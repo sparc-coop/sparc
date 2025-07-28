@@ -5,7 +5,7 @@
     <div class="info-container">
         <header>
             <div>
-                <h2 @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'>@ActiveProduct.Title</h2>
+                <h2 @onclick='() => Nav.NavigateTo($"/store/{ActiveProduct.Id}")'>@ActiveProduct.Title</h2>
                 @if (Price != null)
                 {
                     <div class="price">
@@ -54,7 +54,7 @@
     </div>
 
     @* <div class="gradient-overlay mobile-only"></div> *@
-    <button class="view-btn mobile-only" @onclick='() => Nav.NavigateTo($"/catalog/{ActiveProduct.Id}")'><ArrowLeftIcon /></button>
+    <button class="view-btn mobile-only" @onclick='() => Nav.NavigateTo($"/store/{ActiveProduct.Id}")'><ArrowLeftIcon /></button>
     <div class="show-more mobile-only">
         <button class="more-btn" @onclick='() => ToggleFullDescription(true)'>Show More</button>
     </div>
