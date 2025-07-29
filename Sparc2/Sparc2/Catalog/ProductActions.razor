@@ -1,18 +1,24 @@
 ﻿@using Sparc.Engine
 @using Sparc.Engine.Aura
+
 <div class="product-actions">
     <div class="tabs">
         @if (OwnsProduct)
         {
-            <button id="download-tab" class="product-tab"><h6>Go to @ActiveProduct.Id &rarr;</h6></button>
+            <button id="download-tab" class="product-tab @(ActiveTab == "Download" ? "active" : "")" @onclick="@(() => OnClickTab("Download"))">
+                <h6>Go to @ActiveProduct.Id &rarr;</h6>
+            </button>
         }
         else
         {
-            <button id="demo-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Try @ActiveProduct.Id &rarr;</h6></button>
+            <button id="demo-tab" class="product-tab @(ActiveTab == "Download" ? "active" : "")" @onclick="@(() => OnClickTab("Download"))">
+                <h6>Try @ActiveProduct.Id &rarr;</h6>
+            </button>
         }
+
         @if (Price != null)
         {
-            <button id="purchase-tab" class="product-tab" data-id=@ActiveProduct.Id>
+            <button id="purchase-tab" class="product-tab @(ActiveTab == "Purchase" ? "active" : "")" @onclick="@(() => OnClickTab("Purchase"))">
                 <h6>@(HasPurchasedProduct ? "Purchase Again" : "Purchase")</h6>
                 <div>
                     <span>@Price.FormattedPrice</span>
@@ -20,42 +26,55 @@
                 </div>
             </button>
         }
-        <button id="help-tab" class="product-tab" data-id=@ActiveProduct.Id><h6>Need Help ?</h6></button>
+
+        <button id="help-tab" class="product-tab@(ActiveTab == "Help" ? "active" : "")" @onclick="@(() => OnClickTab("Help"))">
+            <h6>Need Help ?</h6>
+        </button>
     </div>
 </div>
+
+@if (ActiveTab != null)
+{
+    <div class="left-sidebar">
+        <header>
+            @ActiveTab
+            <button @onclick=@(() => OnClickTab(ActiveTab))>
+                <XIcon />
+            </button>
+        </header>
+        <div>
+            @switch (ActiveTab)
+            {
+                case "Purchase":
+                    <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
+                    ;
+                    break;
+                case "Download":
+                    <Sparc2.Catalog.ProductKey />
+                    break;
+                case "Demo":
+                case "Help":
+                    break;
+            }
+        </div>
+    </div>
+}
 
 @inject ISparcAura Aura
 @code {
     [Parameter] public Product ActiveProduct { get; set; } = new Product();
     [Parameter] public GetProductResponse? Price { get; set; }
     [Parameter] public BlossomUser? User { get; set; }
-    [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     bool OwnsProduct => User?.HasProduct(ActiveProduct.Id) == true;
     bool HasPurchasedProduct => User?.Product(ActiveProduct.Id)?.OrderIds.Any() == true;
+    string? ActiveTab = null;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await Js.InvokeVoidAsync("initProductActions", DotNetObjectReference.Create(this));
-        }
-    }
-
-    [JSInvokable("OnClickTab")]
     public async Task OnClickTab(string tab)
     {
+        ActiveTab = (ActiveTab == tab ? null : tab);
         switch (tab)
         {
-            case "help-tab":
-                await OnTabChanged.InvokeAsync("Help");
-                break;
-            case "purchase-tab":
-                await OnTabChanged.InvokeAsync("Purchase");
-                break;
-            case "demo-tab":
-                await OnTabChanged.InvokeAsync("Demo");
-                break;
-            case "download-tab":
+            case "Download":
                 var totp = await Aura.GetSparcCode();
                 if (totp != null)
                     Nav.NavigateTo($"{ActiveProduct.Url}?_auth=totp:{totp.Code}");

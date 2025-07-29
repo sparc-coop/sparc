@@ -135,7 +135,7 @@
   font-family: "Fjalla One";
   font-weight: 600;
   margin: 36px 0 24px;
-  color: var(--Color-Purple-900, #1A0C32);
+  color: var(--purple-900);
 }
 .product-page .description h1 {
   font-size: 36px;
@@ -152,7 +152,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 22.4px */
-  color: var(--Color-Purple-900, #1A0C32);
+  color: var(--purple-900);
 }
 .product-page footer h4, .product-page footer p, .product-page footer span {
   font-family: "Fjalla One";
@@ -171,117 +171,23 @@
 @media only screen and (max-width: 766px) {
   .product-page {
     grid-column: 1/span 4;
-  }
-  .product-page.left-only {
-    height: calc(100vh - 64px);
-  }
-  .product-page.left-only .page-container {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: start;
-    align-items: center;
-    gap: 32px;
-  }
-  .product-page.left-only .left {
-    height: 100%;
-    position: static;
-  }
-  .product-page.left-only .right {
-    height: fit-content;
-  }
-  .product-page.left-only .right ::deep .product-info {
-    height: fit-content !important;
-  }
-  .product-page.left-only .right ::deep .product-info section, .product-page.left-only .right ::deep .product-info footer {
-    display: none;
+    overflow-y: auto;
   }
   .product-page .page-container {
-    height: 100%;
+    flex-direction: column-reverse;
+    padding-bottom: 150px;
   }
   .product-page .page-container > * {
     width: 100%;
+    box-sizing: border-box;
+    height: auto;
   }
-  .product-page .left {
-    display: block;
-    width: 100%;
-    height: calc(100vh - 80px);
-    padding: 0;
-    position: fixed;
-    top: 64px;
-    overflow-y: hidden;
-  }
-  .product-page .left-container {
-    width: calc(100% - 32px);
-    height: 100%;
-    padding: 16px;
-    padding-top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 16px;
-    overflow-y: auto;
-  }
-  .product-page .left-container .span-2 {
-    flex-direction: column;
-  }
-  .product-page .left-container .span-2 ::deep .product-img {
-    width: 100%;
-  }
-  .product-page .left ::deep .spacer {
-    display: block;
-    width: 100%;
-    padding-bottom: 363px;
-  }
-  .product-page .right {
-    width: calc(100% - 32px);
-    height: 363px;
-    background: var(--yellow-50);
-    transition: height 0.3s ease-out;
+  .product-page .left-sidebar {
+    max-width: 90vw;
   }
   .product-page .right-container {
     width: 100%;
-    height: 100%;
+    height: auto;
     position: static;
-  }
-  .product-page .right.fullscreen {
-    height: calc(100vh - 96px);
-    position: fixed;
-    top: 64px;
-    overflow-y: auto;
-    background: var(--yellow-50);
-    transition: height 0.5s ease-out;
-  }
-  .product-page .right.fullscreen ::deep .show-less {
-    width: calc(100% - 32px);
-    padding: 24px;
-    padding-top: 40px;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    background: var(--yellow-50);
-  }
-  .product-page .right.fullscreen ::deep .show-less button {
-    padding: 6px 10px;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    color: var(--gray-900);
-    text-align: center;
-    font-family: "Fjalla One";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 110%; /* 15.4px */
-    animation: fadeIn 0.5s ease-in-out;
-    animation-delay: 0.3s;
-  }
-  .product-page .right.fullscreen ::deep .show-less button:hover {
-    color: var(--purple-500);
-  }
-  .product-page .right.fullscreen ::deep .show-less button:active {
-    color: var(--purple-700);
-    border-color: var(--purple-700);
   }
 }

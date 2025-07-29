@@ -1,66 +1,38 @@
 .product-purchase {
-    width: 100%;
     padding: 16px;
 
-    form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-        color: var(--purple-700);
+    h5 {
+        font-size: 2.133rem;
+        font-weight: 500;
+        line-height: 110%;
+    }
 
-        h5 {
-            font-size: 2.133rem;
+    ::deep label {
+        display: block;
+        margin: 16px 0;
+
+        span {
+            color: var(--purple-700);
+            font-size: 1.2rem;
             font-weight: 500;
-            line-height: 110%;
+        }
+    }
+
+    ::deep .currency-selector-container {
+        header h4 {
+            color: var(--purple-700);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
 
-        section {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-
-            .form-container {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-            }
+        .currency-selector {
+            background-color: white;
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-        }
-
-        label {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 100%;
-
-            span {
-                font-size: 1.2rem;
-                font-weight: 500;
-                line-height: 140%;
-                letter-spacing: -0.12px;
-            }
-
-            input {
-                padding: 16px;
-                border-radius: 26px;
-                border: 1px solid var(--purple-100);
-                opacity: 0.5;
-            }
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 100px;
-            width: 256px;
-            font-weight: 500;
+        select {
+            background-color: white;
         }
     }
 

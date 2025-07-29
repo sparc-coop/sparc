@@ -1,59 +1,32 @@
 ﻿.product-purchase {
-  width: 100%;
   padding: 16px;
 }
-.product-purchase form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  color: var(--purple-700);
-}
-.product-purchase form h5 {
+.product-purchase h5 {
   font-size: 2.133rem;
   font-weight: 500;
   line-height: 110%;
 }
-.product-purchase form section {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.product-purchase ::deep label {
+  display: block;
+  margin: 16px 0;
 }
-.product-purchase form section .form-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.product-purchase form .form-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-.product-purchase form label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-.product-purchase form label span {
+.product-purchase ::deep label span {
+  color: var(--purple-700);
   font-size: 1.2rem;
   font-weight: 500;
-  line-height: 140%;
-  letter-spacing: -0.12px;
 }
-.product-purchase form label input {
+.product-purchase ::deep .currency-selector-container header h4 {
+  color: var(--purple-700);
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.product-purchase ::deep .currency-selector-container .currency-selector {
+  background-color: white;
   padding: 16px;
-  border-radius: 26px;
-  border: 1px solid var(--purple-100);
-  opacity: 0.5;
+  margin-bottom: 16px;
 }
-.product-purchase form .btn {
-  padding: 8px 16px;
-  border-radius: 100px;
-  width: 256px;
-  font-weight: 500;
+.product-purchase ::deep .currency-selector-container select {
+  background-color: white;
 }
 @media only screen and (max-width: 766px) {
   .product-purchase {

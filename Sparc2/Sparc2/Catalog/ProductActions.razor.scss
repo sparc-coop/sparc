@@ -32,12 +32,12 @@
         &:nth-child(1) {
             transform: rotate(0deg);
 
-            &.hovered {
+            &:hover {
                 transform: translateY(-32px) rotate(0deg);
                 animation: popUp1 0.2s ease-in-out;
             }
 
-            &.clicked {
+            &.active {
                 transform: translateY(-32px) rotate(0deg);
             }
         }
@@ -45,12 +45,12 @@
         &:nth-child(2) {
             transform: rotate(-3deg);
 
-            &.hovered {
+            &:hover {
                 transform: translateY(-32px) rotate(-3deg);
                 animation: popUp2 0.2s ease-in-out;
             }
 
-            &.clicked {
+            &.active {
                 transform: translateY(-32px) rotate(-3deg);
             }
         }
@@ -58,12 +58,12 @@
         &:nth-child(3) {
             transform: rotate(5deg);
 
-            &.hovered {
+            &:hover {
                 transform: translateY(-32px) rotate(5deg);
                 animation: popUp3 0.2s ease-in-out;
             }
 
-            &.clicked {
+            &.active {
                 transform: translateY(-32px) rotate(5deg);
             }
         }
@@ -103,6 +103,54 @@
         &#download-tab {
             background: var(--blue);
         }
+    }
+}
+
+.left-sidebar {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    bottom: 0;
+    width: 50vw;
+    max-width: 800px;
+    padding: 0;
+    z-index: 10000;
+    background: var(--yellow-100);
+    border-radius: 0 32px 32px 0;
+    overflow-y: auto;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1);
+
+    header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--purple-700);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 32px;
+        background: var(--yellow-200);
+        z-index: 1100;
+    }
+
+    > div {
+        padding: 16px;
+    }
+
+    button {
+        background-color: transparent;
+    }
+}
+
+@media only screen and (max-width: 766px) {
+    .left-sidebar {
+        top: 60px;
+        border-bottom-right-radius: 0;
+        width: 90vw;
+        max-width: 90vw;
     }
 }
 

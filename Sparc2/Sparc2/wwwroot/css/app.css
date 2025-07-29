@@ -257,6 +257,11 @@ ul li {
 .mobile-only {
   display: none;
 }
+@media screen and (max-width: 766px) {
+  .mobile-only {
+    display: block;
+  }
+}
 
 .description {
   font-size: 16px;
@@ -265,7 +270,7 @@ ul li {
   font-family: "Fjalla One";
   font-weight: 600;
   margin: 36px 0 24px;
-  color: var(--Color-Purple-900, #1A0C32);
+  color: var(--purple-900);
 }
 .description h1 {
   font-size: 36px;
@@ -290,7 +295,7 @@ ul li {
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 22.4px */
-  color: var(--Color-Purple-900, #1A0C32);
+  color: var(--purple-900);
   margin-bottom: 24px;
 }
 

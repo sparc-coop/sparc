@@ -1,7 +1,7 @@
 ﻿@using Markdig
 @implements IDisposable
 
-<div class="product-info @PageClass(PageType) @(showFullDescription ? "fullscreen" : "")">
+<div class="product-info @PageClass(PageType)">
     <div class="info-container">
         <header>
             <div>
@@ -34,6 +34,15 @@
             </div>
         </header>
 
+        @if (ActiveProduct.Images.Any())
+        {
+            <div class="mobile-only">
+                <figure class="product-img span-1">
+                    <img src="@ActiveProduct.Images.First()" alt="@ActiveProduct.Title" />
+                </figure>
+            </div>
+        }
+
         @if (ActiveProduct.Description != null)
         {
             <section class="description">
@@ -56,18 +65,9 @@
         @if (PageType == "Product")
         {
             <footer>
-                <ProductActions ActiveProduct=ActiveProduct Price=Price User=User OnTabChanged=ChangeTab />
+                <ProductActions ActiveProduct=ActiveProduct Price=Price User=User />
             </footer>
         }
-    </div>
-
-    @* <div class="gradient-overlay mobile-only"></div> *@
-    <button class="view-btn mobile-only" @onclick='() => Nav.NavigateTo($"/store/{ActiveProduct.Id}")'><ArrowLeftIcon /></button>
-    <div class="show-more mobile-only">
-        <button class="more-btn" @onclick='() => ToggleFullDescription(true)'>Show More</button>
-    </div>
-    <div class="show-less mobile-only">
-        <button class="less-btn" @onclick='() => ToggleFullDescription(false)'>Show Less</button>
     </div>
 </div>
 
@@ -76,7 +76,6 @@
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string PageType { get; set; } = "Product";
     [Parameter] public BlossomUser User { get; set; }
-    [Parameter] public EventCallback<string> OnTabChanged { get; set; }
     Sparc.Engine.GetProductResponse? Price;
 
     bool showCredits = true;
@@ -92,12 +91,6 @@
     {
         if (User != null)
             await UpdatePrice();
-    }
-
-    async Task ChangeTab(string? tab)
-    {
-        if (OnTabChanged.HasDelegate)
-            await OnTabChanged.InvokeAsync(tab);
     }
 
     async Task UpdatePrice(SparcCurrency? currency = null)

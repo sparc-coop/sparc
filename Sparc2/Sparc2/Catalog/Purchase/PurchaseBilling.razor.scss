@@ -3,6 +3,8 @@ h5 {
     font-style: normal;
     font-weight: 500;
     line-height: 110%;
+    color: var(--purple-700);
+    margin-bottom: 32px;
 }
 
 p {
@@ -12,65 +14,16 @@ p {
     line-height: 120%;
 }
 
-.loader {
-    width: fit-content;
-    font-weight: bold;
-    font-family: monospace;
-    font-size: 20px;
-    color: #0000;
-    background: linear-gradient(90deg,#d7c2f0 calc(50% + 0.5ch),#f5b393 0) right/calc(200% + 1ch) 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: l7 2s infinite steps(11);
 
-    &:before {
-        content: "Sending verification code..."
-    }
-}
-
-.loader2 {
-    width: fit-content;
-    font-weight: bold;
-    font-family: monospace;
-    font-size: 20px;
-    color: #0000;
-    background: linear-gradient(90deg,#d7c2f0 calc(50% + 0.5ch),#f5b393 0) right/calc(200% + 1ch) 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: l7 2s infinite steps(11);
-
-    &:before {
-        content: "Verifying code..."
-    }
-}
-
-.form-container {
+input {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-label {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    padding: 16px;
+    margin-top: 8px;
     width: 100%;
-
-    span {
-        font-size: 1.2rem;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 140%;
-        letter-spacing: -0.12px;
-    }
-
-    input {
-        display: flex;
-        padding: 16px;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 10px;
-        border-radius: 26px;
-        border: 1px solid var(--purple-100);        
-    }
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 26px;
+    border: 1px solid var(--purple-100);
 }

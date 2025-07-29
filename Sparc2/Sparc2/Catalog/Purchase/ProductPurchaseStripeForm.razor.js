@@ -14,7 +14,32 @@ function initialize(element, intent) {
 
     stripeIntegration.stripe = Stripe(intent.publishableKey);
     stripeIntegration.elements = stripeIntegration.stripe.elements({
-        clientSecret: intent.clientSecret
+        clientSecret: intent.clientSecret,
+        appearance: {
+            theme: 'flat',
+
+            variables: {
+                colorPrimary: '#3f256b',
+                colorText: '#3f256b',
+                colorBackground: '#ffffff',
+                borderRadius: '26px',
+                spacingUnit: '4px'
+            },
+
+            rules: {
+                '.Label': {
+                    fontSize: '13px',
+                    fontWeight: 500
+                },
+                '.Input': {
+                    border: '1px solid #DABEFA'
+                },
+                '.Tab': {
+                    borderRadius: '16px'
+                }
+
+            }
+        }
     });
 
     const paymentElement = stripeIntegration.elements.create("payment");

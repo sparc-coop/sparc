@@ -1,5 +1,5 @@
 ﻿.product-info {
-  width: calc(100% - 32px);
+  width: 100%;
   position: relative;
 }
 .product-info.product-page {
@@ -9,6 +9,13 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+.product-info .mobile-only figure.product-img {
+  margin: 0;
+}
+.product-info .mobile-only figure.product-img img {
+  width: 100%;
+  height: auto;
 }
 .product-info header {
   display: flex;
@@ -75,13 +82,13 @@
 .product-info .product-tags > *.grey {
   background: var(--gray-200);
 }
-.product-info .description p {
+.product-info .description p, .product-info .description li {
   font-family: "elza-text", sans-serif;
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%; /* 22.4px */
-  color: var(--Color-Purple-900, #1A0C32);
+  color: var(--purple-900);
 }
 .product-info .credits {
   display: flex;
@@ -157,9 +164,6 @@
     padding-right: 0;
     overflow: hidden;
   }
-  .product-info.catalog-page .credits, .product-info.catalog-page ::deep .product-actions {
-    display: none;
-  }
   .product-info.catalog-page .view-btn {
     display: block;
     background: none;
@@ -204,46 +208,21 @@
     background-image: linear-gradient(to top, var(--yellow-50), transparent);
   }
   .product-info.product-page {
-    overflow: hidden;
-    width: 100%;
-    height: 40vh;
     padding-bottom: 16px;
   }
-  .product-info.product-page .credits, .product-info.product-page ::deep .product-actions {
-    display: none;
-  }
   .product-info.product-page footer {
-    display: none;
+    position: fixed;
+    bottom: -10px;
+    left: 0;
+    right: 0;
   }
-  .product-info.product-page.fullscreen {
-    height: calc(100% - 136px);
-  }
-  .product-info.product-page.fullscreen .info-container {
-    height: 100%;
-  }
-  .product-info.product-page.fullscreen .credits {
-    display: flex !important;
-  }
-  .product-info.product-page.fullscreen ::deep .product-actions {
-    display: block;
-  }
-  .product-info.product-page.fullscreen .gradient-overlay {
-    display: none;
-  }
-  .product-info.product-page.fullscreen .more-btn {
-    display: none;
-  }
-  .product-info.product-page.fullscreen footer {
-    display: block;
-  }
-  .product-info.product-page.fullscreen footer ::deep .product-actions {
+  .product-info.product-page footer ::deep .product-actions {
     position: static;
-    margin-top: 16px;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs {
+  .product-info.product-page footer ::deep .product-actions .tabs {
     flex-direction: column;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button {
+  .product-info.product-page footer ::deep .product-actions .tabs button {
     width: 85%;
     height: 64px;
     padding: 8px 16px;
@@ -251,73 +230,45 @@
     font-size: 2.4rem;
     font-weight: 400;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(1) {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(1) {
     transform: rotate(0deg);
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(1).hovered {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(1):hover {
     transform: translateY(-8px) rotate(0deg);
     animation: popUp1 0.2s ease-in-out;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(1).clicked {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(1).active {
     transform: translateY(-8px) rotate(0deg);
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(2) {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(2) {
     transform: rotate(-3deg);
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(2).hovered {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(2):hover {
     transform: translateY(-8px) rotate(-3deg);
     animation: popUp2 0.2s ease-in-out;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(2).clicked {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(2).active {
     transform: translateY(-8px) rotate(-3deg);
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(3) {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(3) {
     transform: rotate(1deg);
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(3).hovered {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(3):hover {
     transform: translateY(-8px) rotate(1deg);
     animation: popUp3 0.2s ease-in-out;
   }
-  .product-info.product-page.fullscreen footer ::deep .product-actions .tabs button:nth-child(3).clicked {
+  .product-info.product-page footer ::deep .product-actions .tabs button:nth-child(3).active {
     transform: translateY(-8px) rotate(1deg);
   }
-  .product-info.product-page .show-more {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 32px;
-    position: absolute;
-    bottom: 16px;
-  }
-  .product-info.product-page .more-btn {
-    padding: 6px 10px;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    font-family: "Fjalla One";
-    font-size: 1.4rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 110%; /* 55.572px */
-    color: var(--purple-700);
-    transition: 0.2s ease-in-out;
-  }
-  .product-info.product-page .more-btn:hover {
-    color: var(--purple-500);
-  }
-  .product-info.product-page .more-btn:active {
-    color: var(--purple-700);
-    border-color: var(--purple-700);
-  }
-  .product-info header h2 {
-    font-size: 2.848rem;
-  }
-  .product-info header .price {
-    font-size: 1.6rem;
-  }
-  .product-info .description p {
-    font-size: 1.4rem;
-  }
+}
+.product-info header h2 {
+  font-size: 2.848rem;
+}
+.product-info header .price {
+  font-size: 1.6rem;
+}
+.product-info .description p {
+  font-size: 1.4rem;
 }
 
 @keyframes fadeIn {

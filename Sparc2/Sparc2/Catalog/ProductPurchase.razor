@@ -12,14 +12,10 @@
     {
         <section class="billing-section">
             <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
-        </section>
+            <CurrencySelector Avatar="CurrentUser.Avatar" />
 
-        <section class="payment-section">
-            <h5>Payment Information</h5>
-            <div class="form-container">
-                <CurrencySelector Avatar="CurrentUser.Avatar" />
-                <ProductPurchaseStripeForm Product="Product" Avatar="CurrentUser.Avatar"></ProductPurchaseStripeForm>
-            </div>
+            <label><span>Payment</span></label>
+            <ProductPurchaseStripeForm Product="Product" Avatar="CurrentUser.Avatar"></ProductPurchaseStripeForm>
         </section>
     }
 </div>

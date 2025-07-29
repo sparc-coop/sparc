@@ -1,11 +1,11 @@
 ﻿<h5>Select License</h5>
 <div class="form-container">
-    <label>
+    <label class="@(SelectedLicense == "personal" ? "" : "disabled")">
         <input type="radio" name="license-input" checked="@("personal" == SelectedLicense)" @onchange="@(() => UpdateLicense("personal"))" />
         <span>For yourself</span>
     </label>
 
-    <label class="gift">
+    <label class="gift @(SelectedLicense== "personal" ? "disabled" : "" )">
         <div class="gift-email">
             <div>
                 <input type="radio" name="license-input" checked="@("gift" == SelectedLicense)" @onchange="@(() => UpdateLicense("gift"))" />

@@ -1,5 +1,5 @@
 .product-info {
-    width: calc(100% - 32px);
+    width: 100%;
     position: relative;
 
     &.product-page {
@@ -10,6 +10,15 @@
         display: flex;
         flex-direction: column;
         gap: 32px;
+    }
+
+    .mobile-only figure.product-img {
+        margin: 0;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
     }
 
     header {
@@ -90,13 +99,13 @@
 
 
     .description {
-        p {
+        p, li {
             font-family: "elza-text", sans-serif;
             font-size: 1.6rem;
             font-style: normal;
             font-weight: 400;
             line-height: 140%; /* 22.4px */
-            color: var(--Color-Purple-900, #1A0C32);
+            color: var(--purple-900);
         }
     }
 
@@ -195,10 +204,6 @@
             padding-right: 0;
             overflow: hidden;
 
-            .credits, ::deep .product-actions {
-                display: none;
-            }
-
             .view-btn {
                 display: block;
                 //padding: 6px 10px;
@@ -262,152 +267,86 @@
         }
 
         &.product-page {
-            overflow: hidden;
-            width: 100%;
-            height: 40vh;
             padding-bottom: 16px;
 
-            .credits, ::deep .product-actions {
-                display: none;
-            }
-
             footer {
-                display: none;
-            }
-
-            &.fullscreen {
-                height: calc(100% - 136px);
-
-                .info-container {
-                    height: 100%;
-                }
-
-                .credits {
-                    display: flex !important;
-                }
+                position: fixed;
+                bottom: -10px;
+                left: 0;
+                right: 0;
 
                 ::deep .product-actions {
-                    display: block;
-                }
+                    position: static;
 
-                .gradient-overlay {
-                    display: none;
-                }
+                    .tabs {
+                        flex-direction: column;
 
-                .more-btn {
-                    display: none;
-                }
+                        button {
+                            width: 85%;
+                            height: 64px;
+                            padding: 8px 16px;
+                            align-items: center;
+                            font-size: 2.4rem;
+                            font-weight: 400;
 
-                footer {
-                    display: block;
+                            &:nth-child(1) {
+                                transform: rotate(0deg);
 
-                    ::deep .product-actions {
-                        position: static;
-                        margin-top: 16px;
-
-                        .tabs {
-                            flex-direction: column;
-
-                            button {
-                                width: 85%;
-                                height: 64px;
-                                padding: 8px 16px;
-                                align-items: center;
-                                font-size: 2.4rem;
-                                font-weight: 400;
-
-                                &:nth-child(1) {
-                                    transform: rotate(0deg);
-
-                                    &.hovered {
-                                        transform: translateY(-8px) rotate(0deg);
-                                        animation: popUp1 0.2s ease-in-out;
-                                    }
-
-                                    &.clicked {
-                                        transform: translateY(-8px) rotate(0deg);
-                                    }
+                                &:hover {
+                                    transform: translateY(-8px) rotate(0deg);
+                                    animation: popUp1 0.2s ease-in-out;
                                 }
 
-                                &:nth-child(2) {
-                                    transform: rotate(-3deg);
+                                &.active {
+                                    transform: translateY(-8px) rotate(0deg);
+                                }
+                            }
 
-                                    &.hovered {
-                                        transform: translateY(-8px) rotate(-3deg);
-                                        animation: popUp2 0.2s ease-in-out;
-                                    }
+                            &:nth-child(2) {
+                                transform: rotate(-3deg);
 
-                                    &.clicked {
-                                        transform: translateY(-8px) rotate(-3deg);
-                                    }
+                                &:hover {
+                                    transform: translateY(-8px) rotate(-3deg);
+                                    animation: popUp2 0.2s ease-in-out;
                                 }
 
-                                &:nth-child(3) {
-                                    transform: rotate(1deg);
+                                &.active {
+                                    transform: translateY(-8px) rotate(-3deg);
+                                }
+                            }
 
-                                    &.hovered {
-                                        transform: translateY(-8px) rotate(1deg);
-                                        animation: popUp3 0.2s ease-in-out;
-                                    }
+                            &:nth-child(3) {
+                                transform: rotate(1deg);
 
-                                    &.clicked {
-                                        transform: translateY(-8px) rotate(1deg);
-                                    }
+                                &:hover {
+                                    transform: translateY(-8px) rotate(1deg);
+                                    animation: popUp3 0.2s ease-in-out;
+                                }
+
+                                &.active {
+                                    transform: translateY(-8px) rotate(1deg);
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+    }
 
-            .show-more {
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                height: 32px;
-                position: absolute;
-                bottom: 16px;
-            }
-
-            .more-btn {
-                //display: block;
-                padding: 6px 10px;
-                background: none;
-                border: 1px solid transparent;
-                border-radius: 16px;
-                font-family: "Fjalla One";
-                font-size: 1.4rem;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 110%; /* 55.572px */
-                color: var(--purple-700);
-                transition: .2s ease-in-out;
-
-                &:hover {
-                    color: var(--purple-500);
-                }
-
-                &:active {
-                    color: var(--purple-700);
-                    border-color: var(--purple-700);
-                }
-            }
+    header {
+        h2 {
+            font-size: 2.848rem;
         }
 
-        header {
-            h2 {
-                font-size: 2.848rem;
-            }
-
-            .price {
-                font-size: 1.6rem;
-            }
+        .price {
+            font-size: 1.6rem;
         }
+    }
 
-        .description {
-            p {
-                font-size: 1.4rem;
-            }
+    .description {
+        p {
+            font-size: 1.4rem;
         }
     }
 }

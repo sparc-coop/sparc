@@ -30,31 +30,31 @@
 .product-actions button:nth-child(1) {
   transform: rotate(0deg);
 }
-.product-actions button:nth-child(1).hovered {
+.product-actions button:nth-child(1):hover {
   transform: translateY(-32px) rotate(0deg);
   animation: popUp1 0.2s ease-in-out;
 }
-.product-actions button:nth-child(1).clicked {
+.product-actions button:nth-child(1).active {
   transform: translateY(-32px) rotate(0deg);
 }
 .product-actions button:nth-child(2) {
   transform: rotate(-3deg);
 }
-.product-actions button:nth-child(2).hovered {
+.product-actions button:nth-child(2):hover {
   transform: translateY(-32px) rotate(-3deg);
   animation: popUp2 0.2s ease-in-out;
 }
-.product-actions button:nth-child(2).clicked {
+.product-actions button:nth-child(2).active {
   transform: translateY(-32px) rotate(-3deg);
 }
 .product-actions button:nth-child(3) {
   transform: rotate(5deg);
 }
-.product-actions button:nth-child(3).hovered {
+.product-actions button:nth-child(3):hover {
   transform: translateY(-32px) rotate(5deg);
   animation: popUp3 0.2s ease-in-out;
 }
-.product-actions button:nth-child(3).clicked {
+.product-actions button:nth-child(3).active {
   transform: translateY(-32px) rotate(5deg);
 }
 .product-actions button#help-tab {
@@ -87,6 +87,50 @@
   background: var(--blue);
 }
 
+.left-sidebar {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  bottom: 0;
+  width: 50vw;
+  max-width: 800px;
+  padding: 0;
+  z-index: 10000;
+  background: var(--yellow-100);
+  border-radius: 0 32px 32px 0;
+  overflow-y: auto;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1);
+}
+.left-sidebar header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--purple-700);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--yellow-200);
+  z-index: 1100;
+}
+.left-sidebar > div {
+  padding: 16px;
+}
+.left-sidebar button {
+  background-color: transparent;
+}
+
+@media only screen and (max-width: 766px) {
+  .left-sidebar {
+    top: 60px;
+    border-bottom-right-radius: 0;
+    width: 90vw;
+    max-width: 90vw;
+  }
+}
 @keyframes popUp1 {
   0% {
     transform: translateY(0) rotate(deg0);

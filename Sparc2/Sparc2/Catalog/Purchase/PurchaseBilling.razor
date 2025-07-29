@@ -1,54 +1,15 @@
 ﻿@using Sparc.Engine.Aura
 
-@if (!IsVerified)
+<h5>Billing Information</h5>
+
+<label>
+    <span>Would you like an email receipt? Enter your email here (optional)</span>
+    <input @bind="Email" placeholder="Email" />
+</label>
+
+@if (!string.IsNullOrWhiteSpace(VerificationError))
 {
-    <h5>Billing Information</h5>
-    <p>To continue your purchase, please enter your email. We'll send a code to verify it.</p>
-
-    <div class="form-container">
-        <label>
-            <span>Email *</span>
-            <input @bind="Email" placeholder="Email" @onblur="HandleEmailBlur" disabled="@ShowVerification" />
-            @if (!string.IsNullOrWhiteSpace(VerificationError))
-            {
-                <p class="error-text">@VerificationError</p>
-            }
-        </label>
-    </div>
-
-    @if (IsSendingCode)
-    {
-        <div class="loader"></div>
-    }
-
-    @if (ShowVerification)
-    {
-        <div class="form-container">
-            <label>
-                <span>Enter the code sent to @CurrentVerificationDestination *</span>
-                <input @bind="VerificationCode" />
-                @if (!string.IsNullOrWhiteSpace(VerificationError))
-                {
-                    <p class="error-text">@VerificationError</p>
-                }
-            </label>
-        </div>
-        <footer>
-            <button type="button" class="primary-btn" @onclick="VerifyCode" disabled="@IsVerifyingCode">
-                Verify
-            </button>
-        </footer>
-    }
-
-    @if (IsVerifyingCode)
-    {
-        <div class="loader2"></div>
-    }
-
-    @if (ShowSuccessMessage)
-    {
-        <p class="success-text">✅ Email verified successfully!</p>
-    }
+    <p class="error-text">@VerificationError</p>
 }
 
 @inject ISparcAura Aura

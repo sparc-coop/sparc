@@ -2,39 +2,25 @@
 @using Sparc.Engine.Aura
 @layout CatalogLayout
 
-<article class="product-page @(ActiveTab != null ? "left-only" : "")">
+<article class="product-page">
     <div class="page-container">
         <div class="left">
             <div class="left-container">
                 @if (ActiveProduct != null)
                 {
-                    switch (ActiveTab)
-                    {
-                        case "Purchase":
-                            <Sparc2.Catalog.ProductPurchase Product="ActiveProduct" />
-                            ;
-                            break;
-                        case "Download":
-                            <Sparc2.Catalog.ProductKey />
-                            break;
-                        case "Demo":
-                        case "Help":
-                        case null:
-                            <Sparc2.Catalog.ProductImages Product="ActiveProduct" />
-                            break;
-                    }
+                    <Sparc2.Catalog.ProductImages Product="ActiveProduct" />
                 }
             </div>
         </div>
-        <div class="right @((showFullDescription && ActiveTab == null) ? "fullscreen" : "")">
+        <div class="right">
             <div class="right-container">
                 <div class="right-header">
                     <button @onclick=@GoBack><ArrowLeftIcon /></button>
                 </div>
                 @if (ActiveProduct != null)
                 {
-                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" User="User" OnTabChanged="ChangeTab" />
-                } 
+                    <Sparc2.Catalog.ProductInfo PageType="Product" ActiveProduct="ActiveProduct" User="User" />
+                }
                 else
                 {
                     <div class="product-info">
@@ -57,9 +43,7 @@
     [SupplyParameterFromQuery(Name = "paymentIntentId")] public string? PaymentIntentId { get; set; }
 
     Sparc.Blossom.Api.Product? ActiveProduct;
-    BlossomUser User = null!; 
-    bool showFullDescription;
-    string? ActiveTab;
+    BlossomUser User = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,34 +54,9 @@
 
     }
 
-    void ChangeTab(string? tab)
-    {
-        ActiveTab = tab;
-        showFullDescription = false;
-    }
-
     void GoBack()
     {
-        if (ActiveTab != null)
-        {
-            ActiveTab = null;
-        }
-        else
-        {
-            var url = "/store";
-            Nav.NavigateTo(url);
-        }
+        var url = "/store";
     }
-
-    void ToggleFullDescription(bool showMore)
-    {
-        if (showMore)
-        {
-            showFullDescription = true;
-            Js.InvokeVoidAsync("disableBodyScrolling");
-        } else
-        {
-            showFullDescription = false;
-        }
-    }
+}
 }
