@@ -27,7 +27,7 @@
             </button>
         }
 
-        <button id="help-tab" class="product-tab@(ActiveTab == "Help" ? "active" : "")" @onclick="@(() => OnClickTab("Help"))">
+        <button id="help-tab" class="product-tab @(ActiveTab == "Help" ? "active" : "")" @onclick="@(() => OnClickTab("Help"))">
             <h6>Need Help ?</h6>
         </button>
     </div>
@@ -54,6 +54,7 @@
                     break;
                 case "Demo":
                 case "Help":
+                    <Sparc2.Catalog.Help />
                     break;
             }
         </div>

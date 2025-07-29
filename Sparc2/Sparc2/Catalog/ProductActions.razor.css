@@ -108,12 +108,12 @@
   right: 0;
   font-size: 2rem;
   font-weight: 600;
-  color: var(--purple-700);
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
-  background: var(--yellow-200);
+  background: var(--purple-900);
   z-index: 1100;
 }
 .left-sidebar > div {
@@ -121,6 +121,9 @@
 }
 .left-sidebar button {
   background-color: transparent;
+}
+.left-sidebar button ::deep svg path {
+  stroke: white;
 }
 
 @media only screen and (max-width: 766px) {

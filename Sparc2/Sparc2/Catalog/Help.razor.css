@@ -1,0 +1,19 @@
+﻿h5 {
+  font-size: 2.133rem;
+  font-weight: 500;
+  line-height: 110%;
+  margin-bottom: 36px;
+  margin-top: 36px;
+}
+
+p {
+  font-size: 1.8rem;
+  line-height: 140%;
+  margin-bottom: 24px;
+}
+p.important {
+  margin: 36px;
+  border: 1px solid var(--purple-500);
+  padding: 16px 32px;
+  border-radius: 26px;
+}

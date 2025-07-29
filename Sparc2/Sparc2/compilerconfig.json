@@ -47,18 +47,10 @@
     "outputFile": "Donations/AddDonation.razor.css",
     "inputFile": "Donations/AddDonation.razor.scss"
   },
-  //{
-  //  "outputFile": "Catalog/AddProduct.razor.css",
-  //  "inputFile": "Catalog/AddProduct.razor.scss"
-  //},
   {
     "outputFile": "Shared/Components/Breadcrumbs.razor.css",
     "inputFile": "Shared/Components/Breadcrumbs.razor.scss"
   },
-  //{
-  //  "outputFile": "Catalog/TovikReferral.razor.css",
-  //  "inputFile": "Catalog/TovikReferral.razor.scss"
-  //},
   {
     "outputFile": "Shared/Components/FaqItem.razor.css",
     "inputFile": "Shared/Components/FaqItem.razor.scss"
@@ -114,5 +106,9 @@
   {
     "outputFile": "Shared/Icons/ProfileIcon.razor.css",
     "inputFile": "Shared/Icons/ProfileIcon.razor.scss"
+  },
+  {
+    "outputFile": "Catalog/Help.razor.css",
+    "inputFile": "Catalog/Help.razor.scss"
   }
 ]
