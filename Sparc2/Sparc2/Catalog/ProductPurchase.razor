@@ -11,7 +11,6 @@
     @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
     {
         <section class="billing-section">
-            <PurchaseBilling UserEmail="@Email" OnEmailVerified="HandleEmailVerified"></PurchaseBilling>
             <CurrencySelector Avatar="CurrentUser.Avatar" />
 
             <label><span>Payment</span></label>

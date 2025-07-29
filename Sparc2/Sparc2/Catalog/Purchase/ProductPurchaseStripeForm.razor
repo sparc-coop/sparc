@@ -7,6 +7,11 @@
 
     @if (Intent != null)
     {
+        <label>
+            <span>Would you like an email receipt? Enter your email here (optional)</span>
+            <input @bind="Order.Email" placeholder="Email" />
+        </label>
+
         <button id="submit-button" type="submit" class="btn primary-btn">
             Pay @Intent.FormattedAmount
         </button>
@@ -63,8 +68,11 @@
 
     public async Task Pay()
     {
+        if (Order.Email != null)
+            Intent = await Billing.StartCheckoutAsync(Order);
+
         var dotNetHelper = DotNetObjectReference.Create(this);
-        
+
         var returnUrl = $"{Nav.Uri}?paymentIntentId={Intent!.PaymentIntentId}";
         var stripe = await Auth.Value;
         var result = await stripe.InvokeAsync<PaymentResult>("pay", returnUrl);

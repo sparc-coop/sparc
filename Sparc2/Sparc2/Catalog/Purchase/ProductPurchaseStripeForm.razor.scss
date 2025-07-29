@@ -17,16 +17,17 @@
             letter-spacing: -0.12px;
         }
 
-        input, select {
+        input {
             display: flex;
             padding: 16px;
-            flex-direction: column;
+            margin-top: 8px;
+            width: 100%;
+            box-sizing: border-box;
             justify-content: center;
             align-items: flex-start;
             gap: 10px;
             border-radius: 26px;
             border: 1px solid var(--purple-100);
-            opacity: 0.5;
         }
 
         select {
