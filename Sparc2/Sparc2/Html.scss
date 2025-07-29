@@ -344,6 +344,27 @@ ul {
     }
 }
 
+.language-select, .currency-selector {
+    position: relative;
+
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 50%;
+        margin-top: -2px;
+        right: 24px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid var(--purple-500);
+    }
+
+    select {
+        appearance: none;
+    }
+}
+
 // FONTS
 
 /*font-family: elza-text, sans-serif;

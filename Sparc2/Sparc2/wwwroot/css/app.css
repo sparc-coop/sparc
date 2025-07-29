@@ -299,6 +299,25 @@ ul li {
   margin-bottom: 24px;
 }
 
+.language-select, .currency-selector {
+  position: relative;
+}
+.language-select:after, .currency-selector:after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  margin-top: -2px;
+  right: 24px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--purple-500);
+}
+.language-select select, .currency-selector select {
+  appearance: none;
+}
+
 /*font-family: elza-text, sans-serif;
 font-weight: 400;
 font-style: normal;
