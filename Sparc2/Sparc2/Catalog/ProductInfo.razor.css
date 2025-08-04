@@ -53,6 +53,7 @@
   display: flex;
   flex-direction: row;
   gap: 4px;
+  flex-wrap: wrap;
 }
 .product-info .product-tags > * {
   display: flex;
@@ -69,6 +70,7 @@
   line-height: 140%; /* 21px */
   letter-spacing: -0.15px;
   color: white;
+  white-space: nowrap;
 }
 .product-info .product-tags > *.purple {
   background: var(--purple-300);
