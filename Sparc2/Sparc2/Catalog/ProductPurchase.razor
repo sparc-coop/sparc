@@ -8,10 +8,8 @@
     @if (CurrentUser != null && !CurrentUser.HasIdentity("Email"))
     {
         <section class="billing-section">
-            <CurrencySelector Avatar="CurrentUser.Avatar" />
-
             <label><span>Payment</span></label>
-            <ProductPurchaseStripeForm Product="Product" Avatar="CurrentUser.Avatar"></ProductPurchaseStripeForm>
+            <GlobalBiller ProductId="@Product.Id" StripeProductId="@Product.StripeProductId" Avatar="CurrentUser.Avatar"></GlobalBiller>
         </section>
     }
 </div>
