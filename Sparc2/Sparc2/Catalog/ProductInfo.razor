@@ -71,12 +71,12 @@
     </div>
 </div>
 
-@inject Sparc.Engine.SparcEvents Events
+@inject SparcEvents Events
 @code {
     [Parameter] public required Product ActiveProduct { get; set; }
     [Parameter] public string PageType { get; set; } = "Product";
-    [Parameter] public BlossomUser User { get; set; }
-    Sparc.Engine.GetProductResponse? Price;
+    [Parameter] public required BlossomUser User { get; set; }
+    GetProductResponse? Price;
 
     bool showCredits = true;
     string creditsClass = "rotate";

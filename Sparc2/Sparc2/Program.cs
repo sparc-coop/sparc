@@ -1,5 +1,5 @@
 ﻿using Sparc.Blossom.Data;
-using Sparc.Engine;
+using Sparc.Blossom.Engine;
 using Sparc2;
 using Sparc2.Ideas;
 using Sparc2.Products;
@@ -7,7 +7,7 @@ using Sparc2.Products;
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 
 builder.Services.AddAzureStorage(builder.Configuration);
-builder.Services.AddSparcEngine(builder.Configuration["SparcEngine"]);
+builder.Services.AddBlossomEngine(builder.Configuration["SparcEngine"]);
 
 builder.Services.AddSingleton<IdeaService>();
 
@@ -21,7 +21,7 @@ var tovik = new Product(title: "Tovik", "Early Access")
 {
     Id = "Tovik",
     Title = "Tovik",
-    Subtitle = "(100,000 Word Pack)",
+    Subtitle = "Make your site speak their language",
     Credits = [
         new("Christine Antonio", "User Experience Implementation"),
         new("Yoojung Song", "User Experience Design"),
@@ -63,7 +63,7 @@ var tovik = new Product(title: "Tovik", "Early Access")
     "\r\n" +
     "## What I'm purchasing:\r\n" +
     "\r\n" +
-    "This is a one-time purchase of Tovik, which includes an initial word pack of 100,000 words for you to use across as many websites as you like. You will never be charged a subscription or recurring fee to use Tovik." +
+    "This is a one-time purchase of Tovik, which includes Tovik usage up to 500 pages for you to use across as many websites as you like. You will never be charged a subscription or recurring fee to use Tovik." +
     "\r\n" + 
     "\r\n" +
     " If you ever need more words for your websites, just come back here and buy another word pack." +

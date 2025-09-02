@@ -1,7 +1,4 @@
-﻿@using Sparc.Engine
-@using Sparc.Engine.Aura
-
-<div class="product-actions">
+﻿<div class="product-actions">
     <div class="tabs">
         @if (OwnsProduct)
         {
@@ -50,8 +47,8 @@
                     ;
                     break;
                 case "Download":
-                    <Sparc2.Catalog.ProductKey />
-                    break;
+@*                     <Sparc2.Catalog.ProductKey />
+ *@                    break;
                 case "Demo":
                 case "Help":
                     <Sparc2.Catalog.Help />
