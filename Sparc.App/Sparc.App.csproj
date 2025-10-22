@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj" />
+    <ProjectReference Include="..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
+    <ProjectReference Include="..\..\blossom\Sparc.Core\Sparc.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+</Project>
