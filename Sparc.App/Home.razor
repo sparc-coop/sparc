@@ -1,9 +1,30 @@
 ﻿@page "/"
 
+<PageTitle>Sparc Cooperative</PageTitle>
+
 <section>
-    Hi
+    <header>
+        <h1>Tell us what's not working in your world</h1>
+        <p>
+            We're collecting real frustrations, big or small. The things that make you sigh,
+            roll your eyes, or give up halfway. Let us know what's broken, confusing, or
+            missing. We'll listen and maybe even fix it.
+        </p>
+    </header>
+
+    <form @onsubmit="AddIdea">
+        <textarea placeholder="Anything that annoys you or slows you down!" @bind=IdeaText></textarea>
+        <button type="submit">Submit</button>
+    </form>
 </section>
 
 @code
 {
+    private string IdeaText { get; set; } = string.Empty;
+    private void AddIdea()
+    {
+        // Placeholder for idea submission logic
+        Console.WriteLine($"Idea submitted: {IdeaText}");
+        IdeaText = string.Empty;
+    }
 }

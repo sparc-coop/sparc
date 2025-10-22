@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11116.177 d18.0
+VisualStudioVersion = 18.0.11116.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blossom", "Blossom", "{30FE1327-2997-4C76-B5D6-493E20F2305C}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.App", "Sparc.App\Sparc.App.csproj", "{A6494B05-44D2-4EFC-95F2-D07DB67FC038}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Engine", "..\blossom\Sparc.Blossom.Engine\Sparc.Blossom.Engine.csproj", "{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc2", "Sparc2\Sparc2\Sparc2.csproj", "{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,13 @@ Global
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|x64.ActiveCfg = Release|Any CPU
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|x64.Build.0 = Release|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|x64.Build.0 = Debug|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

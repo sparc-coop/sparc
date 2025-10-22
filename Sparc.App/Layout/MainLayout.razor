@@ -1,5 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
+<header>
+    <a href="/">
+        <figure>
+            <img src="img/SparcLogo.svg" alt="Sparc" />
+        </figure>
+    </a>
+    <button id="menu-btn" class="@(showMobileMenu ? "close" : "")" @onclick=ToggleMobileMenu>
+        <img src="img/MenuMorph.svg" alt="Site menu" />
+    </button>
+</header>
+
 <main>
     @Body
 </main>
+
+@code {
+    private bool showMobileMenu = false;
+    private void ToggleMobileMenu()
+    {
+        showMobileMenu = !showMobileMenu;
+    }
+
+}

@@ -1,5 +1,17 @@
+:root {
+    --Color-Yellow-50: #FFFCF6;
+    --Color-Yellow-100: #FBF7EF;
+    --Color-Grayscale-800: #383838;
+}
+
 html, body {
-    font-family: sans-serif;
+    font-family: "elza-text", sans-serif;
+    background: var(--Color-Yellow-50);
+    backdrop-filter: blur(21.410852432250977px);
+}
+
+body {
+    padding: 16px;
 }
 
 #blazor-error-ui {

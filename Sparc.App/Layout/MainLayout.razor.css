@@ -1,12 +1,16 @@
-main {
-    width: min(440px, 100vw);
-    height: min(800px, 90vh);
-    overflow-x: auto;
-    overflow-y: hidden;
-    margin: 80px auto;
-    background-color: #efefef;
+header {
     padding: 16px;
-    box-sizing: border-box;
-    border-radius: 16px;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background: transparent; 
+
+    img {
+        height: 22px;
+    }
+}
+
+main {
 }
