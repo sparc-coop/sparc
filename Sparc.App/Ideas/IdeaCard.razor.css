@@ -6,6 +6,24 @@
     flex-direction: column;
     border: 1px solid var(--Color-Yellow-200);
     background: var(--Color-Yellow-100);
+
+    &.processing {
+        opacity: 0.5;
+    }
+
+    &.invalid {
+        border: 1px solid red;
+    }
+
+    header { 
+        display: flex;
+        justify-content: space-between;
+    }
+
+    h3 {
+        font-size: 0.825rem;
+        font-weight: 600;
+    }
 }
 
 p {

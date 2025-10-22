@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using System.Threading.Tasks
+@using Sparc.Blossom.Content
 
 <PageTitle>Sparc Cooperative</PageTitle>
 
@@ -16,6 +17,10 @@
     <form @onsubmit="AddIdea" @onsubmit:preventDefault=true>
         <textarea placeholder="Anything that annoys you or slows you down!" @bind=IdeaText></textarea>
         <button type="submit">Submit</button>
+        @if (Error is not null)
+        {
+            <p class="error">@Error</p>
+        }
     </form>
 
     <ul>
@@ -29,23 +34,43 @@
 </section>
 
 @inject IRepository<Idea> IdeaRepository
+@inject ITovik Tovik
 @code
 {
     List<Idea> Ideas = [];
     BlossomUser? User;
+    string? Error;
     string IdeaText { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         User = await Aura.UserInfo();
         Ideas = await IdeaRepository.GetAllAsync();
+        Ideas = Ideas.OrderByDescending(x => x.PostDate).ToList();
     }
 
     private async Task AddIdea()
     {
-        Idea idea = new(User.Id, IdeaText);
+        Error = null;
+        Idea idea = new(User!.Avatar, IdeaText);
         Ideas.Insert(0, idea);
-        await IdeaRepository.AddAsync(idea);
+        StateHasChanged();
+
+        var categories = Ideas.Select(x => x.Category)
+        .Where(x => x != null)
+        .Distinct()
+        .ToList();
+
+        if (!await idea.Validate(Tovik, categories!))
+        {
+            Error = "Please provide a valid idea.";
+        }
+        else
+        {
+            Error = null;
+            await IdeaRepository.AddAsync(idea);
+        }
+
         IdeaText = string.Empty;
     }
 }

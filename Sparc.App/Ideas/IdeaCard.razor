@@ -1,6 +1,10 @@
-﻿<article>
+﻿<article class="@Status">
     <header>
         <img src="img/Quote.svg" alt="Idea Quotes" />
+        @if (Idea.Category != null)
+        {
+            <h3>@Idea.Category</h3>
+        }
     </header>
     <p>
         @Idea.Text
@@ -12,4 +16,6 @@
 
 @code {
     [Parameter] public required Idea Idea { get; set; }
+
+    string Status => Idea.IsValid == false ? "invalid" : Idea.IsValid == true ? "valid" : "processing";
 }
