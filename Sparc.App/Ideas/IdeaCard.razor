@@ -1,0 +1,15 @@
+﻿<article>
+    <header>
+        <img src="img/Quote.svg" alt="Idea Quotes" />
+    </header>
+    <p>
+        @Idea.Text
+    </p>
+    <time>
+        @Idea.PostDate.ToString("d MMMM yyyy")
+    </time>
+</article>
+
+@code {
+    [Parameter] public required Idea Idea { get; set; }
+}

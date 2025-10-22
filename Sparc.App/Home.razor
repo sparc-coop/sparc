@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using System.Threading.Tasks
 
 <PageTitle>Sparc Cooperative</PageTitle>
 
@@ -12,19 +13,39 @@
         </p>
     </header>
 
-    <form @onsubmit="AddIdea">
+    <form @onsubmit="AddIdea" @onsubmit:preventDefault=true>
         <textarea placeholder="Anything that annoys you or slows you down!" @bind=IdeaText></textarea>
         <button type="submit">Submit</button>
     </form>
+
+    <ul>
+        @foreach (var idea in Ideas)
+        {
+            <li>
+                <IdeaCard Idea="idea" />
+            </li>
+        }
+    </ul>
 </section>
 
+@inject IRepository<Idea> IdeaRepository
 @code
 {
-    private string IdeaText { get; set; } = string.Empty;
-    private void AddIdea()
+    List<Idea> Ideas = [];
+    BlossomUser? User;
+    string IdeaText { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
     {
-        // Placeholder for idea submission logic
-        Console.WriteLine($"Idea submitted: {IdeaText}");
+        User = await Aura.UserInfo();
+        Ideas = await IdeaRepository.GetAllAsync();
+    }
+
+    private async Task AddIdea()
+    {
+        Idea idea = new(User.Id, IdeaText);
+        Ideas.Insert(0, idea);
+        await IdeaRepository.AddAsync(idea);
         IdeaText = string.Empty;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Sparc.Blossom;
+using Sparc.Core;
 
 namespace Sparc.App.Ideas;
 
-public class Idea(string userId, string text) : BlossomEntity<string>
+public class Idea(string userId, string text) : BlossomEntity<string>(BlossomHash.MD5($"{userId}:{text}"))
 {
     public DateTime PostDate { get; set; } = DateTime.UtcNow;
     public string UserId { get; set; } = userId;
