@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.App", "Sparc.App\Spar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Engine", "..\blossom\Sparc.Blossom.Engine\Sparc.Blossom.Engine.csproj", "{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc2", "Sparc2\Sparc2\Sparc2.csproj", "{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Data.AzureStorage", "..\blossom\Sparc.Blossom.Data.AzureStorage\Sparc.Blossom.Data.AzureStorage.csproj", "{D6B40988-1142-F98D-1C53-1B4F451D9403}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparc.Blossom.Realtime.Twilio", "..\blossom\Sparc.Blossom.Realtime.Twilio\Sparc.Blossom.Realtime.Twilio.csproj", "{93EA97D5-D611-FA53-E96A-A77524F60EC1}"
@@ -69,13 +67,6 @@ Global
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|x64.ActiveCfg = Release|Any CPU
 		{F40B0A7B-FFAF-22E7-6D8C-CE4AC44782B3}.Release|x64.Build.0 = Release|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Debug|x64.Build.0 = Debug|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|x64.ActiveCfg = Release|Any CPU
-		{1F5057E6-1170-9A13-6CE6-4BC5E6F7A9F5}.Release|x64.Build.0 = Release|Any CPU
 		{D6B40988-1142-F98D-1C53-1B4F451D9403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D6B40988-1142-F98D-1C53-1B4F451D9403}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6B40988-1142-F98D-1C53-1B4F451D9403}.Debug|x64.ActiveCfg = Debug|Any CPU
