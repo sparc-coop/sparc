@@ -1,0 +1,18 @@
+﻿<button class="@(isOpen ? "open" : "")" @onclick=Toggle>
+    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="21" viewBox="0 0 23 21" fill="none">
+        <path class="top" d="M0.35672 1.83602C1.91801 1.45374 6.17607 1.07911 10.718 2.63879C15.2599 4.19847 20.3696 3.28866 22.3567 2.63879" stroke="#8B46DB" stroke-width="3" />
+        <path class="middle" d="M0.35672 9.83602C1.91801 9.45374 6.17607 9.07911 10.718 10.6388C15.2599 12.1985 20.3696 11.2887 22.3567 10.6388" stroke="#8B46DB" stroke-width="3" />
+        <path class="bottom" d="M0.35672 17.836C1.91801 17.4537 6.17607 17.0791 10.718 18.6388C15.2599 20.1985 20.3696 19.2887 22.3567 18.6388" stroke="#8B46DB" stroke-width="3" />
+    </svg>
+</button>
+
+@code {
+    [Parameter] public EventCallback<bool> OnToggle { get; set; }
+    bool isOpen = false;
+
+    async Task Toggle()
+    {
+        isOpen = !isOpen;
+        await OnToggle.InvokeAsync(isOpen);
+    }
+}

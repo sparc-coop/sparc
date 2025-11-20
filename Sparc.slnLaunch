@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Sparc with Blossom Engine",
+    "Projects": [
+      {
+        "Path": "Sparc.App\\Sparc.App.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\blossom\\Sparc.Blossom.Engine\\Sparc.Blossom.Engine.csproj",
+        "Action": "StartWithoutDebugging"
+      }
+    ]
+  }
+]

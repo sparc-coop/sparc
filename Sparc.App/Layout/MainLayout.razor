@@ -6,9 +6,7 @@
             <img src="img/SparcLogo.svg" alt="Sparc" />
         </figure>
     </a>
-    <button id="menu-btn" class="@(showMobileMenu ? "close" : "")" @onclick=ToggleMobileMenu>
-        <img src="img/MenuMorph.svg" alt="Site menu" />
-    </button>
+    <AnimatedMenuToggle OnToggle="ToggleMobileMenu" />
 </header>
 
 <main>
@@ -17,9 +15,9 @@
 
 @code {
     private bool showMobileMenu = false;
-    private void ToggleMobileMenu()
+    private void ToggleMobileMenu(bool isOpen)
     {
-        showMobileMenu = !showMobileMenu;
+        showMobileMenu = isOpen;
     }
 
 }
