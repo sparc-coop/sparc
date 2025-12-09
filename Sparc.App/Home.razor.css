@@ -52,3 +52,24 @@ ul {
     flex-direction: column;
     gap: 16px;
 }
+
+aside {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: max(320px, 40vw);
+    padding: 32px;
+    background: white;
+    border-left: 1px solid #CCC;
+    overflow-y: auto;
+
+    ul {
+        padding-left: 16px;
+    }
+
+    ::deep h3 {
+        margin-top: 16px;
+        border-top: 1px solid black;
+    }
+}

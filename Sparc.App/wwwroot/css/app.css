@@ -10,6 +10,7 @@ html, body {
     font-family: "elza-text", sans-serif;
     background: var(--Color-Yellow-50);
     backdrop-filter: blur(21.410852432250977px);
+    color: var(--Color-Grayscale-800);
 }
 
 body {

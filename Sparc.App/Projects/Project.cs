@@ -1,5 +1,4 @@
 ﻿using Sparc.Blossom;
-using System.ComponentModel.DataAnnotations;
 
 namespace Sparc.App.Projects;
 

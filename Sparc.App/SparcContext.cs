@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sparc.App.Ideas;
+using Sparc.App.Posts;
 using Sparc.App.Projects;
-using Sparc.Blossom.Billing;
 
 namespace Sparc.App;
 
@@ -9,8 +8,8 @@ public class SparcContext(DbContextOptions options) : DbContext(options)
 {
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        builder.Entity<Idea>().ToContainer("Ideas")
-            .HasPartitionKey(x => x.IdeaId)
+        builder.Entity<SparcPost>().ToContainer("Posts")
+            .HasPartitionKey(x => new { x.UserId, x.Domain })
             .HasKey(x => x.Id);
 
         builder.Entity<Project>().ToContainer("Projects")

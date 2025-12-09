@@ -1,0 +1,21 @@
+﻿<article class="@Status">
+    <header>
+        <img src="img/Quote.svg" alt="Idea Quotes" />
+        @if (Post.SpaceId != null)
+        {
+            <h3>@Post.SpaceId</h3>
+        }
+    </header>
+    <p>
+        @Post.Text
+    </p>
+    <time>
+        @Post.PostDate.ToString("d MMMM yyyy")
+    </time>
+</article>
+
+@code {
+    [Parameter] public required SparcPost Post { get; set; }
+
+    string Status => "valid"; // Post.IsValid == false ? "invalid" : Idea.IsValid == true ? "valid" : "processing";
+}

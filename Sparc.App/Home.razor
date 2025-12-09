@@ -14,8 +14,8 @@
         </p>
     </header>
 
-    <form @onsubmit="AddIdea" @onsubmit:preventDefault=true>
-        <textarea placeholder="Anything that annoys you or slows you down!" @bind=IdeaText></textarea>
+    <form @onsubmit="AddPost" @onsubmit:preventDefault=true>
+        <textarea placeholder="Anything that annoys you or slows you down!" @bind=PostText></textarea>
         <button type="submit">Submit</button>
         @if (Error is not null)
         {
@@ -24,53 +24,54 @@
     </form>
 
     <ul>
-        @foreach (var idea in Ideas)
+        @foreach (var post in Posts)
         {
-            <li>
-                <IdeaCard Idea="idea" />
+            <li @onclick="@(() => Select(post))">
+                <PostCard Post="post" />
             </li>
         }
     </ul>
 </section>
 
-@inject IRepository<Idea> IdeaRepository
+@if (SelectedPost != null)
+{
+    <aside>
+        <PostEntities Post="SelectedPost" />
+    </aside>
+}
+
+@inject IRepository<SparcPost> PostRepository
 @inject ITovik Tovik
 @code
 {
-    List<Idea> Ideas = [];
+    List<SparcPost> Posts = [];
+    SparcPost? SelectedPost;
     BlossomUser? User;
     string? Error;
-    string IdeaText { get; set; } = string.Empty;
+    string PostText { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         User = await Aura.UserInfo();
-        Ideas = await IdeaRepository.GetAllAsync();
-        Ideas = Ideas.OrderByDescending(x => x.PostDate).ToList();
+        Posts = await PostRepository.GetAllAsync();
+        Posts = Posts.OrderByDescending(x => x.PostDate).ToList();
     }
 
-    private async Task AddIdea()
+    private async Task AddPost()
     {
         Error = null;
-        Idea idea = new(User!.Avatar, IdeaText);
-        Ideas.Insert(0, idea);
+        SparcPost post = new(User!.Avatar, PostText);
+        Posts.Insert(0, post);
         StateHasChanged();
 
-        var categories = Ideas.Select(x => x.Category)
-        .Where(x => x != null)
-        .Distinct()
-        .ToList();
+        await post.ExtractGraph(Tovik);
+        await PostRepository.AddAsync(post);
+        PostText = string.Empty;
+        SelectedPost = post;
+    }
 
-        if (!await idea.Validate(Tovik, categories!))
-        {
-            Error = "Please provide a valid idea.";
-        }
-        else
-        {
-            Error = null;
-            await IdeaRepository.AddAsync(idea);
-        }
-
-        IdeaText = string.Empty;
+    private void Select(SparcPost post)
+    {
+        SelectedPost = post;
     }
 }

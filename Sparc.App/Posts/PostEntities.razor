@@ -1,0 +1,30 @@
+<h3>Entities</h3>
+<ul>
+    @foreach (var entity in Post.Entities)
+    {
+        <li>
+            <h4>@entity.Name</h4>
+            (@entity.Type)
+            <p>@entity.Description</p>
+
+            @if (entity.Relationships.Any())
+            {
+                <h5>Relationships</h5>
+                <ul>
+                    @foreach (var relationship in entity.Relationships.OrderByDescending(x => x.Weight))
+                    {
+                        <li>
+                            <h6>@relationship.TargetEntityName</h6>
+                            (Weight: @relationship.Weight)
+                            <p>@relationship.Description</p>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter] public required SparcPost Post { get; set; }
+}
