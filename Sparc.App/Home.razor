@@ -54,13 +54,13 @@
     {
         User = await Aura.UserInfo();
         Posts = await PostRepository.GetAllAsync();
-        Posts = Posts.OrderByDescending(x => x.PostDate).ToList();
+        Posts = Posts.OrderByDescending(x => x.Timestamp).ToList();
     }
 
     private async Task AddPost()
     {
         Error = null;
-        SparcPost post = new(User!.Avatar, PostText);
+        SparcPost post = new(User!, PostText);
         Posts.Insert(0, post);
         StateHasChanged();
 
