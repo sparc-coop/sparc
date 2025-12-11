@@ -1,5 +1,4 @@
-﻿using Sparc.Blossom;
-using Sparc.Blossom.Authentication;
+﻿using Sparc.Blossom.Authentication;
 using Sparc.Blossom.Content;
 using Sparc.Blossom.Spaces;
 
@@ -11,7 +10,6 @@ public class SparcPost(BlossomUser user, string text)
     public SparcPost() : this(new(), "")
     { }
     
-    public List<SparcEntity> Entities { get; set; } = [];
 
     public async Task ExtractGraph(ITovik tovik)
     {
