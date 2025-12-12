@@ -11,7 +11,7 @@ public class SparcPost(BlossomUser user, string text)
     { }
     
 
-    public async Task ExtractGraph(ITovik tovik)
+    public async Task ExtractGraph(ISparcContent tovik)
     {
         List<SparcEntityType> entityTypes = [
             new("Person", "A single human individual identified by their name"),
