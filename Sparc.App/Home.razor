@@ -26,28 +26,22 @@
     </form>
 
     <ul>
-        @foreach (var post in Posts)
+        @foreach (var space in AllSpaces)
         {
-            <li @onclick="@(() => Select(post))">
-                <PostCard Post="post" />
+            <li>
+                <a href="@($"/spaces/{space.Id}")">
+                    <SpaceCard Space="space" />
+                </a>
             </li>
         }
     </ul>
 </section>
 
-@if (SelectedPost != null)
-{
-    <aside>
-        <PostEntities Post="SelectedPost" />
-    </aside>
-}
-
-@inject IRepository<SparcPost> PostRepository
+@inject ISparcSpaces Spaces
 @inject ISparcContent Tovik
 @code
 {
-    List<SparcPost> Posts = [];
-    SparcPost? SelectedPost;
+    List<BlossomSpace> AllSpaces = [];
     BlossomUser? User;
     string? Error;
     string PostText { get; set; } = string.Empty;
@@ -56,8 +50,7 @@
     protected override async Task OnInitializedAsync()
     {
         User = await Aura.UserInfo();
-        Posts = await PostRepository.GetAllAsync();
-        Posts = Posts.OrderByDescending(x => x.Timestamp).ToList();
+        AllSpaces = await Spaces.GetSpacesAsync("kuviocreative.com", "slacktest");
     }
 
     public async Task Enter(KeyboardEventArgs e)
@@ -76,17 +69,17 @@
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
         SparcPost post = new(User!, PostText);
-        Posts.Insert(0, post);
-        StateHasChanged();
+        // Posts.Insert(0, post);
+        // StateHasChanged();
 
-        //await post.ExtractGraph(Tovik);
-        await PostRepository.AddAsync(post);
-        PostText = string.Empty;
-        SelectedPost = post;
+        // //await post.ExtractGraph(Tovik);
+        // await PostRepository.AddAsync(post);
+        // PostText = string.Empty;
+        // SelectedPost = post;
     }
 
-    private void Select(SparcPost post)
-    {
-        SelectedPost = post;
-    }
+    // private void Select(SparcPost post)
+    // {
+    //     SelectedPost = post;
+    // }
 }

@@ -17,8 +17,8 @@ html, body {
     color: var(--Color-Grayscale-800);
 }
 
-body {
-    padding: 16px;
+a {
+    text-decoration: none;
 }
 
 button {
