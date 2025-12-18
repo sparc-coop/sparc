@@ -1,5 +1,11 @@
-﻿<h3>SpaceOverview</h3>
+﻿<article>
+    <h1>@Space.Name</h1>
+    <h2>Topic</h2>
+    <p>@Space.Topic</p>
+    <h2>Description</h2>
+    <p>@Space.Description</p>
+</article>
 
 @code {
-
+    [Parameter] public required BlossomSpace Space { get; set; }
 }
