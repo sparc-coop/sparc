@@ -49,7 +49,7 @@
     protected override async Task OnInitializedAsync()
     {
         User = await Aura.UserInfo();
-        AllSpaces = await Spaces.GetSpacesAsync("kuviocreative.com", "slacktest");
+        AllSpaces = await Spaces.GetSpacesAsync("kuviocreative.com", "conseris");
     }
 
     public async Task Enter(KeyboardEventArgs e)
