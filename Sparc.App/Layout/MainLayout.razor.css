@@ -12,5 +12,40 @@ button {
     }
 }
 
+nav {
+    ul {
+        font-family: 'DotGothic16';
+        font-size: 0.875rem;
+        display: flex;
+        gap: 32px;
+        align-items: center;
+        display: none;
+    }
+
+    li {
+        a {
+            text-decoration: none;
+            color: var(--Color-Grayscale-800);
+        }
+    }
+}
+
+::deep .avatar {
+    height: 32px;
+    width: 32px;
+    padding: 4px;
+}
+
 main {
+    max-width: 846px;
+    margin: 24px auto;
+}
+
+@media (orientation: landscape) {
+    nav ul {
+        display: flex;
+    }
+    nav > div {
+        display: none;
+    }
 }

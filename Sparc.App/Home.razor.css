@@ -1,19 +1,20 @@
 ﻿section {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
 
 header {
-    padding: 24px;
+    margin-top : 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
 h1 {
-    font-size: 3.1575rem;
-    font-weight: 700;
+    font-family: 'DotGothic16';
+    font-size: 2.36875rem;
+    font-weight: 400;
     letter-spacing: -0.12631rem;
 }
 
@@ -21,29 +22,31 @@ p {
     color: var(--Color-Grayscale-800);
 }
 
-textarea {
-    background: white;
-    border: 2px solid var(--Color-Yellow-100);
+form {
+    border: 1px solid var(--Color-Grayscale-100);
     border-radius: 16px;
-    box-shadow: 4px 4px 16px 0 rgba(63, 24, 5, 0.15);
-    backdrop-filter: blur(17.5px);
-    padding: 24px;
-    min-block-size: 72px;
+    padding: 8px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 36px;
+    gap: 16px;
+}
 
+textarea {
+    background: transparent;
+    width: 100%;
+    min-block-size: 40px;
+    padding: 8px 16px;
+    outline: none;
 }
 
 button {
+    height: 36px;
+    width: 36px;
     display: flex;
-    height: 72px;
-    width: 100%;
-    padding: 8px 24px;
     justify-content: center;
     align-items: center;
-    gap: 4px;
-    align-self: stretch;
-    border-radius: 16px;
-    border: 2px solid #AC6CFF;
-    background: linear-gradient(131deg, #5514C6 -9.95%, #2B1C45 46.88%, #961100 119.95%);
+    border-radius: 14px;
 }
 
 ul {

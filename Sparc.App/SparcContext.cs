@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sparc.App.Posts;
+using Sparc.App.Community;
 using Sparc.App.Projects;
 
 namespace Sparc.App;

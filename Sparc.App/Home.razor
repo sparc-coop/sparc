@@ -15,8 +15,10 @@
     </header>
 
     <form @onsubmit="AddPost" @onsubmit:preventDefault=true>
-        <textarea placeholder="Anything that annoys you or slows you down!" @bind=PostText></textarea>
-        <button type="submit">Submit</button>
+        <textarea placeholder="Search or type anything..." @onkeydown="Enter" @onkeydown:preventDefault=IsEnter @bind=PostText @bind:event="oninput"></textarea>
+        <button type="submit" disabled="@(PostText.Length == 0)">
+            <img src="/img/Submit.svg" alt="Submit" />
+        </button>
         @if (Error is not null)
         {
             <p class="error">@Error</p>
@@ -49,6 +51,7 @@
     BlossomUser? User;
     string? Error;
     string PostText { get; set; } = string.Empty;
+    bool IsEnter;
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,14 +60,26 @@
         Posts = Posts.OrderByDescending(x => x.Timestamp).ToList();
     }
 
+    public async Task Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            IsEnter = true;
+            await AddPost();
+        }
+        else
+            IsEnter = false;
+    }
+
     private async Task AddPost()
     {
+        PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
         SparcPost post = new(User!, PostText);
         Posts.Insert(0, post);
         StateHasChanged();
 
-        await post.ExtractGraph(Tovik);
+        //await post.ExtractGraph(Tovik);
         await PostRepository.AddAsync(post);
         PostText = string.Empty;
         SelectedPost = post;

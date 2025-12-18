@@ -2,7 +2,7 @@
 using Sparc.Blossom.Content;
 using Sparc.Blossom.Spaces;
 
-namespace Sparc.App.Posts;
+namespace Sparc.App.Community;
 
 public class SparcPost(BlossomUser user, string text) 
     : BlossomPost("sparc.coop", "sparc", Language.Find("en")!, text, user)
