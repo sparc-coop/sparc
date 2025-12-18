@@ -25,13 +25,13 @@
             align-items: center;
             padding: 16px;
             color: white;
-            font-family: 'DotGothic16';
+            font-family: var(--Font-Serif);
             opacity: 0;
             transition: opacity 0.2s ease-in-out;
         }
     }
 
-    header { 
+    header {
         display: flex;
         justify-content: space-between;
     }
@@ -45,6 +45,7 @@
     &:hover {
         figure {
             background: var(--Color-Grayscale-800);
+
             figcaption {
                 opacity: 1;
             }

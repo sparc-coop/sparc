@@ -1,0 +1,65 @@
+﻿@using Sparc.Blossom.Content
+ <section>
+     @foreach (var post in Posts)
+    {
+        <article>
+            <header>
+                <figure>
+                    <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
+                    <figcaption>
+                        @post.User?.Name
+                        <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
+                    </figcaption>
+                </figure>
+                <img src="img/VerticalMenu.svg" alt="Options" />
+            </header>
+            <section>
+                <p>@post.Text</p>
+            </section>
+            <footer>
+                <button class="secondary">Comments</button>
+                <button class="secondary">Like</button>
+                <button class="secondary">Quote</button>
+            </footer>
+        </article>
+    }
+</section>
+
+@code {
+    [Parameter] public required BlossomSpace Space { get; set; }
+    List<BlossomPost> Posts = [];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Posts = await Spaces.GetPostsAsync(Space.Id);
+    }
+
+    string Ago(DateTime timestamp)
+    {
+        var span = DateTime.UtcNow - timestamp;
+        if (span.TotalDays >= 365)
+        {
+            return $"{(int)(span.TotalDays / 365)}y ago";
+        }
+        else if (span.TotalDays >= 30)
+        {
+            return $"{(int)(span.TotalDays / 30)}mo ago";
+        }
+        else if (span.TotalDays >= 1)
+        {
+            return $"{(int)span.TotalDays}d ago";
+        }
+        else if (span.TotalHours >= 1)
+        {
+            return $"{(int)span.TotalHours}h ago";
+        }
+        else if (span.TotalMinutes >= 1)
+        {
+            return $"{(int)span.TotalMinutes}m ago";
+        }
+        else
+        {
+            return "just now";
+        }
+    }
+}

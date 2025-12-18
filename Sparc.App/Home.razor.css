@@ -12,7 +12,7 @@ header {
 }
 
 h1 {
-    font-family: 'DotGothic16';
+    font-family: var(--Font-Serif);
     font-size: 2.36875rem;
     font-weight: 400;
     letter-spacing: -0.12631rem;

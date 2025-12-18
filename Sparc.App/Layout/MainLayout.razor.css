@@ -15,7 +15,7 @@ button {
 
 nav {
     ul {
-        font-family: 'DotGothic16';
+        font-family: var(--Font-Serif);
         font-size: 0.875rem;
         display: flex;
         gap: 32px;
@@ -40,6 +40,7 @@ nav {
 main {
     max-width: 1024px;
     margin: 24px auto;
+    padding: 0 16px;
 }
 
 @media (orientation: landscape) {

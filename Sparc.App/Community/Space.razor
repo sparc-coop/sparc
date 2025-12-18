@@ -1,0 +1,75 @@
+﻿@page "/spaces/{Id}"
+@page "/spaces/{Id}/{CurrentPage}"
+
+@if (CurrentSpace is not null)
+{
+    <article>
+        <aside>
+            <header>
+                <h1>@CurrentSpace.Name</h1>
+                <p>@CurrentSpace.Topic</p>
+
+                <dl>
+                    <dt>Stage:</dt>
+                    <dd>Ideation</dd>
+                    <dt>Last Updated:</dt>
+                    <dd>@CurrentSpace.LastActiveDate?.ToShortDateString()</dd>
+                </dl>
+
+                <div>
+                    <button class="secondary">Edit</button>
+                </div>
+            </header>
+
+            <nav>
+                <h2>Pages</h2>
+                <ul>
+                    @foreach (var subpage in Pages)
+                    {
+                        <li class="@(CurrentPage == subpage ? "selected " : "")">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
+                            </svg>
+                            <a href="@($"/spaces/{CurrentSpace.Id}/{subpage}")">@subpage</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </aside>
+
+        <section>
+            @if (CurrentPage == "Overview")
+            {
+                <SpaceOverview Space="CurrentSpace" />
+            }
+            else if (CurrentPage == "Discussion")
+            {
+                <SpaceDiscussion Space="CurrentSpace" />
+            }
+            @* else if (CurrentPage == "Tasks")
+            {
+                <SpaceTasks Space="CurrentSpace" />
+            }
+            else if (CurrentPage == "Files")
+            {
+                <SpaceFiles Space="CurrentSpace" />
+            } *@
+            else
+            {
+                <p>Page not found.</p>
+            }
+        </section>
+    </article>
+}
+
+@code {
+    [Parameter] public required string Id { get; set; }
+    [Parameter] public string CurrentPage { get; set; } = "Discussion";
+    BlossomSpace? CurrentSpace;
+    List<string> Pages = ["Overview", "Discussion", "Tasks", "Files"];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        CurrentSpace = await Spaces.GetSpaceAsync("kuviocreative.com", Id);
+    }
+}

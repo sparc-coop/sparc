@@ -1,0 +1,32 @@
+﻿article {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border-bottom: 1px solid var(--Color-Grayscale-100);
+    padding: 16px;
+
+     header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+     }
+
+     figure {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+
+         figcaption {
+             font-size: 0.875rem;
+         }
+     }
+
+     time {
+         color: var(--Color-Grayscale-600);
+         font-size: 0.75rem;
+     }
+
+     button {
+         padding: 10px 12px;
+     }
+}
