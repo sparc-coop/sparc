@@ -22,33 +22,6 @@ p {
     color: var(--Color-Grayscale-800);
 }
 
-form {
-    border: 1px solid var(--Color-Grayscale-100);
-    border-radius: 16px;
-    padding: 8px;
-    display: grid;
-    align-items: center;
-    grid-template-columns: auto 36px;
-    gap: 16px;
-}
-
-textarea {
-    background: transparent;
-    width: 100%;
-    min-block-size: 40px;
-    padding: 8px 16px;
-    outline: none;
-}
-
-button {
-    height: 36px;
-    width: 36px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 14px;
-}
-
 ul {
     margin: 32px 0;
     display: flex;

@@ -1,0 +1,47 @@
+﻿<form @onsubmit="AddPost" @onsubmit:preventDefault=true>
+    <textarea placeholder="Search or type anything..." @onkeydown="Enter" @onkeydown:preventDefault=IsEnter @bind=PostText @bind:event="oninput"></textarea>
+    <button type="submit" disabled="@(PostText.Length == 0)">
+        <img src="/img/Submit.svg" alt="Submit" />
+    </button>
+
+    @if (Error is not null)
+    {
+        <p class="error">@Error</p>
+    }
+</form>
+
+@code {
+    [Parameter] public string SpaceId { get; set; } = Guid.NewGuid().ToString();
+    string PostText { get; set; } = string.Empty;
+    bool IsEnter;
+    string? Error;
+    BlossomUser? User;
+
+    protected override async Task OnInitializedAsync()
+    {
+        User = await Aura.UserInfo();
+    }
+
+    public async Task Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            IsEnter = true;
+            await AddPost();
+        }
+        else
+            IsEnter = false;
+    }
+    
+    private async Task AddPost()
+    {
+        PostText = PostText.TrimEnd('\r', '\n');
+        Error = null;
+        SparcPost post = new(User!, PostText)
+        {
+            SpaceId = SpaceId
+        };
+        var newPost = await Spaces.PostAsync(post.SpaceId, post);
+        Nav.NavigateTo($"/spaces/{newPost.SpaceId}", true);
+    }
+}
