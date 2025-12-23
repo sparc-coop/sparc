@@ -1,7 +1,7 @@
 ﻿@using Sparc.Blossom.Content
- <section>
-     <PostForm SpaceId="@Space.Id" />
-     @foreach (var post in Posts)
+<section>
+    <PostForm SpaceId="@Space.Id" />
+    @foreach (var post in Posts)
     {
         <article>
             <header>
@@ -10,6 +10,8 @@
                     <figcaption>
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
+                        |
+                        @Score(post)
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -33,6 +35,14 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
+    }
+
+    string Score(BlossomPost post)
+    {
+        if (Space.SpaceId == post.MostRelevantSpaceId)
+            return $"{post.DistanceFromMostRelevantSpace:N2} from subspace";
+
+        return $"{post.DistanceFromRootSpace:N2} from root";
     }
 
     string Ago(DateTime timestamp)
