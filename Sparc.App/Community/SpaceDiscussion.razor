@@ -35,6 +35,7 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
+        Posts = Posts.OrderBy(x => Space.SpaceId == x.MostRelevantSpaceId ? x.DistanceFromMostRelevantSpace : x.DistanceFromRootSpace).ToList();
     }
 
     string Score(BlossomPost post)
