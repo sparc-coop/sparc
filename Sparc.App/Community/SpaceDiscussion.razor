@@ -11,7 +11,8 @@
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                         |
-                        @Score(post)
+                        Quality: @Score(post)
+                        | Dissent: @Dissent(post)
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -41,9 +42,16 @@
     string Score(BlossomPost post)
     {
         if (Space.SpaceId == post.MostRelevantSpaceId)
-            return $"{post.DistanceFromMostRelevantSpace:N2} from subspace";
+            return $"{1 - post.DistanceFromMostRelevantSpace:N2} from subspace";
 
-        return $"{post.DistanceFromRootSpace:N2} from root";
+        return $"{1 - post.DistanceFromRootSpace:N2} from root";
+    }
+
+    string Dissent(BlossomPost post)
+    {
+        if (Space.SpaceId == post.MostRelevantSpaceId)
+            return $"{post.DissentFromMostRelevantSpace:N2} from subspace";
+        return $"{post.DissentFromRootSpace:N2} from root";
     }
 
     string Ago(DateTime timestamp)
