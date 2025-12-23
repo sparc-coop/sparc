@@ -5,7 +5,7 @@ using Sparc.Blossom.Spaces;
 namespace Sparc.App.Community;
 
 public class SparcPost(BlossomUser user, string text) 
-    : BlossomPost("sparc.coop", "sparc", Language.Find("en")!, text, user)
+    : BlossomPost("sparc.coop", "", Language.Find("en")!, text, user)
 {
     public SparcPost() : this(new(), "")
     { }

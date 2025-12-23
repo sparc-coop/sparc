@@ -49,7 +49,7 @@
     protected override async Task OnInitializedAsync()
     {
         User = await Aura.UserInfo();
-        AllSpaces = await Spaces.GetSpacesAsync("kuviocreative.com", "conseris");
+        AllSpaces = await Spaces.GetSpacesAsync("sparc.coop");
     }
 
     public async Task Enter(KeyboardEventArgs e)
@@ -67,18 +67,11 @@
     {
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
-        SparcPost post = new(User!, PostText);
-        // Posts.Insert(0, post);
-        // StateHasChanged();
-
-        // //await post.ExtractGraph(Tovik);
-        // await PostRepository.AddAsync(post);
-        // PostText = string.Empty;
-        // SelectedPost = post;
+        SparcPost post = new(User!, PostText)
+        {
+            SpaceId = Guid.NewGuid().ToString()
+        };
+        var newPost = await Spaces.PostAsync(post.SpaceId, post);
+        Nav.NavigateTo($"/spaces/{newPost.SpaceId}");
     }
-
-    // private void Select(SparcPost post)
-    // {
-    //     SelectedPost = post;
-    // }
 }
