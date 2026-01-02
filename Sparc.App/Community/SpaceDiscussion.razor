@@ -11,8 +11,8 @@
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                         |
-                        Quality: @Score(post)
-                        | Dissent: @Dissent(post)
+                        Distance: @($"{post.LinkedSpace(Space.Id)?.Distance:N2}")
+                        | Alignment: @($"{post.LinkedSpace(Space.Id)?.Alignment:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -36,22 +36,7 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        Posts = Posts.OrderBy(x => Space.SpaceId == x.MostRelevantSpaceId ? x.DistanceFromMostRelevantSpace : x.DistanceFromRootSpace).ToList();
-    }
-
-    string Score(BlossomPost post)
-    {
-        if (Space.SpaceId == post.MostRelevantSpaceId)
-            return $"{1 - post.DistanceFromMostRelevantSpace:N2} from subspace";
-
-        return $"{1 - post.DistanceFromRootSpace:N2} from root";
-    }
-
-    string Dissent(BlossomPost post)
-    {
-        if (Space.SpaceId == post.MostRelevantSpaceId)
-            return $"{post.DissentFromMostRelevantSpace:N2} from subspace";
-        return $"{post.DissentFromRootSpace:N2} from root";
+        Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Score).ToList();
     }
 
     string Ago(DateTime timestamp)
