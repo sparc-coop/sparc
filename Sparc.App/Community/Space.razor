@@ -7,8 +7,8 @@
         <aside>
             <header>
                 <h1>@CurrentSpace.Name</h1>
-                <p>@CurrentSpace.Topic</p>
-
+                <p>@CurrentSpace.Summary.Topic</p>
+                <p>@CurrentSpace.Summary.Description</p>
                 <dl>
                     <dt>Stage:</dt>
                     <dd>Ideation</dd>
@@ -22,6 +22,13 @@
                     <dd>@CurrentSpace.Confidence?.ToString("N2")
                         (@(CurrentSpace.ConfidenceDelta > 0 ? "rising" : CurrentSpace.ConfidenceDelta < 0 ? "falling" : "stable"))
                     </dd>
+                    @if (CurrentSpace.RoomType == "Facet")
+                    {
+                        <dt>Left Side:</dt>
+                        <dd>@CurrentSpace.Summary.LeftTopic</dd>
+                        <dt>Right Side:</dt>
+                        <dd>@CurrentSpace.Summary.RightTopic</dd>
+                    }
                 </dl>
 
                 <div>
@@ -32,7 +39,20 @@
             <nav>
                 <h2>Subspaces</h2>
                 <ul>
-                    @foreach (var subspace in Subspaces)
+                    @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Space"))
+                    {
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
+                            </svg>
+                            <a href="@($"/spaces/{subspace.Id}")">@subspace.Name (CONS: @subspace.Consensus?.ToString("N2"), CONF: @subspace.Confidence?.ToString("N2"))</a>
+                        </li>
+                    }
+                </ul>
+
+                <h2>Facets</h2>
+                <ul>
+                    @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Facet"))
                     {
                         <li>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
