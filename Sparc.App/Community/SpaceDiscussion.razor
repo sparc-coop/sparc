@@ -39,7 +39,7 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        Posts = Posts.OrderByDescending(x => Space.RoomType == "Facet" ? x.LinkedSpace(Space.SpaceId)?.Alignment : x.LinkedSpace(Space.SpaceId)?.Score).ToList();
+        Posts = Posts.OrderByDescending(x => Space.RoomType == "Facet" ? x.LinkedSpace(Space.SpaceId)?.Alignment : x.Weight).ToList();
     }
 
     string Ago(DateTime timestamp)
