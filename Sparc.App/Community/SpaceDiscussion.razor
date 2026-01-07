@@ -3,6 +3,7 @@
     <PostForm SpaceId="@Space.Id" />
     @foreach (var post in Posts)
     {
+        var linkedSpace = post.LinkedSpace(Space.Id);
         <article>
             <header>
                 <figure>
@@ -11,8 +12,10 @@
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                         |
-                        Distance: @($"{post.LinkedSpace(Space.Id)?.Distance:N2}")
-                        | Alignment: @($"{post.LinkedSpace(Space.Id)?.Alignment:N2}")
+                        Distance: @($"{linkedSpace?.Distance:N2}")
+                        | Alignment: @($"{linkedSpace?.Alignment:N2}")
+                        | Information: @($"{post.Information:N2}")
+                        | Maturity: @($"{post.Maturity:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
