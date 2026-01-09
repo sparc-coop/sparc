@@ -12,8 +12,8 @@
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                         |
-                        Distance: @($"{linkedSpace?.Distance:N2}")
-                        | Alignment: @($"{linkedSpace?.Alignment:N2}")
+                        Distance: @($"{linkedSpace?.Distance:N8}")
+                        | Alignment: @($"{linkedSpace?.Alignment:N8}")
                         | Coherence: @($"{post.CoherenceWeight:N2}")
                         | Movement: @($"{post.UserMovementWeight:N2}")
                     </figcaption>
@@ -39,7 +39,7 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        Posts = Posts.OrderByDescending(x => Space.RoomType == "Facet" ? x.LinkedSpace(Space.SpaceId)?.Distance : x.CoherenceWeight).ToList();
+        Posts = Posts.OrderByDescending(x => Space.RoomType == "Facet" ? x.LinkedSpace(Space.SpaceId)?.Distance : x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
     }
 
     string Ago(DateTime timestamp)
