@@ -37,7 +37,7 @@
             </header>
 
             <nav>
-                <h2>Subspaces</h2>
+               @*  <h2>Subspaces</h2>
                 <ul>
                     @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Space"))
                     {
@@ -48,9 +48,9 @@
                             <a href="@($"/spaces/{subspace.Id}")">@subspace.Name (CONS: @subspace.Consensus?.ToString("N2"), CONF: @subspace.Confidence?.ToString("N2"))</a>
                         </li>
                     }
-                </ul>
+                </ul> *@
 
-                <h2>Facets</h2>
+                <h2>Challenges</h2>
                 <ul>
                     @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Facet").OrderByDescending(x => x.Weight))
                     {

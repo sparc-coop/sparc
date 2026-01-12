@@ -15,7 +15,7 @@
                         Distance: @($"{linkedSpace?.Distance:N8}")
                         | Alignment: @($"{linkedSpace?.Alignment:N8}")
                         | Coherence: @($"{post.CoherenceWeight:N2}")
-                        | Movement: @($"{post.X:N2}")
+                        | X Position: @($"{post.X:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -39,7 +39,10 @@
     protected override async Task OnParametersSetAsync()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        Posts = Posts.OrderByDescending(x => Space.RoomType == "Facet" ? x.LinkedSpace(Space.SpaceId)?.Distance : x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
+        if (Space.RoomType == "Facet")
+            Posts = Posts.OrderBy(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
+        else
+            Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
     }
 
     string Ago(DateTime timestamp)
