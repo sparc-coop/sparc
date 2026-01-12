@@ -66,6 +66,16 @@
                     }
                 </ul>
 
+                <h2>Members</h2>
+                <ul>
+                    @foreach (var member in Subspaces.Where(x => x.RoomType == "User"))
+                    {
+                        <li>
+                            @member.Name (X: @member.X)
+                        </li>
+                    }
+                </ul>
+
                 <h2>Pages</h2>
                 <ul>
                     @foreach (var subpage in Pages)
@@ -115,8 +125,8 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        CurrentSpace = await Spaces.GetSpaceAsync("sparc.coop", Id);
-        Subspaces = await Spaces.GetSpacesAsync("sparc.coop", Id);
+        CurrentSpace = await Spaces.GetSpaceAsync(Id);
+        Subspaces = await Spaces.GetSpacesAsync(Id);
         Subspaces = Subspaces.OrderByDescending(x => x.Confidence).ToList();
         if (string.IsNullOrWhiteSpace(CurrentPage))
             CurrentPage = "Discussion";
