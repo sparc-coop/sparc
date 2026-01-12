@@ -7,8 +7,11 @@
         <aside>
             <header>
                 <h1>@CurrentSpace.Name</h1>
-                <p>@CurrentSpace.Summary.Topic</p>
-                <p>@CurrentSpace.Summary.Description</p>
+                <p>@CurrentSpace.Summary.Topic<br /><br /></p>
+                @if (CurrentSpace.RoomType == "Facet")
+                {
+                    <p>Goal: @CurrentSpace.Summary.Description</p>
+                }
                 <dl>
                     <dt>Stage:</dt>
                     <dd>Ideation</dd>
