@@ -1,6 +1,9 @@
 ﻿class SparcGame extends Phaser.Scene {
     height = 500;
     width = 1280;
+    player;
+    platforms;
+    cursors;
 
     preload() {
         this.load.setBaseURL("https://localhost:7243/img/game");
@@ -30,16 +33,36 @@
         this.add.tileSprite(640, this.height * 0.7, this.width, 197, 'bg-tree');
         this.addRandomImages('tree', 6, 4, 0, this.width, this.height * 0.55, this.height * 0.58);
         this.addRandomImages('grass', 6, 2, 0, this.width, this.height - 110, this.height);
-        this.add.tileSprite(640, this.height - 42, this.width, 84, 'ground');
+        var ground = this.add.tileSprite(640, this.height - 42, this.width, 84, 'ground');
+
+        this.platforms = this.physics.add.existing(ground, 1);
+
+        this.player = this.physics.add.sprite(100, 200, 'character');
+        this.player.setBounce(0.2);
+        this.player.setCollideWorldBounds(true);
+        this.player.body.setGravityY(300);
+
+        this.physics.add.collider(this.player, this.platforms);
+
         this.add.image(100, this.height - 280, 'long-tree');
         this.add.image(1000, this.height - 280, 'long-tree');
 
+        this.cursors = this.input.keyboard.createCursorKeys();
 
         //var platforms = this.physics.add.staticGroup();
         //platforms.create(0, this.height - 42, 'ground');
     }
 
     update() {
+        if (this.cursors.left.isDown)
+            this.player.setVelocityX(-160);
+        else if (this.cursors.right.isDown)
+            this.player.setVelocityX(160);
+        else
+            this.player.setVelocityX(0);
+
+        if (this.cursors.up.isDown && this.player.body.touching.down)
+            this.player.setVelocityY(-330);
     }
 
     randomPosition(min, max) {
@@ -47,9 +70,7 @@
     }
 
     randomImg(name, max) {
-        var result = name + '_' + (Math.floor(Math.random() * max) + 1);
-        console.log(result);
-        return result;
+        return name + '_' + (Math.floor(Math.random() * max) + 1);
     }
 
     addRandomImages(name, count, total, minX, maxX, minY, maxY) {
