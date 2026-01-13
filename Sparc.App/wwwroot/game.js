@@ -1,6 +1,6 @@
 ﻿class SparcGame extends Phaser.Scene {
     height = 500;
-    width = 1280;
+    width = 1280 * 3;
     player;
     platforms;
     cursors;
@@ -26,28 +26,37 @@
     }
 
     create() {
-        this.add.image(640, this.height / 2, 'sky');
+        this.physics.world.setBounds(0, 0, this.width, this.height);
 
-        this.addRandomImages('cloud', 4, 4, 0, this.width, 0, 200);
-        this.add.tileSprite(640, this.height / 2, this.width, 182, 'bg-mountain');
-        this.add.tileSprite(640, this.height * 0.7, this.width, 197, 'bg-tree');
-        this.addRandomImages('tree', 6, 4, 0, this.width, this.height * 0.55, this.height * 0.58);
-        this.addRandomImages('grass', 6, 2, 0, this.width, this.height - 110, this.height);
-        var ground = this.add.tileSprite(640, this.height - 42, this.width, 84, 'ground');
+        this.add.tileSprite(this.width / 2, this.height / 2, this.width, 500, 'sky');
+
+        this.addRandomImages('cloud', 12, 4, 0, this.width, 0, 200);
+        this.add.tileSprite(this.width / 2, this.height / 2, this.width, 182, 'bg-mountain');
+        this.add.tileSprite(this.width / 2, this.height * 0.7, this.width, 197, 'bg-tree');
+        this.addRandomImages('tree', 18, 4, 0, this.width, this.height * 0.55, this.height * 0.58);
+        this.addRandomImages('grass', 18, 2, 0, this.width, this.height - 110, this.height);
+        var ground = this.add.tileSprite(640, this.height - 42, this.width * 2, 84, 'ground');
 
         this.platforms = this.physics.add.existing(ground, 1);
 
-        this.player = this.physics.add.sprite(100, 200, 'character');
+        this.player = this.physics.add.sprite(0, 320, 'character');
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
         this.player.body.setGravityY(300);
+        this.player.body.setOffset(0, -15);
 
         this.physics.add.collider(this.player, this.platforms);
 
-        this.add.image(100, this.height - 280, 'long-tree');
+        this.add.image(300, this.height - 280, 'long-tree');
         this.add.image(1000, this.height - 280, 'long-tree');
 
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        var camera = this.cameras.main;
+        camera.setBounds(0, 0, this.width, 500);
+        camera.startFollow(this.player);
+        camera.setDeadzone(400, 0);
+        camera.setFollowOffset(0, 0);
 
         //var platforms = this.physics.add.staticGroup();
         //platforms.create(0, this.height - 42, 'ground');
@@ -55,14 +64,14 @@
 
     update() {
         if (this.cursors.left.isDown)
-            this.player.setVelocityX(-160);
+            this.player.setVelocityX(-320);
         else if (this.cursors.right.isDown)
-            this.player.setVelocityX(160);
+            this.player.setVelocityX(320);
         else
             this.player.setVelocityX(0);
 
         if (this.cursors.up.isDown && this.player.body.touching.down)
-            this.player.setVelocityY(-330);
+            this.player.setVelocityY(-80);
     }
 
     randomPosition(min, max) {
