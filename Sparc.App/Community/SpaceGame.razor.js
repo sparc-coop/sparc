@@ -22,6 +22,7 @@ class SpaceDiscussion extends Phaser.Scene {
         this.load.image('ground', 'sprites/ground.png'); // 579x84
         this.load.image('long-tree', 'sprites/long-tree.png');
         this.load.image('tree_4', 'sprites/two-tree.png');
+        this.load.image('dungeon', 'sprites/dungeon.png');
 
         for (var i = 1; i <= 4; i++)
             this.load.image('cloud_' + i, 'sprites/cloud_' + i + '.png');
@@ -86,17 +87,21 @@ class SpaceDiscussion extends Phaser.Scene {
     }
 
     createPlayer(newPlayer) {
-        console.log('Creating player ' + newPlayer.name + ' at ' + this.x(newPlayer.x));
-        var player = this.physics.add.sprite(this.x(newPlayer.x), this.height - 180, 'character');
+        var type = newPlayer.roomType == 'User' ? 'character' : 'dungeon';
+        console.log('Creating ' + type + newPlayer.weight + ' ' + newPlayer.name + ' at ' + this.x(newPlayer.x));
+        var player = this.physics.add.sprite(this.x(newPlayer.x), this.height - 180, type);
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
+        player.setOrigin(0.5, 1);
         player.body.setGravityY(300);
-        player.body.setOffset(0, -15);
         player.setName(newPlayer.name);
+        if (newPlayer.weight)
+            player.scale = newPlayer.weight * 4;
+        else
+            player.body.setOffset(0, -15);
+
         this.players[newPlayer.name] = player;
         this.physics.add.collider(player, this.platforms);
-
-        console.log('players', this.players);
 
         return player;
     }
@@ -120,6 +125,7 @@ class SpaceDiscussion extends Phaser.Scene {
     }
 
     x(percent) {
+        percent = Math.abs(percent);
         if (percent > 2)
             percent = percent / 100;
         return Math.floor(this.width * percent);
