@@ -96,7 +96,7 @@ class SpaceDiscussion extends Phaser.Scene {
         player.body.setGravityY(300);
         player.setName(newPlayer.name);
         if (newPlayer.weight)
-            player.scale = newPlayer.weight * 4;
+            player.scale = newPlayer.weight * 10;
         else
             player.body.setOffset(0, -15);
 
