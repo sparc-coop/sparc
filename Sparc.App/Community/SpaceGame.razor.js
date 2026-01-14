@@ -7,6 +7,7 @@ class SpaceDiscussion extends Phaser.Scene {
     player;
     platforms;
     cursors;
+    isCreated = false;
 
     constructor() {
         super('SpaceDiscussion');
@@ -47,24 +48,21 @@ class SpaceDiscussion extends Phaser.Scene {
         this.platforms = this.physics.add.existing(ground, 1);
 
         console.log(data);
-
         for (var i = 0; i < data.players.length; i++) {
-            this.players[data.players[i].name] = this.createPlayer(data.players[i]);
-            this.physics.add.collider(this.players[data.players[i].name], this.platforms);
-            if (i == 0)
-                this.player = this.players[data.players[i].name];
+            this.createPlayer(data.players[i]);
         }
 
         this.add.image(this.x(23), this.y(44), 'long-tree');
-        this.add.image(this.x(75), this.y(44), 'long-tree');
+        //this.add.image(this.x(75), this.y(44), 'long-tree');
 
         //this.cursors = this.input.keyboard.createCursorKeys();
 
         var camera = this.cameras.main;
         camera.setBounds(0, 0, this.width, this.height);
-        camera.startFollow(this.player);
         camera.setDeadzone(400, 0);
         camera.setFollowOffset(0, 0);
+
+        this.isCreated = true;
 
         //var platforms = this.physics.add.staticGroup();
         //platforms.create(0, this.height - 42, 'ground');
@@ -87,22 +85,33 @@ class SpaceDiscussion extends Phaser.Scene {
         }
     }
 
-    createPlayer(player) {
-        console.log('Creating player ' + player.name + ' at ' + this.x(player.x));
-        var player = this.physics.add.sprite(this.x(player.x), this.height - 180, 'character');
+    createPlayer(newPlayer) {
+        console.log('Creating player ' + newPlayer.name + ' at ' + this.x(newPlayer.x));
+        var player = this.physics.add.sprite(this.x(newPlayer.x), this.height - 180, 'character');
         player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.body.setGravityY(300);
         player.body.setOffset(0, -15);
-        player.setName(player.name);
+        player.setName(newPlayer.name);
+        this.players[newPlayer.name] = player;
+        this.physics.add.collider(player, this.platforms);
+
+        console.log('players', this.players);
+
         return player;
     }
 
     updateData(data) {
+        if (!this.isCreated)
+            return;
+
         for (var i = 0; i < data.players.length; i++) {
             var player = data.players[i];
             var existing = this.players[player.name];
-            if (existing && existing.state != this.x(player.x)) {
+            if (!existing) {
+                existing = this.createPlayer(player);
+            }
+            else if (existing.state != this.x(player.x)) {
                 console.log('Moving player ' + player.name + ' to ' + this.x(player.x));
                 existing.state = this.x(player.x);
                 this.physics.moveTo(existing, this.x(player.x), existing.y, 160);
