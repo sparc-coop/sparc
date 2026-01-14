@@ -37,10 +37,11 @@
 
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public EventCallback OnUpdate { get; set; }
     List<BlossomPost> Posts = [];
     SpaceGame? Game;
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         await Update();
     }
@@ -48,16 +49,16 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        
+
         if (Space.RoomType == "Facet")
             Posts = Posts.OrderBy(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
         else
             Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
-        
+
         if (Game != null)
             await Game.Update();
 
-        StateHasChanged();
+        await OnUpdate.InvokeAsync();
     }
 
     string Ago(DateTime timestamp)

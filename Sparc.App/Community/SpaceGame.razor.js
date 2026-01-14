@@ -87,6 +87,8 @@ class SpaceDiscussion extends Phaser.Scene {
     }
 
     createPlayer(newPlayer) {
+        if (newPlayer.roomType != 'User')
+            return;
         var type = newPlayer.roomType == 'User' ? 'character' : 'dungeon';
         console.log('Creating ' + type + newPlayer.weight + ' ' + newPlayer.name + ' at ' + this.x(newPlayer.x));
         var player = this.physics.add.sprite(this.x(newPlayer.x), this.height - 180, type);
