@@ -80,6 +80,11 @@ class SpaceDiscussion extends Phaser.Scene {
 
         //if (this.cursors.up.isDown && this.player.body.touching.down)
         //    this.player.setVelocityY(-160);
+
+        for (let key in this.players) {
+            if (this.players[key].state && this.hasReachedTarget(this.players[key]))
+                this.players[key].body.stop();
+        }
     }
 
     createPlayer(player) {
@@ -93,10 +98,16 @@ class SpaceDiscussion extends Phaser.Scene {
         return player;
     }
 
-    updatePlayer(player) {
-        var existing = this.players[player.name];
-        if (existing)
-            this.physics.moveTo(existing, this.x(player.x), existing.y, 160);
+    updateData(data) {
+        for (var i = 0; i < data.players.length; i++) {
+            var player = data.players[i];
+            var existing = this.players[player.name];
+            if (existing && existing.state != this.x(player.x)) {
+                console.log('Moving player ' + player.name + ' to ' + this.x(player.x));
+                existing.state = this.x(player.x);
+                this.physics.moveTo(existing, this.x(player.x), existing.y, 160);
+            }
+        }
     }
 
     x(percent) {
@@ -109,6 +120,16 @@ class SpaceDiscussion extends Phaser.Scene {
         if (percent > 1)
             percent = percent / 100;
         return Math.floor(this.height * percent);
+    }
+
+    hasReachedTarget(object) {
+        var hasReached = object.body.velocity.x < 0 ? object.x < object.state : object.x > object.state;
+        if (hasReached) {
+            object.state = null;
+            return true;
+        }
+
+        return false;
     }
 
     randomPosition(min, max) {
@@ -140,4 +161,9 @@ export function start(data) {
 
     game = new Phaser.Game(config);
     game.scene.start('SpaceDiscussion', data);
+}
+
+export function update(data) {
+    if (game && game.scene.keys['SpaceDiscussion'])
+        game.scene.keys['SpaceDiscussion'].updateData(data);
 }

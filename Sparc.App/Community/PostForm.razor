@@ -12,6 +12,7 @@
 
 @code {
     [Parameter] public string SpaceId { get; set; } = Guid.NewGuid().ToString();
+    [Parameter] public EventCallback OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
     bool IsEnter;
     string? Error;
@@ -32,7 +33,7 @@
         else
             IsEnter = false;
     }
-    
+
     private async Task AddPost()
     {
         PostText = PostText.TrimEnd('\r', '\n');
@@ -42,6 +43,12 @@
             SpaceId = SpaceId
         };
         var newPost = await Spaces.PostAsync(post.SpaceId, post);
-        Nav.NavigateTo($"/spaces/{newPost.SpaceId}", true);
+        if (OnUpdate.HasDelegate)
+        {
+            await OnUpdate.InvokeAsync();
+            PostText = string.Empty;
+        }
+        else
+            Nav.NavigateTo($"/spaces/{newPost.SpaceId}", true);
     }
 }

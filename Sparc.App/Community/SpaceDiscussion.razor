@@ -1,6 +1,9 @@
 ﻿@using Sparc.Blossom.Content
+
+<SpaceGame Space="Space" @ref="Game" />
+
 <section>
-    <PostForm SpaceId="@Space.Id" />
+    <PostForm SpaceId="@Space.Id" OnUpdate="Update" />
     @foreach (var post in Posts)
     {
         var linkedSpace = post.LinkedSpace(Space.Id);
@@ -35,14 +38,26 @@
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
     List<BlossomPost> Posts = [];
+    SpaceGame? Game;
 
     protected override async Task OnParametersSetAsync()
     {
+        await Update();
+    }
+
+    async Task Update()
+    {
         Posts = await Spaces.GetPostsAsync(Space.Id);
+        
         if (Space.RoomType == "Facet")
             Posts = Posts.OrderBy(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
         else
             Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
+        
+        if (Game != null)
+            await Game.Update();
+
+        StateHasChanged();
     }
 
     string Ago(DateTime timestamp)

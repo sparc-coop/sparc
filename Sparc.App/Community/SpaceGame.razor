@@ -20,4 +20,12 @@
             await Game.InvokeVoidAsync("start", Data);
         }
     }
+
+    public async Task Update()
+    {
+        var subspaces = await Spaces.GetSpacesAsync(Space.Id);
+        Data = new(subspaces.Where(x => x.RoomType == "User").ToList());
+        if (Game != null)
+            await Game.InvokeVoidAsync("update", Data);
+    }
 }
