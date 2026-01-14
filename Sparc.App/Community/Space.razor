@@ -92,6 +92,8 @@
         </aside>
 
         <section>
+            <SpaceGame Space="CurrentSpace" />
+
             @if (CurrentPage == "Overview")
             {
                 <SpaceOverview Space="CurrentSpace" />
@@ -131,4 +133,5 @@
         if (string.IsNullOrWhiteSpace(CurrentPage))
             CurrentPage = "Discussion";
     }
+
 }

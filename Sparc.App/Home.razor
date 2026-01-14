@@ -16,8 +16,6 @@
 
     <PostForm />
 
-    <div id="game"></div>
-
     <ul>
         @foreach (var space in AllSpaces)
         {
@@ -31,7 +29,6 @@
 </section>
 
 @inject ISparcContent Tovik
-@inject IJSRuntime Js
 @code
 {
     List<BlossomSpace> AllSpaces = [];
@@ -39,11 +36,5 @@
     protected override async Task OnInitializedAsync()
     {
         AllSpaces = await Spaces.GetSpacesAsync("sparc.coop");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-            await Js.InvokeVoidAsync("startGame");
     }
 }

@@ -1,0 +1,23 @@
+﻿<div id="game"></div>
+
+@code {
+    [Parameter] public required BlossomSpace Space { get; set; }
+    IJSObjectReference? Game;
+    public record GameData(List<BlossomSpace> Players);
+    GameData? Data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var subspaces = await Spaces.GetSpacesAsync(Space.Id);
+        Data = new(subspaces.Where(x => x.RoomType == "User").ToList());
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Game == null && Data != null)
+        {
+            Game = await Js.ImportAsync("./Community/SpaceGame.razor.js");
+            await Game.InvokeVoidAsync("start", Data);
+        }
+    }
+}
