@@ -4,10 +4,10 @@ using Sparc.Blossom.Spaces;
 
 namespace Sparc.App.Community;
 
-public class SparcPost(BlossomUser user, string text) 
-    : BlossomPost("sparc.coop", "", Language.Find("en")!, text, user)
+public class SparcPost(BlossomSpace space, BlossomUser user, string text) 
+    : BlossomPost(space.SpaceId, space.Id, Language.Find("en")!, text, user)
 {
-    public SparcPost() : this(new(), "")
+    public SparcPost() : this(new(""), new(), "")
     { }
     
 

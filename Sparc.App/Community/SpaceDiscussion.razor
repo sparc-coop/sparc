@@ -3,7 +3,7 @@
 <SpaceGame Space="Space" @ref="Game" />
 
 <section>
-    <PostForm SpaceId="@Space.Id" OnUpdate="Update" />
+    <PostForm Space="Space" OnUpdate="Update" />
     @foreach (var post in Posts)
     {
         var linkedSpace = post.LinkedSpace(Space.Id);

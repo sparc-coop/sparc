@@ -11,7 +11,7 @@
 </form>
 
 @code {
-    [Parameter] public string SpaceId { get; set; } = Guid.NewGuid().ToString();
+    [Parameter] public BlossomSpace Space { get; set; } = new("sparc.coop");
     [Parameter] public EventCallback OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
     bool IsEnter;
@@ -38,10 +38,7 @@
     {
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
-        SparcPost post = new(User!, PostText)
-        {
-            SpaceId = SpaceId
-        };
+        SparcPost post = new(Space, User!, PostText);
         var newPost = await Spaces.PostAsync(post.SpaceId, post);
         if (OnUpdate.HasDelegate)
         {
