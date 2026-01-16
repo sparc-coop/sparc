@@ -3,11 +3,12 @@
 class SpaceDiscussion extends Phaser.Scene {
     height = 500;
     width = 1280;
-    players = {};
+    sprites = {};
     player;
     platforms;
     cursors;
     isCreated = false;
+    space;
 
     constructor() {
         super('SpaceDiscussion');
@@ -18,7 +19,7 @@ class SpaceDiscussion extends Phaser.Scene {
         this.load.image('sky', 'skies/sky.png');
         this.load.image('bg-mountain', 'sprites/bg-mountain.png'); // 932x183
         this.load.image('bg-tree', 'sprites/bg-tree.png'); // 519x197
-        this.load.image('character', 'sprites/character.png');
+        this.load.image('User', 'sprites/character.png');
         this.load.image('ground', 'sprites/ground.png'); // 579x84
         this.load.image('long-tree', 'sprites/long-tree.png');
         this.load.image('tree_4', 'sprites/two-tree.png');
@@ -34,7 +35,7 @@ class SpaceDiscussion extends Phaser.Scene {
             this.load.image('tree_' + k, 'sprites/tree_' + k + '.png');
     }
 
-    create(data) {
+    create(space) {
         this.physics.world.setBounds(0, 0, this.width, this.height);
 
         this.add.tileSprite(this.x(50), this.y(50), this.width, this.height, 'sky');
@@ -48,9 +49,11 @@ class SpaceDiscussion extends Phaser.Scene {
 
         this.platforms = this.physics.add.existing(ground, 1);
 
-        console.log(data);
-        for (var i = 0; i < data.players.length; i++) {
-            this.createPlayer(data.players[i]);
+        console.log(space);
+        this.space = space;
+
+        for (var i = 0; i < this.space.linkedSpaces.length; i++) {
+            this.createObject(this.space.linkedSpaces[i]);
         }
 
         this.add.image(this.x(23), this.y(44), 'long-tree');
@@ -80,49 +83,55 @@ class SpaceDiscussion extends Phaser.Scene {
         //if (this.cursors.up.isDown && this.player.body.touching.down)
         //    this.player.setVelocityY(-160);
 
-        for (let key in this.players) {
-            if (this.players[key].state && this.hasReachedTarget(this.players[key]))
-                this.players[key].body.stop();
+        for (let key in this.sprites) {
+            if (this.sprites[key].state && this.hasReachedTarget(this.sprites[key]))
+                this.sprites[key].body.stop();
         }
     }
 
-    createPlayer(newPlayer) {
-        if (newPlayer.roomType != 'User')
+    createObject(obj) {
+        if (obj.type != 'User')
             return;
-        var type = newPlayer.roomType == 'User' ? 'character' : 'dungeon';
-        console.log('Creating ' + type + newPlayer.weight + ' ' + newPlayer.name + ' at ' + this.x(newPlayer.x));
-        var player = this.physics.add.sprite(this.x(newPlayer.x), this.height - 180, type);
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
-        player.setOrigin(0.5, 1);
-        player.body.setGravityY(300);
-        player.setName(newPlayer.name);
-        if (newPlayer.weight)
-            player.scale = newPlayer.weight * 10;
+
+        console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x));
+        var sprite = this.physics.add.sprite(this.x(obj.x), this.height - 180, obj.type);
+        sprite.setBounce(0.2);
+        sprite.setCollideWorldBounds(true);
+        sprite.setOrigin(0.5, 1);
+        sprite.body.setGravityY(300);
+        sprite.setName(obj.name);
+
+        if (obj.weight)
+            sprite.scale = obj.weight * 10;
         else
-            player.body.setOffset(0, -15);
+            sprite.body.setOffset(0, -15);
 
-        this.players[newPlayer.name] = player;
-        this.physics.add.collider(player, this.platforms);
+        this.sprites[obj.name] = sprite;
+        this.physics.add.collider(sprite, this.platforms);
 
-        return player;
+        return sprite;
     }
 
-    updateData(data) {
+    updateObject(obj) {
+        var existing = this.sprites[obj.name];
+        if (!existing) {
+            existing = this.createObject(obj);
+        }
+        else if (existing.state != this.x(obj.x)) {
+            console.log('Moving ' + obj.type + ' ' + obj.name + ' to ' + this.x(obj.x));
+            existing.state = this.x(obj.x);
+            this.physics.moveTo(existing, this.x(obj.x), existing.y, 160);
+        }
+    }
+
+    updateSpace(space) {
         if (!this.isCreated)
             return;
 
-        for (var i = 0; i < data.players.length; i++) {
-            var player = data.players[i];
-            var existing = this.players[player.name];
-            if (!existing) {
-                existing = this.createPlayer(player);
-            }
-            else if (existing.state != this.x(player.x)) {
-                console.log('Moving player ' + player.name + ' to ' + this.x(player.x));
-                existing.state = this.x(player.x);
-                this.physics.moveTo(existing, this.x(player.x), existing.y, 160);
-            }
+        this.space = space;
+
+        for (var i = 0; i < this.space.linkedSpaces.length; i++) {
+            this.updateObject(this.space.linkedSpaces[i]);
         }
     }
 
@@ -139,10 +148,10 @@ class SpaceDiscussion extends Phaser.Scene {
         return Math.floor(this.height * percent);
     }
 
-    hasReachedTarget(object) {
-        var hasReached = object.body.velocity.x < 0 ? object.x < object.state : object.x > object.state;
+    hasReachedTarget(obj) {
+        var hasReached = obj.body.velocity.x < 0 ? obj.x < obj.state : obj.x > obj.state;
         if (hasReached) {
-            object.state = null;
+            obj.state = null;
             return true;
         }
 
@@ -180,7 +189,7 @@ export function start(data) {
     game.scene.start('SpaceDiscussion', data);
 }
 
-export function update(data) {
+export function update(space) {
     if (game && game.scene.keys['SpaceDiscussion'])
-        game.scene.keys['SpaceDiscussion'].updateData(data);
+        game.scene.keys['SpaceDiscussion'].updateSpace(space);
 }

@@ -15,10 +15,10 @@
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                         |
-                        Distance: @($"{linkedSpace?.Distance:N8}")
-                        | Alignment: @($"{linkedSpace?.Alignment:N8}")
+                        Distance: @($"{linkedSpace?.Distance:N2}")
+                        | Alignment: @($"{linkedSpace?.Alignment:N2}")
                         | Coherence: @($"{post.CoherenceWeight:N2}")
-                        | X Position: @($"{post.X:N2}")
+                        | X Position: @($"{linkedSpace?.X:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -54,9 +54,6 @@
             Posts = Posts.OrderBy(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
         else
             Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
-
-        if (Game != null)
-            await Game.Update();
 
         await OnUpdate.InvokeAsync();
     }

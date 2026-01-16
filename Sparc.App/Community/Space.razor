@@ -19,11 +19,13 @@
                     <dt>Last Updated:</dt>
                     <dd>@CurrentSpace.LastActiveDate?.ToShortDateString()</dd>
                     <dt>Consensus:</dt>
-                    <dd>@CurrentSpace.Consensus?.ToString("N2")
+                    <dd>
+                        @CurrentSpace.Consensus?.ToString("N2")
                         (@(CurrentSpace.ConsensusDelta > 0 ? "rising" : CurrentSpace.ConsensusDelta < 0 ? "falling" : "stable"))
                     </dd>
                     <dt>Confidence:</dt>
-                    <dd>@CurrentSpace.Confidence?.ToString("N2")
+                    <dd>
+                        @CurrentSpace.Confidence?.ToString("N2")
                         (@(CurrentSpace.ConfidenceDelta > 0 ? "rising" : CurrentSpace.ConfidenceDelta < 0 ? "falling" : "stable"))
                     </dd>
                     @if (CurrentSpace.RoomType == "Quest")
@@ -41,7 +43,7 @@
             </header>
 
             <nav>
-               @*  <h2>Subspaces</h2>
+                @*  <h2>Subspaces</h2>
                 <ul>
                     @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Space"))
                     {
@@ -54,25 +56,28 @@
                     }
                 </ul> *@
 
-                <h2>Quests</h2>
-                <ul>
-                    @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Quest").OrderBy(x => x.X))
-                    {
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
-                            </svg>
-                            <a href="@($"/spaces/{CurrentSpace.Id}/subspaces/{subspace.Id}")">@subspace.Name (USR: @subspace.Members.Count, THR: @subspace.X?.ToString("N3"))</a>
-                        </li>
-                    }
-                </ul>
+                <h2>Active Quests</h2>
+                @if (UserSpace != null)
+                {
+                    <ul>
+                        @foreach (var quest in UserSpace.LinkedSpaces.Where(x => x.Type == "Quest"))
+                        {
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
+                                </svg>
+                                <a href="@($"/spaces/{UserSpace.Id}/subspaces/{quest.SpaceId}")">@quest.Name</a>
+                            </li>
+                        }
+                    </ul>
+                }
 
                 <h2>Members</h2>
                 <ul>
-                    @foreach (var member in Subspaces.Where(x => x.RoomType == "User"))
+                    @foreach (var member in CurrentSpace.LinkedSpaces.Where(x => x.Type == "User"))
                     {
                         <li>
-                            @member.Name
+                            @member.Name (@member.X.ToString("N2"))
                         </li>
                     }
                 </ul>
@@ -122,7 +127,7 @@
     [Parameter] public string CurrentPage { get; set; } = "Discussion";
     [Parameter] public string? ParentSpaceId { get; set; }
     BlossomSpace? CurrentSpace;
-    List<BlossomSpace> Subspaces = [];
+    BlossomSpace? UserSpace;
     List<string> Pages = ["Overview", "Discussion", "Tasks", "Files"];
 
     protected override async Task OnParametersSetAsync()
@@ -135,6 +140,6 @@
     async Task Update()
     {
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
-        Subspaces = await Spaces.GetSpacesAsync(Id);
+        UserSpace = await Spaces.GetSpaceAsync(Id, "User");
     }
 }

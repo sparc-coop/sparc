@@ -3,29 +3,24 @@
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
     IJSObjectReference? Game;
-    public record GameData(List<BlossomSpace> Players);
-    GameData? Data;
 
     protected override async Task OnInitializedAsync()
     {
         var subspaces = await Spaces.GetSpacesAsync(Space.Id);
-        Data = new(subspaces);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (Game == null && Data != null)
+        if (Game == null)
         {
             Game = await Js.ImportAsync("./Community/SpaceGame.razor.js");
-            await Game.InvokeVoidAsync("start", Data);
+            await Game.InvokeVoidAsync("start", Space);
         }
     }
 
-    public async Task Update()
+    protected override async Task OnParametersSetAsync()
     {
-        var subspaces = await Spaces.GetSpacesAsync(Space.Id);
-        Data = new(subspaces);
         if (Game != null)
-            await Game.InvokeVoidAsync("update", Data);
+            await Game.InvokeVoidAsync("update", Space);
     }
 }
