@@ -6,7 +6,7 @@
     <PostForm Space="Space" OnUpdate="Update" />
     @foreach (var post in Posts)
     {
-        var linkedSpace = post.LinkedSpace(Space.Id);
+        var linkedSpace = post.LinkedSpace(UserSpace.Id);
         <article>
             <header>
                 <figure>
@@ -34,6 +34,7 @@
 
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public required BlossomSpace UserSpace { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     List<BlossomPost> Posts = [];
     SpaceGame? Game;
@@ -47,7 +48,7 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        GameObjects = Posts.Select(p => p.LinkedSpace(Space.Id)).Where(ls => ls != null).ToList()!;
+        GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id)).Where(ls => ls != null).ToList()!;
         await OnUpdate.InvokeAsync();
         GameObjects.AddRange(Space.LinkedSpaces);
     }

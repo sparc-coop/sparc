@@ -79,10 +79,9 @@ class Starfield extends Phaser.Scene {
     }
 
     y(percent) {
-        percent = 1 - percent;
         if (Math.abs(percent) > 2)
             percent = percent / 100;
-        return Math.floor(this.height * percent);
+        return Math.floor(this.height / 2 * percent) + this.height / 2;
     }
 
     hasReachedTarget(obj) {
