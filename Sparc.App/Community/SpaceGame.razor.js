@@ -1,6 +1,105 @@
 ﻿let game = {};
 
-class SpaceDiscussion extends Phaser.Scene {
+class Starfield extends Phaser.Scene {
+    height = 500;
+    width = 1280;
+    sprites = {};
+    isCreated = false;
+    objects;
+
+    constructor() {
+        super('Starfield');
+    }
+
+    preload() {
+        this.load.setBaseURL("https://localhost:7243/img/starfield");
+    }
+
+    create(objects) {
+        this.physics.world.setBounds(0, 0, this.width, this.height);
+        this.isCreated = true;
+        this.updateSpace(objects);
+    }
+
+    updateSpace(objects) {
+        console.log('updating', objects);
+        if (!this.isCreated)
+            return;
+
+        for (var i = 0; i < objects.length; i++) {
+            this.updateObject(objects[i]);
+        }
+    }
+
+    update() {
+        for (let key in this.sprites) {
+            if (this.sprites[key].data.has('destination') && this.hasReachedTarget(this.sprites[key])) {
+                this.sprites[key].body.stop();
+                this.sprites[key].data.remove('destination');
+                console.log('stopped ' + key);
+            }
+        }
+    }
+
+    getOrCreateObject(obj) {
+        var sprite = this.sprites[obj.name];
+        if (!sprite) {
+            console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x) + ', ' + this.y(obj.y));
+            sprite = obj.type == 'Ephemeral'
+                ? this.add.circle(this.x(obj.x), this.y(obj.y), 4, 0xffffff)
+                : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
+
+            sprite.setName(obj.name);
+            sprite.setDataEnabled();
+            this.sprites[obj.name] = sprite;
+            this.physics.add.existing(sprite);
+        }
+
+        return sprite;
+    }
+
+    updateObject(obj) {
+        var sprite = this.getOrCreateObject(obj);
+        if (sprite.data) {
+            var newX = this.x(obj.x);
+            var newY = this.y(obj.y);
+            var distance = Phaser.Math.Distance.Between(sprite.x, sprite.y, newX, newY);
+            var velocity = distance / 2;
+
+            console.log('Moving ' + obj.type + ' ' + obj.name + ' from ' + sprite.x + ', ' + sprite.y + ' to ' + newX + ', ' + newY + '(distance ' + distance + ') at velocity ' + velocity);
+            sprite.setData('destination', { x: newX, y: newY });
+            this.physics.moveTo(sprite, newX, newY, velocity);
+        }
+    }
+
+    x(percent) {
+        if (Math.abs(percent) > 2)
+            percent = percent / 100;
+        return Math.floor(this.width / 2 * percent) + this.width / 2;
+    }
+
+    y(percent) {
+        percent = 1 - percent;
+        if (Math.abs(percent) > 2)
+            percent = percent / 100;
+        return Math.floor(this.height * percent);
+    }
+
+    hasReachedTarget(obj) {
+        if (!obj.data.has('destination'))
+            return true;
+
+        var destination = obj.getData('destination');
+        var hasReached = 
+            (obj.body.velocity.x < 0 ? obj.x < destination.x : obj.x > destination.x)
+            && (obj.body.velocity.y < 0 ? obj.y < destination.y : obj.y > destination.y);
+
+        //console.log('hasReached', obj.body.velocity.x, obj.x, destination.x, obj.body.velocity.y, obj.y, destination.y, hasReached);
+        return hasReached;
+    }
+}
+
+class Planet extends Phaser.Scene {
     height = 500;
     width = 1280;
     sprites = {};
@@ -15,7 +114,7 @@ class SpaceDiscussion extends Phaser.Scene {
     }
 
     preload() {
-        this.load.setBaseURL("https://localhost:7243/img/game");
+        this.load.setBaseURL("https://localhost:7243/img/planet");
         this.load.image('sky', 'skies/sky.png');
         this.load.image('bg-mountain', 'sprites/bg-mountain.png'); // 932x183
         this.load.image('bg-tree', 'sprites/bg-tree.png'); // 519x197
@@ -118,9 +217,10 @@ class SpaceDiscussion extends Phaser.Scene {
             existing = this.createObject(obj);
         }
         else if (existing.state != this.x(obj.x)) {
-            console.log('Moving ' + obj.type + ' ' + obj.name + ' to ' + this.x(obj.x));
             existing.state = this.x(obj.x);
-            this.physics.moveTo(existing, this.x(obj.x), existing.y, 160);
+            var distance = Phaser.Math.Distance.Between(existing.x, existing.y, this.x(obj.x), this.y(obj.y));
+            console.log('Moving ' + obj.type + ' ' + obj.name + ' to ' + this.x(obj.x) + ' at velocity ' + distance / 2);
+            this.physics.moveTo(existing, this.x(obj.x), existing.y, 160, distance / 2);
         }
     }
 
@@ -178,18 +278,19 @@ export function start(data) {
         type: Phaser.AUTO,
         width: 1280,
         height: 500,
-        scene: SpaceDiscussion,
+        scene: Starfield,
         parent: 'game',
+        backgroundColor: '#000000',
         physics: {
             default: 'arcade'
         }
     };
 
     game = new Phaser.Game(config);
-    game.scene.start('SpaceDiscussion', data);
+    game.scene.start('Starfield', data);
 }
 
 export function update(space) {
-    if (game && game.scene.keys['SpaceDiscussion'])
-        game.scene.keys['SpaceDiscussion'].updateSpace(space);
+    if (game && game.scene.keys['Starfield'])
+        game.scene.keys['Starfield'].updateSpace(space);
 }

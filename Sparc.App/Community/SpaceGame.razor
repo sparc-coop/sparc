@@ -1,26 +1,21 @@
 ﻿<div id="game"></div>
 
 @code {
-    [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public required List<Blossom.Content.LinkedSpace> GameObjects { get; set; } = [];
     IJSObjectReference? Game;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var subspaces = await Spaces.GetSpacesAsync(Space.Id);
-    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (Game == null)
         {
             Game = await Js.ImportAsync("./Community/SpaceGame.razor.js");
-            await Game.InvokeVoidAsync("start", Space);
+            await Game.InvokeVoidAsync("start", GameObjects);
         }
     }
 
     protected override async Task OnParametersSetAsync()
     {
         if (Game != null)
-            await Game.InvokeVoidAsync("update", Space);
+            await Game.InvokeVoidAsync("update", GameObjects);
     }
 }

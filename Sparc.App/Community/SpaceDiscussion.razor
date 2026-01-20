@@ -1,6 +1,6 @@
 ﻿@using Sparc.Blossom.Content
 
-<SpaceGame Space="Space" @ref="Game" />
+<SpaceGame GameObjects="GameObjects" @ref="Game" />
 
 <section>
     <PostForm Space="Space" OnUpdate="Update" />
@@ -14,11 +14,8 @@
                     <figcaption>
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                        |
-                        Distance: @($"{linkedSpace?.Distance:N2}")
-                        | Alignment: @($"{linkedSpace?.Alignment:N2}")
-                        | Coherence: @($"{post.CoherenceWeight:N2}")
-                        | X Position: @($"{linkedSpace?.X:N2}")
+                        | X: @($"{linkedSpace?.X:N2}")
+                        | Y: @($"{linkedSpace?.Y:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -40,6 +37,7 @@
     [Parameter] public EventCallback OnUpdate { get; set; }
     List<BlossomPost> Posts = [];
     SpaceGame? Game;
+    List<LinkedSpace> GameObjects = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,13 +47,9 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-
-        if (Space.RoomType == "Facet")
-            Posts = Posts.OrderBy(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
-        else
-            Posts = Posts.OrderByDescending(x => x.LinkedSpace(Space.SpaceId)?.Alignment).ToList();
-
+        GameObjects = Posts.Select(p => p.LinkedSpace(Space.Id)).Where(ls => ls != null).ToList()!;
         await OnUpdate.InvokeAsync();
+        GameObjects.AddRange(Space.LinkedSpaces);
     }
 
     string Ago(DateTime timestamp)
