@@ -13,10 +13,15 @@ class Starfield extends Phaser.Scene {
 
     preload() {
         this.load.setBaseURL("https://localhost:7243/img/starfield");
+        this.load.image('sky', 'skies/pixelart_starfield_1.png');
+        this.load.image('star', 'sprites/star 1x.png');
+        this.load.image('Post', 'sprites/star 4x.png');
     }
 
     create(objects) {
-        this.physics.world.setBounds(0, 0, this.width, this.height);
+        this.physics.world.setBounds(0, 0, this.width * 10, this.height * 10);
+        this.add.tileSprite(this.x(50), this.y(50), this.width * 10, this.height * 10, 'sky');
+
         this.isCreated = true;
         this.updateSpace(objects);
     }
@@ -46,7 +51,7 @@ class Starfield extends Phaser.Scene {
         if (!sprite) {
             console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x) + ', ' + this.y(obj.y));
             sprite = obj.type == 'Post'
-                ? this.add.circle(this.x(obj.x), this.y(obj.y), 4, 0xffffff)
+                ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type)
                 : obj.type == 'Facet'
                     ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xff0000)
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
