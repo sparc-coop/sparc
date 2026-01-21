@@ -6,7 +6,7 @@
     <PostForm Space="Space" OnUpdate="Update" />
     @foreach (var post in Posts)
     {
-        var linkedSpace = post.LinkedSpace(UserSpace.Id);
+        var linkedSpace = UserSpace == null ? null : post.LinkedSpace(UserSpace.Id);
         <article>
             <header>
                 <figure>
@@ -48,14 +48,22 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
-        .Where(ls => ls != null)
-        .Select(x => x! with { Type = "Post" })
-        .ToList()!;
+        if (UserSpace != null)
+        {
+            GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
+            .Where(ls => ls != null)
+            .Select(x => x! with { Type = "Post" })
+            .ToList()!;
+
+        }
         
         await OnUpdate.InvokeAsync();
         
-        GameObjects.AddRange(Space.LinkedSpaces);
+        var spaceObjects = Space.LinkedSpaces
+            .Select(x => x.SpaceId == UserSpace?.Id ? x with { Type = "Self" } : x)
+            .ToList();
+
+        GameObjects.AddRange(spaceObjects);
     }
 
     string Ago(DateTime timestamp)

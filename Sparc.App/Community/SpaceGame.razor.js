@@ -54,6 +54,8 @@ class Starfield extends Phaser.Scene {
                 ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type)
                 : obj.type == 'Facet'
                     ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xff0000)
+                    : obj.type == 'Self'
+                        ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xcccccc)
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
 
             sprite.setName(obj.name);
@@ -61,7 +63,7 @@ class Starfield extends Phaser.Scene {
             this.sprites[obj.name] = sprite;
             this.physics.add.existing(sprite);
 
-            if (obj.type == 'User') {
+            if (obj.type == 'Self') {
                 this.cameras.main.startFollow(sprite);
             }
         }
