@@ -55,6 +55,10 @@ class Starfield extends Phaser.Scene {
             sprite.setDataEnabled();
             this.sprites[obj.name] = sprite;
             this.physics.add.existing(sprite);
+
+            if (obj.type == 'User') {
+                this.cameras.main.startFollow(sprite);
+            }
         }
 
         return sprite;
