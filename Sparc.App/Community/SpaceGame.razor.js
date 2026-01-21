@@ -45,8 +45,10 @@ class Starfield extends Phaser.Scene {
         var sprite = this.sprites[obj.name];
         if (!sprite) {
             console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x) + ', ' + this.y(obj.y));
-            sprite = obj.type == 'Ephemeral'
+            sprite = obj.type == 'Post'
                 ? this.add.circle(this.x(obj.x), this.y(obj.y), 4, 0xffffff)
+                : obj.type == 'Facet'
+                    ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xff0000)
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
 
             sprite.setName(obj.name);

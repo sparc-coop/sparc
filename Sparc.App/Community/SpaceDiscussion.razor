@@ -48,8 +48,13 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id)).Where(ls => ls != null).ToList()!;
+        GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
+        .Where(ls => ls != null)
+        .Select(x => x! with { Type = "Post" })
+        .ToList()!;
+        
         await OnUpdate.InvokeAsync();
+        
         GameObjects.AddRange(Space.LinkedSpaces);
     }
 
