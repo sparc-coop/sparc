@@ -74,8 +74,12 @@ class Starfield extends Phaser.Scene {
                 : obj.type == 'Facet'
                     ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xff0000)
                     : obj.type == 'Self'
-                        ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xcccccc)
-                : this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x00ff00);
+                        ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xffffff)
+                        : obj.type == 'Quest'
+                            ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x0000ff)
+                            : obj.type == 'Answer'
+                            ? this.add.star(this.x(obj.x), this.y(obj.y), 6, 16, 32, 0xffffff)
+                : this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xcccccc);
 
             sprite.setAlpha(obj.z ?? 1);
             sprite.setName(obj.name);

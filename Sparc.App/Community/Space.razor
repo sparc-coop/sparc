@@ -63,6 +63,11 @@
             .Select(x => x! with { Type = "Post" })
             .ToList()!;
 
+            var userObjects = UserSpace.LinkedSpaces
+                .Select(x => x with { Type = x.Type == "Quest" ? "Quest" : "Answer" })
+                .ToList();
+
+            GameObjects.AddRange(userObjects);
         }
 
         var spaceObjects = CurrentSpace.LinkedSpaces
