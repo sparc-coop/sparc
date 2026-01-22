@@ -5,7 +5,7 @@ class Starfield extends Phaser.Scene {
     width = 1280;
     sprites = {};
     isCreated = false;
-    objects;
+    textBox;
 
     constructor() {
         super('Starfield');
@@ -21,6 +21,25 @@ class Starfield extends Phaser.Scene {
     create(objects) {
         this.physics.world.setBounds(0, 0, this.width * 10, this.height * 10);
         this.add.tileSprite(this.x(50), this.y(50), this.width * 10, this.height * 10, 'sky');
+        var box = this.add.rectangle(this.x(0), this.y(50), this.width * 0.92, this.height * 0.3, 0x000000);
+        box.setStrokeStyle(3, 0xffffff, 1);
+        box.setAlpha(0.85);
+        box.setScrollFactor(0);
+        box.setVisible(false);
+        var text = this.make.text({
+            x: this.x(-85),
+            y: this.y(30),
+            text: 'Test text',
+            origin: { x: 0, y: 0 },
+            style: {
+                font: '24px DotGothic16',
+                fill: 'white',
+                wordWrap: { width: this.width * 0.85 }
+            }
+        });
+        text.setScrollFactor(0);
+        text.setVisible(false);
+        this.textBox = { box: box, text: text, activeObject: null };
 
         this.isCreated = true;
         this.updateSpace(objects);
@@ -67,9 +86,26 @@ class Starfield extends Phaser.Scene {
             if (obj.type == 'Self') {
                 this.cameras.main.startFollow(sprite);
             }
+
+            if (obj.name) {
+                sprite.setInteractive().on('pointerdown', (pointer, x, y, ev) => this.showText(obj));
+            }
         }
 
         return sprite;
+    }
+
+    showText(obj) {
+        if (this.textBox.activeObject == obj) {
+            this.textBox.box.setVisible(false);
+            this.textBox.text.setVisible(false);
+            this.textBox.activeObject = null;
+        } else {
+            this.textBox.text.setText(obj.name);
+            this.textBox.box.setVisible(true);
+            this.textBox.text.setVisible(true);
+            this.textBox.activeObject = obj;
+        }
     }
 
     updateObject(obj) {
