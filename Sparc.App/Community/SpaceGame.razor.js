@@ -58,6 +58,7 @@ class Starfield extends Phaser.Scene {
                         ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xcccccc)
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
 
+            sprite.setAlpha(obj.z ?? 1);
             sprite.setName(obj.name);
             sprite.setDataEnabled();
             this.sprites[obj.name] = sprite;
@@ -81,7 +82,7 @@ class Starfield extends Phaser.Scene {
 
             console.log('Moving ' + obj.type + ' ' + obj.name + ' from ' + sprite.x + ', ' + sprite.y + ' to ' + newX + ', ' + newY + '(distance ' + distance + ') at velocity ' + velocity);
             sprite.setData('destination', { x: newX, y: newY });
-            this.physics.moveTo(sprite, newX, newY, velocity);
+            this.physics.moveTo(sprite, newX, newY, velocity, 2000);
         }
     }
 
