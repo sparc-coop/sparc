@@ -10,6 +10,8 @@
 
         <div class="settings">
             <h3>Space Settings</h3>
+            <div>Signed In as @User?.Avatar.Username</div>
+            <div>Viewing from Space @UserSpace?.Id (@Id / @User?.Id)</div>
             <label>
                 User Self-Confidence:
                 <input type="number" step="0.01" @bind="CurrentSpace.Settings.HeadspaceVelocity" />
@@ -35,7 +37,7 @@
 
     </article>
 }
-
+@inject ISparcAura Aura
 @code {
     [Parameter] public required string Id { get; set; }
     [Parameter] public string? ParentSpaceId { get; set; }
@@ -44,6 +46,7 @@
     SpaceGame? Game;
     List<LinkedSpace> GameObjects = [];
     List<BlossomPost> Posts = [];
+    BlossomUser? User;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -53,7 +56,8 @@
     async Task Update()
     {
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
-        UserSpace = await Spaces.GetSpaceAsync(Id, "User");
+        User = await Aura.UserInfo();
+        UserSpace = await Spaces.GetSpaceAsync(Id, User.Avatar.Id);
         Posts = await Spaces.GetPostsAsync(CurrentSpace!.Id);
 
         if (UserSpace != null)
