@@ -1,8 +1,8 @@
 ﻿let game = {};
 
 class Starfield extends Phaser.Scene {
-    height = 500;
-    width = 1280;
+    height = 1000;
+    width = 2560;
     sprites = {};
     isCreated = false;
     textBox;
@@ -32,7 +32,7 @@ class Starfield extends Phaser.Scene {
             text: 'Test text',
             origin: { x: 0, y: 0 },
             style: {
-                font: '24px DotGothic16',
+                font: '48px DotGothic16',
                 fill: 'white',
                 wordWrap: { width: this.width * 0.85 }
             }
@@ -72,10 +72,10 @@ class Starfield extends Phaser.Scene {
             sprite = obj.type == 'Post'
                 ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type)
                 : obj.type == 'Facet'
-                    ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xff0000)
+                    ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xff0000)
                     : obj.type == 'Self'
-                        ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0xcccccc)
-                : this.add.rectangle(this.x(obj.x), this.y(obj.y), 16, 16, 0x00ff00);
+                        ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xcccccc)
+                : this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x00ff00);
 
             sprite.setAlpha(obj.z ?? 1);
             sprite.setName(obj.name);
@@ -84,7 +84,11 @@ class Starfield extends Phaser.Scene {
             this.physics.add.existing(sprite);
 
             if (obj.type == 'Self') {
-                this.cameras.main.startFollow(sprite);
+                this.cameras.main.startFollow(sprite, false, 0.1, 0.1);
+            }
+
+            if (obj.type == 'Post') {
+                sprite.setScale(2);
             }
 
             if (obj.name) {
@@ -149,8 +153,8 @@ class Starfield extends Phaser.Scene {
 }
 
 class Planet extends Phaser.Scene {
-    height = 500;
-    width = 1280;
+    height = 1000;
+    width = 2560;
     sprites = {};
     player;
     platforms;
@@ -325,8 +329,8 @@ export function start(data) {
 
     const config = {
         type: Phaser.AUTO,
-        width: 1280,
-        height: 500,
+        width: 2560,
+        height: 1000,
         scene: Starfield,
         parent: 'game',
         backgroundColor: '#000000',

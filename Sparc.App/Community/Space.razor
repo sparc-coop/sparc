@@ -1,145 +1,48 @@
 ﻿@page "/spaces/{Id}"
-@page "/spaces/{Id}/{CurrentPage}"
 @page "/spaces/{ParentSpaceId}/subspaces/{Id}"
+@using Sparc.Blossom.Content
 
 @if (CurrentSpace is not null)
 {
     <article>
-        <aside>
-            <header>
-                <h1>@CurrentSpace.Name</h1>
-                <p>@CurrentSpace.Summary.Topic<br /><br /></p>
-                @if (CurrentSpace.RoomType == "Quest")
-                {
-                    <p>Goal: @CurrentSpace.Summary.Description</p>
-                }
-                <dl>
-                    <dt>Stage:</dt>
-                    <dd>Ideation</dd>
-                    <dt>Last Updated:</dt>
-                    <dd>@CurrentSpace.LastActiveDate?.ToShortDateString()</dd>
-                    <dt>Consensus:</dt>
-                    <dd>
-                        @CurrentSpace.Consensus?.ToString("N2")
-                        (@(CurrentSpace.ConsensusDelta > 0 ? "rising" : CurrentSpace.ConsensusDelta < 0 ? "falling" : "stable"))
-                    </dd>
-                    <dt>Confidence:</dt>
-                    <dd>
-                        @CurrentSpace.Confidence?.ToString("N2")
-                        (@(CurrentSpace.ConfidenceDelta > 0 ? "rising" : CurrentSpace.ConfidenceDelta < 0 ? "falling" : "stable"))
-                    </dd>
-                    @if (CurrentSpace.RoomType == "Quest")
-                    {
-                        <dt>Left Side:</dt>
-                        <dd>@CurrentSpace.Summary.LeftTopic</dd>
-                        <dt>Right Side:</dt>
-                        <dd>@CurrentSpace.Summary.RightTopic</dd>
-                    }
-                </dl>
-
-                <div>
-                    <button class="secondary">Edit</button>
-                </div>
-            </header>
-
-            <nav>
-                @*  <h2>Subspaces</h2>
-                <ul>
-                    @foreach (var subspace in Subspaces.Where(x => x.RoomType == "Space"))
-                    {
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
-                            </svg>
-                            <a href="@($"/spaces/{subspace.Id}")">@subspace.Name (CONS: @subspace.Consensus?.ToString("N2"), CONF: @subspace.Confidence?.ToString("N2"))</a>
-                        </li>
-                    }
-                </ul> *@
-
-                <h2>Active Quests</h2>
-                @if (UserSpace != null)
-                {
-                    <ul>
-                        @foreach (var quest in UserSpace.LinkedSpaces.Where(x => x.Type == "Quest"))
-                        {
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
-                                </svg>
-                                <a href="@($"/spaces/{UserSpace.Id}/subspaces/{quest.SpaceId}")">@quest.Name (@quest.X.ToString("N2"))</a>
-                            </li>
-                        }
-                    </ul>
-                }
-
-                <h2>Members</h2>
-                <ul>
-                    @foreach (var member in CurrentSpace.LinkedSpaces.Where(x => x.Type == "User"))
-                    {
-                        <li>
-                            @member.Name (@member.X.ToString("N2"))
-                        </li>
-                    }
-                </ul>
-
-                <h2>Pages</h2>
-                <ul>
-                    @foreach (var subpage in Pages)
-                    {
-                        <li class="@(CurrentPage == subpage ? "selected " : "")">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M10 7L15 12L10 17" stroke="#525252" stroke-width="1.2" stroke-linecap="square" stroke-linejoin="round" />
-                            </svg>
-                            <a href="@($"/spaces/{CurrentSpace.Id}/{subpage}")">@subpage</a>
-                        </li>
-                    }
-                </ul>
-            </nav>
-        </aside>
-
-        <section>
-            @if (CurrentPage == "Overview")
-            {
-                <SpaceOverview Space="CurrentSpace" />
-            }
-            else if (CurrentPage == "Discussion")
-            {
-                <SpaceDiscussion Space="CurrentSpace" UserSpace="UserSpace" OnUpdate="Update" />
-            }
-            @* else if (CurrentPage == "Tasks")
-            {
-                <SpaceTasks Space="CurrentSpace" />
-            }
-            else if (CurrentPage == "Files")
-            {
-                <SpaceFiles Space="CurrentSpace" />
-            } *@
-            else
-            {
-                <p>Page not found.</p>
-            }
-        </section>
+        <SpaceGame GameObjects="GameObjects" @ref="Game" />
+        <PostForm Space="CurrentSpace" OnUpdate="Update" />
     </article>
 }
 
 @code {
     [Parameter] public required string Id { get; set; }
-    [Parameter] public string CurrentPage { get; set; } = "Discussion";
     [Parameter] public string? ParentSpaceId { get; set; }
     BlossomSpace? CurrentSpace;
     BlossomSpace? UserSpace;
-    List<string> Pages = ["Overview", "Discussion", "Tasks", "Files"];
+    SpaceGame? Game;
+    List<LinkedSpace> GameObjects = [];
+    List<BlossomPost> Posts = [];
 
     protected override async Task OnParametersSetAsync()
     {
         await Update();
-        if (string.IsNullOrWhiteSpace(CurrentPage))
-            CurrentPage = "Discussion";
     }
 
     async Task Update()
     {
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
         UserSpace = await Spaces.GetSpaceAsync(Id, "User");
+        Posts = await Spaces.GetPostsAsync(CurrentSpace!.Id);
+
+        if (UserSpace != null)
+        {
+            GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
+            .Where(ls => ls != null)
+            .Select(x => x! with { Type = "Post" })
+            .ToList()!;
+
+        }
+
+        var spaceObjects = CurrentSpace.LinkedSpaces
+            .Select(x => x.SpaceId == UserSpace?.Id ? x with { Type = "Self" } : x)
+            .ToList();
+
+        GameObjects.AddRange(spaceObjects);
     }
 }
