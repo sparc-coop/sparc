@@ -12,7 +12,8 @@ class Starfield extends Phaser.Scene {
     }
 
     preload() {
-        this.load.setBaseURL("https://sparc-app-test.azurewebsites.net/img/starfield");
+        this.load.setBaseURL("https://localhost:7243/img/starfield");
+        //this.load.setBaseURL("https://sparc-app-test.azurewebsites.net/img/starfield");
         this.load.image('sky', 'skies/pixelart_starfield_1.png');
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
