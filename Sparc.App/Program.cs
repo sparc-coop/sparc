@@ -4,8 +4,8 @@ using Sparc.Blossom;
 using Sparc.Blossom.Data;
 
 var builder = BlossomApplication.CreateBuilder<Html>(args);
-builder.AddBlossomEngine("https://localhost:7185/");
-//builder.AddBlossomEngine("https://sparcengine-spaces-e8aba2etcmchcsce.centralus-01.azurewebsites.net/");
+
+builder.AddBlossomEngine(builder.Configuration["SparcEngine"]);
 builder.Services.AddCosmos<SparcContext>(builder.Configuration);
 
 await builder.Build().RunAsync<Html>();
