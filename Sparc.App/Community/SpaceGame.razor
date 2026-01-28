@@ -1,7 +1,7 @@
 ﻿<div id="game"></div>
 
 @code {
-    [Parameter] public required List<Blossom.Content.LinkedSpace> GameObjects { get; set; } = [];
+    [Parameter] public required List<Blossom.Content.BlossomCoordinate> GameObjects { get; set; } = [];
     IJSObjectReference? Game;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

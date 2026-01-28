@@ -6,7 +6,7 @@
     <PostForm Space="Space" OnUpdate="Update" />
     @foreach (var post in Posts)
     {
-        var linkedSpace = UserSpace == null ? null : post.LinkedSpace(UserSpace.Id);
+        var coordinate = GameObjects.FirstOrDefault(x => x.Id == post.Id);
         <article>
             <header>
                 <figure>
@@ -14,9 +14,9 @@
                     <figcaption>
                         @post.User?.Name
                         <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                        | X: @($"{linkedSpace?.X:N2}")
-                        | Y: @($"{linkedSpace?.Y:N2}")
-                        | Z: @($"{linkedSpace?.Z:N2}")
+                        | X: @($"{coordinate?.X:N2}")
+                        | Y: @($"{coordinate?.Y:N2}")
+                        | Z: @($"{coordinate?.Z:N2}")
                     </figcaption>
                 </figure>
                 <img src="img/VerticalMenu.svg" alt="Options" />
@@ -39,7 +39,7 @@
     [Parameter] public EventCallback OnUpdate { get; set; }
     List<BlossomPost> Posts = [];
     SpaceGame? Game;
-    List<LinkedSpace> GameObjects = [];
+    List<BlossomCoordinate> GameObjects = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,22 +49,7 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        if (UserSpace != null)
-        {
-            GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
-            .Where(ls => ls != null)
-            .Select(x => x! with { Type = "Post" })
-            .ToList()!;
-
-        }
-        
-        await OnUpdate.InvokeAsync();
-        
-        var spaceObjects = Space.LinkedSpaces
-            .Select(x => x.SpaceId == UserSpace?.Id ? x with { Type = "Self" } : x)
-            .ToList();
-
-        GameObjects.AddRange(spaceObjects);
+        GameObjects = await Spaces.GetCoordinatesAsync(Space.Id);
     }
 
     string Ago(DateTime timestamp)

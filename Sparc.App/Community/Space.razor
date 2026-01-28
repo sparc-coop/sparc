@@ -35,6 +35,15 @@
             <button @onclick="SaveSettings">Save</button>
         </div>
 
+        <div>
+            <h3>Coordinates</h3>
+            <ul>
+                @foreach (var coordinate in GameObjects)
+                {
+                    <li>@coordinate.Type @coordinate.Id: @coordinate.Name (@coordinate.X, @coordinate.Y, @coordinate.Z)</li>
+                }
+            </ul>
+        </div>
     </article>
 }
 @inject ISparcAura Aura
@@ -44,8 +53,7 @@
     BlossomSpace? CurrentSpace;
     BlossomSpace? UserSpace;
     SpaceGame? Game;
-    List<LinkedSpace> GameObjects = [];
-    List<BlossomPost> Posts = [];
+    List<BlossomCoordinate> GameObjects = [];
     BlossomUser? User;
 
     protected override async Task OnParametersSetAsync()
@@ -58,27 +66,10 @@
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
         User = await Aura.UserInfo();
         UserSpace = await Spaces.GetSpaceAsync(Id, User.Avatar.Id);
-        Posts = await Spaces.GetPostsAsync(CurrentSpace!.Id);
-
-        if (UserSpace != null)
-        {
-            GameObjects = Posts.Select(p => p.LinkedSpace(UserSpace.Id))
-            .Where(ls => ls != null)
-            .Select(x => x! with { Type = "Post" })
-            .ToList()!;
-
-            var userObjects = UserSpace.LinkedSpaces
-                .Select(x => x with { Type = x.Type == "Quest" ? "Quest" : "Answer" })
-                .ToList();
-
-            GameObjects.AddRange(userObjects);
-        }
-
-        var spaceObjects = CurrentSpace.LinkedSpaces
-            .Select(x => x.SpaceId == UserSpace?.Id ? x with { Type = "Self" } : x)
-            .ToList();
-
-        GameObjects.AddRange(spaceObjects);
+        GameObjects = await Spaces.GetCoordinatesAsync(Id);
+        
+        // Set current user to Self (should move this to backend)
+        GameObjects = GameObjects.Select(x => x.Id == User.Avatar.Id ? x with { Type = "Self" } : x).ToList();
     }
 
     async Task SaveSettings()
