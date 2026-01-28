@@ -6,6 +6,7 @@ class Starfield extends Phaser.Scene {
     sprites = {};
     isCreated = false;
     textBox;
+    axes;
 
     constructor() {
         super('Starfield');
@@ -41,6 +42,61 @@ class Starfield extends Phaser.Scene {
         text.setScrollFactor(0);
         text.setVisible(false);
         this.textBox = { box: box, text: text, activeObject: null };
+
+        this.axes = {
+            x: {
+                line: this.add.line(this.x(0), this.y(50), 0, 0, this.width, 0, 0xffffff),
+                leftLabel: this.make.text({
+                    x: this.x(-0.85),
+                    y: this.y(0),
+                    text: '',
+                    origin: { x: -1, y: 0 },
+                    style: {
+                        font: '36px DotGothic16',
+                        fill: 'white'
+                    },
+                }),
+                rightLabel: this.make.text({
+                    x: this.x(0.85),
+                    y: this.y(0),
+                    text: '',
+                    origin: { x: 1, y: 0 },
+                    style: {
+                        font: '36px DotGothic16',
+                        fill: 'white'
+                    },
+                })
+            },
+            y: {
+                line: this.add.line(this.x(50), this.y(0), 0, 0, 0, this.height, 0xffffff),
+                leftLabel: this.make.text({
+                    x: this.x(0),
+                    y: this.y(1),
+                    text: '',
+                    origin: { x: 0, y: 0 },
+                    style: {
+                        font: '36px DotGothic16',
+                        fill: 'white'
+                    },
+                }),
+                rightLabel: this.make.text({
+                    x: this.x(0),
+                    y: this.y(-1),
+                    text: '',
+                    origin: { x: -1, y: 0 },
+                    style: {
+                        font: '36px DotGothic16',
+                        fill: 'white'
+                    },
+                })
+            }
+        };
+
+        this.axes.x.leftLabel.setScrollFactor(0);
+        this.axes.x.rightLabel.setScrollFactor(0);
+        this.axes.y.leftLabel.setScrollFactor(0);
+        this.axes.y.rightLabel.setScrollFactor(0);
+        console.log('axes', this.axes);
 
         this.isCreated = true;
         this.updateSpace(objects);
@@ -78,8 +134,8 @@ class Starfield extends Phaser.Scene {
                         ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xffffff)
                         : obj.type == 'Quest'
                             ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x0000ff)
-                            : obj.type == 'Answer'
-                            ? this.add.star(this.x(obj.x), this.y(obj.y), 6, 16, 32, 0xffffff)
+                            : obj.type == 'Z'
+                                ? this.add.star(this.x(obj.x), this.y(obj.y), 6, 16, 32, 0xffffff)
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xcccccc);
 
             sprite.setAlpha(obj.z ?? 1);
@@ -94,6 +150,16 @@ class Starfield extends Phaser.Scene {
 
             if (obj.type == 'Post') {
                 sprite.setScale(2);
+            }
+
+            if (obj.type == 'X') {
+                this.axes.x.rightLabel.setText(obj.summary?.rightTopic);
+                this.axes.x.leftLabel.setText(obj.summary?.leftTopic);
+            }
+
+            if (obj.type == 'Y') {
+                this.axes.y.rightLabel.setText(obj.summary?.rightTopic);
+                this.axes.y.leftLabel.setText(obj.summary?.leftTopic);
             }
 
             if (obj.name) {
