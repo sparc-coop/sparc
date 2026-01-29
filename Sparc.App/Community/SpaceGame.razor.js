@@ -136,6 +136,18 @@ class Starfield extends Phaser.Scene {
                             ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x0000ff)
                             : obj.type == 'Z'
                                 ? this.add.star(this.x(obj.x), this.y(obj.y), 6, 16, 32, 0xffffff)
+                                : obj.type == 'Constellation'
+                                    ? this.make.text({
+                                        x: this.x(obj.x),
+                                        y: this.y(obj.y),
+                                        text: obj.summary?.name,
+                                        origin: { x: 0, y: 0 },
+                                        style: {
+                                            font: '36px DotGothic16',
+                                            fill: 'white',
+                                            wordWrap: { width: this.width * 0.85 }
+                                        }
+                                    })
                 : this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xcccccc);
 
             sprite.setAlpha(obj.z ?? 1);
@@ -198,6 +210,9 @@ class Starfield extends Phaser.Scene {
             console.log('set y', obj.summary);
         }
 
+        if (obj.type == 'Constellation') {
+            sprite.setText(obj.summary?.name);
+        }
     }
 
     x(percent) {
