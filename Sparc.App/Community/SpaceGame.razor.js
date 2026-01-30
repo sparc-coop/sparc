@@ -43,60 +43,54 @@ class Starfield extends Phaser.Scene {
         text.setVisible(false);
         this.textBox = { box: box, text: text, activeObject: null };
 
-        this.axes = {
-            x: {
-                line: this.add.line(this.x(0), this.y(0), 0, 0, this.width * 10, 0, 0xffffff),
-                leftLabel: this.make.text({
-                    x: this.x(-0.85),
-                    y: this.y(0),
-                    text: '',
-                    origin: { x: 0, y: 0 },
-                    style: {
-                        font: '36px DotGothic16',
-                        fill: 'white'
-                    },
-                }),
-                rightLabel: this.make.text({
-                    x: this.x(0.85),
-                    y: this.y(0),
-                    text: '',
-                    origin: { x: 1, y: 0 },
-                    style: {
-                        font: '36px DotGothic16',
-                        fill: 'white'
-                    },
-                })
-            },
-            y: {
-                line: this.add.line(this.x(0), this.y(0), 0, 0, 0, this.height * 10, 0xffffff),
-                bottomLabel: this.make.text({
-                    x: this.x(0.05),
-                    y: this.y(0.85),
-                    text: '',
-                    origin: { x: 0, y: 0 },
-                    style: {
-                        font: '36px DotGothic16',
-                        fill: 'white'
-                    },
-                }),
-                topLabel: this.make.text({
-                    x: this.x(0.05),
-                    y: this.y(-0.85),
-                    text: '',
-                    origin: { x: 0, y: 0 },
-                    style: {
-                        font: '36px DotGothic16',
-                        fill: 'white'
-                    },
-                })
-            }
-        };
-
-        this.axes.x.leftLabel.setScrollFactor(0);
-        this.axes.x.rightLabel.setScrollFactor(0);
-        this.axes.y.topLabel.setScrollFactor(0);
-        this.axes.y.bottomLabel.setScrollFactor(0);
-        console.log('axes', this.axes);
+        //this.axes = {
+        //    x: {
+        //        line: this.add.line(this.x(0), this.y(0), 0, 0, this.width * 10, 0, 0xffffff),
+        //        leftLabel: this.make.text({
+        //            x: this.x(-0.85),
+        //            y: this.y(0),
+        //            text: '',
+        //            origin: { x: 0, y: 0 },
+        //            style: {
+        //                font: '36px DotGothic16',
+        //                fill: 'white'
+        //            },
+        //        }),
+        //        rightLabel: this.make.text({
+        //            x: this.x(0.85),
+        //            y: this.y(0),
+        //            text: '',
+        //            origin: { x: 1, y: 0 },
+        //            style: {
+        //                font: '36px DotGothic16',
+        //                fill: 'white'
+        //            },
+        //        })
+        //    },
+        //    y: {
+        //        line: this.add.line(this.x(0), this.y(0), 0, 0, 0, this.height * 10, 0xffffff),
+        //        bottomLabel: this.make.text({
+        //            x: this.x(0.05),
+        //            y: this.y(0.85),
+        //            text: '',
+        //            origin: { x: 0, y: 0 },
+        //            style: {
+        //                font: '36px DotGothic16',
+        //                fill: 'white'
+        //            },
+        //        }),
+        //        topLabel: this.make.text({
+        //            x: this.x(0.05),
+        //            y: this.y(-0.85),
+        //            text: '',
+        //            origin: { x: 0, y: 0 },
+        //            style: {
+        //                font: '36px DotGothic16',
+        //                fill: 'white'
+        //            },
+        //        })
+        //    }
+        //};
 
         this.isCreated = true;
         this.updateSpace(objects);
@@ -109,6 +103,14 @@ class Starfield extends Phaser.Scene {
 
         for (var i = 0; i < objects.length; i++) {
             this.updateObject(objects[i]);
+        }
+
+        // Delete sprites that are no longer present
+        for (let key in this.sprites) {
+            if (!objects.find(o => o.name == key)) {
+                this.sprites[key].destroy();
+                delete this.sprites[key];
+            }
         }
     }
 
@@ -198,13 +200,13 @@ class Starfield extends Phaser.Scene {
             this.physics.moveTo(sprite, newX, newY, velocity, 2000);
         }
 
-        if (obj.type == 'X') {
+        if (obj.type == 'X' && this.axes) {
             this.axes.x.rightLabel.setText(obj.summary?.rightTopic);
             this.axes.x.leftLabel.setText(obj.summary?.leftTopic);
             console.log('set x', obj.summary);
         }
 
-        if (obj.type == 'Y') {
+        if (obj.type == 'Y' && this.axes) {
             this.axes.y.bottomLabel.setText(obj.summary?.rightTopic);
             this.axes.y.topLabel.setText(obj.summary?.leftTopic);
             console.log('set y', obj.summary);
