@@ -40,7 +40,13 @@
             <ul>
                 @foreach (var coordinate in GameObjects)
                 {
-                    <li>@coordinate.Type @coordinate.Id: @coordinate.Name (@coordinate.X, @coordinate.Y, @coordinate.Z)</li>
+                    <li>
+                        @coordinate.Type @coordinate.Id: @coordinate.Name (@coordinate.X, @coordinate.Y, @coordinate.Z)
+                        @if (coordinate.ConnectTo != null)
+                        {
+                            <span>Connected To @GameObjects.FirstOrDefault(x => x.Id == coordinate.ConnectTo)?.Name</span>
+                        }
+                    </li>
                 }
             </ul>
         </div>
