@@ -97,13 +97,11 @@ class Starfield extends Phaser.Scene {
     }
 
     updateSpace(objects) {
-        console.log('updating', objects);
         if (!this.isCreated)
             return;
 
         // Add constellation lines
         var constellationObjects = objects.filter(o => o.connectTo);
-        console.log('constellation', constellationObjects);
         for (var j = 0; j < constellationObjects.length; j++) {
             var from = constellationObjects[j];
             var to = objects.find(x => x.id == from.connectTo);
@@ -120,7 +118,6 @@ class Starfield extends Phaser.Scene {
             }
         }
 
-        console.log('objects', objects);
         for (var i = 0; i < objects.length; i++) {
             this.updateObject(objects[i]);
         }
@@ -147,7 +144,6 @@ class Starfield extends Phaser.Scene {
     getOrCreateObject(obj) {
         var sprite = this.sprites[obj.id];
         if (!sprite) {
-            console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x) + ', ' + this.y(obj.y));
             sprite = obj.type == 'Post'
                 ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type).setDepth(4)
                 : obj.type == 'Facet'
@@ -217,9 +213,11 @@ class Starfield extends Phaser.Scene {
             var distance = Phaser.Math.Distance.Between(sprite.x, sprite.y, newX, newY);
             var velocity = distance / 2;
 
-            console.log('Moving ' + obj.type + ' ' + obj.name + ' from ' + sprite.x + ', ' + sprite.y + ' to ' + newX + ', ' + newY + '(distance ' + distance + ') at velocity ' + velocity);
-            sprite.setData('destination', { x: newX, y: newY });
-            this.physics.moveTo(sprite, newX, newY, velocity, 2000);
+            if (velocity > 0) {
+                console.log('Moving ' + obj.type + ' ' + obj.name + ' from ' + sprite.x + ', ' + sprite.y + ' to ' + newX + ', ' + newY + '(distance ' + distance + ') at velocity ' + velocity);
+                sprite.setData('destination', { x: newX, y: newY });
+                this.physics.moveTo(sprite, newX, newY, velocity, 2000);
+            }
         }
 
         if (obj.type == 'X' && this.axes) {
@@ -358,7 +356,6 @@ class Planet extends Phaser.Scene {
         if (obj.type != 'User')
             return;
 
-        console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x));
         var sprite = this.physics.add.sprite(this.x(obj.x), this.height - 180, obj.type);
         sprite.setBounce(0.2);
         sprite.setCollideWorldBounds(true);
