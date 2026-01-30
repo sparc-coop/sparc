@@ -101,13 +101,33 @@ class Starfield extends Phaser.Scene {
         if (!this.isCreated)
             return;
 
+        // Add constellation lines
+        var constellationObjects = objects.filter(o => o.connectTo);
+        console.log('constellation', constellationObjects);
+        for (var j = 0; j < constellationObjects.length; j++) {
+            var from = constellationObjects[j];
+            var to = objects.find(x => x.id == from.connectTo);
+            if (from && to) {
+                var lineId = from.id + to.id;
+                objects.push({
+                    id: lineId,
+                    type: 'Connector',
+                    x: from.x,
+                    y: from.y,
+                    x2: to.x,
+                    y2: to.y
+                });
+            }
+        }
+
+        console.log('objects', objects);
         for (var i = 0; i < objects.length; i++) {
             this.updateObject(objects[i]);
         }
 
         // Delete sprites that are no longer present
         for (let key in this.sprites) {
-            if (!objects.find(o => o.name == key)) {
+            if (!objects.find(o => o.id == key)) {
                 this.sprites[key].destroy();
                 delete this.sprites[key];
             }
@@ -125,11 +145,11 @@ class Starfield extends Phaser.Scene {
     }
 
     getOrCreateObject(obj) {
-        var sprite = this.sprites[obj.name];
+        var sprite = this.sprites[obj.id];
         if (!sprite) {
             console.log('Creating ' + obj.type + ' ' + obj.name + ' at ' + this.x(obj.x) + ', ' + this.y(obj.y));
             sprite = obj.type == 'Post'
-                ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type)
+                ? this.physics.add.sprite(this.x(obj.x), this.y(obj.y), obj.type).setDepth(4)
                 : obj.type == 'Facet'
                     ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0xff0000)
                     : obj.type == 'Self'
@@ -138,6 +158,8 @@ class Starfield extends Phaser.Scene {
                             ? this.add.rectangle(this.x(obj.x), this.y(obj.y), 32, 32, 0x0000ff)
                             : obj.type == 'Z'
                                 ? this.add.star(this.x(obj.x), this.y(obj.y), 6, 16, 32, 0xffffff)
+                                : obj.type == 'Connector'
+                                    ? this.add.line(this.x(obj.x), this.y(obj.y), 0, 0, this.x(obj.x2) - this.x(obj.x), this.y(obj.y2) - this.y(obj.y), 0xffffff, 0.3).setOrigin(0, 0).setLineWidth(5).setDepth(3)
                                 : obj.type == 'Constellation'
                                     ? this.make.text({
                                         x: this.x(obj.x),
@@ -155,7 +177,7 @@ class Starfield extends Phaser.Scene {
             sprite.setAlpha(obj.z ?? 1);
             sprite.setName(obj.name);
             sprite.setDataEnabled();
-            this.sprites[obj.name] = sprite;
+            this.sprites[obj.id] = sprite;
             this.physics.add.existing(sprite);
 
             if (obj.type == 'Self') {
@@ -349,14 +371,14 @@ class Planet extends Phaser.Scene {
         else
             sprite.body.setOffset(0, -15);
 
-        this.sprites[obj.name] = sprite;
+        this.sprites[obj.id] = sprite;
         this.physics.add.collider(sprite, this.platforms);
 
         return sprite;
     }
 
     updateObject(obj) {
-        var existing = this.sprites[obj.name];
+        var existing = this.sprites[obj.id];
         if (!existing) {
             existing = this.createObject(obj);
         }
