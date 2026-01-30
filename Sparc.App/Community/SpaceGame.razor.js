@@ -185,7 +185,7 @@ class Starfield extends Phaser.Scene {
             }
 
             if (obj.type == 'Post') {
-                sprite.setScale(2);
+                sprite.setScale(obj.z * 2);
             }
 
             if (obj.name) {
