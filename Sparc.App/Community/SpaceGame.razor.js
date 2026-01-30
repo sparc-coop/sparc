@@ -21,8 +21,8 @@ class Starfield extends Phaser.Scene {
     }
 
     create(objects) {
-        this.physics.world.setBounds(0, 0, this.width * 10, this.height * 10);
-        this.add.tileSprite(this.x(50), this.y(50), this.width * 10, this.height * 10, 'sky');
+        this.physics.world.setBounds(0, 0, this.width * 2, this.height * 2);
+        this.add.tileSprite(this.x(50), this.y(50), this.width * 2, this.height * 2, 'sky');
         var box = this.add.rectangle(this.x(0), this.y(50), this.width * 0.92, this.height * 0.3, 0x000000);
         box.setStrokeStyle(3, 0xffffff, 1);
         box.setAlpha(0.85);
@@ -250,16 +250,41 @@ class Starfield extends Phaser.Scene {
     }
 
     hasReachedTarget(obj) {
-        if (!obj.data.has('destination'))
+        // If no destination set, consider reached
+        if (!obj.data || !obj.data.has('destination'))
             return true;
 
         var destination = obj.getData('destination');
-        var hasReached = 
-            (obj.body.velocity.x < 0 ? obj.x < destination.x : obj.x > destination.x)
-            && (obj.body.velocity.y < 0 ? obj.y < destination.y : obj.y > destination.y);
 
-        //console.log('hasReached', obj.body.velocity.x, obj.x, destination.x, obj.body.velocity.y, obj.y, destination.y, hasReached);
-        return hasReached;
+        // If there's no body/velocity treat as reached (guard)
+        if (!obj.body || !obj.body.velocity)
+            return true;
+
+        // Tolerance in pixels to avoid precision/stutter issues
+        const EPS = 1;
+
+        const vx = obj.body.velocity.x;
+        const vy = obj.body.velocity.y;
+
+        // X axis reached?
+        let reachedX = Math.abs(obj.x - destination.x) <= EPS;
+        if (!reachedX) {
+            if (vx > 0)
+                reachedX = obj.x >= destination.x - EPS;
+            else if (vx < 0)
+                reachedX = obj.x <= destination.x + EPS;
+        }
+
+        // Y axis reached?
+        let reachedY = Math.abs(obj.y - destination.y) <= EPS;
+        if (!reachedY) {
+            if (vy > 0)
+                reachedY = obj.y >= destination.y - EPS;
+            else if (vy < 0)
+                reachedY = obj.y <= destination.y + EPS;
+        }
+
+        return reachedX && reachedY;
     }
 }
 
