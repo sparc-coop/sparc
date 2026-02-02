@@ -8,7 +8,7 @@
     {
         if (Game == null)
         {
-            Game = await Js.ImportAsync("./Community/SpaceGame.razor.js");
+            Game = await Js.ImportAsync("./SpaceGame/SpaceGame.js");
             await Game.InvokeVoidAsync("start", GameObjects);
         }
     }
