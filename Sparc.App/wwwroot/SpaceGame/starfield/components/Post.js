@@ -14,7 +14,10 @@ export default class Post extends Phaser.GameObjects.Sprite {
         this.setInteractive().on('pointerdown', () => this.scene.textbox.show(obj));
 
         scene.add.existing(this);
-        scene.physics.add.existing(this);
+    }
+
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
     }
 
     updateFromObject(obj) {

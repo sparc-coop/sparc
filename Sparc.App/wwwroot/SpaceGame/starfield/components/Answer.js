@@ -4,4 +4,8 @@
         console.log('Adding answer');
         scene.add.existing(this);
     }
+
+    preUpdate(time, delta) {
+        super.preUpdate(time, delta);
+    }
 }

@@ -5,7 +5,6 @@
         this.setOrigin(0, 0);
         this.setLineWidth(5);
         this.setDepth(3);
-        this.setName(from.id + to.id);
         
         scene.add.existing(this);
     }

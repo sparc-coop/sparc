@@ -23,6 +23,7 @@ export default class Starfield extends Phaser.Scene {
         this.load.image('sky', 'skies/pixelart_starfield_1.png');
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
+        this.load.image('crosshair', 'sprites/crosshair094.png');
     }
 
     create(objects) {
@@ -54,9 +55,8 @@ export default class Starfield extends Phaser.Scene {
         objects.forEach(o => this.updateObject(o));
 
         // Delete sprites that are no longer present
-        //this.children.list
-        //    .filter(c => !objects.find(o => o.id == c.name))
-        //    .forEach(obj => obj.destroy());
+        var noLongerPresent = this.children.list.filter(c => c.name && !objects.find(o => o.id == c.name));
+        noLongerPresent.forEach(obj => obj.destroy());
     }
 
     updateObject(obj) {
@@ -68,6 +68,7 @@ export default class Starfield extends Phaser.Scene {
         var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
         
         if (distance > 0) {
+            console.log('moving', gameObject.name, gameObject.x, gameObject.y, 'to', newX, newY);
             gameObject.setData('destination', { x: newX, y: newY });
             if (!this.moving.includes(gameObject))
                 this.moving.push(gameObject);
@@ -83,25 +84,35 @@ export default class Starfield extends Phaser.Scene {
     }
 
     toGameObject(obj) {
-        var existing = this.children.getByName(obj.id);
-        if (existing)
-            return existing;
+        var gameObject = this.children.getByName(obj.id);
+        if (gameObject) {
+            return gameObject;
+        }
         
         switch (obj.type) {
             case 'Post':
-                return new Post(this, obj);
+                gameObject = new Post(this, obj);
+                break;
             case 'Facet':
-                return new Facet(this, obj);
+                gameObject = new Facet(this, obj);
+                break;
             case 'Self':
             case 'User':
-                return new User(this, obj);
+                gameObject = new User(this, obj);
+                break;
             case 'Z':
-                return new Answer(this, obj);
+                gameObject = new Answer(this, obj);
+                break;
             case 'Constellation':
-                return new Constellation(this, obj);
+                gameObject = new Constellation(this, obj);
+                break;
             default:
-                return new DefaultObject(this, obj);
+                gameObject = new DefaultObject(this, obj);
         }
+
+        gameObject.setName(obj.id);
+        this.physics.add.existing(gameObject);
+        return gameObject;
     }
 
     x(percent) {

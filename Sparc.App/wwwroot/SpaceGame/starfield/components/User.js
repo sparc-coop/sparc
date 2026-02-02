@@ -1,10 +1,13 @@
-﻿export default class User extends Phaser.GameObjects.Rectangle {
+﻿export default class User extends Phaser.GameObjects.Sprite {
     constructor(scene, obj) {
-        super(scene, scene.x(obj.x), scene.y(obj.y), 32, 32, obj.type == 'Self' ? 0xffffff : 0xcccccc);
+        super(scene, scene.x(obj.x), scene.y(obj.y), 'crosshair');
 
         if (obj.type == 'Self') {
+            this.setAlpha(0.4);
             scene.cameras.main.startFollow(this, false, 0.1, 0.1);
-            console.log('Camera following user', this.x, this.y);
+        } else {
+            this.setAlpha(0.2);
+            this.setScale(0.3);
         }
 
         scene.add.existing(this);
