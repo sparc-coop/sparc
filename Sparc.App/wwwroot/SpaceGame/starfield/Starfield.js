@@ -5,6 +5,7 @@ import User from './components/User.js';
 import Answer from './components/Answer.js';
 import Constellation from './components/Constellation.js';
 import DefaultObject from './components/DefaultObject.js';
+import Axis from './components/Axis.js';
 
 export default class Starfield extends Phaser.Scene {
     height = 1000;
@@ -68,7 +69,7 @@ export default class Starfield extends Phaser.Scene {
         var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
         
         if (distance > 0) {
-            console.log('moving', gameObject.name, gameObject.x, gameObject.y, 'to', newX, newY);
+            console.log('moving', gameObject, 'to', newX, newY);
             gameObject.setData('destination', { x: newX, y: newY });
             if (!this.moving.includes(gameObject))
                 this.moving.push(gameObject);
@@ -100,6 +101,10 @@ export default class Starfield extends Phaser.Scene {
             case 'User':
                 gameObject = new User(this, obj);
                 break;
+            case 'X':
+            case 'Y':
+                gameObject = new Axis(this, obj);
+                break;
             case 'Z':
                 gameObject = new Answer(this, obj);
                 break;
@@ -122,6 +127,7 @@ export default class Starfield extends Phaser.Scene {
     }
 
     y(percent) {
+        percent = -1 * percent;
         if (Math.abs(percent) > 2)
             percent = percent / 100;
         return Math.floor(this.height / 2 * percent) + this.height / 2;
