@@ -58,6 +58,7 @@ export default class Starfield extends Phaser.Scene {
         // Delete sprites that are no longer present
         var noLongerPresent = this.children.list.filter(c => c.name && !objects.find(o => o.id == c.name));
         noLongerPresent.forEach(obj => obj.destroy());
+
     }
 
     updateObject(obj) {
@@ -169,5 +170,16 @@ export default class Starfield extends Phaser.Scene {
         }
 
         return reachedX && reachedY;
+    }
+
+    zoomToFit() {
+        var posts = this.children.list.filter(c => c instanceof Post || c instanceof Facet || c instanceof User);
+        var minX = Math.min(...posts.map(p => p.x));
+        var maxX = Math.max(...posts.map(p => p.x));
+        var minY = Math.min(...posts.map(p => p.y));
+        var maxY = Math.max(...posts.map(p => p.y));
+        var zoom = Math.max(this.width / (maxX - minX + this.width / 10), this.height / (maxY - minY + this.height / 10), 1);
+        console.log('zooming to', posts, minX, maxX, minY, maxY, zoom);
+        this.cameras.main.setZoom(zoom);
     }
 }
