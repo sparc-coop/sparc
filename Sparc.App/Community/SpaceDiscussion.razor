@@ -1,45 +1,40 @@
 ﻿@using Sparc.Blossom.Content
 
-<SpaceGame GameObjects="GameObjects" @ref="Game" />
-
-<section>
-    <PostForm Space="Space" OnUpdate="Update" />
-    @foreach (var post in Posts)
-    {
-        var coordinate = GameObjects.FirstOrDefault(x => x.Id == post.Id);
-        <article>
-            <header>
-                <figure>
-                    <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
-                    <figcaption>
-                        @post.User?.Name
-                        <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                        | X: @($"{coordinate?.X:N2}")
-                        | Y: @($"{coordinate?.Y:N2}")
-                        | Z: @($"{coordinate?.Z:N2}")
-                    </figcaption>
-                </figure>
-                <img src="img/VerticalMenu.svg" alt="Options" />
-            </header>
-            <section>
-                <p>@post.Text</p>
-            </section>
-            <footer>
-                <button class="secondary">Comments</button>
-                <button class="secondary">Like</button>
-                <button class="secondary">Quote</button>
-            </footer>
-        </article>
-    }
+<section class="discussion">
+    <div>
+        @foreach (var post in Posts)
+        {
+            <article>
+                <header>
+                    <figure>
+                        <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
+                        <figcaption>
+                            @post.User?.Name
+                            <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
+                        </figcaption>
+                    </figure>
+                    <img src="img/VerticalMenu.svg" alt="Options" />
+                </header>
+                <section>
+                    <p>@post.Text</p>
+                </section>
+                <footer>
+                    <button class="secondary">Comments</button>
+                    <button class="secondary">Like</button>
+                    <button class="secondary">Quote</button>
+                </footer>
+            </article>
+        }
+    </div>
+    <footer>
+        <PostForm Space="Space" OnUpdate="Update" />
+    </footer>
 </section>
 
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
-    [Parameter] public required BlossomSpace UserSpace { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     List<BlossomPost> Posts = [];
-    SpaceGame? Game;
-    List<BlossomCoordinate> GameObjects = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,7 +44,7 @@
     async Task Update()
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
-        GameObjects = await Spaces.GetCoordinatesAsync(Space.Id);
+        await OnUpdate.InvokeAsync();
     }
 
     string Ago(DateTime timestamp)

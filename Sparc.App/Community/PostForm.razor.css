@@ -1,15 +1,16 @@
 ﻿form {
-    border: 1px solid var(--Color-Grayscale-100);
+    border: 3px solid white;
     border-radius: 16px;
     padding: 8px;
     display: grid;
     align-items: center;
-    grid-template-columns: auto 36px;
+    grid-template-columns: auto;
     gap: 16px;
+    background: rgba(0, 0, 0, 0.85);
+    width: 100%;
 }
 
 textarea {
-    background: transparent;
     width: 100%;
     min-block-size: 40px;
     padding: 8px 16px;
@@ -23,4 +24,5 @@ button {
     justify-content: center;
     align-items: center;
     border-radius: 14px;
+    display: none;
 }

@@ -1,8 +1,19 @@
-﻿article {
+﻿.discussion {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 80px;
+
+    > footer {
+        display: flex; 
+        align-items: flex-end;
+    }
+}
+
+article {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    border-bottom: 1px solid var(--Color-Grayscale-100);
     padding: 16px;
 
      header {
@@ -28,5 +39,9 @@
 
      button {
          padding: 10px 12px;
+     }
+
+     footer {
+         display: none;
      }
 }

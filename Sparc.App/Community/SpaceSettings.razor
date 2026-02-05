@@ -1,0 +1,47 @@
+﻿<div class="settings">
+    <h3>Space Settings</h3>
+    <div>Signed In as @User?.Avatar.Username</div>
+    <div>Viewing from Space @UserSpace?.Id (@CurrentSpace.Id / @User?.Id)</div>
+    <label>
+        User Self-Confidence:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.HeadspaceVelocity" />
+    </label>
+    <label>
+        User Openness to New Ideas:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.UserHeadspaceWeight" />
+    </label>
+    <label>
+        Answer Flexibility:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.SpaceGravity" />
+    </label>
+    <label>
+        Number of Messages to Lookback:
+        <input type="number" @bind="CurrentSpace.Settings.MessageLookback" />
+    </label>
+    <label>
+        Message Lookback Weight:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.MessageLookbackWeight" />
+    </label>
+    <label>
+        Constellation Strength:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.ConstellationStrength" />
+    </label>
+    <label>
+        Constellation Threshold:
+        <input type="number" step="0.01" @bind="CurrentSpace.Settings.ConstellationThreshold" />
+    </label>
+    <button @onclick="Save">Save</button>
+</div>
+
+@code {
+    [Parameter] public required BlossomSpace CurrentSpace { get; set; }
+    [Parameter] public BlossomUser? User { get; set; }
+    [Parameter] public BlossomSpace? UserSpace { get; set; }
+    [Parameter] public EventCallback OnUpdate { get; set; }
+
+    async Task Save()
+    {
+        await Spaces.SaveSpaceAsync(CurrentSpace!.Id, CurrentSpace);
+        await OnUpdate.InvokeAsync();
+    }
+}

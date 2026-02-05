@@ -11,13 +11,15 @@
     --Color-Grayscale-700: #525252;
     --Color-Grayscale-800: #383838;
     --Font-Serif: 'DotGothic16';
+    --Surface-Page: #0A1226;
+    --Surface-Text-Primary: #FFFFFF;
 }
 
 html, body {
     font-family: "elza-text", sans-serif;
-    background: var(--Color-Yellow-50);
+    background: var(--Surface-Page);
     backdrop-filter: blur(21.410852432250977px);
-    color: var(--Color-Grayscale-800);
+    color: var(--Surface-Text-Primary);
 }
 
 a {

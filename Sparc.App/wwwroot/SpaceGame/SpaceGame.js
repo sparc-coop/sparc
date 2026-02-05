@@ -5,13 +5,18 @@ let game;
 export function start(data) {
     const config = {
         type: Phaser.AUTO,
-        width: 2560,
-        height: 1000,
         scene: Starfield,
         parent: 'game',
         backgroundColor: '#000000',
         physics: {
             default: 'arcade'
+        },
+        scale: {
+            mode: Phaser.Scale.EXPAND,
+            autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+            width: 1280,
+            height: 1280 * 9 / 16,
+            parent: 'game'
         }
     };
 

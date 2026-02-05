@@ -1,8 +1,5 @@
 ﻿<form @onsubmit="AddPost" @onsubmit:preventDefault=true>
     <textarea placeholder="Search or type anything..." @onkeydown="Enter" @onkeydown:preventDefault=IsEnter @bind=PostText @bind:event="oninput"></textarea>
-    <button type="submit" disabled="@(PostText.Length == 0)">
-        <img src="/img/Submit.svg" alt="Submit" />
-    </button>
 
     @if (Error is not null)
     {

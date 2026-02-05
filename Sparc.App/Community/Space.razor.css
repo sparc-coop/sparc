@@ -1,98 +1,84 @@
 ﻿article {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    height: 80dvh;
-
-    .settings {
-        background: #eee;
-        padding: 16px;
-        width: 500px;
-
-        label {
-            display: grid;
-            grid-template-columns: 300px auto;
-            gap: 16px;
-            margin: 4px;
-        }
-
-        input {
-            padding: 4px 16px;
-            background-color: white;
-            width: 100px;
-            border-radius: 20px;
-        }
-    }
+    border-top: 1px solid #162959;
+    box-sizing: border-box;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 60px);
 }
 
-h1 {
-    font-size: 1.33rem;
-    font-weight: 500;
-    margin-bottom: 16px;
+#game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
-p {
-    font-size: 0.875rem; 
-}
-
-dl {
-    margin: 24px 0;
+#hud {
+    position: absolute;
+    top: 30px;
+    right: 8px;
+    width: 30vw;
+    bottom: 8px;
     display: grid;
-    grid-template-columns: auto auto;
-    color: var(--Color-Grayscale-500);
-    font-family: var(--Font-Serif);
-    font-size: 0.875rem;
+    grid-template-columns: auto;
+    grid-template-rows: 200px auto;
+    gap: 8px;
 }
 
-header {
-    padding-bottom: 16px;
-}
+.project, .details {
+    background-color: #081B4B;
+    border-radius: 8px;
+    font: 400 0.875rem/1.225rem var(--Font-Serif);
+    border: 3px solid #152959;
+    padding: 8px;
 
-aside {
-    padding: 16px;
-    border-right: 1px solid var(--Color-Grayscale-100);
-    button {
-        width: 100%;
+    header {
+        margin: 8px 0;
     }
 }
 
-nav {
-    margin: 24px 0;
+.project {
+    padding-top: 40px;
 
-    h2 {
-        color: var(--Color-Orange-400);
-        text-transform: uppercase;
-        font-size: 0.875rem;
-        margin-bottom: 16px;
+    > header {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        padding: 8px 12px;
+        background-color: #081B4B;
+        display: inline-block;
+        border-radius: 8px;
+        border: 3px solid #152959;
+    }
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px auto;
+
+    header ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
     }
 
-    ul {
-        font-family: var(--Font-Serif);
-    }
 
     li {
-        line-height: 140%;
-        padding: 8px 0;
-        display: flex;
-        gap: 4px;
-        align-items: center;
+        background: rgba(8, 27, 75, 0.50);
+        color: #5A72AF;
+        padding: 4px 8px;
+        text-align: center;
+        border-radius: 8px;
+        border: 3px solid #152959;
+        border-bottom: 0;
 
-        a {
-            color: var(--Color-Grayscale-500);
-            opacity: 0.5;
-        }
-
-        svg {
-            visibility: hidden;
-        }
-
-        &.selected {
-            svg {
-                visibility: visible;
-            }
-            a {
-                opacity: 1;
-            }
+        &.active {
+            background-color: #081B4B;
+            color: white;
         }
     }
 }

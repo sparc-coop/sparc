@@ -26,7 +26,7 @@ nav {
     li {
         a {
             text-decoration: none;
-            color: var(--Color-Grayscale-800);
+            color: var(--Surface-Text-Primary);
         }
     }
 }
@@ -35,6 +35,7 @@ nav {
     height: 32px;
     width: 32px;
     padding: 4px;
+    background-color: transparent !important;
 }
 
 main {

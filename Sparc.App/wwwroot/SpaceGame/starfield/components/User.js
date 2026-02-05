@@ -4,10 +4,11 @@
 
         if (obj.type == 'Self') {
             this.setAlpha(0.2);
-            scene.cameras.main.startFollow(this, false, 0.1, 0.1);
+            this.setScale(0.6);
+            scene.cameras.main.startFollow(this, false, 0.1, 0.1, scene.width * -0.08, 0);
         } else {
             this.setAlpha(0.05);
-            this.setScale(0.3);
+            this.setScale(0.15);
         }
 
         scene.add.existing(this);

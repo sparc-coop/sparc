@@ -1,0 +1,20 @@
+﻿.settings {
+    background: #eee;
+    padding: 16px;
+    width: 500px;
+    display: none;
+
+    label {
+        display: grid;
+        grid-template-columns: 300px auto;
+        gap: 16px;
+        margin: 4px;
+    }
+
+    input {
+        padding: 4px 16px;
+        background-color: white;
+        width: 100px;
+        border-radius: 20px;
+    }
+}

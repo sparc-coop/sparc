@@ -2,93 +2,94 @@
 @page "/spaces/{ParentSpaceId}/subspaces/{Id}"
 @using Sparc.Blossom.Content
 
-@if (CurrentSpace is not null)
-{
-    <article>
-        <SpaceGame GameObjects="GameObjects" @ref="Game" />
-        <PostForm Space="CurrentSpace" OnUpdate="Update" />
+<article>
+    <div id="game"></div>
 
-        <div class="settings">
-            <h3>Space Settings</h3>
-            <div>Signed In as @User?.Avatar.Username</div>
-            <div>Viewing from Space @UserSpace?.Id (@Id / @User?.Id)</div>
-            <label>
-                User Self-Confidence:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.HeadspaceVelocity" />
-            </label>
-            <label>
-                User Openness to New Ideas:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.UserHeadspaceWeight" />
-            </label>
-            <label>
-                Answer Flexibility:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.SpaceGravity" />
-            </label>
-            <label>
-                Number of Messages to Lookback:
-                <input type="number" @bind="CurrentSpace.Settings.MessageLookback" />
-            </label>
-            <label>
-                Message Lookback Weight:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.MessageLookbackWeight" />
-            </label>
-            <label>
-                Constellation Strength:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.ConstellationStrength" />
-            </label>
-            <label>
-                Constellation Threshold:
-                <input type="number" step="0.01" @bind="CurrentSpace.Settings.ConstellationThreshold" />
-            </label>
-            <button @onclick="SaveSettings">Save</button>
-        </div>
+    @if (CurrentSpace is not null)
+    {
+        <div id="hud">
+            <section class="project">
+                <header>
+                    Project
+                </header>
+                <SpaceCard Space="CurrentSpace" />
+            </section>
 
-        <div>
-            <h3>Coordinates</h3>
-            <ul>
-                @foreach (var coordinate in GameObjects)
+            <section class="details">
+                <header>
+                    <ul>
+                        <li class="@(ActiveTab == "Discoveries" ? "active" : "")" @onclick="@(() => SetActiveTab("Discoveries"))">Discoveries</li>
+                        <li class="@(ActiveTab == "Frog" ? "active" : "")" @onclick="@(() => SetActiveTab("Frog"))">Frog GM</li>
+                        <li class="@(ActiveTab == "Settings" ? "active" : "")" @onclick="@(() => SetActiveTab("Settings"))">Settings</li>
+                    </ul>
+                </header>
+
+                @if (ActiveTab == "Discoveries")
                 {
-                    <li>
-                        @coordinate.Type @coordinate.Id: @coordinate.Name (@coordinate.X.ToString("N2"), @coordinate.Y.ToString("N2"), @coordinate.Z.ToString("N2"))
-                        @if (coordinate.ConnectTo != null)
-                        {
-                            <span>Connected To @GameObjects.FirstOrDefault(x => x.Id == coordinate.ConnectTo)?.Name</span>
-                        }
-                    </li>
+                    <div class="discoveries">
+                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" />
+                    </div>
                 }
-            </ul>
+                else if (ActiveTab == "Frog")
+                {
+                    <div class="frog">
+                    </div>
+                }
+                else if (ActiveTab == "Settings")
+                {
+                    <div class="settings">
+                        <SpaceSettings CurrentSpace="CurrentSpace" User="User" UserSpace="UserSpace" OnUpdate="Update" />
+                    </div>
+                }
+            </section>
         </div>
-    </article>
-}
+    }
+</article>
+
 @inject ISparcAura Aura
 @code {
     [Parameter] public required string Id { get; set; }
     [Parameter] public string? ParentSpaceId { get; set; }
     BlossomSpace? CurrentSpace;
     BlossomSpace? UserSpace;
-    SpaceGame? Game;
     List<BlossomCoordinate> GameObjects = [];
+    List<BlossomPost> Discoveries = [];
     BlossomUser? User;
+    IJSObjectReference? Game;
+    string ActiveTab = "Discoveries";
 
     protected override async Task OnParametersSetAsync()
     {
+        User = await Aura.UserInfo();
         await Update();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Game == null)
+        {
+            Game = await Js.ImportAsync("./SpaceGame/SpaceGame.js");
+            await Game.InvokeVoidAsync("start", GameObjects);
+        }
     }
 
     async Task Update()
     {
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
-        User = await Aura.UserInfo();
-        UserSpace = await Spaces.GetSpaceAsync(Id, User.Avatar.Id);
+        UserSpace = await Spaces.GetSpaceAsync(Id, User!.Avatar.Id);
         GameObjects = await Spaces.GetCoordinatesAsync(Id);
-        
+
         // Set current user to Self (should move this to backend)
         GameObjects = GameObjects.Select(x => x.Id == User.Avatar.Id ? x with { Type = "Self" } : x).ToList();
+        if (Game != null)
+            await Game.InvokeVoidAsync("update", GameObjects);
+
     }
 
-    async Task SaveSettings()
+    void SetActiveTab(string tab)
     {
-        await Spaces.SaveSpaceAsync(CurrentSpace!.Id, CurrentSpace);
-        await Update();
+        ActiveTab = tab;
     }
+
+
 }

@@ -9,7 +9,7 @@ export default class Post extends Phaser.GameObjects.Sprite {
         this.setAlpha(obj.z ?? 1);
         this.setName(obj.id);
         this.setDepth(4);
-        this.setScale(obj.z * 2);
+        this.setScale(obj.z);
         this.setDataEnabled();
         this.setInteractive().on('pointerdown', () => this.scene.textbox.show(obj));
 
@@ -24,7 +24,7 @@ export default class Post extends Phaser.GameObjects.Sprite {
 
     updateFromObject(obj) {
         this.setAlpha(obj.z ?? 1);
-        this.setScale(obj.z * 2);
+        this.setScale(obj.z);
 
         if (this.connector)
             this.connector.destroy();
