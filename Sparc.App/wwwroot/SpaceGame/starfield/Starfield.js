@@ -14,6 +14,8 @@ export default class Starfield extends Phaser.Scene {
     moving = [];
     isCreated = false;
     textbox;
+    selectedId = null;
+    home = { x: 0, y: 0 };
     
     constructor() {
         super({ key: 'Starfield' });
@@ -25,6 +27,7 @@ export default class Starfield extends Phaser.Scene {
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
         this.load.image('crosshair', 'sprites/crosshair094.png');
+        this.load.plugin('rexeasemoveplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexeasemoveplugin.min.js', true);
     }
 
     create(objects) {
@@ -59,22 +62,49 @@ export default class Starfield extends Phaser.Scene {
         var noLongerPresent = this.children.list.filter(c => c.name && !objects.find(o => o.id == c.name));
         noLongerPresent.forEach(obj => obj.destroy());
 
+        // Set home position to self if available
+        var self = objects.find(o => o.type == 'Self');
+        if (self) {
+            this.home.x = self.x;
+            this.home.y = self.y;
+        }
+
+        if (this.selectedId)
+            this.select(this.selectedId);
     }
 
-    updateObject(obj) {
+    select(id) {
+        var obj = this.objects.find(o => o.id == id);
+        var self = this.objects.find(o => o.type == 'Self');
+
+        if (obj) {
+            self.x = obj.x;
+            self.y = obj.y;
+        } else {
+            // If no longer present, reset to home
+            self.x = this.home.x;
+            self.y = this.home.y;
+        }
+
+        this.updateObject(self, 1000);
+    }
+
+    updateObject(obj, inXSeconds) {
         var gameObject = this.toGameObject(obj);
 
         // Move to new position
         var newX = this.x(obj.x);
         var newY = this.y(obj.y);
         var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
+        inXSeconds = inXSeconds || 2000;
         
         if (distance > 0) {
-            console.log('moving', gameObject, 'to', newX, newY);
+            console.log('moving', gameObject, 'to', newX, newY, ' at velocity', distance / inXSeconds);
             gameObject.setData('destination', { x: newX, y: newY });
             if (!this.moving.includes(gameObject))
                 this.moving.push(gameObject);
-            this.physics.moveTo(gameObject, newX, newY, distance / 2, 2000);
+            this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds, newX, newY, 'Cubic');
+            //this.physics.moveTo(gameObject, newX, newY, distance / inXSeconds);
         }
 
         // Additional updates if defined

@@ -1,8 +1,14 @@
 ﻿.discussion {
-    height: 100%;
+    height: 63vh;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 80px;
+    grid-template-rows: auto 1fr;
+    gap: 24px;
+
+    > div {
+        max-height: 100%;
+        overflow-y: auto;
+    }
 
     > footer {
         display: flex; 
@@ -15,33 +21,38 @@ article {
     flex-direction: column;
     gap: 24px;
     padding: 16px;
+    cursor: pointer;
 
-     header {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-     }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-     figure {
-         display: flex;
-         align-items: center;
-         gap: 8px;
+    figure {
+        display: flex;
+        align-items: center;
+        gap: 8px;
 
-         figcaption {
-             font-size: 0.875rem;
-         }
-     }
+        figcaption {
+            font-size: 0.875rem;
+        }
+    }
 
-     time {
-         color: var(--Color-Grayscale-600);
-         font-size: 0.75rem;
-     }
+    time {
+        font-size: 0.75rem;
+    }
 
-     button {
-         padding: 10px 12px;
-     }
+    button {
+        padding: 10px 12px;
+    }
 
-     footer {
-         display: none;
-     }
+    footer {
+        display: none;
+    }
+
+    &.selected {
+        border-radius: 16px;
+        background-color: #152972;
+    }
 }

@@ -27,7 +27,7 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" />
+                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" OnSelect="Select" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
@@ -91,5 +91,9 @@
         ActiveTab = tab;
     }
 
-
+    async Task Select(BlossomPost? post)
+    {
+        if (Game != null)
+            await Game.InvokeVoidAsync("select", post?.Id);
+    }
 }

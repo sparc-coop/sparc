@@ -28,3 +28,8 @@ export function update(space) {
     if (game && game.scene.keys['Starfield'])
         game.scene.keys['Starfield'].updateSpace(space);
 }
+
+export function select(id) {
+    if (game && game.scene.keys['Starfield'])
+        game.scene.keys['Starfield'].select(id);
+}

@@ -4,7 +4,7 @@
     <div>
         @foreach (var post in Posts)
         {
-            <article>
+            <article @onclick=@(() => Select(post)) class="@(SelectedPost == post ? "selected" : "")">
                 <header>
                     <figure>
                         <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
@@ -34,7 +34,9 @@
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
+    [Parameter] public EventCallback<BlossomPost?> OnSelect { get; set; }
     List<BlossomPost> Posts = [];
+    BlossomPost? SelectedPost;
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,6 +47,16 @@
     {
         Posts = await Spaces.GetPostsAsync(Space.Id);
         await OnUpdate.InvokeAsync();
+    }
+
+    async Task Select(BlossomPost post)
+    {
+        if (SelectedPost == post)
+            SelectedPost = null;
+        else
+            SelectedPost = post;
+
+        await OnSelect.InvokeAsync(SelectedPost);
     }
 
     string Ago(DateTime timestamp)
