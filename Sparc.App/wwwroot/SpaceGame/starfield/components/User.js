@@ -3,10 +3,10 @@
         super(scene, scene.x(obj.x), scene.y(obj.y), 'crosshair');
 
         if (obj.type == 'Self') {
-            this.setAlpha(0.4);
+            this.setAlpha(0.2);
             scene.cameras.main.startFollow(this, false, 0.1, 0.1);
         } else {
-            this.setAlpha(0.2);
+            this.setAlpha(0.05);
             this.setScale(0.3);
         }
 
