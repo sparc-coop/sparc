@@ -6,6 +6,7 @@ import Answer from './components/Answer.js';
 import Constellation from './components/Constellation.js';
 import DefaultObject from './components/DefaultObject.js';
 import Axis from './components/Axis.js';
+import Hint from './components/Hint.js';
 
 export default class Starfield extends Phaser.Scene {
     height = 1000;
@@ -150,6 +151,9 @@ export default class Starfield extends Phaser.Scene {
                 break;
             case 'Constellation':
                 gameObject = new Constellation(this, obj);
+                break;
+            case 'Hint':
+                gameObject = new Hint(this, obj);
                 break;
             default:
                 gameObject = new DefaultObject(this, obj);

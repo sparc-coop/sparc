@@ -35,6 +35,7 @@
     [Parameter] public required BlossomSpace Space { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     [Parameter] public EventCallback<BlossomPost?> OnSelect { get; set; }
+    [Parameter] public string? Type { get; set; }
     List<BlossomPost> Posts = [];
     BlossomPost? SelectedPost;
 
@@ -45,7 +46,7 @@
 
     async Task Update()
     {
-        Posts = await Spaces.GetPostsAsync(Space.Id);
+        Posts = await Spaces.GetPostsAsync(Space.Id, Type ?? "Post");
         await OnUpdate.InvokeAsync();
     }
 
