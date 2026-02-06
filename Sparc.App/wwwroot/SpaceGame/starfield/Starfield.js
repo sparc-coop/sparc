@@ -31,10 +31,19 @@ export default class Starfield extends Phaser.Scene {
     }
 
     create(objects) {
-        this.physics.world.setBounds(0, 0, this.width * 2, this.height * 2);
+        this.physics.world.setBounds(0, 0, this.width * 5, this.height * 5);
+        this.cameras.main.setBounds(0, 0, this.width * 5, this.height * 5);
 
-        this.add.tileSprite(this.x(50), this.y(50), this.width * 2, this.height * 2, 'sky');
+        this.add.tileSprite(this.x(50), this.y(50), this.width * 5, this.height * 5, 'sky');
         this.textbox = new Textbox(this, this.x(-0.95), this.y(0.3), this.width * 0.95, this.height * 0.3);
+
+        this.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+            const zoomFactor = 0.001;
+            var newZoom = this.cameras.main.zoom + deltaY * zoomFactor * -1;
+            // clamp
+            newZoom = Phaser.Math.Clamp(newZoom, 0.4, 2);
+            this.cameras.main.setZoom(newZoom);
+        });
 
         this.isCreated = true;
         this.updateSpace(objects);
