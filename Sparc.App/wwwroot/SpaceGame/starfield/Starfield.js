@@ -2,7 +2,7 @@
 import Post from './components/Post.js';
 import Facet from './components/Facet.js';
 import User from './components/User.js';
-import Answer from './components/Answer.js';
+import NorthStar from './components/NorthStar.js';
 import Constellation from './components/Constellation.js';
 import DefaultObject from './components/DefaultObject.js';
 import Axis from './components/Axis.js';
@@ -146,8 +146,8 @@ export default class Starfield extends Phaser.Scene {
             case 'Y':
                 gameObject = new Axis(this, obj);
                 break;
-            case 'Z':
-                gameObject = new Answer(this, obj);
+            case 'Space':
+                gameObject = new NorthStar(this, obj);
                 break;
             case 'Constellation':
                 gameObject = new Constellation(this, obj);
