@@ -21,7 +21,7 @@
         var index = userTrail.findIndex(x => x.id == obj.id);
         if (index > 0) {
             var previousPosition = userTrail[index - 1];
-            this.setTo(0, 0, this.scene.x(previousPosition.x) - this.x, this.scene.y(previousPosition.y) - this.y);
+            this.setTo(0, 0, this.scene.x(previousPosition.x) - this.scene.x(obj.x), this.scene.y(previousPosition.y) - this.scene.y(obj.y));
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
