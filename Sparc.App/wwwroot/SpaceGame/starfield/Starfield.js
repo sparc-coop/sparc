@@ -111,10 +111,10 @@ export default class Starfield extends Phaser.Scene {
             var newX = this.x(obj.x);
             var newY = this.y(obj.y);
             var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
-            inXSeconds = inXSeconds || 2000;
+            if (!inXSeconds)
+                inXSeconds = obj.type == 'Self' ? 1000 : 1000;
 
             if (distance > 0) {
-                console.log('moving', gameObject, 'to', newX, newY, ' at velocity', distance / inXSeconds);
                 gameObject.setData('destination', { x: newX, y: newY });
                 if (!this.moving.includes(gameObject))
                     this.moving.push(gameObject);

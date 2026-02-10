@@ -7,6 +7,13 @@
 
     @if (CurrentSpace is not null)
     {
+        <ul id="quests">
+            @foreach (var quest in Quests)
+            {
+                <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")" @onclick="@(() => SelectQuest(quest))" >@quest.Summary?.Name</li>
+            }
+        </ul>
+
         <div id="hud">
             <section class="project">
                 <header>
@@ -55,6 +62,8 @@
     BlossomSpace? UserSpace;
     List<BlossomCoordinate> GameObjects = [];
     List<BlossomPost> Discoveries = [];
+    IEnumerable<BlossomCoordinate> Quests => GameObjects.Where(x => x.Type == "Facet").OrderByDescending(x => x.Z);
+    BlossomCoordinate? SelectedQuest;
     BlossomUser? User;
     IJSObjectReference? Game;
     string ActiveTab = "Discoveries";
@@ -78,13 +87,17 @@
     {
         CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
         UserSpace = await Spaces.GetSpaceAsync(Id, User!.Avatar.Id);
-        GameObjects = await Spaces.GetCoordinatesAsync(Id);
+        await UpdateGameObjects();
+    }
+
+    async Task UpdateGameObjects()
+    {
+        GameObjects = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
 
         // Set current user to Self (should move this to backend)
-        GameObjects = GameObjects.Select(x => x.Id == User.Avatar.Id ? x with { Type = "Self" } : x).ToList();
+        GameObjects = GameObjects.Select(x => x.Id == User!.Avatar.Id ? x with { Type = "Self" } : x).ToList();
         if (Game != null)
             await Game.InvokeVoidAsync("update", GameObjects);
-
     }
 
     void SetActiveTab(string tab)
@@ -96,5 +109,15 @@
     {
         if (Game != null)
             await Game.InvokeVoidAsync("select", post?.Id);
+    }
+
+    async Task SelectQuest(BlossomCoordinate quest)
+    {
+        if (SelectedQuest?.Id == quest.Id)
+            SelectedQuest = null;
+        else
+            SelectedQuest = quest;
+
+        await UpdateGameObjects();
     }
 }

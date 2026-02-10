@@ -16,6 +16,27 @@
     height: 100%;
 }
 
+#quests {
+    position: absolute;
+    top: 30px;
+    left: 8px;
+    width: 10vw;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+        padding: 8px;
+        background-color: #081B4B;
+        cursor: pointer;
+
+        &.active {
+            border-radius: 16px;
+            background-color: #152972;
+        }
+    }
+}
+
 #hud {
     position: absolute;
     top: 30px;
@@ -28,7 +49,7 @@
     gap: 8px;
 }
 
-.project, .details {
+.project, .details, #quests {
     background-color: #081B4B;
     border-radius: 8px;
     font: 400 0.875rem/1.225rem var(--Font-Serif);
