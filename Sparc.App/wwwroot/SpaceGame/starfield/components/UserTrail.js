@@ -25,7 +25,7 @@
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
-        this.setAlpha(alphaIndex);
+        this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
         //this.setScale(userTrail.length - index);
     }
 }
