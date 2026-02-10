@@ -28,6 +28,7 @@ export default class Starfield extends Phaser.Scene {
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
         this.load.image('crosshair', 'sprites/crosshair094.png');
+        this.load.image('north', 'sprites/north.png');
         this.load.plugin('rexeasemoveplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexeasemoveplugin.min.js', true);
     }
 
@@ -103,18 +104,20 @@ export default class Starfield extends Phaser.Scene {
         var gameObject = this.toGameObject(obj);
 
         // Move to new position
-        var newX = this.x(obj.x);
-        var newY = this.y(obj.y);
-        var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
-        inXSeconds = inXSeconds || 2000;
-        
-        if (distance > 0) {
-            console.log('moving', gameObject, 'to', newX, newY, ' at velocity', distance / inXSeconds);
-            gameObject.setData('destination', { x: newX, y: newY });
-            if (!this.moving.includes(gameObject))
-                this.moving.push(gameObject);
-            this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds, newX, newY, 'Cubic');
-            //this.physics.moveTo(gameObject, newX, newY, distance / inXSeconds);
+        if (gameObject.scrollFactorX != 0) {
+            var newX = this.x(obj.x);
+            var newY = this.y(obj.y);
+            var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
+            inXSeconds = inXSeconds || 2000;
+
+            if (distance > 0) {
+                console.log('moving', gameObject, 'to', newX, newY, ' at velocity', distance / inXSeconds);
+                gameObject.setData('destination', { x: newX, y: newY });
+                if (!this.moving.includes(gameObject))
+                    this.moving.push(gameObject);
+                this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds, newX, newY, 'Cubic');
+                //this.physics.moveTo(gameObject, newX, newY, distance / inXSeconds);
+            }
         }
 
         // Additional updates if defined
