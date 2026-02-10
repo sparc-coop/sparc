@@ -1,16 +1,24 @@
 ﻿export default class User extends Phaser.GameObjects.Sprite {
     constructor(scene, obj) {
-        super(scene, scene.x(obj.x), scene.y(obj.y), 'crosshair');
+        super(scene, scene.x(obj.x), scene.y(obj.y), 'ship');
 
         if (obj.type == 'Self') {
-            this.setAlpha(0.2);
-            this.setScale(0.6);
-            scene.cameras.main.startFollow(this, false, 0.1, 0.1, scene.width * -0.08, 0);
+            this.setScale(1);
         } else {
-            this.setAlpha(0.05);
-            this.setScale(0.15);
+            this.setScale(0.7);
         }
 
+        this.updateFromObject(obj);
         scene.add.existing(this);
+    }
+
+    updateFromObject(obj) {
+        var userTrail = this.scene.objects.filter(x => x.type == 'UserTrail');
+        var lastPosition = userTrail.length > 1 ? userTrail[userTrail.length - 2] : null;
+
+        if (lastPosition) {
+            var rad = Phaser.Math.Angle.Between(this.scene.x(lastPosition.x), this.scene.y(lastPosition.y), this.scene.x(obj.x), this.scene.y(obj.y));
+            this.setRotation(rad + Math.PI / 2);
+        }
     }
 }

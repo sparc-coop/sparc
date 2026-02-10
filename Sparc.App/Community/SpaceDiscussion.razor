@@ -41,7 +41,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Update();
+        Posts = await Spaces.GetPostsAsync(Space.Id, Type ?? "Post");
     }
 
     async Task Update()
