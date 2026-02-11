@@ -49,6 +49,15 @@ button {
         font-family: var(--Font-Serif);
         background: transparent;
     }
+
+    &.icon {
+        background: transparent;
+        border: none;
+
+        &:hover {
+            background: transparent;
+        }
+    }
 }
 
 #blazor-error-ui {

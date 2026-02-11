@@ -1,18 +1,24 @@
 ﻿@page "/spaces/{Id}"
 @page "/spaces/{ParentSpaceId}/subspaces/{Id}"
-@using Sparc.Blossom.Content
 
 <article>
     <div id="game"></div>
 
     @if (CurrentSpace is not null)
     {
-        <ul id="quests">
-            @foreach (var quest in Quests)
-            {
-                <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")" @onclick="@(() => SelectQuest(quest))" >@quest.Summary?.Name</li>
-            }
-        </ul>
+        <div id="buttons">
+        @if (GameObjects.Any(x => x.Type == "Facet"))
+        {
+            <button @onclick="ToggleQuests">
+                <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
+            </button>
+        }
+        </div>
+
+        @if (ShowQuests)
+        {
+            <SpaceQuests GameObjects="GameObjects" OnSelect="SelectQuest" />
+        }
 
         <div id="hud">
             <section class="project">
@@ -62,11 +68,11 @@
     BlossomSpace? UserSpace;
     List<BlossomCoordinate> GameObjects = [];
     List<BlossomPost> Discoveries = [];
-    IEnumerable<BlossomCoordinate> Quests => GameObjects.Where(x => x.Type == "Facet").OrderByDescending(x => x.Z);
     BlossomCoordinate? SelectedQuest;
     BlossomUser? User;
     IJSObjectReference? Game;
     string ActiveTab = "Discoveries";
+    bool ShowQuests;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -113,11 +119,13 @@
 
     async Task SelectQuest(BlossomCoordinate quest)
     {
-        if (SelectedQuest?.Id == quest.Id)
+        if (SelectedQuest?.Id == quest?.Id)
             SelectedQuest = null;
         else
             SelectedQuest = quest;
 
         await UpdateGameObjects();
     }
+
+    void ToggleQuests() => ShowQuests = !ShowQuests;
 }

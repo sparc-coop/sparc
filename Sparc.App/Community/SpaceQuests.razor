@@ -1,0 +1,48 @@
+﻿<section>
+    <header>
+        Quests
+    </header>
+
+    <figure>
+        <img src="./SpaceGame/starfield/sprites/gm.png" />
+        <figcaption>
+            Here is the list of quests.
+        </figcaption>
+    </figure>
+
+    <ul id="quests">
+        @foreach (var quest in Quests)
+        {
+            <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")">
+                <figure></figure>
+                <div>
+                    <h3>@quest.Summary?.Name</h3>
+                    <p>@quest.Summary?.Topic</p>
+                </div>
+                <button class="icon" @onclick="@(() => SelectQuest(quest))">
+                    <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Go to Quest" />
+                </button>
+            </li>
+        }
+    </ul>
+</section>
+
+
+@code {
+    [Parameter] public required List<BlossomCoordinate> GameObjects { get; set; }
+    [Parameter] public EventCallback<BlossomCoordinate?> OnSelect { get; set; }
+    BlossomCoordinate? SelectedQuest;
+
+    IEnumerable<BlossomCoordinate> Quests => GameObjects
+        .Where(x => x.Type == "Facet")
+        .OrderByDescending(x => x.Z);
+
+    async Task SelectQuest(BlossomCoordinate quest)
+    {
+        if (SelectedQuest?.Id == quest.Id)
+            SelectedQuest = null;
+        else
+            SelectedQuest = quest;
+        await OnSelect.InvokeAsync(SelectedQuest);
+    }
+}
