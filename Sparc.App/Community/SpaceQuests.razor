@@ -14,7 +14,13 @@
         @foreach (var quest in Quests)
         {
             <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")">
+                <div>
                 <figure></figure>
+                    @if (quest.Length.HasValue)
+                    {
+                        <aside>@((quest.Length.Value * 100).ToString("N0")) ly</aside>
+                    }
+                </div>
                 <div>
                     <h3>@quest.Summary?.Name</h3>
                     <p>@quest.Summary?.Topic</p>
