@@ -19,7 +19,7 @@ export default class Starfield extends Phaser.Scene {
     textbox;
     crosshair;
     selectedId = null;
-    
+
     constructor() {
         super({ key: 'Starfield' });
     }
@@ -49,7 +49,7 @@ export default class Starfield extends Phaser.Scene {
             newZoom = Phaser.Math.Clamp(newZoom, 0.4, 2);
             this.cameras.main.setZoom(newZoom);
         });
-        
+
         this.isCreated = true;
         this.updateSpace(objects);
     }
@@ -70,7 +70,7 @@ export default class Starfield extends Phaser.Scene {
             return;
 
         console.log('updating space');
-        
+
         // Set home position to self if available
         var self = objects.find(o => o.type == 'Self');
         if (self) {
@@ -118,8 +118,8 @@ export default class Starfield extends Phaser.Scene {
                 gameObject.setData('destination', { x: newX, y: newY });
                 if (!this.moving.includes(gameObject))
                     this.moving.push(gameObject);
+                console.log(`moving ${obj.type} to ${obj.x},${obj.y} in ${inXSeconds}ms`);
                 this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds, newX, newY, 'Cubic');
-                //this.physics.moveTo(gameObject, newX, newY, distance / inXSeconds);
             }
         }
 
@@ -136,7 +136,7 @@ export default class Starfield extends Phaser.Scene {
         if (gameObject) {
             return gameObject;
         }
-        
+
         switch (obj.type) {
             case 'Post':
                 gameObject = new Post(this, obj);
@@ -148,8 +148,7 @@ export default class Starfield extends Phaser.Scene {
             case 'User':
                 gameObject = new User(this, obj);
                 break;
-            case 'X':
-            case 'Y':
+            case 'Axis':
                 gameObject = new Axis(this, obj);
                 break;
             case 'Space':
@@ -159,6 +158,7 @@ export default class Starfield extends Phaser.Scene {
                 gameObject = new Constellation(this, obj);
                 break;
             case 'Hint':
+            case 'Answer':
                 gameObject = new Hint(this, obj);
                 break;
             case 'UserTrail':

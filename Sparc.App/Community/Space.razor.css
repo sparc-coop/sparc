@@ -41,7 +41,7 @@
     position: absolute;
     top: 30px;
     right: 8px;
-    width: 30vw;
+    width: min(30vw, 400px);
     bottom: 8px;
     display: grid;
     grid-template-columns: auto;
