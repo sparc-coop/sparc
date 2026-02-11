@@ -18,12 +18,12 @@
                 <figure></figure>
                     @if (quest.Length.HasValue)
                     {
-                        <aside>@((quest.Length.Value * 100).ToString("N0")) ly</aside>
+                        <aside>@quest.Length.Value.ToString("0.##") ly</aside>
                     }
                 </div>
                 <div>
                     <h3>@quest.Summary?.Name</h3>
-                    <p>@quest.Summary?.Topic</p>
+                    <p>@quest.Summary?.Description</p>
                 </div>
                 <button class="icon" @onclick="@(() => SelectQuest(quest))">
                     <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Go to Quest" />

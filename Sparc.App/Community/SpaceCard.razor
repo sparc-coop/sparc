@@ -14,9 +14,17 @@
         <p>
             @Space.Summary.Topic
         </p>
+
+        @if (GameState is not null)
+        {
+            <aside>
+                @GameState.DistanceToAnswer.ToString("0.##") ly to the answer
+            </aside>
+        }
     </div>
 </article>
 
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public required GameState? GameState { get; set; }
 }

@@ -25,7 +25,7 @@
                 <header>
                     Project
                 </header>
-                <SpaceCard Space="CurrentSpace" />
+                <SpaceCard Space="CurrentSpace" GameState="GameState" />
             </section>
 
             <section class="details">
@@ -74,6 +74,7 @@
     IJSObjectReference? Game;
     string ActiveTab = "Discoveries";
     bool ShowQuests;
+    GameState? GameState;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -99,7 +100,8 @@
 
     async Task UpdateGameObjects()
     {
-        GameObjects = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
+        GameState = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
+        GameObjects = GameState.Coordinates;
 
         // Set current user to Self (should move this to backend)
         GameObjects = GameObjects.Select(x => x.Id == User!.Avatar.Id ? x with { Type = "Self" } : x).ToList();
