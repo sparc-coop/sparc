@@ -24,9 +24,11 @@ export function start(data) {
     game.scene.start('Starfield', data);
 }
 
-export function update(space) {
-    if (game && game.scene.keys['Starfield'])
+export function update(space, dotnet) {
+    if (game && game.scene.keys['Starfield']) {
         game.scene.keys['Starfield'].updateSpace(space);
+        game.scene.keys['Starfield'].dotnet = dotnet;
+    }
 }
 
 export function select(id) {

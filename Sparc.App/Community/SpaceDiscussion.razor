@@ -50,6 +50,13 @@
         await OnUpdate.InvokeAsync();
     }
 
+    public async Task Select(string id)
+    {
+        var post = Posts.FirstOrDefault(x => x.Id == id);
+        if (post != null)
+            await Select(post);
+    }
+
     async Task Select(BlossomPost post)
     {
         if (SelectedPost == post)

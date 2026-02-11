@@ -40,7 +40,7 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" OnSelect="Select" />
+                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
@@ -70,6 +70,7 @@
     List<BlossomPost> Discoveries = [];
     BlossomCoordinate? SelectedQuest;
     BlossomUser? User;
+    SpaceDiscussion? SpaceDiscussionRef;
     IJSObjectReference? Game;
     string ActiveTab = "Discoveries";
     bool ShowQuests;
@@ -103,7 +104,7 @@
         // Set current user to Self (should move this to backend)
         GameObjects = GameObjects.Select(x => x.Id == User!.Avatar.Id ? x with { Type = "Self" } : x).ToList();
         if (Game != null)
-            await Game.InvokeVoidAsync("update", GameObjects);
+            await Game.InvokeVoidAsync("update", GameObjects, DotNetObjectReference.Create(this));
     }
 
     void SetActiveTab(string tab)
@@ -111,10 +112,12 @@
         ActiveTab = tab;
     }
 
-    async Task Select(BlossomPost? post)
+    async Task Select(BlossomPost? post) => await Select(post?.Id);
+
+    async Task Select(string? id)
     {
         if (Game != null)
-            await Game.InvokeVoidAsync("select", post?.Id);
+            await Game.InvokeVoidAsync("select", id);
     }
 
     async Task SelectQuest(BlossomCoordinate quest)
@@ -125,6 +128,19 @@
             SelectedQuest = quest;
 
         await UpdateGameObjects();
+    }
+
+    [JSInvokable("SelectGameObject")]
+    public async Task SelectGameObject(string id)
+    {
+        var obj = GameObjects.FirstOrDefault(x => x.Id == id);
+        if (obj != null)
+        {
+            if (obj.Type == "Quest")
+                await SelectQuest(obj);
+            else if (obj.Type == "Post")
+                await SpaceDiscussionRef!.Select(obj.Id);
+        }
     }
 
     void ToggleQuests() => ShowQuests = !ShowQuests;

@@ -5,6 +5,7 @@
         this.setOrigin(0, 0);
         this.setLineWidth(2);
         this.setDepth(3);
+        this.setInteractive().on('pointerdown', () => this.scene.dotnet.invokeMethodAsync('SelectGameObject', obj.id));
 
         scene.add.existing(this);
     }
