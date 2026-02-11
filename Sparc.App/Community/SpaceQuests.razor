@@ -34,8 +34,8 @@
     BlossomCoordinate? SelectedQuest;
 
     IEnumerable<BlossomCoordinate> Quests => GameObjects
-        .Where(x => x.Type == "Facet")
-        .OrderByDescending(x => x.Z);
+        .Where(x => x.Type == "Quest")
+        .OrderByDescending(x => x.Length);
 
     async Task SelectQuest(BlossomCoordinate quest)
     {

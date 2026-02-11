@@ -37,8 +37,14 @@
         background-color: #081B4B;
         display: grid;
         grid-template-columns: 54px auto 54px;
+        gap: 8px;
         justify-content: center;
         align-items: center;
+
+        figure {
+            aspect-ratio: 1;
+            background-color: #152959;
+        }
 
         h3 {
             margin-bottom: 8px;

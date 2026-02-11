@@ -7,7 +7,7 @@
     @if (CurrentSpace is not null)
     {
         <div id="buttons">
-        @if (GameObjects.Any(x => x.Type == "Facet"))
+        @if (GameObjects.Any(x => x.Type == "Quest"))
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />

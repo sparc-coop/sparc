@@ -8,6 +8,7 @@
             this.setScale(0.7);
         }
 
+        this.setDepth(8);
         this.updateFromObject(obj);
         scene.add.existing(this);
     }

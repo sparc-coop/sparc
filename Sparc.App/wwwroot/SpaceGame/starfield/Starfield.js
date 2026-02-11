@@ -5,7 +5,7 @@ import User from './components/User.js';
 import NorthStar from './components/NorthStar.js';
 import Constellation from './components/Constellation.js';
 import DefaultObject from './components/DefaultObject.js';
-import Axis from './components/Axis.js';
+import Quest from './components/Quest.js';
 import Hint from './components/Hint.js';
 import UserTrail from './components/UserTrail.js';
 import Crosshair from './components/Crosshair.js';
@@ -69,7 +69,7 @@ export default class Starfield extends Phaser.Scene {
         if (!this.isCreated)
             return;
 
-        console.log('updating space');
+        console.log('updating space', objects);
 
         // Set home position to self if available
         var self = objects.find(o => o.type == 'Self');
@@ -148,8 +148,9 @@ export default class Starfield extends Phaser.Scene {
             case 'User':
                 gameObject = new User(this, obj);
                 break;
-            case 'Axis':
-                gameObject = new Axis(this, obj);
+            case 'Quest':
+                var self = this.objects.find(o => o.type == 'Self');
+                gameObject = new Quest(this, obj, self);
                 break;
             case 'Space':
                 gameObject = new NorthStar(this, obj);
@@ -179,7 +180,9 @@ export default class Starfield extends Phaser.Scene {
     x(percent) {
         if (Math.abs(percent) > 2)
             percent = percent / 100;
-        return Math.floor(this.width / 2 * percent) + this.width / 2;
+
+        var rawX = Math.floor(this.width / 2 * percent) + this.width / 2;
+        return rawX;
     }
 
     y(percent) {

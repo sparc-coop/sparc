@@ -3,7 +3,7 @@
         super(scene, scene.x(obj.x), scene.y(obj.y), 0, 0, 0, 0, 0x9f2b68, 1);
 
         this.setOrigin(0, 0);
-        this.setLineWidth(1);
+        this.setLineWidth(3);
 
         this.updateFromObject(obj);
 
