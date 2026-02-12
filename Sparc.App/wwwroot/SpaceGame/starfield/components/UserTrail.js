@@ -21,11 +21,31 @@
         var index = userTrail.findIndex(x => x.id == obj.id);
         if (index > 0) {
             var previousPosition = userTrail[index - 1];
-            this.setTo(0, 0, this.scene.x(previousPosition.x) - this.scene.x(obj.x), this.scene.y(previousPosition.y) - this.scene.y(obj.y));
+
+            var x2 = this.scene.x(previousPosition.x) - this.scene.x(obj.x);
+            var y2 = this.scene.y(previousPosition.y) - this.scene.y(obj.y);
+            var end = { x: this.geom.x2, y: this.geom.y2 };
+
+            this.scene.tweens.add({
+                targets: end,
+                x: x2,
+                y: y2,
+                ease: 'Linear',
+                duration: 1000,
+                repeat: 0,
+                yoyo: false,
+                onUpdate: () => {
+                    this.setTo(0, 0, end.x, end.y);
+                }
+            });
+
+            //this.setTo(0, 0, this.scene.x(previousPosition.x) - this.scene.x(obj.x), this.scene.y(previousPosition.y) - this.scene.y(obj.y));
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
         this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
+        this.setAlpha(obj.z);
+        this.setLineWidth(6 * alphaIndex);
         //this.setScale(userTrail.length - index);
     }
 }

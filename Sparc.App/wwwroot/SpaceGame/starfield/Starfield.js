@@ -56,9 +56,17 @@ export default class Starfield extends Phaser.Scene {
 
     update() {
         for (let obj of this.moving) {
-            if (obj.data.has('destination') && this.hasReachedTarget(obj)) {
-                obj.body.stop();
-                obj.data.remove('destination');
+            if (obj.data.has('destination')) {
+                var destination = obj.getData('destination');
+                if (destination.length && this.hasReachedTarget(obj, destination[0])) {
+                    destination.shift();
+                    if (destination.length)
+                        this.plugins.get('rexeasemoveplugin').moveTo(obj, 300, destination[0].x, destination[0].y, 'Cubic');
+                    else {
+                        obj.body.stop();
+                        obj.data.remove('destination');
+                    }
+                }
             }
         }
 
@@ -112,14 +120,14 @@ export default class Starfield extends Phaser.Scene {
             var newY = this.y(obj.y);
             var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
             if (!inXSeconds)
-                inXSeconds = obj.type == 'Self' ? 2000 : obj.type == 'Post' ? 1000 : 0;
+                inXSeconds = 300;
 
             if (distance > 0) {
-                gameObject.setData('destination', { x: newX, y: newY });
+                var destination = [{ x: gameObject.x, y: this.y(0) }, { x: newX, y: this.y(0) }, { x: newX, y: newY }];
+                gameObject.setData('destination', destination);
+                this.plugins.get('rexeasemoveplugin').moveTo(gameObject, 300, destination[0].x, destination[0].y, 'Cubic');
                 if (!this.moving.includes(gameObject))
                     this.moving.push(gameObject);
-                console.log(`moving ${obj.type} to ${obj.x},${obj.y} in ${inXSeconds}ms`);
-                this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds, newX, newY, 'Cubic');
             }
         }
 
@@ -192,13 +200,8 @@ export default class Starfield extends Phaser.Scene {
         return Math.floor(this.height / 2 * percent) + this.height / 2;
     }
 
-    hasReachedTarget(obj) {
+    hasReachedTarget(obj, destination) {
         // If no destination set, consider reached
-        if (!obj.data || !obj.data.has('destination'))
-            return true;
-
-        var destination = obj.getData('destination');
-
         // If there's no body/velocity treat as reached (guard)
         if (!obj.body || !obj.body.velocity)
             return true;
