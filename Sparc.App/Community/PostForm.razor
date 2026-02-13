@@ -8,7 +8,7 @@
 </form>
 
 @code {
-    [Parameter] public BlossomSpace Space { get; set; } = new("sparc.coop");
+    [Parameter] public BlossomSpace Space { get; set; } = new(Guid.NewGuid().ToString()) { SpaceId = "sparc.coop" };
     [Parameter] public EventCallback OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
     bool IsEnter;
