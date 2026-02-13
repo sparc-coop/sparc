@@ -8,32 +8,22 @@
         <aside>
             <header>
                 <h1>@CurrentSpace.Name</h1>
-                <p>@CurrentSpace.Summary.Topic<br /><br /></p>
+                <p>@CurrentSpace.Summary?.Topic<br /><br /></p>
                 @if (CurrentSpace.RoomType == "Quest")
                 {
-                    <p>Goal: @CurrentSpace.Summary.Description</p>
+                    <p>Goal: @CurrentSpace.Summary?.Description</p>
                 }
                 <dl>
                     <dt>Stage:</dt>
                     <dd>Ideation</dd>
                     <dt>Last Updated:</dt>
                     <dd>@CurrentSpace.LastActiveDate?.ToShortDateString()</dd>
-                    <dt>Consensus:</dt>
-                    <dd>
-                        @CurrentSpace.Consensus?.ToString("N2")
-                        (@(CurrentSpace.ConsensusDelta > 0 ? "rising" : CurrentSpace.ConsensusDelta < 0 ? "falling" : "stable"))
-                    </dd>
-                    <dt>Confidence:</dt>
-                    <dd>
-                        @CurrentSpace.Confidence?.ToString("N2")
-                        (@(CurrentSpace.ConfidenceDelta > 0 ? "rising" : CurrentSpace.ConfidenceDelta < 0 ? "falling" : "stable"))
-                    </dd>
                     @if (CurrentSpace.RoomType == "Quest")
                     {
                         <dt>Left Side:</dt>
-                        <dd>@CurrentSpace.Summary.LeftTopic</dd>
+                        <dd>@CurrentSpace.Summary?.LeftTopic</dd>
                         <dt>Right Side:</dt>
-                        <dd>@CurrentSpace.Summary.RightTopic</dd>
+                        <dd>@CurrentSpace.Summary?.RightTopic</dd>
                     }
                 </dl>
 

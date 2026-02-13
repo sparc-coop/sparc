@@ -16,9 +16,9 @@
             <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")">
                 <div>
                 <figure></figure>
-                    @if (quest.Length.HasValue)
+                    @if (quest.Coordinates?.Length != null)
                     {
-                        <aside>@quest.Length.Value.ToString("0.##") ly</aside>
+                        <aside>@quest.Coordinates.Length.ToString("0.##") ly</aside>
                     }
                 </div>
                 <div>
@@ -35,15 +35,15 @@
 
 
 @code {
-    [Parameter] public required List<BlossomCoordinate> GameObjects { get; set; }
-    [Parameter] public EventCallback<BlossomCoordinate?> OnSelect { get; set; }
-    BlossomCoordinate? SelectedQuest;
+    [Parameter] public required List<BlossomSpaceObject> GameObjects { get; set; }
+    [Parameter] public EventCallback<BlossomSpaceObject?> OnSelect { get; set; }
+    BlossomSpaceObject? SelectedQuest;
 
-    IEnumerable<BlossomCoordinate> Quests => GameObjects
-        .Where(x => x.Type == "Quest")
-        .OrderByDescending(x => x.Length);
+    IEnumerable<BlossomSpaceObject> Quests => GameObjects
+        .Where(x => x.EntityType == "Quest")
+        .OrderByDescending(x => x.Coordinates?.Length);
 
-    async Task SelectQuest(BlossomCoordinate quest)
+    async Task SelectQuest(BlossomSpaceObject quest)
     {
         if (SelectedQuest?.Id == quest.Id)
             SelectedQuest = null;

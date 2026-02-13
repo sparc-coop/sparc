@@ -7,7 +7,7 @@
     @if (CurrentSpace is not null)
     {
         <div id="buttons">
-        @if (GameObjects.Any(x => x.Type == "Quest"))
+        @if (GameObjects.Any(x => x.EntityType == "Quest"))
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
@@ -62,19 +62,19 @@
 
 @inject ISparcAura Aura
 @code {
-    [Parameter] public required string Id { get; set; }
-    [Parameter] public string? ParentSpaceId { get; set; }
-    BlossomSpace? CurrentSpace;
-    BlossomSpace? UserSpace;
-    List<BlossomCoordinate> GameObjects = [];
-    List<BlossomPost> Discoveries = [];
-    BlossomCoordinate? SelectedQuest;
-    BlossomUser? User;
-    SpaceDiscussion? SpaceDiscussionRef;
-    IJSObjectReference? Game;
-    string ActiveTab = "Discoveries";
-    bool ShowQuests;
-    GameState? GameState;
+        [Parameter] public required string Id { get; set; }
+        [Parameter] public string? ParentSpaceId { get; set; }
+        BlossomSpace? CurrentSpace;
+        BlossomSpace? UserSpace;
+        List<BlossomSpaceObject> GameObjects = [];
+        List<Post> Discoveries = [];
+        BlossomSpaceObject? SelectedQuest;
+        BlossomUser? User;
+        SpaceDiscussion? SpaceDiscussionRef;
+        IJSObjectReference? Game;
+        string ActiveTab = "Discoveries";
+        bool ShowQuests;
+        GameState? GameState;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -101,10 +101,13 @@
     async Task UpdateGameObjects()
     {
         GameState = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
-        GameObjects = GameState.Coordinates;
+        GameObjects = GameState.Objects;
 
         // Set current user to Self (should move this to backend)
-        GameObjects = GameObjects.Select(x => x.Id == User!.Avatar.Id ? x with { Type = "Self" } : x).ToList();
+        var currentUser = GameObjects.FirstOrDefault(x => x.Id == User!.Avatar.Id);
+        if (currentUser != null)
+            currentUser.EntityType = "Self";
+
         if (Game != null)
             await Game.InvokeVoidAsync("update", GameObjects, DotNetObjectReference.Create(this));
     }
@@ -114,7 +117,7 @@
         ActiveTab = tab;
     }
 
-    async Task Select(BlossomPost? post) => await Select(post?.Id);
+    async Task Select(Post? post) => await Select(post?.Id);
 
     async Task Select(string? id)
     {
@@ -122,7 +125,7 @@
             await Game.InvokeVoidAsync("select", id);
     }
 
-    async Task SelectQuest(BlossomCoordinate quest)
+    async Task SelectQuest(BlossomSpaceObject quest)
     {
         if (SelectedQuest?.Id == quest?.Id)
             SelectedQuest = null;
@@ -138,9 +141,9 @@
         var obj = GameObjects.FirstOrDefault(x => x.Id == id);
         if (obj != null)
         {
-            if (obj.Type == "Quest")
+            if (obj.EntityType == "Quest")
                 await SelectQuest(obj);
-            else if (obj.Type == "Post")
+            else if (obj.EntityType == "Post")
                 await SpaceDiscussionRef!.Select(obj.Id);
         }
     }

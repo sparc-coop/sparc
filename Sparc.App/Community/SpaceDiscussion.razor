@@ -34,10 +34,10 @@
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
-    [Parameter] public EventCallback<BlossomPost?> OnSelect { get; set; }
+    [Parameter] public EventCallback<Post?> OnSelect { get; set; }
     [Parameter] public string? Type { get; set; }
-    List<BlossomPost> Posts = [];
-    BlossomPost? SelectedPost;
+    List<Post> Posts = [];
+    Post? SelectedPost;
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,7 +57,7 @@
             await Select(post);
     }
 
-    async Task Select(BlossomPost post)
+    async Task Select(Post post)
     {
         if (SelectedPost == post)
             SelectedPost = null;

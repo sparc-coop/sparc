@@ -35,7 +35,7 @@
     {
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
-        SparcPost post = new(Space, User!, PostText);
+        Post post = new(Space, User!.Avatar, PostText);
         var newPost = await Spaces.PostAsync(post.SpaceId, post);
         if (OnUpdate.HasDelegate)
         {
