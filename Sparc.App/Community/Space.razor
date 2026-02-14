@@ -4,10 +4,10 @@
 <article>
     <div id="game"></div>
 
-    @if (CurrentSpace is not null)
+    @if (GameState is not null)
     {
         <div id="buttons">
-        @if (GameObjects.Any(x => x.EntityType == "Quest"))
+        @if (GameState.Quests.Any())
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
@@ -17,7 +17,7 @@
 
         @if (ShowQuests)
         {
-            <SpaceQuests GameObjects="GameObjects" OnSelect="SelectQuest" />
+            <SpaceQuests Quests="GameState.Quests" Facets="GameState.Facets" OnSelect="SelectQuest" />
         }
 
         <div id="hud">
@@ -25,7 +25,7 @@
                 <header>
                     Project
                 </header>
-                <SpaceCard Space="CurrentSpace" GameState="GameState" />
+                <SpaceCard GameState="GameState" />
             </section>
 
             <section class="details">
@@ -40,19 +40,19 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
+                        <SpaceDiscussion Space="GameState.Space" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
                 {
                     <div class="frog">
-                        <SpaceDiscussion Space="CurrentSpace" OnUpdate="Update" OnSelect="Select" Type="Hint" />
+                        <SpaceDiscussion Space="GameState.Space" OnUpdate="Update" OnSelect="Select" Type="Hint" />
                     </div>
                 }
                 else if (ActiveTab == "Settings")
                 {
                     <div class="settings">
-                        <SpaceSettings CurrentSpace="CurrentSpace" User="User" UserSpace="UserSpace" OnUpdate="Update" />
+                        <SpaceSettings CurrentSpace="GameState.Space" User="User" OnUpdate="Update" />
                     </div>
                 }
             </section>
@@ -64,9 +64,6 @@
 @code {
         [Parameter] public required string Id { get; set; }
         [Parameter] public string? ParentSpaceId { get; set; }
-        BlossomSpace? CurrentSpace;
-        BlossomSpace? UserSpace;
-        List<BlossomSpaceObject> GameObjects = [];
         List<Post> Discoveries = [];
         BlossomSpaceObject? SelectedQuest;
         BlossomUser? User;
@@ -87,29 +84,26 @@
         if (Game == null)
         {
             Game = await Js.ImportAsync("./SpaceGame/SpaceGame.js");
-            await Game.InvokeVoidAsync("start", GameObjects);
+            await Game.InvokeVoidAsync("start", GameState);
         }
     }
 
     async Task Update()
     {
-        CurrentSpace = await Spaces.GetSpaceAsync(ParentSpaceId ?? "sparc.coop", Id);
-        UserSpace = await Spaces.GetSpaceAsync(Id, User!.Avatar.Id);
         await UpdateGameObjects();
     }
 
     async Task UpdateGameObjects()
     {
         GameState = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
-        GameObjects = GameState.Objects;
 
         // Set current user to Self (should move this to backend)
-        var currentUser = GameObjects.FirstOrDefault(x => x.Id == User!.Avatar.Id);
+        var currentUser = GameState.Headspaces.FirstOrDefault(x => x.Id == User!.Avatar.Id);
         if (currentUser != null)
             currentUser.EntityType = "Self";
 
         if (Game != null)
-            await Game.InvokeVoidAsync("update", GameObjects, DotNetObjectReference.Create(this));
+            await Game.InvokeVoidAsync("update", GameState, DotNetObjectReference.Create(this));
     }
 
     void SetActiveTab(string tab)
@@ -138,7 +132,7 @@
     [JSInvokable("SelectGameObject")]
     public async Task SelectGameObject(string id)
     {
-        var obj = GameObjects.FirstOrDefault(x => x.Id == id);
+        var obj = GameState!.Posts.FirstOrDefault(x => x.Id == id);
         if (obj != null)
         {
             if (obj.EntityType == "Quest")

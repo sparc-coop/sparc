@@ -2,7 +2,7 @@
 
 <section class="discussion">
     <div>
-        @foreach (var post in Posts)
+        @foreach (var post in GameState.Posts)
         {
             <article @onclick=@(() => Select(post)) class="@(SelectedPost == post ? "selected" : "")">
                 <header>
@@ -27,32 +27,25 @@
         }
     </div>
     <footer>
-        <PostForm Space="Space" OnUpdate="Update" />
+        <PostForm Space="GameState.Space" OnUpdate="Update" />
     </footer>
 </section>
 
 @code {
-    [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public required GameState GameState { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     [Parameter] public EventCallback<Post?> OnSelect { get; set; }
     [Parameter] public string? Type { get; set; }
-    List<Post> Posts = [];
     Post? SelectedPost;
-
-    protected override async Task OnInitializedAsync()
-    {
-        Posts = await Spaces.GetPostsAsync(Space.Id, Type ?? "Post");
-    }
 
     async Task Update()
     {
-        Posts = await Spaces.GetPostsAsync(Space.Id, Type ?? "Post");
         await OnUpdate.InvokeAsync();
     }
 
     public async Task Select(string id)
     {
-        var post = Posts.FirstOrDefault(x => x.Id == id);
+        var post = GameState.Posts.FirstOrDefault(x => x.Id == id);
         if (post != null)
             await Select(post);
     }
