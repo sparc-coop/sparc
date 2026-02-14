@@ -1,6 +1,6 @@
 ﻿export default class Crosshair extends Phaser.GameObjects.Sprite {
     constructor(scene, obj) {
-        super(scene, scene.x(obj.x), scene.y(obj.y), 'crosshair');
+        super(scene, scene.x(obj), scene.y(obj), 'crosshair');
         this.setAlpha(0);
         scene.add.existing(this);
         scene.cameras.main.startFollow(this, false, 0.1, 0.1, scene.width * -0.08, 0);

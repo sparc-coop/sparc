@@ -4,16 +4,16 @@ export default class Post extends Phaser.GameObjects.Sprite {
     connector;
     
     constructor(scene, obj) {
-        super(scene, scene.x(obj.x), scene.y(obj.y), 'Post');
+        super(scene, scene.x(obj), scene.y(obj), 'Post');
 
-        this.setAlpha(obj.z ?? 1);
         this.setName(obj.id);
         this.setDepth(4);
-        this.setScale(obj.z * 4);
         this.setDataEnabled();
         this.setInteractive().on('pointerdown', () => this.scene.dotnet.invokeMethodAsync('SelectGameObject', obj.id));
 
         scene.add.existing(this);
+
+        this.updateFromObject(obj);
     }
 
     preUpdate(time, delta) {
@@ -21,8 +21,8 @@ export default class Post extends Phaser.GameObjects.Sprite {
     }
 
     updateFromObject(obj) {
-        this.setAlpha(obj.z ?? 1);
-        this.setScale(obj.z * 4);
+        this.setAlpha(this.scene.z(obj));
+        this.setScale(this.scene.z(obj) * 4);
 
         if (this.connector)
             this.connector.destroy();

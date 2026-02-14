@@ -35,7 +35,7 @@ export default class Starfield extends Phaser.Scene {
         this.load.plugin('rexeasemoveplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexeasemoveplugin.min.js', true);
     }
 
-    create(objects) {
+    create(data) {
         this.physics.world.setBounds(0, 0, this.width * 5, this.height * 5);
         this.cameras.main.setBounds(0, 0, this.width * 5, this.height * 5);
 
@@ -51,7 +51,7 @@ export default class Starfield extends Phaser.Scene {
         });
 
         this.isCreated = true;
-        this.updateSpace(objects);
+        this.updateSpace(data);
     }
 
     update() {
@@ -73,25 +73,26 @@ export default class Starfield extends Phaser.Scene {
         this.moving = this.moving.filter(o => o.data.has('destination'));
     }
 
-    updateSpace(objects) {
-        if (!this.isCreated)
+    updateSpace(data) {
+        if (!this.isCreated || !data)
             return;
 
-        console.log('updating space', objects);
+        console.log('updating space', data);
+        this.objects = [...data.headspaces, ...data.posts, ...data.facets, ...data.quests, ...data.constellations];
 
         // Set home position to self if available
-        var self = objects.find(o => o.type == 'Self');
+        var self = this.objects.find(o => o._type == 'Headspace' && o.id == data.headspace.id);
         if (self) {
-            objects.push({ id: 'Crosshair', type: 'Crosshair', x: self.x, y: self.y, ref: 'Self' });
+            self._type = 'Self';
+            this.objects.push({ id: 'Crosshair', _type: 'Crosshair', coordinates: self.coordinates, ref: 'Self' });
         }
 
-        this.objects = objects;
-        objects.forEach(o => this.updateObject(o));
+        console.log('converted to objects', this.objects);
+        this.objects.forEach(o => this.updateObject(o));
 
         // Delete sprites that are no longer present
-        var noLongerPresent = this.children.list.filter(c => c.name && !objects.find(o => o.id == c.name));
+        var noLongerPresent = this.children.list.filter(c => c.name && !this.objects.find(o => o.id == c.name));
         noLongerPresent.forEach(obj => obj.destroy());
-
 
         if (this.selectedId)
             this.select(this.selectedId);
@@ -100,13 +101,13 @@ export default class Starfield extends Phaser.Scene {
     select(id) {
         var selectedObject = id ?
             this.objects.find(o => o.id == id)
-            : this.objects.find(o => o.type == 'Self');
+            : this.objects.find(o => o._type == 'Self');
 
-        var crosshair = this.objects.find(o => o.type == 'Crosshair');
+        var crosshair = this.objects.find(o => o._type == 'Crosshair');
         if (selectedObject && crosshair) {
             crosshair.x = selectedObject.x;
             crosshair.y = selectedObject.y;
-            crosshair.ref = selectedObject.type;
+            crosshair.ref = selectedObject._type;
             this.updateObject(crosshair, 500);
         }
     }
@@ -116,8 +117,8 @@ export default class Starfield extends Phaser.Scene {
 
         // Move to new position
         if (gameObject.scrollFactorX != 0) {
-            var newX = this.x(obj.x);
-            var newY = this.y(obj.y);
+            var newX = this.x(obj);
+            var newY = this.y(obj);
             var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
             if (!inXSeconds)
                 inXSeconds = 300;
@@ -145,7 +146,7 @@ export default class Starfield extends Phaser.Scene {
             return gameObject;
         }
 
-        switch (obj.type) {
+        switch (obj._type) {
             case 'Post':
             case 'Guide':
                 gameObject = new Post(this, obj);
@@ -158,7 +159,7 @@ export default class Starfield extends Phaser.Scene {
                 gameObject = new User(this, obj);
                 break;
             case 'Quest':
-                var self = this.objects.find(o => o.type == 'Self');
+                var self = this.objects.find(o => o._type == 'Self');
                 gameObject = new Quest(this, obj, self);
                 break;
             case 'Space':
@@ -171,7 +172,7 @@ export default class Starfield extends Phaser.Scene {
             case 'Answer':
                 gameObject = new Hint(this, obj);
                 break;
-            case 'UserTrail':
+            case 'Headspace':
                 gameObject = new UserTrail(this, obj);
                 break;
             case 'Crosshair':
@@ -186,19 +187,33 @@ export default class Starfield extends Phaser.Scene {
         return gameObject;
     }
 
-    x(percent) {
-        if (Math.abs(percent) > 2)
-            percent = percent / 100;
+    x(obj) {
+        var coordinate = typeof obj === 'object' ? obj.coordinates.vector[0] : obj;
 
-        var rawX = Math.floor(this.width / 2 * percent) + this.width / 2;
+        if (Math.abs(coordinate) > 2)
+            coordinate = coordinate / 100;
+
+        var rawX = Math.floor(this.width / 2 * coordinate) + this.width / 2;
         return rawX;
     }
 
-    y(percent) {
-        percent = -1 * percent;
-        if (Math.abs(percent) > 2)
-            percent = percent / 100;
-        return Math.floor(this.height / 2 * percent) + this.height / 2;
+    y(obj) {
+        var coordinate = typeof obj === 'object' ? obj.coordinates.vector[1] : obj;
+
+        coordinate = -1 * coordinate;
+        if (Math.abs(coordinate) > 2)
+            coordinate = coordinate / 100;
+        return Math.floor(this.height / 2 * coordinate) + this.height / 2;
+    }
+
+    z(obj) {
+        var coordinate = typeof obj === 'object'
+            ? obj.coordinates.vector.length > 2
+                ? obj.coordinates.vector[2]
+                : 1
+            : obj;
+
+        return coordinate;
     }
 
     hasReachedTarget(obj, destination) {

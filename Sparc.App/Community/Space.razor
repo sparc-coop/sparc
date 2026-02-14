@@ -40,13 +40,13 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion Space="GameState.Space" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
+                        <SpaceDiscussion GameState="GameState" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
                 {
                     <div class="frog">
-                        <SpaceDiscussion Space="GameState.Space" OnUpdate="Update" OnSelect="Select" Type="Hint" />
+                        <SpaceDiscussion GameState="GameState" OnUpdate="Update" OnSelect="Select" Type="Hint" />
                     </div>
                 }
                 else if (ActiveTab == "Settings")

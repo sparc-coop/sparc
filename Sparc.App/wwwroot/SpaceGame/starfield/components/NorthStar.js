@@ -9,8 +9,8 @@
     }
 
     updateFromObject(obj) {
-        var user = this.scene.objects.find(x => x.type == 'Self');
-        var rad = Phaser.Math.Angle.Between(this.scene.x(user.x), this.scene.y(user.y), this.scene.x(obj.x), this.scene.y(obj.y));
+        var user = this.scene.objects.find(x => x._type == 'Self');
+        var rad = Phaser.Math.Angle.Between(this.scene.x(user), this.scene.y(user), this.scene.x(obj), this.scene.y(obj));
         this.setRotation(rad + Math.PI / 2);
         console.log('north star', obj, user, rad);
     }
