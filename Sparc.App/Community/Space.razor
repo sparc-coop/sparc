@@ -7,7 +7,7 @@
     @if (GameState is not null)
     {
         <div id="buttons">
-        @if (GameState.Quests.Any())
+        @if (GameState.Facets.Any())
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
@@ -17,7 +17,7 @@
 
         @if (ShowQuests)
         {
-            <SpaceQuests Quests="GameState.Quests" Facets="GameState.Facets" OnSelect="SelectQuest" />
+            <SpaceQuests Facets="GameState.Facets" OnSelect="SelectQuest" SelectedQuest="GameState.Headspace?.ActiveQuest" />
         }
 
         <div id="hud">

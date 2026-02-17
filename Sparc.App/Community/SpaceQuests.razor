@@ -11,21 +11,21 @@
     </figure>
 
     <ul id="quests">
-        @foreach (var quest in Quests)
+        @foreach (var facet in Facets)
         {
-            <li class="@(SelectedQuest?.Id == quest.Id ? "active" : "")">
+            <li class="@(SelectedQuest?.Id == facet.Id ? "active" : "")">
                 <div>
                 <figure></figure>
-                    @if (quest.Coordinates?.Length != null)
+                    @if (facet.Coordinates?.Length != null)
                     {
-                        <aside>@quest.Coordinates.Length.ToString("0.##") ly</aside>
+                        <aside>@facet.Coordinates.Length.ToString("0.##") ly</aside>
                     }
                 </div>
                 <div>
-                    <h3>@quest.Summary?.RightTopic</h3>
-                    <p>@quest.Summary?.Description</p>
+                    <h3>@facet.Summary?.RightTopic</h3>
+                    <p>@facet.Summary?.Description</p>
                 </div>
-                <button class="icon" @onclick="@(() => SelectQuest(quest))">
+                <button class="icon" @onclick="@(() => SelectQuest(facet))">
                     <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Go to Quest" />
                 </button>
             </li>
@@ -35,10 +35,9 @@
 
 
 @code {
-    [Parameter] public required List<Quest> Quests { get; set; }
     [Parameter] public required List<Facet> Facets { get; set; }
     [Parameter] public EventCallback<BlossomSpaceObject?> OnSelect { get; set; }
-    BlossomSpaceObject? SelectedQuest;
+    [Parameter] public BlossomSpaceObject? SelectedQuest { get; set; }
 
     async Task SelectQuest(BlossomSpaceObject quest)
     {

@@ -27,10 +27,10 @@ export default class Post extends Phaser.GameObjects.Sprite {
         if (this.connector)
             this.connector.destroy();
 
-        if (obj.connectTo) {
-            var to = this.scene.objects.find(x => x.id == obj.connectTo);
-            if (to)
-                this.connector = new ConstellationConnector(this.scene, this, to);
-        }
+        //if (obj.connectTo) {
+        //    var to = this.scene.find(null, obj.connectTo);
+        //    if (to)
+        //        this.connector = new ConstellationConnector(this.scene, this, to);
+        //}
     }
 }

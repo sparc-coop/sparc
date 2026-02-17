@@ -2,6 +2,7 @@
 import Post from './components/Post.js';
 import Facet from './components/Facet.js';
 import User from './components/User.js';
+import Self from './components/Self.js';
 import NorthStar from './components/NorthStar.js';
 import Constellation from './components/Constellation.js';
 import DefaultObject from './components/DefaultObject.js';
@@ -13,11 +14,10 @@ import Crosshair from './components/Crosshair.js';
 export default class Starfield extends Phaser.Scene {
     height = 1000;
     width = 2560;
-    objects = [];
-    moving = [];
     isCreated = false;
     textbox;
     crosshair;
+    gameState;
     selectedId = null;
 
     constructor() {
@@ -55,82 +55,64 @@ export default class Starfield extends Phaser.Scene {
     }
 
     update() {
-        for (let obj of this.moving) {
-            if (obj.data.has('destination')) {
-                var destination = obj.getData('destination');
-                if (destination.length && this.hasReachedTarget(obj, destination[0])) {
-                    destination.shift();
-                    if (destination.length)
-                        this.plugins.get('rexeasemoveplugin').moveTo(obj, 300, destination[0].x, destination[0].y, 'Cubic');
-                    else {
-                        obj.body.stop();
-                        obj.data.remove('destination');
-                    }
-                }
-            }
-        }
-
-        this.moving = this.moving.filter(o => o.data.has('destination'));
     }
 
     updateSpace(data) {
         if (!this.isCreated || !data)
             return;
 
-        console.log('updating space', data);
-        this.objects = [...data.headspaces, ...data.posts, ...data.facets, ...data.quests, ...data.constellations];
+        this.gameState = data;
+
+        var objects = [...data.headspaces, ...data.posts, ...data.facets, ...data.constellations];
 
         // Set home position to self if available
-        var self = this.objects.find(o => o._type == 'Headspace' && o.id == data.headspace.id);
+        var self = this.find('Headspace', data.headspace.id);
         if (self) {
             self._type = 'Self';
-            this.objects.push({ id: 'Crosshair', _type: 'Crosshair', coordinates: self.coordinates, ref: 'Self' });
+            objects.push({ id: 'Crosshair', _type: 'Crosshair', coordinates: self.coordinates, ref: 'Self' });
         }
 
-        console.log('converted to objects', this.objects);
-        this.objects.forEach(o => this.updateObject(o));
+        console.log('updating space', data, objects);
+        objects.forEach(o => this.updateObject(o));
 
         // Delete sprites that are no longer present
-        var noLongerPresent = this.children.list.filter(c => c.name && !this.objects.find(o => o.id == c.name));
+        var noLongerPresent = this.children.list.filter(c => c.name && !objects.find(o => o.id == c.name));
         noLongerPresent.forEach(obj => obj.destroy());
 
         if (this.selectedId)
             this.select(this.selectedId);
     }
 
-    select(id) {
-        var selectedObject = id ?
-            this.objects.find(o => o.id == id)
-            : this.objects.find(o => o._type == 'Self');
+    find(type, id) {
+        return this.children.list.find(o => (!type || o.constructor.name == type) && (!id || o.name == id));
+    }
 
-        var crosshair = this.objects.find(o => o._type == 'Crosshair');
-        if (selectedObject && crosshair) {
-            crosshair.x = selectedObject.x;
-            crosshair.y = selectedObject.y;
-            crosshair.ref = selectedObject._type;
-            this.updateObject(crosshair, 500);
+    findInGameState(type, id) {
+        return this.gameState.find(o => (!type || o._type == type) && (!id || o.id == id));
+    }
+
+    getAll(type, filter) {
+        return this.children.list.filter(o => (!type || o.constructor.name == type) && (!filter || filter(o)));
+    }
+
+    getAllInGameState(type, filter) {
+        return this.gameState.filter(o => (!type || o._type == type) && (!filter || filter(o)));
+    }
+
+    select(id) {
+        var crosshair = this.find('Crosshair');
+        if (!crosshair) {
+            var self = this.find('Self');
+            crosshair = new Crosshair(this, self);
         }
+
+        crosshair.select(id);
     }
 
     updateObject(obj, inXSeconds) {
-        var gameObject = this.toGameObject(obj);
+        var gameObject = this.getOrCreateObject(obj);
 
-        // Move to new position
-        if (gameObject.scrollFactorX != 0) {
-            var newX = this.x(obj);
-            var newY = this.y(obj);
-            var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
-            if (!inXSeconds)
-                inXSeconds = 300;
-
-            if (distance > 0) {
-                var destination = [{ x: gameObject.x, y: this.y(0) }, { x: newX, y: this.y(0) }, { x: newX, y: newY }];
-                gameObject.setData('destination', destination);
-                this.plugins.get('rexeasemoveplugin').moveTo(gameObject, 300, destination[0].x, destination[0].y, 'Cubic');
-                if (!this.moving.includes(gameObject))
-                    this.moving.push(gameObject);
-            }
-        }
+        this.moveObject(gameObject, obj, inXSeconds);
 
         // Additional updates if defined
         if (gameObject.updateFromObject) {
@@ -140,7 +122,21 @@ export default class Starfield extends Phaser.Scene {
         return gameObject;
     }
 
-    toGameObject(obj) {
+    moveObject(gameObject, newObj, inXSeconds) {
+        if (gameObject.scrollFactorX == 0)
+            return;
+
+        var newX = this.x(newObj);
+        var newY = this.y(newObj);
+
+        var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
+        if (distance <= 0)
+            return;
+
+        this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds ?? 300, newX, newY, 'Cubic');
+    }
+
+    getOrCreateObject(obj) {
         var gameObject = this.children.getByName(obj.id);
         if (gameObject) {
             return gameObject;
@@ -155,12 +151,13 @@ export default class Starfield extends Phaser.Scene {
                 gameObject = new Facet(this, obj);
                 break;
             case 'Self':
+                gameObject = new Self(this, obj);
+                break;
             case 'User':
                 gameObject = new User(this, obj);
                 break;
             case 'Quest':
-                var self = this.objects.find(o => o._type == 'Self');
-                gameObject = new Quest(this, obj, self);
+                gameObject = new Quest(this, obj);
                 break;
             case 'Space':
                 gameObject = new NorthStar(this, obj);
@@ -172,12 +169,6 @@ export default class Starfield extends Phaser.Scene {
             case 'Answer':
                 gameObject = new Hint(this, obj);
                 break;
-            case 'Headspace':
-                gameObject = new UserTrail(this, obj);
-                break;
-            case 'Crosshair':
-                gameObject = new Crosshair(this, obj);
-                break;
             default:
                 gameObject = new DefaultObject(this, obj);
         }
@@ -188,7 +179,9 @@ export default class Starfield extends Phaser.Scene {
     }
 
     x(obj) {
-        var coordinate = typeof obj === 'object' ? obj.coordinates.vector[0] : obj;
+        var coordinate = typeof (obj) == 'object'
+            ? obj.coordinates ? obj.coordinates.vector[0] : obj.x 
+            : obj;
 
         if (Math.abs(coordinate) > 2)
             coordinate = coordinate / 100;
@@ -198,7 +191,9 @@ export default class Starfield extends Phaser.Scene {
     }
 
     y(obj) {
-        var coordinate = typeof obj === 'object' ? obj.coordinates.vector[1] : obj;
+        var coordinate = typeof obj === 'object'
+            ? obj.coordinates ? obj.coordinates.vector[1] : obj.y
+                : obj;
 
         coordinate = -1 * coordinate;
         if (Math.abs(coordinate) > 2)
@@ -208,9 +203,8 @@ export default class Starfield extends Phaser.Scene {
 
     z(obj) {
         var coordinate = typeof obj === 'object'
-            ? obj.coordinates.vector.length > 2
-                ? obj.coordinates.vector[2]
-                : 1
+            ? obj.coordinates ? obj.coordinates.vector.length > 2 ? obj.coordinates.vector[2] : 1
+        : obj.alpha
             : obj;
 
         return coordinate;
@@ -258,5 +252,26 @@ export default class Starfield extends Phaser.Scene {
         var zoom = Math.max(this.width / (maxX - minX + this.width / 10), this.height / (maxY - minY + this.height / 10), 1);
         console.log('zooming to', posts, minX, maxX, minY, maxY, zoom);
         this.cameras.main.setZoom(zoom);
+    }
+
+    updateAxes() {
+        var destination = [{ x: gameObject.x, y: this.y(0) }, { x: newX, y: this.y(0) }, { x: newX, y: newY }];
+
+        for (let obj of this.moving) {
+            if (obj.data.has('destination')) {
+                var destination = obj.getData('destination');
+                if (destination.length && this.hasReachedTarget(obj, destination[0])) {
+                    destination.shift();
+                    if (destination.length)
+                        this.plugins.get('rexeasemoveplugin').moveTo(obj, 300, destination[0].x, destination[0].y, 'Cubic');
+                    else {
+                        obj.body.stop();
+                        obj.data.remove('destination');
+                    }
+                }
+            }
+        }
+
+        this.moving = this.moving.filter(o => o.data.has('destination'));
     }
 }

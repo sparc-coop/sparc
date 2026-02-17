@@ -16,7 +16,7 @@
     }
 
     updateFromObject(obj) {
-        var userTrail = this.scene.objects.filter(x => x._type == 'Headspace');
+        var userTrail = this.scene.getAll('UserTrail', x => x.userId == obj.id);
         var lastPosition = userTrail.length > 1 ? userTrail[userTrail.length - 2] : null;
 
         if (lastPosition) {

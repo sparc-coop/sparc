@@ -1,7 +1,9 @@
 ﻿export default class UserTrail extends Phaser.GameObjects.Line {
+    userId;
     constructor(scene, obj) {
         super(scene, scene.x(obj), scene.y(obj), 0, 0, 0, 0, 0x9f2b68, 1);
 
+        this.userId = obj.user.id;
         this.setOrigin(0, 0);
         this.setLineWidth(3);
 
@@ -13,9 +15,10 @@
 
     updateFromObject(obj) {
         // Scale alpha based on its index in the trail, with the most recent position being the most opaque
-        var userTrail = this.scene.objects.filter(x => (x._type == 'Headspace' || x._type == 'Self') && x.user.id == obj.user.id);
+        var userTrail = this.scene.getAll('UserTrail', x => x.userId == this.userId);
         var index = userTrail.findIndex(x => x.id == obj.id);
         console.log('user trail', userTrail, index);
+
         if (index > 0) {
             var previousPosition = userTrail[index - 1];
 
@@ -36,7 +39,7 @@
                 }
             });
 
-            //this.setTo(0, 0, this.scene.x(previousPosition.x) - this.scene.x(obj.x), this.scene.y(previousPosition.y) - this.scene.y(obj.y));
+            //this.setTo(0, 0, this.scene.x(previousPosition) - this.scene.x(obj), this.scene.y(previousPosition) - this.scene.y(obj));
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
