@@ -7,12 +7,12 @@
         this.setDepth(3);
         this.setInteractive().on('pointerdown', () => this.scene.dotnet.invokeMethodAsync('SelectGameObject', axis.id));
 
-        this.updateFromObject(obj);
+        this.updateFromObject(axis);
         scene.add.existing(this);
     }
 
     updateFromObject(obj) {
-        var user = this.scene.findInGameState('self');
+        var user = this.scene.gameState.self;
         if (user)
             this.setTo(this.scene.x(user) - this.scene.x(obj), this.scene.y(user) - this.scene.y(obj));
     }
