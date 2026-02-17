@@ -12,7 +12,7 @@
     }
 
     updateFromObject(obj) {
-        var user = this.scene.findInGameState('headspace');
+        var user = this.scene.findInGameState('self');
         if (user)
             this.setTo(this.scene.x(user) - this.scene.x(obj), this.scene.y(user) - this.scene.y(obj));
     }

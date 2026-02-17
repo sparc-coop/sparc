@@ -15,7 +15,7 @@
 
     updateFromObject(obj) {
         // Scale alpha based on its index in the trail, with the most recent position being the most opaque
-        var userTrail = this.scene.getAllInGameState('headspaces', x => x.user.id == this.userId);
+        var userTrail = this.scene.getAllInGameState('userTrails', x => x.user.id == this.userId);
         var index = userTrail.findIndex(x => x.id == obj.id);
 
         if (index > 0) {

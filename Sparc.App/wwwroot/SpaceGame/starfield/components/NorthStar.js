@@ -9,7 +9,7 @@
     }
 
     updateFromObject(obj) {
-        var user = this.scene.findInGameState('headspace');
+        var user = this.scene.findInGameState('self');
         var rad = Phaser.Math.Angle.Between(this.scene.x(user), this.scene.y(user), this.scene.x(obj), this.scene.y(obj));
         this.setRotation(rad + Math.PI / 2);
         console.log('north star', obj, user, rad);

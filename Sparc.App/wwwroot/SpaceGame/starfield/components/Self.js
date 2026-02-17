@@ -11,18 +11,19 @@ export default class Self extends Phaser.GameObjects.Sprite {
         this.updateFromObject(obj);
         scene.add.existing(this);
 
-        console.log('creating self', obj);
+        console.log('creating self', obj, this);
 
         var crosshair = new Crosshair(scene, obj);
 
-        var userTrails = this.scene.getAllInGameState('headspaces', x => x.userId == obj.id);
+        var userTrails = this.scene.getAllInGameState('userTrails', x => x.userId == obj.id);
         userTrails.forEach(x => this.trails.push(new UserTrail(scene, x)));
     }
 
     updateFromObject(obj) {
-        this.trails.push(new UserTrail(this.scene, obj));
+        var userTrails = this.scene.getAllInGameState('userTrails', x => x.userId == obj.id);
+        if (userTrails.length)
+            this.trails.push(new UserTrail(this.scene, userTrails[userTrails.length - 1]));
 
-        var userTrails = this.scene.getAllInGameState('headspaces', x => x.userId == obj.id);
         var lastPosition = userTrails.length > 1 ? userTrails[userTrails.length - 2] : null;
 
         if (lastPosition) {

@@ -17,7 +17,7 @@
 
         @if (ShowQuests)
         {
-            <SpaceQuests Facets="GameState.Facets" OnSelect="SelectQuest" SelectedQuest="GameState.Headspace?.ActiveQuest" />
+            <SpaceQuests Facets="GameState.Facets" OnSelect="SelectQuest" SelectedQuest="GameState.Self?.ActiveQuest" />
         }
 
         <div id="hud">
@@ -96,11 +96,6 @@
     async Task UpdateGameObjects()
     {
         GameState = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
-
-        // Set current user to Self (should move this to backend)
-        var currentUser = GameState.Headspaces.FirstOrDefault(x => x.Id == User!.Avatar.Id);
-        if (currentUser != null)
-            currentUser.EntityType = "Self";
 
         if (Game != null)
             await Game.InvokeVoidAsync("update", GameState, DotNetObjectReference.Create(this));

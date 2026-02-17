@@ -63,7 +63,7 @@ export default class Starfield extends Phaser.Scene {
 
         this.gameState = data;
 
-        var objects = [...this.gameState.headspaces, ...this.gameState.posts, ...this.gameState.facets, ...this.gameState.constellations];
+        var objects = [this.gameState.self, ...this.gameState.userTrails, ...this.gameState.posts, ...this.gameState.facets, ...this.gameState.constellations];
 
         console.log('updating space', this.gameState, objects);
         objects.forEach(o => this.updateObject(o));
@@ -150,7 +150,7 @@ export default class Starfield extends Phaser.Scene {
             case 'Facet':
                 gameObject = new Facet(this, obj);
                 break;
-            case 'Self':
+            case 'BlossomSpace':
                 gameObject = new Self(this, obj);
                 break;
             case 'User':
