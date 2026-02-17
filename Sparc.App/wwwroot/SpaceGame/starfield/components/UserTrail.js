@@ -15,9 +15,8 @@
 
     updateFromObject(obj) {
         // Scale alpha based on its index in the trail, with the most recent position being the most opaque
-        var userTrail = this.scene.getAll('UserTrail', x => x.userId == this.userId);
+        var userTrail = this.scene.getAllInGameState('headspaces', x => x.user.id == this.userId);
         var index = userTrail.findIndex(x => x.id == obj.id);
-        console.log('user trail', userTrail, index);
 
         if (index > 0) {
             var previousPosition = userTrail[index - 1];
@@ -31,7 +30,7 @@
                 x: x2,
                 y: y2,
                 ease: 'Linear',
-                duration: 1000,
+                duration: 300,
                 repeat: 0,
                 yoyo: false,
                 onUpdate: () => {
@@ -43,8 +42,9 @@
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
+        console.log('user trail', this.userId, userTrail, index, alphaIndex);
         this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
-        this.setAlpha(this.scene.z(obj));
+        //this.setAlpha(this.scene.z(obj));
         this.setLineWidth(6 * alphaIndex);
         //this.setScale(userTrail.length - index);
     }

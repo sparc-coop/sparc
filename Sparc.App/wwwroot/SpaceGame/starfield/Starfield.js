@@ -63,16 +63,9 @@ export default class Starfield extends Phaser.Scene {
 
         this.gameState = data;
 
-        var objects = [...data.headspaces, ...data.posts, ...data.facets, ...data.constellations];
+        var objects = [...this.gameState.headspaces, ...this.gameState.posts, ...this.gameState.facets, ...this.gameState.constellations];
 
-        // Set home position to self if available
-        var self = this.find('Headspace', data.headspace.id);
-        if (self) {
-            self._type = 'Self';
-            objects.push({ id: 'Crosshair', _type: 'Crosshair', coordinates: self.coordinates, ref: 'Self' });
-        }
-
-        console.log('updating space', data, objects);
+        console.log('updating space', this.gameState, objects);
         objects.forEach(o => this.updateObject(o));
 
         // Delete sprites that are no longer present
@@ -88,7 +81,13 @@ export default class Starfield extends Phaser.Scene {
     }
 
     findInGameState(type, id) {
-        return this.gameState.find(o => (!type || o._type == type) && (!id || o.id == id));
+        if (!this.gameState[type])
+            return null;
+
+        if (!this.id && this.gameState[type].length)
+            return this.gameState[type][0];
+
+        return this.gameState[type].find(o => o.id == id);
     }
 
     getAll(type, filter) {
@@ -96,16 +95,17 @@ export default class Starfield extends Phaser.Scene {
     }
 
     getAllInGameState(type, filter) {
-        return this.gameState.filter(o => (!type || o._type == type) && (!filter || filter(o)));
+        if (!this.gameState[type])
+            return null;
+
+        if (!this.filter)
+            return this.gameState[type];
+
+        return this.gameState[type].filter(o => filter(o));
     }
 
     select(id) {
         var crosshair = this.find('Crosshair');
-        if (!crosshair) {
-            var self = this.find('Self');
-            crosshair = new Crosshair(this, self);
-        }
-
         crosshair.select(id);
     }
 

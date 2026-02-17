@@ -1,4 +1,7 @@
-﻿export default class Self extends Phaser.GameObjects.Sprite {
+﻿import UserTrail from './UserTrail.js';
+import Crosshair from './Crosshair.js';
+
+export default class Self extends Phaser.GameObjects.Sprite {
     trails = [];
     constructor(scene, obj) {
         super(scene, scene.x(obj), scene.y(obj), 'ship');
@@ -8,14 +11,18 @@
         this.updateFromObject(obj);
         scene.add.existing(this);
 
-        var userTrails = this.scene.getAllInGameState('Headspace', x => x.userId == obj.id);
+        console.log('creating self', obj);
+
+        var crosshair = new Crosshair(scene, obj);
+
+        var userTrails = this.scene.getAllInGameState('headspaces', x => x.userId == obj.id);
         userTrails.forEach(x => this.trails.push(new UserTrail(scene, x)));
     }
 
     updateFromObject(obj) {
         this.trails.push(new UserTrail(this.scene, obj));
 
-        var userTrails = this.scene.getAllInGameState('Headspace', x => x.userId == obj.id);
+        var userTrails = this.scene.getAllInGameState('headspaces', x => x.userId == obj.id);
         var lastPosition = userTrails.length > 1 ? userTrails[userTrails.length - 2] : null;
 
         if (lastPosition) {
