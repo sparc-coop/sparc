@@ -63,7 +63,7 @@ export default class Starfield extends Phaser.Scene {
 
         this.gameState = data;
 
-        var objects = [this.gameState.space, this.gameState.self, ...this.gameState.userTrails, ...this.gameState.posts, ...this.gameState.facets, ...this.gameState.constellations];
+        var objects = [this.gameState.space, this.gameState.self, ...this.gameState.userTrails, ...this.gameState.posts, ...this.gameState.availableQuests, ...this.gameState.constellations];
 
         console.log('updating space', this.gameState, objects);
         objects.forEach(o => this.updateObject(o));

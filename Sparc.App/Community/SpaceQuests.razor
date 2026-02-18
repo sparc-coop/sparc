@@ -11,23 +11,33 @@
     </figure>
 
     <ul id="quests">
-        @foreach (var facet in Facets)
+        @foreach (var quest in AvailableQuests)
         {
-            <li class="@(UserSpace.ActiveQuestId == facet.Id ? "active" : "")">
+            <li class="@(UserSpace.ActiveQuestId == quest.Id ? "active" : "")">
                 <div>
-                <figure></figure>
-                    @if (facet.Coordinates?.Length != null)
+                    <figure></figure>
+                    @if (quest.Coordinates?.Length != null)
                     {
-                        <aside>@facet.Coordinates.Length.ToString("0.##") ly</aside>
+                        <aside>@quest.Coordinates.Length.ToString("0.##") ly</aside>
                     }
                 </div>
                 <div>
-                    <h3>@facet.Summary?.RightTopic</h3>
-                    <p>@facet.Summary?.Description</p>
+                    <h3>@quest.Summary?.RightTopic</h3>
+                    <p>@quest.Summary?.Description</p>
                 </div>
-                <button class="icon" @onclick="@(() => SelectQuest(facet))">
-                    <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Go to Quest" />
-                </button>
+
+                @if (UserSpace.ActiveQuestId == quest.Id)
+                {
+                    <button class="icon" @onclick="@(() => ToggleQuest(quest))">
+                        <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Stop Quest" />
+                    </button>
+                }
+                else
+                {
+                    <button class="icon" @onclick="@(() => ToggleQuest(quest))">
+                        <img src="./SpaceGame/starfield/sprites/start_quest.png" alt="Go to Quest" />
+                    </button>
+                }
             </li>
         }
     </ul>
@@ -35,13 +45,13 @@
 
 
 @code {
-    [Parameter] public required List<Facet> Facets { get; set; }
+    [Parameter] public required List<Quest> AvailableQuests { get; set; }
     [Parameter] public required BlossomSpace UserSpace { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
 
-    async Task SelectQuest(BlossomSpaceObject facet)
+    async Task ToggleQuest(Quest quest)
     {
-        await Spaces.ActivateQuestAsync(facet.SpaceId, facet.Id);
+        await Spaces.ActivateQuestAsync(quest.SpaceId, quest.FacetId);
         await OnUpdate.InvokeAsync();
     }
 }
