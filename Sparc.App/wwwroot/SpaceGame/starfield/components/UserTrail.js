@@ -10,7 +10,6 @@
         this.updateFromObject(obj);
 
         scene.add.existing(this);
-        console.log('made a headspace', this.x, this.y, this.alpha);
     }
 
     updateFromObject(obj) {
@@ -42,7 +41,6 @@
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
-        console.log('user trail', this.userId, userTrail, index, alphaIndex);
         this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
         //this.setAlpha(this.scene.z(obj));
         this.setLineWidth(6 * alphaIndex);

@@ -11,8 +11,6 @@ export default class Self extends Phaser.GameObjects.Sprite {
         this.updateFromObject(obj);
         scene.add.existing(this);
 
-        console.log('creating self', obj, this);
-
         var crosshair = new Crosshair(scene, obj);
 
         var userTrails = this.scene.getAllInGameState('userTrails', x => x.userId == obj.id);
