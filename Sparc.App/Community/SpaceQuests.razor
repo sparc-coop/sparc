@@ -13,7 +13,7 @@
     <ul id="quests">
         @foreach (var facet in Facets)
         {
-            <li class="@(SelectedQuest?.Id == facet.Id ? "active" : "")">
+            <li class="@(UserSpace.ActiveQuestId == facet.Id ? "active" : "")">
                 <div>
                 <figure></figure>
                     @if (facet.Coordinates?.Length != null)
@@ -36,15 +36,12 @@
 
 @code {
     [Parameter] public required List<Facet> Facets { get; set; }
-    [Parameter] public EventCallback<BlossomSpaceObject?> OnSelect { get; set; }
-    [Parameter] public BlossomSpaceObject? SelectedQuest { get; set; }
+    [Parameter] public required BlossomSpace UserSpace { get; set; }
+    [Parameter] public EventCallback OnUpdate { get; set; }
 
-    async Task SelectQuest(BlossomSpaceObject quest)
+    async Task SelectQuest(BlossomSpaceObject facet)
     {
-        if (SelectedQuest?.Id == quest.Id)
-            SelectedQuest = null;
-        else
-            SelectedQuest = quest;
-        await OnSelect.InvokeAsync(SelectedQuest);
+        await Spaces.ActivateQuestAsync(facet.SpaceId, facet.Id);
+        await OnUpdate.InvokeAsync();
     }
 }

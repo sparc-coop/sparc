@@ -17,7 +17,7 @@
 
         @if (ShowQuests)
         {
-            <SpaceQuests Facets="GameState.Facets" OnSelect="SelectQuest" SelectedQuest="GameState.Self?.ActiveQuest" />
+            <SpaceQuests Facets="GameState.Facets" UserSpace="GameState.Self" OnUpdate="UpdateGameObjects" />
         }
 
         <div id="hud">
@@ -40,19 +40,19 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion GameState="GameState" OnUpdate="Update" OnSelect="Select" @ref="SpaceDiscussionRef" />
+                        <SpaceDiscussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" @ref="SpaceDiscussionRef" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
                 {
                     <div class="frog">
-                        <SpaceDiscussion GameState="GameState" OnUpdate="Update" OnSelect="Select" Type="Hint" />
+                        <SpaceDiscussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="Hint" />
                     </div>
                 }
                 else if (ActiveTab == "Settings")
                 {
                     <div class="settings">
-                        <SpaceSettings CurrentSpace="GameState.Space" User="User" OnUpdate="Update" />
+                        <SpaceSettings CurrentSpace="GameState.Space" User="User" OnUpdate="UpdateGameObjects" />
                     </div>
                 }
             </section>
@@ -76,7 +76,7 @@
     protected override async Task OnParametersSetAsync()
     {
         User = await Aura.UserInfo();
-        await Update();
+        await UpdateGameObjects();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -88,14 +88,9 @@
         }
     }
 
-    async Task Update()
-    {
-        await UpdateGameObjects();
-    }
-
     async Task UpdateGameObjects()
     {
-        GameState = await Spaces.GetCoordinatesAsync(Id, SelectedQuest?.Id);
+        GameState = await Spaces.GetCoordinatesAsync(Id);
 
         if (Game != null)
             await Game.InvokeVoidAsync("update", GameState, DotNetObjectReference.Create(this));
