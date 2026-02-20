@@ -126,8 +126,8 @@ export default class Starfield extends Phaser.Scene {
         if (gameObject.scrollFactorX == 0)
             return;
 
-        var newX = this.x(newObj);
-        var newY = this.y(newObj);
+        var newX = gameObject.baseX ? gameObject.baseX(newObj) : this.x(newObj);
+        var newY = gameObject.baseY ? gameObject.baseY(newObj) : this.y(newObj);
 
         var distance = Phaser.Math.Distance.Between(gameObject.x, gameObject.y, newX, newY);
         if (distance <= 0)
@@ -181,27 +181,30 @@ export default class Starfield extends Phaser.Scene {
         return gameObject;
     }
 
-    x(obj) {
+    x(obj, offset) {
         var coordinate = typeof (obj) == 'object'
             ? obj.coordinates ? obj.coordinates.vector[0] : obj.x 
             : obj;
 
+        offset ??= this.width / 2;
+
         if (Math.abs(coordinate) > 2)
             coordinate = coordinate / 100;
 
-        var rawX = Math.floor(this.width / 2 * coordinate) + this.width / 2;
+        var rawX = Math.floor(this.width / 2 * coordinate) + offset;
         return rawX;
     }
 
-    y(obj) {
+    y(obj, offset) {
         var coordinate = typeof obj === 'object'
             ? obj.coordinates ? obj.coordinates.vector[1] : obj.y
                 : obj;
 
+        offset ??= this.height / 2;
         coordinate = -1 * coordinate;
         if (Math.abs(coordinate) > 2)
             coordinate = coordinate / 100;
-        return Math.floor(this.height / 2 * coordinate) + this.height / 2;
+        return Math.floor(this.height / 2 * coordinate) + offset;
     }
 
     z(obj) {
