@@ -4,6 +4,7 @@
         super(scene, scene.x(obj), scene.y(obj), 0, 0, 0, 0, 0x9f2b68, 1);
 
         this.userId = obj.user.id;
+        this.name = obj.id;
         this.setOrigin(0, 0);
         this.setLineWidth(3);
 
@@ -37,6 +38,7 @@
                 }
             });
 
+            console.log('updated user trail line to', x2, y2, end.x, end.y);
             //this.setTo(0, 0, this.scene.x(previousPosition) - this.scene.x(obj), this.scene.y(previousPosition) - this.scene.y(obj));
         }
 
