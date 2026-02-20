@@ -5,7 +5,6 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
-    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     <UserSecretsId>e3d6f798-5b40-4a1d-8a6c-a5060b602679</UserSecretsId>
   </PropertyGroup>
 
@@ -13,10 +12,6 @@
     <ProjectReference Include="..\..\blossom\Sparc.Blossom.Data.Cosmos\Sparc.Blossom.Data.Cosmos.csproj" />
     <ProjectReference Include="..\..\blossom\Sparc.Blossom\Sparc.Blossom.csproj" />
     <ProjectReference Include="..\..\blossom\Sparc.Core\Sparc.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
   <ItemGroup>
