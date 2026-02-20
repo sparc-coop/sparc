@@ -20,8 +20,8 @@
                     <aside>@quest.Length.ToString("0.##") ly</aside>
                 </div>
                 <div>
-                    <h3>@quest.Name</h3>
-                    <p>@quest.Summary?.Topic</p>
+                    <h3>@quest.Summary?.RightTopic</h3>
+                    <p>@quest.Summary?.Description</p>
                 </div>
 
                 @if (UserSpace.ActiveQuestId == quest.Id)
