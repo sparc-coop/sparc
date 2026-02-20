@@ -11,6 +11,8 @@
             this.scene.find(null, id)
             : this.scene.find('Self');
 
+        console.log('following', objToFollow);
+
         if (objToFollow) {
             this.setAlpha(objToFollow.constructor.name == 'Self' ? 0 : 0.1);
             this.scene.moveObject(this, objToFollow);

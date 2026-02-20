@@ -22,7 +22,9 @@ export default class Post extends Phaser.GameObjects.Sprite {
 
     updateFromObject(obj) {
         this.setAlpha(this.scene.z(obj));
-        this.setScale(this.scene.z(obj) * 4);
+        this.setScale(this.scene.z(obj));
+
+        console.log('z', this.scene.z(obj));
 
         if (this.connector)
             this.connector.destroy();

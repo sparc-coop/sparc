@@ -182,6 +182,9 @@ export default class Starfield extends Phaser.Scene {
     }
 
     x(obj, offset) {
+        if (typeof obj == 'object' && obj.x)
+            return obj.x;
+
         var coordinate = typeof (obj) == 'object'
             ? obj.coordinates ? obj.coordinates.vector[0] : obj.x 
             : obj;
@@ -196,6 +199,9 @@ export default class Starfield extends Phaser.Scene {
     }
 
     y(obj, offset) {
+        if (typeof obj == 'object' && obj.y)
+            return obj.y;
+
         var coordinate = typeof obj === 'object'
             ? obj.coordinates ? obj.coordinates.vector[1] : obj.y
                 : obj;
@@ -213,7 +219,7 @@ export default class Starfield extends Phaser.Scene {
         : obj.alpha
             : obj;
 
-        return coordinate;
+        return coordinate * coordinate * coordinate;
     }
 
     hasReachedTarget(obj, destination) {

@@ -8,25 +8,26 @@
     <div>
         <header>
             <h2>
-                @GameState.Space.Name
+                @Space.Name
             </h2>
         </header>
         <p>
-            @GameState.Space.Summary?.Topic
+            @Space.Summary?.Topic
         </p>
 
-        @if (GameState is not null)
+        @if (DistanceToAnswer is not null)
         {
             <aside>
-                @GameState.DistanceToAnswer.ToString("0.##") ly to the answer
-            </aside>
-            <aside>
-                Current Coherence: @GameState.Space.Coherence.ToString("0.##")
+                @DistanceToAnswer.Value.ToString("0.##") ly to the answer
             </aside>
         }
+        <aside>
+                Current Coherence: @Space.Coherence.ToString("0.##")
+            </aside>
     </div>
 </article>
 
 @code {
-    [Parameter] public required GameState GameState { get; set; }
+    [Parameter] public required BlossomSpace Space { get; set; }
+    [Parameter] public double? DistanceToAnswer { get; set;  }
 }

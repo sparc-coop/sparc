@@ -15,7 +15,6 @@
     </header>
 
     <PostForm />
-@* 
     <ul>
         @foreach (var space in AllSpaces)
         {
@@ -25,7 +24,7 @@
                 </a>
             </li>
         }
-    </ul> *@
+    </ul>
 </section>
 
 @inject ISparcContent Tovik
@@ -35,6 +34,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //AllSpaces = await Spaces.GetSpacesAsync("sparc.coop");
+        AllSpaces = await Spaces.GetSpacesAsync();
     }
 }
