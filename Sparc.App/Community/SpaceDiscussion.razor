@@ -6,13 +6,26 @@
         {
             <article @onclick=@(() => Select(post)) class="@(SelectedPost == post ? "selected" : "")">
                 <header>
-                    <figure>
-                        <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
-                        <figcaption>
-                            @post.User?.Name
-                            <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                        </figcaption>
-                    </figure>
+                    @if (post.EntityType == "Post")
+                    {
+                        <figure>
+                            <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
+                            <figcaption>
+                                @post.User?.Name
+                                <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
+                                | @post.Distance.Pretty() ly
+                            </figcaption>
+                        </figure>
+                    }
+                    else
+                    {
+                        <figure>
+                            <img src="SpaceGame/starfield/sprites/star 4x.png" alt="Star" />
+                            <figcaption>
+                                @post.Distance.Pretty() ly
+                            </figcaption>
+                        </figure>
+                    }
                     <img src="img/VerticalMenu.svg" alt="Options" />
                 </header>
                 <section>

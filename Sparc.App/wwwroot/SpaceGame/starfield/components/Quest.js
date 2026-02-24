@@ -25,7 +25,5 @@
         var x2 = this.scene.x(obj, 0);
         var y2 = this.scene.y(obj, 0);
         this.setTo(x2, y2);
-        console.log('Updated quest line to', this.x, this.y, x2, y2);
-
     }
 }

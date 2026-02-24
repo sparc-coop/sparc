@@ -15,19 +15,15 @@
             @Space.Summary?.Topic
         </p>
 
-        @if (DistanceToAnswer is not null)
-        {
-            <aside>
-                @DistanceToAnswer.Value.ToString("0.##") ly to the answer
-            </aside>
-        }
         <aside>
-                Current Coherence: @Space.Coherence.ToString("0.##")
-            </aside>
+            @Space.Distance.Pretty() ly @(Space.EntityType == "Quest" ? "to next turn" : "to the answer")
+        </aside>
+        <aside>
+            Current Coherence: @Space.Coherence.ToString("0.##")
+        </aside>
     </div>
 </article>
 
 @code {
     [Parameter] public required BlossomSpace Space { get; set; }
-    [Parameter] public double? DistanceToAnswer { get; set;  }
 }

@@ -144,10 +144,8 @@ export default class Starfield extends Phaser.Scene {
 
         switch (obj._type) {
             case 'Post':
-            case 'Guide':
+            case 'Fact':
                 gameObject = new Post(this, obj);
-                break;
-                gameObject = new Facet(this, obj);
                 break;
             case 'BlossomSpace':
                 if (obj.roomType == 'User')

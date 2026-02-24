@@ -25,7 +25,6 @@ export default class Self extends Phaser.GameObjects.Sprite {
             if (existing)
                 existing.updateFromObject(x);
             else {
-                console.log('trail not found');
                 var newTrail = new UserTrail(this.scene, x);
                 this.trails.push(newTrail);
             }
@@ -37,7 +36,5 @@ export default class Self extends Phaser.GameObjects.Sprite {
             var rad = Phaser.Math.Angle.Between(this.scene.x(lastPosition), this.scene.y(lastPosition), this.scene.x(obj), this.scene.y(obj));
             this.setRotation(rad + Math.PI / 2);
         }
-
-        console.log('self is at', this.x, this.y);
     }
 }

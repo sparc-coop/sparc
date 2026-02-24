@@ -37,9 +37,6 @@
                     this.setTo(0, 0, end.x, end.y);
                 }
             });
-
-            console.log('updated user trail line to', x2, y2, end.x, end.y);
-            //this.setTo(0, 0, this.scene.x(previousPosition) - this.scene.x(obj), this.scene.y(previousPosition) - this.scene.y(obj));
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
