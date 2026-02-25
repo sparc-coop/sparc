@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <h3>@quest.Summary?.RightTopic</h3>
-                    <p>@quest.Summary?.Description</p>
+                    <p>@(quest.Hint ?? quest.Summary?.Description)</p>
                 </div>
 
                 @if (UserSpace.ActiveQuestId == quest.Id)
