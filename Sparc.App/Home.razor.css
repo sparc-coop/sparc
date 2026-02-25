@@ -21,8 +21,8 @@ h1 {
 
 ul {
     margin: 32px 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
 
     li {
@@ -30,7 +30,16 @@ ul {
         border-radius: 8px;
         border: 3px solid #152959;
         padding: 16px;
+        padding-top: 32px;
+        position: relative;
 
+        > button {
+            position: absolute;
+            top: -8px;
+            right: 0px;
+            background-color: transparent;
+            color: white;
+        }
 
         a {
             color: inherit;

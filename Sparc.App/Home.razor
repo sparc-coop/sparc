@@ -19,6 +19,7 @@
         @foreach (var space in AllSpaces)
         {
             <li>
+                <button @onclick="(() => Delete(space))">✕</button>
                 <a href="@($"/spaces/{space.Id}")">
                     <SpaceCard Space="space" />
                 </a>
@@ -35,5 +36,11 @@
     protected override async Task OnInitializedAsync()
     {
         AllSpaces = await Spaces.GetSpacesAsync();
+    }
+
+    private async Task Delete(BlossomSpace space)
+    {
+        await Spaces.DeleteSpaceAsync(space.Id);
+        AllSpaces.Remove(space);
     }
 }

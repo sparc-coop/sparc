@@ -5,7 +5,7 @@ using Sparc.Blossom.Data;
 
 var builder = BlossomApplication.CreateBuilder<Html>(args);
 
-builder.AddBlossomEngine(builder.Configuration["SparcEngine"]);
+builder.AddSparcEngine(builder.Configuration["SparcEngine"]);
 builder.Services.AddCosmos<SparcContext>(builder.Configuration);
 
 await builder.Build().RunAsync<Html>();
