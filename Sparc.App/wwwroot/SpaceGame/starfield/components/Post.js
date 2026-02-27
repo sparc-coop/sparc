@@ -1,7 +1,7 @@
 ﻿import ConstellationConnector from './ConstellationConnector.js';
 
 export default class Post extends Phaser.GameObjects.Sprite {
-    connector;
+    gravity;
     
     constructor(scene, obj) {
         super(scene, scene.x(obj), scene.y(obj), 'asteroid');
@@ -16,6 +16,19 @@ export default class Post extends Phaser.GameObjects.Sprite {
         this.updateFromObject(obj);
     }
 
+    drawGravity(obj) {
+        if (obj.coordinates.length < 4)
+            return;
+
+        gravity = this.add.graphics({
+            x: this.x,
+            y: this.y
+        });
+
+        gravity.lineStyle(4, 0xffffff, 0.5);
+        gravity.lineTo(this.scene.x(obj.coordinates[3]), this.scene.y(obj.coordinates[4]));
+    }
+
     preUpdate(time, delta) {
         super.preUpdate(time, delta);
     }
@@ -26,9 +39,10 @@ export default class Post extends Phaser.GameObjects.Sprite {
 
         console.log('z', this.scene.z(obj));
 
-        if (this.connector)
-            this.connector.destroy();
+        if (this.gravity)
+            this.gravity.destroy();
 
+        this.drawGravity(obj);
         //if (obj.connectTo) {
         //    var to = this.scene.find(null, obj.connectTo);
         //    if (to)
