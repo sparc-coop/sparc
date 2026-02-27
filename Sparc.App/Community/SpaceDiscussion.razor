@@ -14,6 +14,7 @@
                                 @post.User?.Name
                                 <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
                                 | @post.Distance.Pretty() parsecs
+                                | Collapse: @post.CollapseScale.ToString("0.00")
                             </figcaption>
                         </figure>
                     }

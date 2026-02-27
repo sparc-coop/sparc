@@ -4,7 +4,7 @@ export default class Post extends Phaser.GameObjects.Sprite {
     gravity;
     
     constructor(scene, obj) {
-        super(scene, scene.x(obj), scene.y(obj), 'asteroid');
+        super(scene, scene.x(obj), scene.y(obj), obj._type == 'Post' ? 'spark' : 'asteroid');
 
         this.setName(obj.id);
         this.setDepth(4);
