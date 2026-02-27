@@ -140,6 +140,23 @@ export default class Starfield extends Phaser.Scene {
         this.plugins.get('rexeasemoveplugin').moveTo(gameObject, inXSeconds ?? 300, newX, newY, 'Cubic');
     }
 
+    moveLine(line, x2, y2) {
+        var end = { x: line.geom.x2, y: line.geom.y2 };
+
+        this.tweens.add({
+            targets: end,
+            x: x2,
+            y: y2,
+            ease: 'Linear',
+            duration: 300,
+            repeat: 0,
+            yoyo: false,
+            onUpdate: () => {
+                line.setTo(0, 0, end.x, end.y);
+            }
+        });
+    }
+
     getOrCreateObject(obj) {
         var gameObject = this.children.getByName(obj.id);
         if (gameObject) {

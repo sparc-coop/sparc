@@ -23,20 +23,8 @@
 
             var x2 = this.scene.x(previousPosition) - this.scene.x(obj);
             var y2 = this.scene.y(previousPosition) - this.scene.y(obj);
-            var end = { x: this.geom.x2, y: this.geom.y2 };
 
-            this.scene.tweens.add({
-                targets: end,
-                x: x2,
-                y: y2,
-                ease: 'Linear',
-                duration: 300,
-                repeat: 0,
-                yoyo: false,
-                onUpdate: () => {
-                    this.setTo(0, 0, end.x, end.y);
-                }
-            });
+            this.scene.moveLine(this, x2, y2);
         }
 
         var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;

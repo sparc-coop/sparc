@@ -21,7 +21,14 @@
                     else
                     {
                         <figure>
-                            <img src="SpaceGame/starfield/sprites/asteroid.png" alt="Fact" />
+                            @if (post.EntityType == "Fact")
+                            {
+                                <img src="SpaceGame/starfield/sprites/asteroid.png" alt="Fact" />
+                            }
+                            else
+                            {
+                                <img src="SpaceGame/starfield/sprites/question.png" alt="Question" />
+                            }
                             <figcaption>
                                 @post.Distance.Pretty() parsecs | Collapse: @post.CollapseScale.ToString("0.00")
                             </figcaption>
