@@ -8,7 +8,7 @@
 </form>
 
 @code {
-    [Parameter] public BlossomSpace Space { get; set; } = new(Guid.NewGuid().ToString()) { SpaceId = "sparc.coop" };
+    [Parameter] public BlossomSpace? Space { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
     bool IsEnter;
@@ -35,14 +35,21 @@
     {
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
-        Post post = new(Space, User!.Avatar, PostText);
-        var newPost = await Spaces.PostAsync(post.SpaceId, post);
-        if (OnUpdate.HasDelegate)
+
+        if (Space == null)
         {
-            await OnUpdate.InvokeAsync();
-            PostText = string.Empty;
+            var newSpace = new BlossomSpace(Guid.NewGuid().ToString()) { SpaceId = "sparc.coop" };
+            Post post = new(newSpace, User!.Avatar, PostText);
+            var createdSpace = await Spaces.CreateSpaceAsync(post);
+            Nav.NavigateTo($"/spaces/{createdSpace.Id}", true);
         }
         else
-            Nav.NavigateTo($"/spaces/{newPost.SpaceId}", true);
+        {
+            Post post = new(Space, User!.Avatar, PostText);
+            var newPost = await Spaces.PostAsync(post.SpaceId, post);
+            PostText = string.Empty;
+            if (OnUpdate.HasDelegate)
+                await OnUpdate.InvokeAsync();
+        }
     }
 }
