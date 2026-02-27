@@ -29,8 +29,11 @@ export default class Starfield extends Phaser.Scene {
         this.load.image('sky', 'skies/pixelart_starfield_1.png');
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
+        this.load.image('question', 'sprites/question.png');
+        this.load.image('spark', 'sprites/spark.png');
+        this.load.image('asteroid', 'sprites/asteroid.png');
         this.load.image('crosshair', 'sprites/crosshair094.png');
-        this.load.image('ship', 'sprites/ship.png');
+        this.load.image('orb', 'sprites/orb 24x24.png');
         this.load.image('north', 'sprites/north.png');
         this.load.plugin('rexeasemoveplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexeasemoveplugin.min.js', true);
     }
@@ -166,8 +169,7 @@ export default class Starfield extends Phaser.Scene {
             case 'Constellation':
                 gameObject = new Constellation(this, obj);
                 break;
-            case 'Hint':
-            case 'Answer':
+            case 'Question':
                 gameObject = new Hint(this, obj);
                 break;
             default:

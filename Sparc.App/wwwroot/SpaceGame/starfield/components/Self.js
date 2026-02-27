@@ -4,7 +4,7 @@ import Crosshair from './Crosshair.js';
 export default class Self extends Phaser.GameObjects.Sprite {
     trails = [];
     constructor(scene, obj) {
-        super(scene, scene.x(obj), scene.y(obj), 'ship');
+        super(scene, scene.x(obj), scene.y(obj), 'orb');
 
         this.setScale(1);
         this.setDepth(8);

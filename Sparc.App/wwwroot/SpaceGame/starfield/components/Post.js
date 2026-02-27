@@ -4,7 +4,7 @@ export default class Post extends Phaser.GameObjects.Sprite {
     connector;
     
     constructor(scene, obj) {
-        super(scene, scene.x(obj), scene.y(obj), 'Post');
+        super(scene, scene.x(obj), scene.y(obj), 'asteroid');
 
         this.setName(obj.id);
         this.setDepth(4);

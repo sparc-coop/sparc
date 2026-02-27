@@ -1,7 +1,8 @@
-﻿export default class Hint extends Phaser.GameObjects.Rectangle {
+﻿export default class Hint extends Phaser.GameObjects.Sprite {
     constructor(scene, obj) {
-        super(scene, scene.x(obj), scene.y(obj), 16, 16, 0x008000, scene.z(obj));
+        super(scene, scene.x(obj), scene.y(obj), 'question');
 
+        this.setAlpha(scene.z(obj));
         scene.add.existing(this);
     }
 }
