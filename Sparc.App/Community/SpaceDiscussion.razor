@@ -2,7 +2,7 @@
 
 <section class="discussion">
     <div>
-        @foreach (var post in GameState.Posts)
+        @foreach (var post in GameState.SpaceObjects)
         {
             <article @onclick=@(() => Select(post)) class="@(SelectedPost == post ? "selected" : "")">
                 <header>
@@ -58,7 +58,7 @@
 
     public async Task Select(string id)
     {
-        var post = GameState.Posts.FirstOrDefault(x => x.Id == id);
+        var post = GameState.SpaceObjects.FirstOrDefault(x => x.Id == id);
         if (post != null)
             await Select(post);
     }

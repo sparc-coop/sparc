@@ -122,7 +122,7 @@
     [JSInvokable("SelectGameObject")]
     public async Task SelectGameObject(string id)
     {
-        var obj = GameState!.Posts.FirstOrDefault(x => x.Id == id);
+        var obj = GameState!.SpaceObjects.FirstOrDefault(x => x.Id == id);
         if (obj != null)
         {
             if (obj.EntityType == "Quest")
