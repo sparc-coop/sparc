@@ -14,13 +14,6 @@
         <p>
             @Space.Summary?.Topic
         </p>
-
-        <aside>
-            @Space.Distance.Pretty() ly @(Space.EntityType == "Quest" ? "to next turn" : "to the answer")
-        </aside>
-        <aside>
-            Current Coherence: @Space.Coherence.ToString("0.##")
-        </aside>
     </div>
 </article>
 

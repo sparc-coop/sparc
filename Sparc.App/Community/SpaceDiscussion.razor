@@ -9,20 +9,20 @@
                     @if (post.EntityType == "Post")
                     {
                         <figure>
-                            <Sparc.Blossom.Authentication.Avatar.AuraAvatar Avatar="post.User" />
+                            <img src="SpaceGame/starfield/sprites/orb 24x24.png" alt="@post.User?.Name" />
                             <figcaption>
                                 @post.User?.Name
                                 <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                                | @post.Distance.Pretty() ly
+                                | @post.Distance.Pretty() parsecs
                             </figcaption>
                         </figure>
                     }
                     else
                     {
                         <figure>
-                            <img src="SpaceGame/starfield/sprites/star 4x.png" alt="Star" />
+                            <img src="SpaceGame/starfield/sprites/asteroid.png" alt="Fact" />
                             <figcaption>
-                                @post.Distance.Pretty() ly
+                                @post.Distance.Pretty() parsecs
                             </figcaption>
                         </figure>
                     }
