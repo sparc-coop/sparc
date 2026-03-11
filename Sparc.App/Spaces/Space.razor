@@ -17,7 +17,7 @@
 
         @if (ShowQuests)
         {
-            <SpaceQuests AvailableQuests="GameState.AvailableQuests" UserSpace="GameState.Self" OnUpdate="UpdateGameObjects" />
+            <Quests AvailableQuests="GameState.AvailableQuests" UserSpace="GameState.Self" OnUpdate="UpdateGameObjects" />
         }
 
         <div id="hud">
@@ -40,19 +40,19 @@
                 @if (ActiveTab == "Discoveries")
                 {
                     <div class="discoveries">
-                        <SpaceDiscussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" @ref="SpaceDiscussionRef" />
+                        <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" @ref="SpaceDiscussionRef" />
                     </div>
                 }
                 else if (ActiveTab == "Frog")
                 {
                     <div class="frog">
-                        <SpaceDiscussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="Hint" />
+                        <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="Hint" />
                     </div>
                 }
                 else if (ActiveTab == "Settings")
                 {
                     <div class="settings">
-                        <SpaceSettings CurrentSpace="GameState.Space" User="User" OnUpdate="UpdateGameObjects" />
+                        <Settings CurrentSpace="GameState.Space" User="User" OnUpdate="UpdateGameObjects" />
                     </div>
                 }
             </section>
@@ -67,7 +67,7 @@
         List<Post> Discoveries = [];
         BlossomSpaceObject? SelectedQuest;
         BlossomUser? User;
-        SpaceDiscussion? SpaceDiscussionRef;
+        Discussion? SpaceDiscussionRef;
         IJSObjectReference? Game;
         string ActiveTab = "Discoveries";
         bool ShowQuests;
