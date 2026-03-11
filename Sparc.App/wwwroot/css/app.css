@@ -28,7 +28,7 @@ a {
     text-decoration: none;
 }
 
-button.eight-bit, label.eight-bit {
+.eight-bit, .eight-bit {
     box-shadow: inset -4px -4px 0 0 transparent;
     position: relative;
     font-family: var(--Serif);
@@ -40,6 +40,7 @@ button.eight-bit, label.eight-bit {
         width: 100%;
         height: 100%;
         box-sizing: content-box;
+        pointer-events: none;
     }
 
     &:before {
@@ -168,3 +169,4 @@ button {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 }
+

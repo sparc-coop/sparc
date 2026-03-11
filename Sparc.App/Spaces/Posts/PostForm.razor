@@ -7,19 +7,18 @@
                       @bind:event="oninput">
         </textarea>
         </label>
-        <button class="eight-bit">Send</button>
-
-        @if (Error is not null)
-        {
-            <p class="error">@Error</p>
-        }
+        <button class="eight-bit" disabled="@(IsSending != null)">
+            @(IsSending == null ? "Send" : IsSending == true ? "Sending..." : "Sent!")
+        </button>
     </form>
 
 @code {
     [Parameter] public BlossomSpace? Space { get; set; }
-    [Parameter] public EventCallback OnUpdate { get; set; }
+    [Parameter] public EventCallback OnUpdating { get; set; }
+    [Parameter] public EventCallback<BlossomSpace> OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
     bool IsEnter;
+    bool? IsSending;
     string? Error;
     BlossomUser? User;
 
@@ -41,6 +40,10 @@
 
     private async Task AddPost()
     {
+        if (OnUpdating.HasDelegate)
+            await OnUpdating.InvokeAsync();
+
+        IsSending = true;
         PostText = PostText.TrimEnd('\r', '\n');
         Error = null;
 
@@ -49,7 +52,10 @@
             var newSpace = new BlossomSpace(Guid.NewGuid().ToString()) { SpaceId = "sparc.coop" };
             Post post = new(newSpace, User!.Avatar, PostText);
             var createdSpace = await Spaces.CreateSpaceAsync(post);
-            Nav.NavigateTo($"/spaces/{createdSpace.Id}", true);
+            if (OnUpdate.HasDelegate)
+                await OnUpdate.InvokeAsync(createdSpace);
+            else
+                Nav.NavigateTo($"/spaces/{createdSpace.Id}", true);
         }
         else
         {
@@ -57,7 +63,9 @@
             var newPost = await Spaces.PostAsync(post.SpaceId, post);
             PostText = string.Empty;
             if (OnUpdate.HasDelegate)
-                await OnUpdate.InvokeAsync();
+                await OnUpdate.InvokeAsync(Space);
         }
+
+        IsSending = false;
     }
 }

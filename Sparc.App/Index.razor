@@ -14,13 +14,55 @@
             missing. We'll listen and maybe even fix it.
         </p>
 
-        <PostForm />
+        <PostForm OnUpdating="MarkSending" OnUpdate="MarkSent" />
     </header>
 
     <article class="galaxy">
         <figure>
             <img src="/img/human-beginning.gif" alt="Human Beginning" />
         </figure>
+
+        @if (IsSpaceCreating)
+        {
+            <footer class="eight-bit">
+                @if (Notify == null)
+                {
+                    <div class="forming-1 @(Space != null ? "done" : "")">
+                        <div class="typewriter">Forming Galaxy....@(CompletionPercent)%</div>
+                    </div>
+
+                    @if (Space != null)
+                    {
+                        <div class="forming-2">
+                            Formation paused: Universe still under construction.<br />
+                            Do you want to be notified when it's 100% complete?
+                        </div>
+                        <div class="forming-3">
+                            <label @onclick="@(() => Notify = true)">
+                                <input type="radio" name="Notify" checked />
+                                Yes, notify me
+                            </label>
+                            <label @onclick="@(() => Notify = false)">
+                                <input type="radio" name="Notify" />
+                                No thanks
+                            </label>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="forming-4">
+                        <div class="typewriter">Establishing comms link........ Where should we send the transmission?</div>
+                    </div>
+                    <div class="forming-5">
+                        <label>
+                            Type your email...
+                            <input type="email" @bind="Email" />
+                        </label>
+                    </div>
+                }
+            </footer>
+        }
     </article>
 
     @* <ul>
@@ -40,10 +82,39 @@
 @code
 {
     List<BlossomSpace> AllSpaces = [];
+    BlossomSpace? Space;
+    bool? Notify;
+    bool IsSpaceCreating;
+    int CompletionPercent;
+    string Email = "";
+    Timer? ProgressTimer;
 
     protected override async Task OnInitializedAsync()
     {
         AllSpaces = await Spaces.GetSpacesAsync();
+    }
+
+    async Task MarkSending()
+    {
+        IsSpaceCreating = true;
+        CompletionPercent = 0;
+        ProgressTimer = new Timer(_ =>
+        {
+            if (Space != null || CompletionPercent >= 99)
+            {
+                ProgressTimer?.Dispose();
+            }
+            else
+            {
+                CompletionPercent += 1;
+                InvokeAsync(StateHasChanged);
+            }
+        }, null, 0, 100);
+    }
+
+    async Task MarkSent(BlossomSpace space)
+    {
+        Space = space;
     }
 
     private async Task Delete(BlossomSpace space)
