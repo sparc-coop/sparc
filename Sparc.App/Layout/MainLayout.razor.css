@@ -13,6 +13,7 @@ button {
     }
 }
 
+
 nav {
     ul {
         font-family: var(--Serif);
@@ -20,6 +21,7 @@ nav {
         display: flex;
         gap: 32px;
         align-items: center;
+        margin: 0;
     }
 
     li {
@@ -38,9 +40,7 @@ nav {
 }
 
 main {
-    max-width: 80dvw;
-    margin: 24px auto;
-    padding: 0 16px;
+    padding: 0;
 }
 
 @media (orientation: landscape) {

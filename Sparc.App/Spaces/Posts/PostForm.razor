@@ -1,11 +1,19 @@
 ﻿<form @onsubmit="AddPost" @onsubmit:preventDefault=true>
-    <textarea placeholder="Search or type anything..." @onkeydown="Enter" @onkeydown:preventDefault=IsEnter @bind=PostText @bind:event="oninput"></textarea>
+    <label class="eight-bit">
+        <textarea placeholder="Tell us what's broken..."
+                  @onkeydown="Enter"
+                  @onkeydown:preventDefault=IsEnter
+                  @bind=PostText
+                      @bind:event="oninput">
+        </textarea>
+        </label>
+        <button class="eight-bit">Send</button>
 
-    @if (Error is not null)
-    {
-        <p class="error">@Error</p>
-    }
-</form>
+        @if (Error is not null)
+        {
+            <p class="error">@Error</p>
+        }
+    </form>
 
 @code {
     [Parameter] public BlossomSpace? Space { get; set; }

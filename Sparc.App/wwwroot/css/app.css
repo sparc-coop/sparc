@@ -5,6 +5,7 @@
     --Orange-200: #F1AF8E;
     --Orange-400: #F86F2B;
     --Orange-500: #FF5A08;
+    --Orange-800: #6B2908;
     --Grayscale-100: #E6E6E6;
     --Grayscale-500: #858585;
     --Grayscale-600: #6B6B6B;
@@ -27,12 +28,48 @@ a {
     text-decoration: none;
 }
 
+button.eight-bit, label.eight-bit {
+    box-shadow: inset -4px -4px 0 0 transparent;
+    position: relative;
+    font-family: var(--Serif);
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        box-sizing: content-box;
+    }
+
+    &:before {
+        top: -4px;
+        left: 0;
+        border-top: 4px white solid;
+        border-bottom: 4px white solid;
+    }
+
+    &:after {
+        left: -4px;
+        top: 0;
+        border-left: 4px white solid;
+        border-right: 4px white solid;
+    }
+}
+
 button {
     background-color: var(--Orange-400);
-    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
-    padding: 15px 12px;
-    line-height: 100%;
     text-align: center;
+    box-shadow: inset -4px -4px 0 0 var(--Orange-500);
+    font-family: var(--Serif);
+    font-size: 1.6rem;
+    color: white;
+    min-width: 75px;
+    padding: 8px 16px;
+
+    &.eight-bit:before, &.eight-bit:after {
+        border-color: var(--Orange-800);
+    }
 
     &:hover {
         background-color: var(--Orange-500);
@@ -45,15 +82,17 @@ button {
     }
 
     &.secondary {
-        border-radius: 14px;
         border: 1px solid var(--Grayscale-100);
-        font-family: var(--Serif);
         background: transparent;
     }
 
     &.icon {
         background: transparent;
         border: none;
+
+        &:before, &:after {
+            border-width: 0;
+        }
 
         &:hover {
             background: transparent;
