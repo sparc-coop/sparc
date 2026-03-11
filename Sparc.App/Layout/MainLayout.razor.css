@@ -15,12 +15,11 @@ button {
 
 nav {
     ul {
-        font-family: var(--Font-Serif);
-        font-size: 0.875rem;
+        font-family: var(--Serif);
+        font-size: 1.4rem;
         display: flex;
         gap: 32px;
         align-items: center;
-        display: none;
     }
 
     li {
@@ -45,10 +44,4 @@ main {
 }
 
 @media (orientation: landscape) {
-    nav ul {
-        display: flex;
-    }
-    nav > div {
-        display: none;
-    }
 }

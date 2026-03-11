@@ -12,8 +12,8 @@ header {
 }
 
 h1 {
-    font-family: var(--Font-Serif);
-    font-size: 4.20875rem;
+    font-family: var(--Serif);
+    font-size: 6.7rem;
     font-weight: 400;
     letter-spacing: -0.12631rem;
 }

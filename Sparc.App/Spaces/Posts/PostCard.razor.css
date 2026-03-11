@@ -4,8 +4,8 @@
     display: flex;
     gap: 24px;
     flex-direction: column;
-    border: 1px solid var(--Color-Yellow-200);
-    background: var(--Color-Yellow-100);
+    border: 1px solid var(--Yellow-200);
+    background: var(--Yellow-100);
 
     &.processing {
         opacity: 0.5;
@@ -27,10 +27,10 @@
 }
 
 p {
-    color: var(--Color-Grayscale-800);
+    color: var(--Grayscale-800);
 }
 
 time {
     font-size: 0.875rem;
-    color: var(--Color-Grayscale-700);
+    color: var(--Grayscale-700);
 }

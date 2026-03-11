@@ -1,16 +1,16 @@
 :root {
-    --Color-Yellow-50: #FFFCF6;
-    --Color-Yellow-100: #FBF7EF;
-    --Color-Yellow-200: #FEEECD;
-    --Color-Orange-200: #F1AF8E;
-    --Color-Orange-400: #F86F2B;
-    --Color-Orange-500: #FF5A08;
-    --Color-Grayscale-100: #E6E6E6;
-    --Color-Grayscale-500: #858585;
-    --Color-Grayscale-600: #6B6B6B;
-    --Color-Grayscale-700: #525252;
-    --Color-Grayscale-800: #383838;
-    --Font-Serif: 'DotGothic16';
+    --Yellow-50: #FFFCF6;
+    --Yellow-100: #FBF7EF;
+    --Yellow-200: #FEEECD;
+    --Orange-200: #F1AF8E;
+    --Orange-400: #F86F2B;
+    --Orange-500: #FF5A08;
+    --Grayscale-100: #E6E6E6;
+    --Grayscale-500: #858585;
+    --Grayscale-600: #6B6B6B;
+    --Grayscale-700: #525252;
+    --Grayscale-800: #383838;
+    --Serif: 'DotGothic16';
     --Surface-Page: #0A1226;
     --Surface-Text-Primary: #FFFFFF;
 }
@@ -20,6 +20,7 @@ html, body {
     background: var(--Surface-Page);
     backdrop-filter: blur(21.410852432250977px);
     color: var(--Surface-Text-Primary);
+    font-size: 10px;
 }
 
 a {
@@ -27,26 +28,26 @@ a {
 }
 
 button {
-    background-color: var(--Color-Orange-400);
+    background-color: var(--Orange-400);
     transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
     padding: 15px 12px;
     line-height: 100%;
     text-align: center;
 
     &:hover {
-        background-color: var(--Color-Orange-500);
+        background-color: var(--Orange-500);
     }
 
     &[disabled] {
-        background-color: var(--Color-Orange-200);
+        background-color: var(--Orange-200);
         opacity: 0.5;
         pointer-events: none;
     }
 
     &.secondary {
         border-radius: 14px;
-        border: 1px solid var(--Color-Grayscale-100);
-        font-family: var(--Font-Serif);
+        border: 1px solid var(--Grayscale-100);
+        font-family: var(--Serif);
         background: transparent;
     }
 
