@@ -17,18 +17,6 @@ header {
     }
 }
 
-h1 {
-    font-family: var(--Serif);
-    font-size: 2.8rem;
-    font-weight: 400;
-    letter-spacing: -0.12631rem;
-}
-
-p {
-    font-size: 1.4rem;
-    line-height: 160%;
-}
-
 article.galaxy {
     background-image: url('/img/galaxy.png');
     background-size: cover;
@@ -58,12 +46,7 @@ article.galaxy {
     }
 }
 
-@media (orientation: landscape) {
-    h1 {
-        font-size: 6.73rem;
-        line-height: 104%;
-    }
-}
+
 
 
 .typewriter {

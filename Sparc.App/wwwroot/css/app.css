@@ -13,15 +13,17 @@
     --Grayscale-800: #383838;
     --Sparc-Gradient: linear-gradient(342deg, #C697FC 15%, #FF5A08 145.73%);
     --Serif: 'DotGothic16';
+    --Sans-Serif: 'Funnel Sans';
     --Surface-Page: #0A1226;
-    --Surface-Text-Primary: #FFFFFF;
+    --Text-Primary: #FFFFFF;
+    --Text-Secondary: #7C89AC;
 }
 
 html, body {
-    font-family: "elza-text", sans-serif;
+    font-family: var(--Sans-Serif), sans-serif;
     background: var(--Surface-Page);
     backdrop-filter: blur(21.410852432250977px);
-    color: var(--Surface-Text-Primary);
+    color: var(--Text-Primary);
     font-size: 10px;
 }
 
@@ -102,6 +104,24 @@ button {
     }
 }
 
+h1 {
+    font-family: var(--Serif);
+    font-size: 2.8rem;
+    font-weight: 400;
+
+    @media (orientation: landscape) {
+        font-size: 6.73rem;
+        line-height: 104%;
+    }
+}
+
+p {
+    font-family: var(--Sans-Serif);
+    color: var(--Text-Secondary);
+    font-size: 1.6rem;
+    line-height: 160%;
+}
+
 #blazor-error-ui {
     color-scheme: light only;
     background: lightyellow;
@@ -170,4 +190,3 @@ button {
         content: var(--blazor-load-percentage-text, "Loading");
     }
 }
-

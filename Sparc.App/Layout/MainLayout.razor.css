@@ -22,7 +22,7 @@ nav {
 }
 
 ::deep a.nav {
-    color: var(--Surface-Text-Primary);
+    color: var(--Text-Primary);
     font-family: var(--Serif);
     font-size: 1.4rem;
     letter-spacing: -0.14px;
@@ -38,6 +38,7 @@ nav {
     ::deep a.nav.active {
         background: var(--Sparc-Gradient);
         background-clip: text;
+        color: transparent;
         -webkit-text-fill-color: transparent;
     }
 
