@@ -7,7 +7,7 @@
     width: 100%;
 }
 
-textarea {
+textarea, input {
     min-block-size: 30px;
     padding: 4px 16px;
     outline: none;

@@ -1,11 +1,12 @@
 ﻿<form @onsubmit="AddPost" @onsubmit:preventDefault=true>
     <label class="eight-bit">
-        <textarea placeholder="Tell us what's broken..."
+        <input placeholder="Tell us what's broken..."
                   @onkeydown="Enter"
                   @onkeydown:preventDefault=IsEnter
                   @bind=PostText
-                      @bind:event="oninput">
-        </textarea>
+                      @bind:event="oninput"
+               disabled="@(IsSending != null)">
+        </input>
         </label>
         <button class="eight-bit" disabled="@(IsSending != null)">
             @(IsSending == null ? "Send" : IsSending == true ? "Sending..." : "Sent!")

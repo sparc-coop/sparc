@@ -49,6 +49,12 @@
                         </form>
                     }
                 }
+                else if (ShouldNotify == false)
+                {
+                    <div class="forming-4">
+                        <div class="typewriter">No worries! Keep monitoring this page for updates to your new space.</div>
+                    </div>
+                }
                 else if (!IsRegistered)
                 {
                     <div class="forming-4">
@@ -96,10 +102,12 @@
     string Email = "";
     Timer? ProgressTimer;
     ElementReference? EmailInput;
+    BlossomUser? UserInfo;
 
     protected override async Task OnInitializedAsync()
     {
         AllSpaces = await Spaces.GetSpacesAsync();
+        UserInfo = await Aura.UserInfo();
     }
 
     async Task MarkSending()
