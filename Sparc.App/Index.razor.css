@@ -46,7 +46,9 @@ article.galaxy {
     }
 }
 
-
+p {
+    color: var(--Text-Primary);
+}
 
 
 .typewriter {

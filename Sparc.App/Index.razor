@@ -25,7 +25,7 @@
         @if (IsSpaceCreating)
         {
             <footer class="eight-bit">
-                @if (Notify == null)
+                @if (ShouldNotify == null)
                 {
                     <div class="forming-1 @(Space != null ? "done" : "")">
                         <div class="typewriter">Forming Galaxy....@(CompletionPercent)%</div>
@@ -37,28 +37,34 @@
                             Formation paused: Universe still under construction.<br />
                             Do you want to be notified when it's 100% complete?
                         </div>
-                        <div class="forming-3">
-                            <label @onclick="@(() => Notify = true)">
+                        <form class="forming-3" @onsubmit=Notify>
+                            <label @onclick="Notify">
                                 <input type="radio" name="Notify" checked />
                                 Yes, notify me
                             </label>
-                            <label @onclick="@(() => Notify = false)">
+                            <label @onclick="@(() => ShouldNotify = false)">
                                 <input type="radio" name="Notify" />
                                 No thanks
                             </label>
-                        </div>
+                        </form>
                     }
                 }
-                else
+                else if (!IsRegistered)
                 {
                     <div class="forming-4">
                         <div class="typewriter">Establishing comms link........ Where should we send the transmission?</div>
                     </div>
-                    <div class="forming-5">
+                    <form class="forming-5" @onsubmit="ConnectEmail">
                         <label>
                             Type your email...
-                            <input type="email" @bind="Email" />
+                            <input type="email" @ref="EmailInput" @bind="Email" />
                         </label>
+                    </form>
+                }
+                else
+                {
+                    <div class="forming-4">
+                        <div class="typewriter">Thank you! We will be in touch as soon as you can explore your new space.</div>
                     </div>
                 }
             </footer>
@@ -83,11 +89,13 @@
 {
     List<BlossomSpace> AllSpaces = [];
     BlossomSpace? Space;
-    bool? Notify;
+    bool? ShouldNotify;
     bool IsSpaceCreating;
+    bool IsRegistered;
     int CompletionPercent;
     string Email = "";
     Timer? ProgressTimer;
+    ElementReference? EmailInput;
 
     protected override async Task OnInitializedAsync()
     {
@@ -115,6 +123,21 @@
     async Task MarkSent(BlossomSpace space)
     {
         Space = space;
+    }
+
+    async Task Notify()
+    {
+        ShouldNotify = true;
+        StateHasChanged();
+
+        if (EmailInput != null)
+            await EmailInput.Value.FocusAsync();
+    }
+
+    async Task ConnectEmail()
+    {
+        await Aura.Login(Email);
+        IsRegistered = true;
     }
 
     private async Task Delete(BlossomSpace space)
