@@ -1,16 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
 <header>
-    <a href="/">
-        <figure>
-            <img src="img/SparcLogo.svg" alt="Sparc" />
-        </figure>
-    </a>
+    <NavLink class="nav logo" href="/" Match="NavLinkMatch.All">sparc</NavLink>
     
     <nav>
         <ul>
             <li>
-                <a href="/about">About Us</a>
+                <NavLink class="nav" href="/about">About Us</NavLink>
             </li>
         </ul>
     </nav>

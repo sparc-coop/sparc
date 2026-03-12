@@ -11,6 +11,7 @@
     --Grayscale-600: #6B6B6B;
     --Grayscale-700: #525252;
     --Grayscale-800: #383838;
+    --Sparc-Gradient: linear-gradient(342deg, #C697FC 15%, #FF5A08 145.73%);
     --Serif: 'DotGothic16';
     --Surface-Page: #0A1226;
     --Surface-Text-Primary: #FFFFFF;
@@ -28,7 +29,7 @@ a {
     text-decoration: none;
 }
 
-.eight-bit, .eight-bit {
+.eight-bit {
     box-shadow: inset -4px -4px 0 0 transparent;
     position: relative;
     font-family: var(--Serif);

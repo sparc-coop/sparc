@@ -5,30 +5,12 @@ header {
     align-items: center;
 }
 
-button {
-    background: transparent; 
-
-    img {
-        height: 22px;
-    }
-}
-
-
 nav {
     ul {
-        font-family: var(--Serif);
-        font-size: 1.4rem;
         display: flex;
         gap: 32px;
         align-items: center;
         margin: 0;
-    }
-
-    li {
-        a {
-            text-decoration: none;
-            color: var(--Surface-Text-Primary);
-        }
     }
 }
 
@@ -38,6 +20,26 @@ nav {
     padding: 4px;
     background-color: transparent !important;
 }
+
+::deep a.nav {
+    color: var(--Surface-Text-Primary);
+    font-family: var(--Serif);
+    font-size: 1.4rem;
+    letter-spacing: -0.14px;
+    line-height: 100%;
+    vertical-align: bottom;
+
+    &.logo {
+        font-size: 2.4rem;
+        letter-spacing: -0.5px;
+    }
+}
+
+    ::deep a.nav.active {
+        background: var(--Sparc-Gradient);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
 
 main {
     padding: 0;
