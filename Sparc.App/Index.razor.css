@@ -1,9 +1,17 @@
 ﻿section {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    height: calc(100dvh - 60px);
     max-inline-size: 800px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+
+    @media (orientation: landscape) {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
 }
 
 header {
@@ -24,7 +32,13 @@ article.galaxy {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-block-size: 460px;
+    block-size: 100%;
+
+    @media (orientation: landscape) {
+        block-size: auto;
+        min-block-size: 460px;
+    }
+
     position: relative;
 
     footer {

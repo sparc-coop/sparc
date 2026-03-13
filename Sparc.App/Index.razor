@@ -25,7 +25,7 @@
         @if (IsSpaceCreating)
         {
             <footer class="eight-bit">
-                @if (ShouldNotify == null)
+                @if (!IsNotifySubmitted)
                 {
                     <div class="forming-1 @(Space != null ? "done" : "")">
                         <div class="typewriter">Forming Galaxy....@(CompletionPercent)%</div>
@@ -37,14 +37,14 @@
                             Formation paused: Universe still under construction.<br />
                             Do you want to be notified when it's 100% complete?
                         </div>
-                        <form class="forming-3" @onsubmit=Notify>
-                            <label @onclick="Notify">
-                                <input type="radio" name="Notify" checked />
-                                Yes, notify me
+                        <form class="forming-3" @onsubmit="@(() => SubmitNotify())" @onkeydown="MaybeSubmitNotify">
+                            <label>
+                                <input type="radio" name="Notify" checked="@ShouldNotify" @ref="RadioInput" @onchange="@(() => ShouldNotify = true)" />
+                                <span @onclick="@(() => SubmitNotify(true))">Yes, notify me</span>
                             </label>
-                            <label @onclick="@(() => ShouldNotify = false)">
-                                <input type="radio" name="Notify" />
-                                No thanks
+                            <label >
+                                <input type="radio" name="Notify" checked="@(!ShouldNotify)" @onchange="@(() => ShouldNotify = false)" />
+                                <span @onclick="@(() => SubmitNotify(false))">No thanks</span>
                             </label>
                         </form>
                     }
@@ -95,13 +95,15 @@
 {
     List<BlossomSpace> AllSpaces = [];
     BlossomSpace? Space;
-    bool? ShouldNotify;
+    bool ShouldNotify = true;
     bool IsSpaceCreating;
     bool IsRegistered;
+    bool IsNotifySubmitted;
     int CompletionPercent;
     string Email = "";
     Timer? ProgressTimer;
     ElementReference? EmailInput;
+    ElementReference? RadioInput;
     BlossomUser? UserInfo;
 
     protected override async Task OnInitializedAsync()
@@ -125,17 +127,30 @@
                 CompletionPercent += 1;
                 InvokeAsync(StateHasChanged);
             }
-        }, null, 0, 100);
+        }, null, 0, 300);
     }
 
     async Task MarkSent(BlossomSpace space)
     {
         Space = space;
+        StateHasChanged();
+
+        if (RadioInput != null)
+            await RadioInput.Value.FocusAsync();
     }
 
-    async Task Notify()
+    async Task MaybeSubmitNotify(KeyboardEventArgs args)
     {
-        ShouldNotify = true;
+        if (args.Code == "Enter" || args.Code == "NumpadEnter")
+            await SubmitNotify();
+    }
+
+    async Task SubmitNotify(bool? shouldNotify = null)
+    {
+        if (shouldNotify.HasValue)
+            ShouldNotify = shouldNotify.Value;
+
+        IsNotifySubmitted = true;
         StateHasChanged();
 
         if (EmailInput != null)
