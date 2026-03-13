@@ -4,10 +4,19 @@
     gap: 16px;
     max-inline-size: 800px;
     margin: 32px auto;
+    padding: 0 16px;
 }
 
 article {
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    > img {
+        max-width: 60dvh;
+    }
+}
+
+p {
+    font-size: 1.8rem;
 }
