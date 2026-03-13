@@ -1,17 +1,15 @@
-﻿<form @onsubmit="AddPost" @onsubmit:preventDefault=true>
+﻿<form @onsubmit="AddPost">
     <label class="eight-bit">
         <input placeholder="Tell us what's broken..."
-                  @onkeydown="Enter"
-                  @onkeydown:preventDefault=IsEnter
-                  @bind=PostText
-                      @bind:event="oninput"
+               @bind=PostText
+               @bind:event="oninput"
                disabled="@(IsSending != null)">
         </input>
-        </label>
-        <button class="eight-bit" disabled="@(IsSending != null)">
-            @(IsSending == null ? "Send" : IsSending == true ? "Sending..." : "Sent!")
-        </button>
-    </form>
+    </label>
+    <button class="eight-bit" disabled="@(IsSending != null)">
+        @(IsSending == null ? "Send" : IsSending == true ? "Sending..." : "Sent!")
+    </button>
+</form>
 
 @code {
     [Parameter] public BlossomSpace? Space { get; set; }
