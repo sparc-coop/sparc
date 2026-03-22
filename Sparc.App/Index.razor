@@ -141,6 +141,8 @@
         Space = space;
         StateHasChanged();
 
+        Nav.NavigateTo($"/spaces/{space.Id}");
+
         if (RadioInput != null)
             await RadioInput.Value.FocusAsync();
     }
