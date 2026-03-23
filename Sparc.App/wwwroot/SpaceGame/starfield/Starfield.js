@@ -29,7 +29,7 @@ export default class Starfield extends Phaser.Scene {
         this.load.image('sky', 'skies/pixelart_starfield_1.png');
         this.load.image('star', 'sprites/star 1x.png');
         this.load.image('Post', 'sprites/star 4x.png');
-        this.load.image('question', 'sprites/question.png');
+        this.load.image('question', 'sprites/diamond.png');
         this.load.image('spark', 'sprites/spark.png');
         this.load.image('asteroid', 'sprites/asteroid.png');
         this.load.image('crosshair', 'sprites/crosshair094.png');

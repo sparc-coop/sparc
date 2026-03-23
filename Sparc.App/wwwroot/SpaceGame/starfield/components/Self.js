@@ -10,6 +10,7 @@ export default class Self extends Phaser.GameObjects.Sprite {
 
         this.setScale(1);
         this.setDepth(8);
+        this.setAngle(-180);
 
         var crosshair = new Crosshair(scene, obj);
 
@@ -18,6 +19,12 @@ export default class Self extends Phaser.GameObjects.Sprite {
 
         this.updateFromObject(obj);
         scene.add.existing(this);
+        scene.tweens.add({
+            targets: this,
+            repeat: -1,
+            duration: 5000,
+            angle: 180
+        });
     }
 
     drawGravity(obj) {
