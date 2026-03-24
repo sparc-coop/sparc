@@ -13,7 +13,7 @@
                             <figcaption>
                                 @post.User?.Name
                                 <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                                | @post.Distance.Pretty() parsecs
+                                | @post.Distance.Pretty() parsecs | Temperature: @post.Temperature.ToString("0.00") K
                                 | Collapse: @post.CollapseScale.ToString("0.00")
                             </figcaption>
                         </figure>
@@ -27,7 +27,7 @@
                             }
                             else
                             {
-                                <img src="SpaceGame/starfield/sprites/question.png" alt="Question" />
+                                <img src="SpaceGame/starfield/sprites/diamond.png" alt="Question" />
                             }
                             <figcaption>
                                 @post.Distance.Pretty() parsecs | Collapse: @post.CollapseScale.ToString("0.00")
