@@ -1,4 +1,4 @@
-﻿export default class UserTrail extends Phaser.GameObjects.Line {
+﻿export default class QuestPath extends Phaser.GameObjects.Line {
     userId;
     constructor(scene, obj) {
         super(scene, scene.x(obj), scene.y(obj), 0, 0, 0, 0, 0x9f2b68, 1);
@@ -15,22 +15,23 @@
 
     updateFromObject(obj) {
         // Scale alpha based on its index in the trail, with the most recent position being the most opaque
-        var userTrail = this.scene.getAllInGameState('userTrails', x => x.user.id == this.userId);
-        var index = userTrail.findIndex(x => x.id == obj.id);
+        var paths = this.scene.getAllInGameState('questPaths', x => x.user.id == this.userId);
+        var index = paths.findIndex(x => x.id == obj.id);
 
         if (index > 0) {
-            var previousPosition = userTrail[index - 1];
+            var previousPosition = paths[index - 1];
 
             var x2 = this.scene.x(previousPosition) - this.scene.x(obj);
             var y2 = this.scene.y(previousPosition) - this.scene.y(obj);
 
-            this.scene.moveLine(this, x2, y2);
+            this.setTo(0, 0, x2, y2);
+            console.log(this, x2, y2);
         }
 
-        var alphaIndex = 1 - (userTrail.length - (index + 1)) / userTrail.length;
-        this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
+        //var alphaIndex = 1 - (paths.length - (index + 1)) / paths.length;
+        //this.setAlpha(alphaIndex * alphaIndex * alphaIndex);
         //this.setAlpha(this.scene.z(obj));
-        this.setLineWidth(6 * alphaIndex);
-        //this.setScale(userTrail.length - index);
+        //this.setLineWidth(6 * alphaIndex);
+        //this.setScale(paths.length - index);
     }
 }

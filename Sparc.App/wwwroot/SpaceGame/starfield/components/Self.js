@@ -1,4 +1,4 @@
-﻿import UserTrail from './UserTrail.js';
+﻿import QuestPath from './UserTrail.js';
 import Crosshair from './Crosshair.js';
 
 export default class Self extends Phaser.GameObjects.Sprite {
@@ -14,8 +14,15 @@ export default class Self extends Phaser.GameObjects.Sprite {
 
         var crosshair = new Crosshair(scene, obj);
 
-        var userTrails = this.scene.getAllInGameState('userTrails', x => x.userId == obj.id);
-        userTrails.forEach(x => this.trails.push(new UserTrail(scene, x)));
+        var questPaths = this.scene.getAllInGameState('questPaths', x => x.userId == obj.id)
+            .map(x => { return { x: scene.x(x), y: scene.y(x) }; });
+
+        console.log('quest paths', questPaths);
+
+        var quest = scene.add.graphics({
+            lineStyle: { width: 2, color: 0x9f2b68, alpha: 0.5 },
+        });
+        quest.strokePoints(questPaths);
 
         this.updateFromObject(obj);
         scene.add.existing(this);
@@ -45,24 +52,17 @@ export default class Self extends Phaser.GameObjects.Sprite {
     }
 
     updateFromObject(obj) {
-        var userTrails = this.scene.getAllInGameState('userTrails', x => x.userId == obj.id);
-        userTrails.forEach(x => {
-            var existing = this.trails.find(t => t.name == x.id);
-            if (existing)
-                existing.updateFromObject(x);
-            else {
-                var newTrail = new UserTrail(this.scene, x);
-                this.trails.push(newTrail);
-            }
-        });
+        //var questPaths = this.scene.getAllInGameState('questPaths', x => x.userId == obj.id);
+        //questPaths.forEach(x => {
+        //    var existing = this.trails.find(t => t.name == x.id);
+        //    if (existing)
+        //        existing.updateFromObject(x);
+        //    else {
+        //        var newTrail = new QuestPath(this.scene, x);
+        //        this.trails.push(newTrail);
+        //    }
+        //});
 
         this.drawGravity(obj);
-
-        var lastPosition = userTrails.length > 1 ? userTrails[userTrails.length - 2] : null;
-
-        if (lastPosition) {
-            var rad = Phaser.Math.Angle.Between(this.scene.x(lastPosition), this.scene.y(lastPosition), this.scene.x(obj), this.scene.y(obj));
-            this.setRotation(rad + Math.PI / 2);
-        }
     }
 }

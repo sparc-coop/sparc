@@ -7,19 +7,19 @@
     @if (GameState is not null)
     {
         <div id="buttons">
-        @if (GameState.AvailableQuests.Any())
+        @* @if (GameState.AvailableQuests.Any())
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
             </button>
-        }
+        } *@
         </div>
 
-        @if (ShowQuests)
+@*         @if (ShowQuests)
         {
             <Quests AvailableQuests="GameState.AvailableQuests" UserSpace="GameState.Self" OnUpdate="UpdateGameObjects" />
         }
-
+ *@
         <div id="hud">
             <section class="project">
                 <header>

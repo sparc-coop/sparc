@@ -16,9 +16,7 @@
     [Parameter] public EventCallback OnUpdating { get; set; }
     [Parameter] public EventCallback<BlossomSpace> OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
-    bool IsEnter;
     bool? IsSending;
-    string? Error;
     BlossomUser? User;
 
     protected override async Task OnInitializedAsync()
@@ -30,11 +28,8 @@
     {
         if (e.Code == "Enter" || e.Code == "NumpadEnter")
         {
-            IsEnter = true;
             await AddPost();
         }
-        else
-            IsEnter = false;
     }
 
     private async Task AddPost()
@@ -44,7 +39,6 @@
 
         IsSending = true;
         PostText = PostText.TrimEnd('\r', '\n');
-        Error = null;
 
         if (Space == null)
         {

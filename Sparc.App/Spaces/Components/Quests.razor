@@ -16,7 +16,6 @@
             <li class="@(UserSpace.ActiveQuestId == quest.Id ? "active" : "")">
                 <div>
                     <figure></figure>
-                    <aside>@quest.Importance.ToString("0.#") / 10</aside>
                     <aside>@quest.Distance.Pretty() ly</aside>
                 </div>
                 <div>
@@ -49,7 +48,7 @@
 
     async Task ToggleQuest(Quest quest)
     {
-        await Spaces.ActivateQuestAsync(quest.SpaceId, quest.FacetId);
+        await Spaces.ActivateQuestAsync(quest.SpaceId, "");
         await OnUpdate.InvokeAsync();
     }
 }
