@@ -2,7 +2,6 @@
 import Crosshair from './Crosshair.js';
 
 export default class Self extends Phaser.GameObjects.Sprite {
-    trails = [];
     gravity;
 
     constructor(scene, obj) {
@@ -13,16 +12,6 @@ export default class Self extends Phaser.GameObjects.Sprite {
         this.setAngle(-180);
 
         var crosshair = new Crosshair(scene, obj);
-
-        var questPaths = this.scene.getAllInGameState('questPaths', x => x.userId == obj.id)
-            .map(x => { return { x: scene.x(x), y: scene.y(x) }; });
-
-        console.log('quest paths', questPaths);
-
-        var quest = scene.add.graphics({
-            lineStyle: { width: 2, color: 0x9f2b68, alpha: 0.5 },
-        });
-        quest.strokePoints(questPaths);
 
         this.updateFromObject(obj);
         scene.add.existing(this);

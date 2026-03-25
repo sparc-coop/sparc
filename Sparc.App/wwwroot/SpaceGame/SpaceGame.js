@@ -31,7 +31,7 @@ export function update(data, dotnet) {
     }
 }
 
-export function select(id) {
+export function select(id, path) {
     if (game && game.scene.keys['Starfield'])
-        game.scene.keys['Starfield'].select(id);
+        game.scene.keys['Starfield'].select(id, path);
 }

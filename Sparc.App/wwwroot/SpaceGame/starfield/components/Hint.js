@@ -4,6 +4,7 @@
 
         this.setScale(scene.z(obj) * 4);
         this.setAlpha(scene.z(obj));
+        this.setInteractive().on('pointerdown', () => this.scene.dotnet.invokeMethodAsync('SelectGameObject', obj.id));
         scene.add.existing(this);
     }
 }

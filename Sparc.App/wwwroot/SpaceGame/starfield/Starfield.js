@@ -108,9 +108,9 @@ export default class Starfield extends Phaser.Scene {
         return this.gameState[type].filter(o => filter(o));
     }
 
-    select(id) {
+    select(id, path) {
         var crosshair = this.find('Crosshair');
-        crosshair.select(id);
+        crosshair.select(id, path);
     }
 
     updateObject(obj, inXSeconds) {

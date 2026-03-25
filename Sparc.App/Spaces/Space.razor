@@ -106,12 +106,16 @@
         ActiveTab = tab;
     }
 
-    async Task Select(Post? post) => await Select(post?.Id);
+    async Task Select(Post? post)
+    {
+        var path = await Spaces.TravelAsync(Id, post?.Id ?? "self");
+        await Select(post?.Id, path);
+    }
 
-    async Task Select(string? id)
+    async Task Select(string? id, List<QuestPath> path)
     {
         if (Game != null)
-            await Game.InvokeVoidAsync("select", id);
+            await Game.InvokeVoidAsync("select", id, path);
     }
 
     async Task SelectQuest(BlossomSpaceObject quest)
@@ -132,7 +136,7 @@
         {
             if (obj.EntityType == "Quest")
                 await SelectQuest(obj);
-            else if (obj.EntityType == "Post")
+            else 
                 await SpaceDiscussionRef!.Select(obj.Id);
         }
     }
