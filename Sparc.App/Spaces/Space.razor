@@ -62,16 +62,16 @@
 
 @inject ISparcAura Aura
 @code {
-        [Parameter] public required string Id { get; set; }
-        [Parameter] public string? ParentSpaceId { get; set; }
-        List<Post> Discoveries = [];
-        BlossomSpaceObject? SelectedQuest;
-        BlossomUser? User;
-        Discussion? SpaceDiscussionRef;
-        IJSObjectReference? Game;
-        string ActiveTab = "Discoveries";
-        bool ShowQuests;
-        GameState? GameState;
+    [Parameter] public required string Id { get; set; }
+    [Parameter] public string? ParentSpaceId { get; set; }
+    List<Post> Discoveries = [];
+    BlossomSpaceObject? SelectedQuest;
+    BlossomUser? User;
+    Discussion? SpaceDiscussionRef;
+    IJSObjectReference? Game;
+    string ActiveTab = "Discoveries";
+    bool ShowQuests;
+    GameState? GameState;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -92,8 +92,13 @@
     {
         GameState = await Spaces.GetCoordinatesAsync(Id);
 
-        if (Game != null)
-            await Game.InvokeVoidAsync("update", GameState, DotNetObjectReference.Create(this));
+        try
+        {
+            if (Game != null)
+                await Game.InvokeVoidAsync("update", GameState, DotNetObjectReference.Create(this));
+        }
+        catch
+        { }
     }
 
     void SetActiveTab(string tab)
