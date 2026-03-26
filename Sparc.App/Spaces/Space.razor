@@ -7,7 +7,7 @@
     @if (GameState is not null)
     {
         <div id="buttons">
-        @* @if (GameState.AvailableQuests.Any())
+            @* @if (GameState.AvailableQuests.Any())
         {
             <button @onclick="ToggleQuests">
                 <img src="./SpaceGame/starfield/sprites/exclamation.png" alt="Show Quests" />
@@ -15,7 +15,7 @@
         } *@
         </div>
 
-@*         @if (ShowQuests)
+        @*         @if (ShowQuests)
         {
             <Quests AvailableQuests="GameState.AvailableQuests" UserSpace="GameState.Self" OnUpdate="UpdateGameObjects" />
         }
@@ -31,30 +31,15 @@
             <section class="details">
                 <header>
                     <ul>
-                        <li class="@(ActiveTab == "Discoveries" ? "active" : "")" @onclick="@(() => SetActiveTab("Discoveries"))">Discoveries</li>
-                        <li class="@(ActiveTab == "Frog" ? "active" : "")" @onclick="@(() => SetActiveTab("Frog"))">Frog GM</li>
-                        <li class="@(ActiveTab == "Settings" ? "active" : "")" @onclick="@(() => SetActiveTab("Settings"))">Settings</li>
+                        <li class="@(ActiveTab == "Post" ? "active" : "")" @onclick="@(() => SetActiveTab("Post"))">Discoveries</li>
+                        <li class="@(ActiveTab == "Fact" ? "active" : "")" @onclick="@(() => SetActiveTab("Fact"))">Facts</li>
+                        <li class="@(ActiveTab == "Question" ? "active" : "")" @onclick="@(() => SetActiveTab("Question"))">Guides</li>
                     </ul>
                 </header>
 
-                @if (ActiveTab == "Discoveries")
-                {
-                    <div class="discoveries">
-                        <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" @ref="SpaceDiscussionRef" />
-                    </div>
-                }
-                else if (ActiveTab == "Frog")
-                {
-                    <div class="frog">
-                        <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="Hint" />
-                    </div>
-                }
-                else if (ActiveTab == "Settings")
-                {
-                    <div class="settings">
-                        <Settings CurrentSpace="GameState.Space" User="User" OnUpdate="UpdateGameObjects" />
-                    </div>
-                }
+                <div class="discoveries">
+                    <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="@ActiveTab" @ref="SpaceDiscussionRef" />
+                </div>
             </section>
         </div>
     }
@@ -69,7 +54,7 @@
     BlossomUser? User;
     Discussion? SpaceDiscussionRef;
     IJSObjectReference? Game;
-    string ActiveTab = "Discoveries";
+    string ActiveTab = "Post";
     bool ShowQuests;
     GameState? GameState;
 
@@ -106,10 +91,10 @@
         ActiveTab = tab;
     }
 
-    async Task Select(Post? post)
+    async Task Select(BlossomSpaceObject? obj)
     {
-        var path = await Spaces.TravelAsync(Id, post?.Id ?? "self");
-        await Select(post?.Id, path);
+        var path = await Spaces.TravelAsync(Id, obj?.Id ?? "self");
+        await Select(obj?.Id, path);
     }
 
     async Task Select(string? id, List<QuestPath> path)
@@ -136,7 +121,7 @@
         {
             if (obj.EntityType == "Quest")
                 await SelectQuest(obj);
-            else 
+            else
                 await SpaceDiscussionRef!.Select(obj.Id);
         }
     }

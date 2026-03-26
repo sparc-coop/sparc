@@ -55,6 +55,7 @@
             Post post = new(Space, User!.Avatar, PostText);
             var newPost = await Spaces.PostAsync(post.SpaceId, post);
             PostText = string.Empty;
+            IsSending = null;
             if (OnUpdate.HasDelegate)
                 await OnUpdate.InvokeAsync(Space);
         }

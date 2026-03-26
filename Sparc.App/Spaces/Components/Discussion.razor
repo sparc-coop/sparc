@@ -2,26 +2,26 @@
 
 <section class="discussion">
     <div>
-        @foreach (var post in GameState.SpaceObjects)
+        @foreach (var item in GameState.SpaceObjects.Where(x => x.EntityType == Type))
         {
-            <article @onclick=@(() => Select(post)) class="@(SelectedPost == post ? "selected" : "")">
+            <article @onclick=@(() => Select(item)) class="@(SelectedObject == item ? "selected" : "")">
                 <header>
-                    @if (post.EntityType == "Post")
+                    @if (item.EntityType == "Post")
                     {
                         <figure>
-                            <img src="SpaceGame/starfield/sprites/orb 24x24.png" alt="@post.User?.Name" />
+                            <img src="SpaceGame/starfield/sprites/orb 24x24.png" alt="@item.User?.Name" />
                             <figcaption>
-                                @post.User?.Name
-                                <time datetime="@post.Timestamp">@Ago(post.Timestamp)</time>
-                                | @post.Distance.Pretty() parsecs | Temperature: @post.Temperature.ToString("0.00") K
-                                | Collapse: @post.CollapseScale.ToString("0.00")
+                                @item.User?.Name
+                                <time datetime="@item.Timestamp">@Ago(item.Timestamp)</time>
+                                | @item.Distance.Pretty() parsecs | Temperature: @item.Temperature.ToString("0.00") K
+                                | Collapse: @item.CollapseScale.ToString("0.00")
                             </figcaption>
                         </figure>
                     }
                     else
                     {
                         <figure>
-                            @if (post.EntityType == "Fact")
+                            @if (item.EntityType == "Fact")
                             {
                                 <img src="SpaceGame/starfield/sprites/asteroid.png" alt="Fact" />
                             }
@@ -30,14 +30,14 @@
                                 <img src="SpaceGame/starfield/sprites/diamond.png" alt="Question" />
                             }
                             <figcaption>
-                                @post.Distance.Pretty() parsecs | Collapse: @post.CollapseScale.ToString("0.00")
+                                @item.Distance.Pretty() parsecs | Collapse: @item.CollapseScale.ToString("0.00")
                             </figcaption>
                         </figure>
                     }
                     <img src="img/VerticalMenu.svg" alt="Options" />
                 </header>
                 <section>
-                    <p>@post.Text</p>
+                    <p>@item.Text</p>
                 </section>
                 <footer>
                     <button class="secondary">Comments</button>
@@ -55,9 +55,9 @@
 @code {
     [Parameter] public required GameState GameState { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
-    [Parameter] public EventCallback<Post?> OnSelect { get; set; }
+    [Parameter] public EventCallback<BlossomSpaceObject?> OnSelect { get; set; }
     [Parameter] public string? Type { get; set; }
-    Post? SelectedPost;
+    BlossomSpaceObject? SelectedObject;
 
     async Task Update()
     {
@@ -71,14 +71,14 @@
             await Select(post);
     }
 
-    async Task Select(Post post)
+    async Task Select(BlossomSpaceObject obj)
     {
-        if (SelectedPost == post)
-            SelectedPost = null;
+        if (SelectedObject == obj)
+            SelectedObject = null;
         else
-            SelectedPost = post;
+            SelectedObject = obj;
 
-        await OnSelect.InvokeAsync(SelectedPost);
+        await OnSelect.InvokeAsync(SelectedObject);
     }
 
     string Ago(DateTime timestamp)
