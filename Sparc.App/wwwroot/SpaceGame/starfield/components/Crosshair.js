@@ -1,4 +1,5 @@
 ﻿export default class Crosshair extends Phaser.GameObjects.Sprite {
+    questPath;
     constructor(scene, objToFollow) {
         super(scene, scene.x(objToFollow), scene.y(objToFollow), 'crosshair');
         this.setAlpha(0);
@@ -21,12 +22,15 @@
         if (!path)
             return;
 
+        if (this.questPath)
+            this.questPath.destroy();
+
         var questPaths = path.map(x => { return { x: this.scene.x(x), y: this.scene.y(x) }; });
         console.log('quest paths', questPaths);
 
-        var quest = this.scene.add.graphics({
+        this.questPath = this.scene.add.graphics({
             lineStyle: { width: 2, color: 0x9f2b68, alpha: 0.5 },
         });
-        quest.strokePoints(questPaths);
+        this.questPath.strokePoints(questPaths);
     }
 }

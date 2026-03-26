@@ -93,8 +93,8 @@
 
     async Task Select(BlossomSpaceObject? obj)
     {
-        //var path = await Spaces.TravelAsync(Id, obj?.Id ?? "self");
-        await Select(obj?.Id, []);
+        var path = await Spaces.TravelAsync(Id, obj?.Id ?? "self");
+        await Select(obj?.Id, path);
     }
 
     async Task Select(string? id, List<QuestPath> path)

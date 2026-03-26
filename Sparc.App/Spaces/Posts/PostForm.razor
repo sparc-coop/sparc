@@ -46,7 +46,10 @@
             Post post = new(newSpace, User!.Avatar, PostText);
             var createdSpace = await Spaces.CreateSpaceAsync(post);
             if (OnUpdate.HasDelegate)
+            {
                 await OnUpdate.InvokeAsync(createdSpace);
+                IsSending = false;
+            }
             else
                 Nav.NavigateTo($"/spaces/{createdSpace.Id}", true);
         }
@@ -56,10 +59,10 @@
             var newPost = await Spaces.PostAsync(post.SpaceId, post);
             PostText = string.Empty;
             IsSending = null;
+            StateHasChanged();
+
             if (OnUpdate.HasDelegate)
                 await OnUpdate.InvokeAsync(Space);
         }
-
-        IsSending = false;
     }
 }
