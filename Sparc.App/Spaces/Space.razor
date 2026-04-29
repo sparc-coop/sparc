@@ -38,7 +38,7 @@
                 </header>
 
                 <div class="discoveries">
-                    <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" Type="@ActiveTab" @ref="SpaceDiscussionRef" />
+                    <Discussion GameState="GameState" OnUpdate="UpdateGameObjects" OnSelect="Select" OnEnter="Enter" Type="@ActiveTab" @ref="SpaceDiscussionRef" />
                 </div>
             </section>
         </div>
@@ -110,6 +110,12 @@
         else
             SelectedQuest = quest;
 
+        await UpdateGameObjects();
+    }
+
+    async Task Enter(BlossomSpaceObject obj)
+    {
+        await Spaces.ActivateQuestAsync(Id, obj.Id);
         await UpdateGameObjects();
     }
 

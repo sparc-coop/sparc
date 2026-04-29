@@ -34,7 +34,7 @@
                             </figcaption>
                         </figure>
                     }
-                    <img src="img/VerticalMenu.svg" alt="Options" />
+                    <button @onclick="@(() => Enter(item))">Enter</button>
                 </header>
                 <section>
                     <p>@item.Text</p>
@@ -56,8 +56,10 @@
     [Parameter] public required GameState GameState { get; set; }
     [Parameter] public EventCallback OnUpdate { get; set; }
     [Parameter] public EventCallback<BlossomSpaceObject?> OnSelect { get; set; }
+    [Parameter] public EventCallback<BlossomSpaceObject?> OnEnter { get; set; }
     [Parameter] public string? Type { get; set; }
     BlossomSpaceObject? SelectedObject;
+
 
     async Task Update()
     {
@@ -79,6 +81,11 @@
             SelectedObject = obj;
 
         await OnSelect.InvokeAsync(SelectedObject);
+    }
+
+    async Task Enter(BlossomSpaceObject obj)
+    {
+        await OnEnter.InvokeAsync(obj);
     }
 
     string Ago(DateTime timestamp)
