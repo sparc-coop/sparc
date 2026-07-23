@@ -65,7 +65,7 @@
         [Parameter] public required string Id { get; set; }
         [Parameter] public string? ParentSpaceId { get; set; }
         List<Post> Discoveries = [];
-        BlossomSpaceObject? SelectedQuest;
+        //BlossomQuest? SelectedQuest;
         BlossomUser? User;
         Discussion? SpaceDiscussionRef;
         IJSObjectReference? Game;
@@ -109,15 +109,15 @@
             await Game.InvokeVoidAsync("select", id);
     }
 
-    async Task SelectQuest(BlossomSpaceObject quest)
-    {
-        if (SelectedQuest?.Id == quest?.Id)
-            SelectedQuest = null;
-        else
-            SelectedQuest = quest;
+    // async Task SelectQuest(BlossomSpaceObject quest)
+    // {
+    //     if (SelectedQuest?.Id == quest?.Id)
+    //         SelectedQuest = null;
+    //     else
+    //         SelectedQuest = quest;
 
-        await UpdateGameObjects();
-    }
+    //     await UpdateGameObjects();
+    // }
 
     [JSInvokable("SelectGameObject")]
     public async Task SelectGameObject(string id)
@@ -125,9 +125,9 @@
         var obj = GameState!.SpaceObjects.FirstOrDefault(x => x.Id == id);
         if (obj != null)
         {
-            if (obj.EntityType == "Quest")
-                await SelectQuest(obj);
-            else if (obj.EntityType == "Post")
+            // if (obj.EntityType == "Quest")
+            //     await SelectQuest(obj);
+            if (obj.EntityType == "Post")
                 await SpaceDiscussionRef!.Select(obj.Id);
         }
     }

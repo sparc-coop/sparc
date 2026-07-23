@@ -16,9 +16,7 @@
     [Parameter] public EventCallback OnUpdating { get; set; }
     [Parameter] public EventCallback<BlossomSpace> OnUpdate { get; set; }
     string PostText { get; set; } = string.Empty;
-    bool IsEnter;
     bool? IsSending;
-    string? Error;
     BlossomUser? User;
 
     protected override async Task OnInitializedAsync()
@@ -29,12 +27,7 @@
     public async Task Enter(KeyboardEventArgs e)
     {
         if (e.Code == "Enter" || e.Code == "NumpadEnter")
-        {
-            IsEnter = true;
             await AddPost();
-        }
-        else
-            IsEnter = false;
     }
 
     private async Task AddPost()
@@ -44,11 +37,10 @@
 
         IsSending = true;
         PostText = PostText.TrimEnd('\r', '\n');
-        Error = null;
 
         if (Space == null)
         {
-            var newSpace = new BlossomSpace(Guid.NewGuid().ToString()) { SpaceId = "sparc.coop" };
+            var newSpace = new BlossomSpace("sparc.coop", Guid.NewGuid().ToString());
             Post post = new(newSpace, User!.Avatar, PostText);
             var createdSpace = await Spaces.CreateSpaceAsync(post);
             if (OnUpdate.HasDelegate)
@@ -59,7 +51,7 @@
         else
         {
             Post post = new(Space, User!.Avatar, PostText);
-            var newPost = await Spaces.PostAsync(post.SpaceId, post);
+            var newPost = await Spaces.PostAsync(post.RealmId, post);
             PostText = string.Empty;
             if (OnUpdate.HasDelegate)
                 await OnUpdate.InvokeAsync(Space);

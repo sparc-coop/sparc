@@ -49,7 +49,7 @@
 
     async Task ToggleQuest(Quest quest)
     {
-        await Spaces.ActivateQuestAsync(quest.SpaceId, quest.FacetId);
+        await Spaces.ActivateQuestAsync(quest.RealmId, quest.FacetId);
         await OnUpdate.InvokeAsync();
     }
 }
