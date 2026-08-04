@@ -1,4 +1,5 @@
-﻿<form @onsubmit="AddPost">
+﻿@using Sparc.Blossom.Data
+<form @onsubmit="AddPost">
     <label class="eight-bit">
         <input placeholder="Tell us what's broken..."
                @bind=PostText
@@ -6,6 +7,7 @@
                disabled="@(IsSending != null)">
         </input>
     </label>
+    <InputFile OnChange="Upload" />
     <button class="eight-bit" disabled="@(IsSending != null)">
         @(IsSending == null ? "Send" : IsSending == true ? "Sending..." : "Sent!")
     </button>
@@ -58,5 +60,19 @@
         }
 
         IsSending = false;
+    }
+
+    private async Task Upload(InputFileChangeEventArgs e)
+    {
+        var newSpace = new BlossomSpace("sparc.coop", Guid.NewGuid().ToString());
+        Media media = new(newSpace, User!.Avatar, e.File.Name);
+        var token = await Spaces.BeginUploadAsync(media);
+
+        var blobs = new AzureBlobRepository(token.Token);
+        var file = new BlossomFile(e.File.Name, AccessTypes.Public, e.File.OpenReadStream());
+        await blobs.AddAsync(file);
+
+        media.Uri = file.Url!;
+        await Spaces.CompleteUploadAsync(media);
     }
 }
